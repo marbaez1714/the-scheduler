@@ -1,7 +1,7 @@
 import {Navigate, useLocation} from "react-router-dom";
 import {RequireAuthProps} from "./types";
 
-const RequireAuth = ({element}: RequireAuthProps) => {
+export const RequireAuth = ({element}: RequireAuthProps) => {
   // TODO: Add auth
   const auth = true;
   const location = useLocation();
@@ -11,5 +11,3 @@ const RequireAuth = ({element}: RequireAuthProps) => {
   }
   return <Navigate to="/login" replace state={{from: location}} />;
 };
-
-export default RequireAuth;
