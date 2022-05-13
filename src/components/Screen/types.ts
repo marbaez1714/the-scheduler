@@ -1,3 +1,9 @@
-import {HTMLProps} from "react";
+import { HeaderProps } from '../Header';
 
-export interface ScreenProps extends HTMLProps<HTMLDivElement> {}
+export interface ScreenProps {
+  title?: string;
+  subtitle?: string;
+  className?: string;
+  children: React.ReactNode;
+  headerProps?: HeaderProps;
+}

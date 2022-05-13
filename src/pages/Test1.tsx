@@ -1,5 +1,7 @@
+import { Screen } from 'src/components/Screen';
+
 const Test1 = () => {
-  return <h1>Test 1</h1>;
+  return <Screen>Test 1</Screen>;
 };
 
 export default Test1;

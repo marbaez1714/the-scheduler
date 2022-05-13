@@ -1,5 +1,6 @@
-import {HTMLProps} from "react";
+import { HTMLProps } from 'react';
 
 export interface TextProps extends HTMLProps<HTMLParagraphElement> {
-  type?: "normal" | "title";
+  type?: 'normal' | 'title' | 'subtitle' | 'small';
+  centered?: boolean;
 }
