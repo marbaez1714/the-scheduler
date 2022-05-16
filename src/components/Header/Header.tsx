@@ -1,21 +1,54 @@
+import { useRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Logout } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { AccountCircle, Logout } from '@mui/icons-material';
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+} from '@mui/material';
 import { HeaderProps } from './types';
 
 const Header = ({ title }: HeaderProps) => {
-  const { logout } = useAuth0();
+  // Refs
+  const menuButtonRef = useRef(null);
+  // Hooks
+  const { isAuthenticated, logout } = useAuth0();
+  // State
+  const [menuOpen, setMenuOpen] = useState(false);
+  // Functions
+  const handleMenuOpen = () => {
+    setMenuOpen(true);
+  };
+  const handleMenuClose = () => {
+    setMenuOpen(false);
+  };
 
   return (
-    <div className="py-3 px-6 shadow-md h-16 flex">
+    <header className="py-3 px-6 shadow-md h-16 flex">
       {title && <h1>{title}</h1>}
       {/* Right Actions */}
-      <div className="ml-auto">
-        <IconButton onClick={() => logout()}>
-          <Logout />
-        </IconButton>
-      </div>
-    </div>
+      {isAuthenticated && (
+        <div className="ml-auto">
+          <IconButton onClick={handleMenuOpen} ref={menuButtonRef}>
+            <AccountCircle />
+          </IconButton>
+          <Menu
+            anchorEl={menuButtonRef.current}
+            open={menuOpen}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={() => logout()}>
+              <ListItemIcon>
+                <Logout />
+              </ListItemIcon>
+              <ListItemText>Logout</ListItemText>
+            </MenuItem>
+          </Menu>
+        </div>
+      )}
+    </header>
   );
 };
 
