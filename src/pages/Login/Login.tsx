@@ -8,9 +8,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    loginWithPopup().then(() => {
-      navigate('/test1');
-    });
+    loginWithPopup()
+      .then(() => {
+        navigate('/test1');
+      })
+      .catch(() => alert('Unauthorized'));
   };
 
   return (

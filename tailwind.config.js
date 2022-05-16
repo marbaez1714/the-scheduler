@@ -1,9 +1,10 @@
 module.exports = {
-  content: ["./src/**/*.tsx"],
+  important: true,
+  content: ['./src/**/*.tsx'],
   theme: {
     extend: {
       fontFamily: {
-        roboto: ["Roboto"],
+        roboto: ['Roboto'],
       },
     },
   },

@@ -15,15 +15,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "baseUrl": ".",
-    "paths": {
-      "@components/*": ["src/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@providers/*": ["./src/providers/*"]
-    }
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "baseUrl": "."
   },
   "include": ["src"]
 }
