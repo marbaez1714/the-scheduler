@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { Screen } from 'src/components/Screen';
 
 const Login = () => {
+  // Hooks
   const { loginWithPopup } = useAuth0();
   const navigate = useNavigate();
 
+  // Actions
   const handleLoginClick = () => {
     loginWithPopup()
       .then(() => {
@@ -19,11 +21,12 @@ const Login = () => {
     <Screen
       title="Welcome"
       subtitle="To get started, press the login button below"
-      className="justify-center"
     >
-      <Button onClick={handleLoginClick} variant="contained" size="large">
-        Auth0 Login
-      </Button>
+      <div className="flex justify-center">
+        <Button onClick={handleLoginClick} variant="contained" size="large">
+          Auth0 Login
+        </Button>
+      </div>
     </Screen>
   );
 };

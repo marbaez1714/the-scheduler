@@ -14,28 +14,33 @@ const AddCompany = () => {
 
   return (
     <Screen
-      title="Add a Company"
+      title="Add Company"
       subtitle="Enter information in the boxes below to add a company."
-      className="flex-col space-y-6"
+      breadCrumbs={[
+        { to: '/', title: 'home' },
+        { to: '/test1', title: 'Test 1' },
+        { to: '/add-company', title: 'Add Company' },
+      ]}
     >
-      {/* Fields */}
-      {formFields.map(({ icon, ...props }, index) => (
-        <TextField
-          key={index}
-          variant="filled"
-          {...props}
-          InputProps={{
-            startAdornment: icon && (
-              <InputAdornment position="start">{icon}</InputAdornment>
-            ),
-          }}
-        />
-      ))}
+      <div className="flex flex-col space-y-6">
+        {/* Fields */}
+        {formFields.map(({ icon, ...props }, index) => (
+          <TextField
+            key={index}
+            {...props}
+            InputProps={{
+              startAdornment: icon && (
+                <InputAdornment position="start">{icon}</InputAdornment>
+              ),
+            }}
+          />
+        ))}
 
-      {/* Actions */}
-      <div className="flex space-x-4 justify-end">
-        <Button>Cancel</Button>
-        <Button variant="contained">Submit</Button>
+        {/* Actions */}
+        <div className="flex space-x-4 justify-end">
+          <Button>Cancel</Button>
+          <Button variant="contained">Submit</Button>
+        </div>
       </div>
     </Screen>
   );
