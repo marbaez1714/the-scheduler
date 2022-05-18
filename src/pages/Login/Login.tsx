@@ -1,18 +1,24 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Button } from '@mui/material';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Screen } from 'src/components/Screen';
 
 const Login = () => {
   // Hooks
-  const { loginWithPopup } = useAuth0();
+  const { loginWithPopup, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
+
+  // Effects
+  useEffect(() => {
+    isAuthenticated && navigate('/landing');
+  }, [isAuthenticated]);
 
   // Actions
   const handleLoginClick = () => {
     loginWithPopup()
       .then(() => {
-        navigate('/test1');
+        navigate('/landing');
       })
       .catch(() => alert('Unauthorized'));
   };

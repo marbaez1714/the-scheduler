@@ -1,4 +1,4 @@
-import { Badge, Email, Home, Notes, Phone } from '@mui/icons-material';
+import { Badge, Email, LocationOn, Notes, Phone } from '@mui/icons-material';
 import { Button, InputAdornment, TextField } from '@mui/material';
 import { Screen } from 'src/components/Screen';
 import { FormField } from 'src/utils/forms/types';
@@ -8,7 +8,7 @@ const AddCompany = () => {
     { label: 'Company Name', required: true, icon: <Badge /> },
     { label: 'Primary Phone', icon: <Phone /> },
     { label: 'Primary Email', icon: <Email /> },
-    { label: 'Office Address', icon: <Home /> },
+    { label: 'Location', icon: <LocationOn /> },
     { label: 'Notes', multiline: true, icon: <Notes /> },
   ];
 
@@ -16,28 +16,26 @@ const AddCompany = () => {
     <Screen
       title="Add Company"
       subtitle="Enter information in the boxes below to add a company."
-      breadCrumbs={[
-        { to: '/', title: 'home' },
-        { to: '/test1', title: 'Test 1' },
-        { to: '/add-company', title: 'Add Company' },
-      ]}
     >
-      <div className="flex flex-col space-y-6">
-        {/* Fields */}
-        {formFields.map(({ icon, ...props }, index) => (
-          <TextField
-            key={index}
-            {...props}
-            InputProps={{
-              startAdornment: icon && (
-                <InputAdornment position="start">{icon}</InputAdornment>
-              ),
-            }}
-          />
-        ))}
-
+      {/* Page Content */}
+      <div className="flex flex-col divide-y space-y-6">
+        {/* Input Fields */}
+        <div className="flex flex-col space-y-6">
+          {formFields.map(({ label, icon, required, ...props }, index) => (
+            <TextField
+              key={index}
+              {...props}
+              label={required ? label : `${label} (optional)`}
+              InputProps={{
+                startAdornment: icon && (
+                  <InputAdornment position="start">{icon}</InputAdornment>
+                ),
+              }}
+            />
+          ))}
+        </div>
         {/* Actions */}
-        <div className="flex space-x-4 justify-end">
+        <div className="flex justify-end space-x-4 pt-6">
           <Button>Cancel</Button>
           <Button variant="contained">Submit</Button>
         </div>
