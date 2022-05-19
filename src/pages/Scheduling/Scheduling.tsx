@@ -1,11 +1,7 @@
 import { Screen } from 'src/components/Screen';
 
 const Scheduling = () => {
-  return (
-    <Screen>
-      <div>Scheduling</div>
-    </Screen>
-  );
+  return <Screen>test</Screen>;
 };
 
 export default Scheduling;
