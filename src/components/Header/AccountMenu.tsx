@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { AccountCircle, Logout } from '@mui/icons-material';
 import {
   IconButton,
@@ -8,10 +7,11 @@ import {
   MenuItem,
 } from '@mui/material';
 import { useRef, useState } from 'react';
+import { useFirebase } from 'src/hooks/useFirebase';
 
 export const AccountMenu = () => {
   // Hooks
-  const { logout } = useAuth0();
+  const { signOut } = useFirebase();
   // Refs
   const menuButtonRef = useRef(null);
   // State
@@ -36,7 +36,7 @@ export const AccountMenu = () => {
         open={menuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={() => logout()}>
+        <MenuItem onClick={signOut}>
           <ListItemIcon>
             <Logout />
           </ListItemIcon>

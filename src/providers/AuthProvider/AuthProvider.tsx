@@ -5,7 +5,7 @@ import {
 } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
 
-const AuthRouteProvider = ({ children, ...rest }: Auth0ProviderOptions) => {
+const AuthProvider = ({ children, ...rest }: Auth0ProviderOptions) => {
   const navigate = useNavigate();
 
   const handleRedirectCallback = (appState: AppState | undefined) => {
@@ -19,4 +19,5 @@ const AuthRouteProvider = ({ children, ...rest }: Auth0ProviderOptions) => {
   );
 };
 
-export default AuthRouteProvider;
+export default AuthProvider;
+

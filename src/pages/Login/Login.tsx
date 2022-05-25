@@ -3,10 +3,12 @@ import { Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Screen } from 'src/components/Screen';
+import { useFirebase } from 'src/hooks/useFirebase';
 
 const Login = () => {
   // Hooks
-  const { loginWithPopup, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
+  const { signIn } = useFirebase();
   const navigate = useNavigate();
 
   // Effects
@@ -16,11 +18,14 @@ const Login = () => {
 
   // Actions
   const handleLoginClick = () => {
-    loginWithPopup()
+    signIn()
       .then(() => {
         navigate('/landing');
       })
-      .catch(() => alert('Unauthorized'));
+      .catch((e) => {
+        console.log(e);
+        alert('Unauthorized');
+      });
   };
 
   return (

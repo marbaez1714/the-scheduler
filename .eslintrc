@@ -11,7 +11,8 @@
   "rules": {
     "@typescript-eslint/no-empty-interface": "warn",
     "no-empty-pattern": "warn",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "@typescript-eslint/no-empty-function": "off"
   },
   "env": { "browser": true, "node": true }
 }
