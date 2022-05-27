@@ -12,7 +12,8 @@ function App() {
     <BrowserRouter>
       <AuthProvider
         domain={process.env.REACT_APP_AUTH0_DOMAIN || ''}
-        clientId={process.env.REACT_APP_AUTO0_CLIENT || ''}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT || ''}
+        audience={process.env.REACT_APP_AUTH0_AUDIENCE}
         redirectUri={window.location.origin}
       >
         <FirebaseProvider>
