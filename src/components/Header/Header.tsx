@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { HeaderProps } from './types';
 import { AccountMenu } from './AccountMenu';
 import { NavMenu } from './NavMenu';
@@ -17,7 +16,6 @@ import { IconButton } from '@mui/material';
 
 const Header = ({ title }: HeaderProps) => {
   // Hooks
-  const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
   // Menu Items
@@ -63,14 +61,12 @@ const Header = ({ title }: HeaderProps) => {
         <Home />
       </IconButton>
       {/* Menus */}
-      {isAuthenticated && <NavMenu title="Add" menuItems={addMenuItems} />}
-      {isAuthenticated && <NavMenu title="Edit" menuItems={editMenuItems} />}
-      {isAuthenticated && (
-        <NavMenu title="Dashboards" menuItems={dashboardMenuItems} />
-      )}
+      <NavMenu title="Add" menuItems={addMenuItems} />
+      <NavMenu title="Edit" menuItems={editMenuItems} />
+      <NavMenu title="Dashboards" menuItems={dashboardMenuItems} />
 
       {/* Right Actions */}
-      {isAuthenticated && <AccountMenu />}
+      <AccountMenu />
     </header>
   );
 };

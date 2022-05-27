@@ -7,11 +7,10 @@ import {
   MenuItem,
 } from '@mui/material';
 import { useRef, useState } from 'react';
-import { useFirebase } from 'src/hooks/useFirebase';
 
 export const AccountMenu = () => {
   // Hooks
-  const { signOut } = useFirebase();
+
   // Refs
   const menuButtonRef = useRef(null);
   // State
@@ -36,7 +35,7 @@ export const AccountMenu = () => {
         open={menuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={signOut}>
+        <MenuItem onClick={() => {}}>
           <ListItemIcon>
             <Logout />
           </ListItemIcon>

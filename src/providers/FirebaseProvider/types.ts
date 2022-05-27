@@ -1,6 +1,6 @@
 export interface FirebaseContextParams {
-  signIn: () => Promise<void>;
-  signOut: () => Promise<void>;
+  signIn: () => void;
+  signOut: () => void;
 }
 
 export interface FirebaseProviderProps {

@@ -1,5 +1,4 @@
 import { PathRouteProps, Route, Routes } from 'react-router-dom';
-import { RequireAuthRoute } from './RequireAuthRoute';
 import { Login } from '../pages/Login';
 import { Landing } from 'src/pages/Landing';
 import { AddCompany } from 'src/pages/AddCompany';
@@ -22,13 +21,6 @@ const Navigation = () => {
         <Route path={`/${path}`} key={`${path}-${index}`} {...rest} />
       ))}
       {/* Authorized Routes */}
-      {authRoutes.map(({ path, element }, index) => (
-        <Route
-          path={`/${path}`}
-          element={<RequireAuthRoute element={element} />}
-          key={`${path}-${index}`}
-        />
-      ))}
     </Routes>
   );
 };
