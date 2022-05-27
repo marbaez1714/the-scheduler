@@ -1,19 +1,51 @@
 import { createContext } from 'react';
 
+import {
+  GoogleAuthProvider as fbGoogleAuthProvider,
+  signInWithPopup as fbSignInWithPopup,
+  signOut as fbSignOut,
+} from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
 import { FirebaseContextParams, FirebaseProviderProps } from './types';
+import { firebaseAuth } from './utils';
 
 export const FirebaseContext = createContext<FirebaseContextParams>({
-  signIn: () => {},
+  signIn: { google: () => {} },
   signOut: () => {},
+  authUser: undefined,
+  authLoading: false,
+  authError: undefined,
 });
 
 const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
-  const signIn = async () => {};
+  // ---------- Hooks ----------
+  const [authUser, authLoading, authError] = useAuthState(firebaseAuth);
 
-  const signOut = async () => {};
+  // ---------- State ----------
 
-  const context = { signIn, signOut };
+  // ---------- Functions ----------
+  const signInGoogle = async () => {
+    fbSignInWithPopup(firebaseAuth, new fbGoogleAuthProvider()).catch(
+      console.error
+    );
+  };
 
+  const signOut = async () => {
+    fbSignOut(firebaseAuth);
+  };
+
+  // ---------- Setting Context ----------
+  const context = {
+    signIn: { google: signInGoogle },
+    signOut,
+    firebaseAuth,
+    authUser,
+    authLoading,
+    authError,
+  };
+
+  // ---------- Provider ----------
   return (
     <FirebaseContext.Provider value={context}>
       {children}

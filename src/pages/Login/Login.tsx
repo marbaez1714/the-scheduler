@@ -1,15 +1,19 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Screen } from 'src/components/Screen';
+import { useFirebase } from 'src/hooks/useFirebase';
 
 const Login = () => {
   // Hooks
+  const { signIn } = useFirebase();
   const navigate = useNavigate();
 
   // Effects
 
   // Actions
-  const handleLoginClick = () => {};
+  const handleLoginClick = () => {
+    signIn.google();
+  };
 
   return (
     <Screen
@@ -18,7 +22,7 @@ const Login = () => {
     >
       <div className="flex justify-center">
         <Button onClick={handleLoginClick} variant="contained" size="large">
-          Auth0 Login
+          Google Login
         </Button>
       </div>
     </Screen>
