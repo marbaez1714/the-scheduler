@@ -1,20 +1,26 @@
 import { Button } from '@mui/material';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Screen } from 'src/components/Screen';
 import { useFirebase } from 'src/hooks/useFirebase';
+import { AppRoutes } from 'src/utils/constants/routes';
 
 const Login = () => {
   // Hooks
-  const { signIn } = useFirebase();
+  const { signIn, authUser } = useFirebase();
   const navigate = useNavigate();
 
   // Effects
+  useEffect(() => {
+    authUser && navigate(AppRoutes.Landing);
+  }, [authUser]);
 
   // Actions
   const handleLoginClick = () => {
-    signIn.google();
+    signIn.google().then(() => navigate(AppRoutes.Landing));
   };
 
+  // JSX
   return (
     <Screen
       title="Welcome"
