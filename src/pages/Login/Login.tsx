@@ -7,17 +7,17 @@ import { AppRoutes } from 'src/utils/constants/routes';
 
 const Login = () => {
   // Hooks
-  const { signIn, authUser } = useFirebase();
+  const { signIn, authorized } = useFirebase();
   const navigate = useNavigate();
 
   // Effects
   useEffect(() => {
-    authUser && navigate(AppRoutes.Landing);
-  }, [authUser]);
+    authorized && navigate(AppRoutes.Landing);
+  }, [authorized]);
 
   // Actions
   const handleLoginClick = () => {
-    signIn.google().then(() => navigate(AppRoutes.Landing));
+    signIn.google();
   };
 
   // JSX

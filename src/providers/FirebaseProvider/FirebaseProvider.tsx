@@ -1,9 +1,10 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
 import {
   GoogleAuthProvider as fbGoogleAuthProvider,
   signInWithPopup as fbSignInWithPopup,
   signOut as fbSignOut,
+  User as fbAuth,
 } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -17,27 +18,48 @@ export const FirebaseContext = createContext<FirebaseContextParams>({
   authUser: undefined,
   authLoading: false,
   authError: undefined,
+  authorized: false,
 });
 
 // Provider
 const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
-  // ---------- Hooks ----------
+  // ***************************
+  // ********** Hooks **********
+  // ***************************
   const [authUser, authLoading, authError] = useAuthState(firebaseAuth);
 
-  // ---------- State ----------
-  // TODO
+  // ***************************
+  // ********** State **********
+  // ***************************
+  const [authorized, setAuthorized] = useState(false);
 
-  // ---------- Functions ----------
+  // *******************************
+  // ********** Functions **********
+  // *******************************
   const signInGoogle = async () => {
     const googleProvider = new fbGoogleAuthProvider();
-    await fbSignInWithPopup(firebaseAuth, googleProvider);
+    const { user } = await fbSignInWithPopup(firebaseAuth, googleProvider);
+    await _handleSignIn(user);
   };
 
   const signOut = async () => {
+    setAuthorized(false);
     await fbSignOut(firebaseAuth);
   };
 
-  // ---------- Setting Context ----------
+  // *****************************
+  // ********** Helpers **********
+  // *****************************
+  const _handleSignIn = async (user: fbAuth) => {
+    await user.getIdTokenResult(true).then((idToken) => {
+      console.log(idToken);
+      setAuthorized(!!idToken.claims.authorized);
+    });
+  };
+
+  // *************************************
+  // ********** Setting Context **********
+  // *************************************
   const context = {
     signIn: { google: signInGoogle },
     signOut,
@@ -45,9 +67,12 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     authUser,
     authLoading,
     authError,
+    authorized,
   };
 
-  // ---------- Provider ----------
+  // ******************************
+  // ********** Provider **********
+  // ******************************
   return (
     <FirebaseContext.Provider value={context}>
       {children}

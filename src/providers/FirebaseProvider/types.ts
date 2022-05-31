@@ -6,6 +6,7 @@ export interface FirebaseContextParams {
   authUser: AuthStateHook['0'];
   authLoading: AuthStateHook['1'];
   authError: AuthStateHook['2'];
+  authorized: boolean;
 }
 
 export interface FirebaseProviderProps {
