@@ -9,7 +9,7 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FirebaseContextParams, FirebaseProviderProps } from './types';
-import { firebaseAuth } from './utils';
+import { createCompanyCallable, firebaseAuth } from './utils';
 
 // Context
 export const FirebaseContext = createContext<FirebaseContextParams>({
@@ -19,6 +19,7 @@ export const FirebaseContext = createContext<FirebaseContextParams>({
   authLoading: false,
   authError: undefined,
   authorized: false,
+  createCompany: () => new Promise(() => {}),
 });
 
 // Provider
@@ -36,6 +37,8 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   // *******************************
   // ********** Functions **********
   // *******************************
+
+  // Auth
   const signInGoogle = async () => {
     const googleProvider = new fbGoogleAuthProvider();
     const { user } = await fbSignInWithPopup(firebaseAuth, googleProvider);
@@ -45,6 +48,11 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const signOut = async () => {
     setAuthorized(false);
     await fbSignOut(firebaseAuth);
+  };
+
+  // Documents
+  const createCompany = async () => {
+    createCompanyCallable();
   };
 
   // *****************************
@@ -68,6 +76,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     authLoading,
     authError,
     authorized,
+    createCompany,
   };
 
   // ******************************

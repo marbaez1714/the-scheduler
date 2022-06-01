@@ -7,8 +7,13 @@ export interface FirebaseContextParams {
   authLoading: AuthStateHook['1'];
   authError: AuthStateHook['2'];
   authorized: boolean;
+  createCompany: () => Promise<void>;
 }
 
 export interface FirebaseProviderProps {
   children: React.ReactNode;
+}
+
+export enum FirebaseFunctions {
+  CreateCompany = 'createCompany',
 }
