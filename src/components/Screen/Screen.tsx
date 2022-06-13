@@ -1,38 +1,22 @@
-import { Text } from '../Text';
-import { Header } from '../Header';
 import { ScreenProps } from './types';
 import { StatusBar } from './StatusBar';
+import { SideBar } from './SideBar';
 
-const Screen = ({ title, subtitle, children, headerProps }: ScreenProps) => {
+const Screen = ({ title, children }: ScreenProps) => {
   return (
-    <div className="h-screen flex flex-col">
-      {/* Header */}
-      <Header {...headerProps} />
-
-      {/* Screen Container */}
-      <div className="container mx-auto flex flex-grow flex-col">
-        {/* Title and Subtitle Container */}
-        {(title || subtitle) && (
-          <div className="pt-10 pb-4 mb-6">
-            {/* Title */}
-            {title && (
-              <Text type="title" centered>
-                {title}
-              </Text>
-            )}
-            {/* Subtitle */}
-            {subtitle && (
-              <Text type="subtitle" centered>
-                {subtitle}
-              </Text>
-            )}
-          </div>
-        )}
-
-        {/* Screen Content */}
-        {children}
+    <div className="flex flex-col h-screen w-screen font-roboto">
+      {/* Page */}
+      <div className="flex flex-grow">
+        {/* Side Bar */}
+        <SideBar />
+        {/* Page Content */}
+        <div className="flex flex-col flex-grow">
+          <header className="font-medium text-3xl text-slate-900 bg-slate-100 p-4 border-b-slate-200 border-b">
+            {title}
+          </header>
+          <div className="flex flex-grow bg-slate-50 px-8 py-4">{children}</div>
+        </div>
       </div>
-      {/* Status Bar */}
       <StatusBar />
     </div>
   );

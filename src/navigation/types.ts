@@ -1,3 +1,3 @@
 export interface AuthRouteProps {
-  children: React.ReactNode;
+  component: React.ReactNode;
 }

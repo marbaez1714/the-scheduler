@@ -5,12 +5,14 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { FirebaseProvider } from './providers/FirebaseProvider';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <FirebaseProvider>
       <BrowserRouter>
         <Navigation />
+        <Toaster />
       </BrowserRouter>
     </FirebaseProvider>
   );

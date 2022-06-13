@@ -3,28 +3,11 @@
 // *********************** //
 // ***** Collections ***** //
 // *********************** //
-export enum SchedulerCollections {
-  Admin = 'admin',
-  Companies = 'companies',
-  Communities = 'communities',
-}
+type CollectionNames = 'admin' | 'companies' | 'communities';
 
-// ************************ //
-// ***** Shared Types ***** //
-// ************************ //
-
-// Document Meta
-type UpdateMeta = {
-  updatedBy: string;
-  updatedTime: Record<string, any>;
-};
-
-type CreateMeta = UpdateMeta & {
-  createdBy: string;
-  createdTime: Record<string, any>;
-};
-
-// Documents
+// *********************** //
+// ****** Documents ****** //
+// *********************** //
 interface StoreDocumentTypes {
   Company: {
     name: string;
@@ -41,22 +24,39 @@ interface StoreDocumentTypes {
   };
 }
 
-type StoreCreateDocument<T extends keyof StoreDocumentTypes> = CreateMeta &
+type StoreDocumentNames = keyof StoreDocumentTypes;
+
+// ************************ //
+// ***** Shared Types ***** //
+// ************************ //
+
+// Document Meta
+type UpdateMeta = {
+  updatedBy: string;
+  updatedTime: Record<string, any>;
+};
+
+type CreateMeta = UpdateMeta & {
+  createdBy: string;
+  createdTime: Record<string, any>;
+};
+
+// General Documents
+type StoreCreateDocument<T extends StoreDocumentNames> = CreateMeta &
   Required<StoreDocumentTypes[T]>;
 
-type StoreUpdateDocument<T extends keyof StoreDocumentTypes> = UpdateMeta &
+type StoreUpdateDocument<T extends StoreDocumentNames> = UpdateMeta &
   Required<StoreDocumentTypes[T]>;
 
 // General Payloads
-type CreatePayloadTypes<T extends keyof StoreDocumentTypes> =
-  StoreDocumentTypes[T];
+type CreatePayloadTypes<T extends StoreDocumentNames> = StoreDocumentTypes[T];
 
-type UpdatePayloadTypes<T extends keyof StoreDocumentTypes> = {
+type UpdatePayloadTypes<T extends StoreDocumentNames> = {
   id: string;
 } & StoreDocumentTypes[T];
 
 // Get Payloads
-type GetByIdPayload = { id: string; collection: SchedulerCollections };
+type GetByIdPayload = { id: string };
 
 type GetCompaniesPayload = {
   orderBy?: string;
@@ -70,12 +70,34 @@ type GetCommunitiesPayload = {
   companyId?: string;
 };
 
-// Helper Functions
+// Response Objects
+type GetByIdResponse<T extends StoreDocumentNames> = {
+  document: StoreCreateDocument<T>;
+};
+
+type GetResponse<T extends StoreDocumentNames> = {
+  documents: StoreCreateDocument<T>[];
+  size: number;
+};
+
+type CreateResponse = {
+  message: string;
+};
+
+type UpdateResponse = {
+  message: string;
+};
 
 export type {
+  // Payloads
   GetByIdPayload,
   CreatePayloadTypes,
   UpdatePayloadTypes,
   GetCompaniesPayload,
   GetCommunitiesPayload,
+  // Responses
+  CreateResponse,
+  UpdateResponse,
+  GetByIdResponse,
+  GetResponse,
 };

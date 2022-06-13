@@ -2,8 +2,11 @@ import { HttpsCallable } from 'firebase/functions';
 import { AuthStateHook } from 'react-firebase-hooks/auth';
 import {
   CreatePayloadTypes,
+  CreateResponse,
   GetByIdPayload,
+  GetByIdResponse,
   UpdatePayloadTypes,
+  UpdateResponse,
 } from 'src/utils/firebase/types';
 
 // -------------------------- //
@@ -29,12 +32,18 @@ export interface FirebaseProviderProps {
 // -------------------------------- //
 
 export type CallableFunctions = {
-  // General
-  getById: HttpsCallable<GetByIdPayload>;
   // Company
-  createCompany: HttpsCallable<CreatePayloadTypes<'Company'>>;
-  updateCompany: HttpsCallable<UpdatePayloadTypes<'Company'>>;
+  getCompanyById: HttpsCallable<GetByIdPayload, GetByIdResponse<'Company'>>;
+  createCompany: HttpsCallable<CreatePayloadTypes<'Company'>, CreateResponse>;
+  updateCompany: HttpsCallable<UpdatePayloadTypes<'Company'>, UpdateResponse>;
   // Community
-  createCommunity: HttpsCallable<CreatePayloadTypes<'Community'>>;
-  updateCommunity: HttpsCallable<UpdatePayloadTypes<'Community'>>;
+  getCommunityById: HttpsCallable<GetByIdPayload, GetByIdResponse<'Community'>>;
+  createCommunity: HttpsCallable<
+    CreatePayloadTypes<'Community'>,
+    CreateResponse
+  >;
+  updateCommunity: HttpsCallable<
+    UpdatePayloadTypes<'Community'>,
+    UpdateResponse
+  >;
 };

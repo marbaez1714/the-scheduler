@@ -20,13 +20,12 @@ export const firebaseApp = fbInitializeApp(firebaseConfig);
 export const firebaseAuth = fbGetAuth(firebaseApp);
 export const firebaseFunctions = fbGetFunctions(firebaseApp);
 
-const getCloudFunction = (name: string) =>
-  httpsCallable(firebaseFunctions, name);
-
+// Initialize all of the firebase functions
 export const callableFunctions: CallableFunctions = {
-  getById: getCloudFunction('getById'),
-  createCompany: getCloudFunction('createCompany'),
-  updateCompany: getCloudFunction('updateCompany'),
-  createCommunity: getCloudFunction('createCommunity'),
-  updateCommunity: getCloudFunction('updateCommunity'),
+  getCompanyById: httpsCallable(firebaseFunctions, 'getCompanyById'),
+  createCompany: httpsCallable(firebaseFunctions, 'createCompany'),
+  updateCompany: httpsCallable(firebaseFunctions, 'updateCompany'),
+  getCommunityById: httpsCallable(firebaseFunctions, 'getCommunityById'),
+  createCommunity: httpsCallable(firebaseFunctions, 'createCommunity'),
+  updateCommunity: httpsCallable(firebaseFunctions, 'updateCommunity'),
 };

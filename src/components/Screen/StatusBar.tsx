@@ -6,16 +6,15 @@ export const StatusBar = () => {
   const { authState } = useFirebase();
 
   return (
-    <div className="bg-slate-300 flex py-1 px-2 opacity-75">
-      <Text type="small" className="px-4 text-slate-800">
+    <div className="bg-slate-200 flex py-1 px-2 opacity-75">
+      <p className="text-xs text-slate-800 px-4">
         Version: {process.env.REACT_APP_VERSION}
-      </Text>
-      <Text type="small" className="px-4 text-slate-800">
+      </p>
+      <p className="text-xs text-slate-800 px-4">
         {authState.user !== null
           ? 'Status: Authorized'
           : 'Status: Unauthorized'}
-      </Text>
-      <Loop fontSize="small" className="text-slate-800 animate-spin" />
+      </p>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { Loading } from 'src/pages/Loading';
 import { AppRoutes } from 'src/utils/constants/routes';
 import { AuthRouteProps } from './types';
 
-export const AuthRoute = ({ children }: AuthRouteProps) => {
+export const AuthRoute = ({ component }: AuthRouteProps) => {
   const { authState } = useFirebase();
   const location = useLocation();
 
@@ -17,5 +17,5 @@ export const AuthRoute = ({ children }: AuthRouteProps) => {
     return <Navigate to={AppRoutes.Base} state={{ from: location }} replace />;
   }
 
-  return <>{children}</>;
+  return <>{component}</>;
 };
