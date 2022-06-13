@@ -8,6 +8,7 @@ const Screen = ({ title, subtitle, children, headerProps }: ScreenProps) => {
     <div className="h-screen flex flex-col">
       {/* Header */}
       <Header {...headerProps} />
+
       {/* Screen Container */}
       <div className="container mx-auto flex flex-grow flex-col">
         {/* Title and Subtitle Container */}
@@ -27,6 +28,7 @@ const Screen = ({ title, subtitle, children, headerProps }: ScreenProps) => {
             )}
           </div>
         )}
+
         {/* Screen Content */}
         {children}
       </div>

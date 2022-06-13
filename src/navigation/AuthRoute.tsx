@@ -6,14 +6,14 @@ import { AppRoutes } from 'src/utils/constants/routes';
 import { AuthRouteProps } from './types';
 
 export const AuthRoute = ({ children }: AuthRouteProps) => {
-  const { authUser, authLoading } = useFirebase();
+  const { authState } = useFirebase();
   const location = useLocation();
 
-  if (authLoading) {
+  if (authState.loading) {
     return <Loading />;
   }
 
-  if (!authUser) {
+  if (!authState.user) {
     return <Navigate to={AppRoutes.Base} state={{ from: location }} replace />;
   }
 

@@ -1,19 +1,40 @@
+import { HttpsCallable } from 'firebase/functions';
 import { AuthStateHook } from 'react-firebase-hooks/auth';
+import {
+  CreatePayloadTypes,
+  GetByIdPayload,
+  UpdatePayloadTypes,
+} from 'src/utils/firebase/types';
 
-export interface FirebaseContextParams {
+// -------------------------- //
+// ----- Provider Types ----- //
+// -------------------------- //
+export interface FirebaseContextParams extends CallableFunctions {
   signIn: { google: () => Promise<void> };
   signOut: () => Promise<void>;
-  authUser: AuthStateHook['0'];
-  authLoading: AuthStateHook['1'];
-  authError: AuthStateHook['2'];
-  authorized: boolean;
-  createCompany: () => Promise<void>;
+  authState: {
+    authorized: boolean;
+    user: AuthStateHook['0'];
+    loading: AuthStateHook['1'];
+    error: AuthStateHook['2'];
+  };
 }
 
 export interface FirebaseProviderProps {
   children: React.ReactNode;
 }
 
-export enum FirebaseFunctions {
-  CreateCompany = 'createCompany',
-}
+// -------------------------------- //
+// ----- Cloud Function Types ----- //
+// -------------------------------- //
+
+export type CallableFunctions = {
+  // General
+  getById: HttpsCallable<GetByIdPayload>;
+  // Company
+  createCompany: HttpsCallable<CreatePayloadTypes<'Company'>>;
+  updateCompany: HttpsCallable<UpdatePayloadTypes<'Company'>>;
+  // Community
+  createCommunity: HttpsCallable<CreatePayloadTypes<'Community'>>;
+  updateCommunity: HttpsCallable<UpdatePayloadTypes<'Community'>>;
+};

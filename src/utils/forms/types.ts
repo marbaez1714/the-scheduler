@@ -1,6 +1,7 @@
 export type FormField = {
   label: string;
-  icon?: JSX.Element;
+  param: string;
+  icon?: string;
   required?: boolean;
   multiline?: boolean;
 };

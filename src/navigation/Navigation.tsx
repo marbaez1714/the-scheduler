@@ -24,7 +24,7 @@ const Navigation = () => {
         }
       />
       <Route
-        path="/company"
+        path="/company/add"
         element={
           <AuthRoute>
             <AddCompany />

@@ -9,34 +9,34 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FirebaseContextParams, FirebaseProviderProps } from './types';
-import { createCompanyCallable, firebaseAuth } from './utils';
+import { callableFunctions, firebaseAuth } from './utils';
 
-// Context
-export const FirebaseContext = createContext<FirebaseContextParams>({
+// Initial Context
+const initialContext: FirebaseContextParams = {
   signIn: { google: () => new Promise(() => {}) },
   signOut: () => new Promise(() => {}),
-  authUser: undefined,
-  authLoading: false,
-  authError: undefined,
-  authorized: false,
-  createCompany: () => new Promise(() => {}),
-});
+  authState: {
+    authorized: false,
+    user: undefined,
+    loading: false,
+    error: undefined,
+  },
+  ...callableFunctions,
+};
+
+// Context
+export const FirebaseContext =
+  createContext<FirebaseContextParams>(initialContext);
 
 // Provider
 const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
-  // ***************************
   // ********** Hooks **********
-  // ***************************
   const [authUser, authLoading, authError] = useAuthState(firebaseAuth);
 
-  // ***************************
   // ********** State **********
-  // ***************************
   const [authorized, setAuthorized] = useState(false);
 
-  // *******************************
   // ********** Functions **********
-  // *******************************
 
   // Auth
   const signInGoogle = async () => {
@@ -50,38 +50,27 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     await fbSignOut(firebaseAuth);
   };
 
-  // Documents
-  const createCompany = async () => {
-    createCompanyCallable();
-  };
-
-  // *****************************
   // ********** Helpers **********
-  // *****************************
   const _handleSignIn = async (user: fbAuth) => {
     await user.getIdTokenResult(true).then((idToken) => {
-      console.log(idToken);
       setAuthorized(!!idToken.claims.authorized);
     });
   };
 
-  // *************************************
   // ********** Setting Context **********
-  // *************************************
   const context = {
     signIn: { google: signInGoogle },
     signOut,
-    firebaseAuth,
-    authUser,
-    authLoading,
-    authError,
-    authorized,
-    createCompany,
+    authState: {
+      authorized: authorized,
+      user: authUser,
+      loading: authLoading,
+      error: authError,
+    },
+    ...callableFunctions,
   };
 
-  // ******************************
   // ********** Provider **********
-  // ******************************
   return (
     <FirebaseContext.Provider value={context}>
       {children}

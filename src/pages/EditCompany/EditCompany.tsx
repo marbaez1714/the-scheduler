@@ -14,11 +14,11 @@ const EditCompany = () => {
   const [selectedCompany, setSelectedCompany] = useState<string>();
 
   const formFields: FormField[] = [
-    { label: 'Company Name', required: true, icon: <Badge /> },
-    { label: 'Primary Phone', icon: <Phone /> },
-    { label: 'Primary Email', icon: <Email /> },
-    { label: 'Location', icon: <LocationOn /> },
-    { label: 'Notes', multiline: true, icon: <Notes /> },
+    // { label: 'Company Name', required: true, icon: <Badge /> },
+    // { label: 'Primary Phone', icon: <Phone /> },
+    // { label: 'Primary Email', icon: <Email /> },
+    // { label: 'Location', icon: <LocationOn /> },
+    // { label: 'Notes', multiline: true, icon: <Notes /> },
   ];
 
   const exampleOptions = [

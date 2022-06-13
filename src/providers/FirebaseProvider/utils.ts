@@ -2,9 +2,9 @@ import { initializeApp as fbInitializeApp } from 'firebase/app';
 import { getAuth as fbGetAuth } from 'firebase/auth';
 import {
   getFunctions as fbGetFunctions,
-  httpsCallable as fbHttpsCallable,
+  httpsCallable,
 } from 'firebase/functions';
-import { FirebaseFunctions } from './types';
+import { CallableFunctions } from './types';
 
 // Firebase Config
 const firebaseConfig = {
@@ -20,8 +20,13 @@ export const firebaseApp = fbInitializeApp(firebaseConfig);
 export const firebaseAuth = fbGetAuth(firebaseApp);
 export const firebaseFunctions = fbGetFunctions(firebaseApp);
 
-// Firebase Functions
-export const createCompanyCallable = fbHttpsCallable(
-  firebaseFunctions,
-  FirebaseFunctions.CreateCompany
-);
+const getCloudFunction = (name: string) =>
+  httpsCallable(firebaseFunctions, name);
+
+export const callableFunctions: CallableFunctions = {
+  getById: getCloudFunction('getById'),
+  createCompany: getCloudFunction('createCompany'),
+  updateCompany: getCloudFunction('updateCompany'),
+  createCommunity: getCloudFunction('createCommunity'),
+  updateCommunity: getCloudFunction('updateCommunity'),
+};
