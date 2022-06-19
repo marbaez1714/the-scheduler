@@ -6,18 +6,13 @@ export const ModifyCompany = () => {
   // - HOOKS - //
   const { companiesGetAll } = useFirebase();
 
-  // - STATE - //
-
   // - EFFECTS - //
   useEffect(() => {
-    console.log('here');
-    companiesGetAll().then((resp) => console.log(resp));
+    companiesGetAll().then((resp) => console.log(resp.data.documents));
   }, []);
 
   // - ACTIONS - //
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {};
 
-  // - HELPERS - //
-
-  return <form className="flex flex-col divide-y space-y-6"></form>;
+  // - JSX - //
+  return <div>this is where you can modify the page</div>;
 };

@@ -1,18 +1,9 @@
 import { Button } from '@mui/material';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useFirebase } from 'src/hooks/useFirebase';
-import { AppRoutes } from 'src/utils/constants/routes';
 
 const Login = () => {
   // Hooks
-  const { signIn, authState } = useFirebase();
-  const navigate = useNavigate();
-
-  // Effects
-  useEffect(() => {
-    authState.authorized && navigate(AppRoutes.Landing);
-  }, [authState.authorized]);
+  const { signIn } = useFirebase();
 
   // Actions
   const handleLoginClick = () => {

@@ -116,17 +116,21 @@ interface GetPayload {
 }
 
 // Response Objects
+type ResponseDocument<T extends StoreDocumentNames> = {
+  id: string;
+} & StoreDocument[T];
+
 type GetByIdResponse<T extends StoreDocumentNames> = {
-  document: StoreDocument[T];
+  document: ResponseDocument<T>;
 };
 
 type GetAllResponse<T extends StoreDocumentNames> = {
-  documents: StoreDocument[T][];
+  documents: ResponseDocument<T>[];
   size: number;
 };
 
 type GetResponse<T extends StoreDocumentNames> = {
-  documents: StoreDocument[T][];
+  documents: ResponseDocument<T>[];
   lastRef: string | number;
   size: number;
 };

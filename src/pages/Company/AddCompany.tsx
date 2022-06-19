@@ -1,13 +1,9 @@
+import { useMemo, useState } from 'react';
 import { Button, TextField } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import toast from 'react-hot-toast';
 import { useFirebase } from 'src/hooks/useFirebase';
+import toast from 'react-hot-toast';
 
 export const AddCompany = () => {
-  useEffect(() => {
-    console.log('fire');
-  }, []);
-
   // - HOOKS - //
   const { companiesCreate } = useFirebase();
 
@@ -21,6 +17,7 @@ export const AddCompany = () => {
   // - ACTIONS - //
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const payload = {
       name: companyName.trim(),
       primaryAddress: address.trim(),

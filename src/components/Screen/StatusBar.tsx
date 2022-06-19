@@ -1,5 +1,3 @@
-import { Loop } from '@mui/icons-material';
-import { Text } from 'src/components/Text';
 import { useFirebase } from 'src/hooks/useFirebase';
 
 export const StatusBar = () => {
