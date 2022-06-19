@@ -4,6 +4,13 @@ import {
   getFunctions as fbGetFunctions,
   httpsCallable,
 } from 'firebase/functions';
+import {
+  GetAllPayload,
+  GetAllResponse,
+  GetByIdPayload,
+  GetByIdResponse,
+  StoreDocumentNames,
+} from 'src/utils/firebase/types';
 import { CallableFunctions } from './types';
 
 // Firebase Config
@@ -20,12 +27,58 @@ export const firebaseApp = fbInitializeApp(firebaseConfig);
 export const firebaseAuth = fbGetAuth(firebaseApp);
 export const firebaseFunctions = fbGetFunctions(firebaseApp);
 
+const getAllCallable =
+  <T extends StoreDocumentNames>(collection: T) =>
+  () => {
+    return httpsCallable<GetAllPayload, GetAllResponse<T>>(
+      firebaseFunctions,
+      'getAll'
+    )({ collection });
+  };
+
+const getByIdCallable =
+  <T extends StoreDocumentNames>(collection: T) =>
+  (id: string) => {
+    return httpsCallable<GetByIdPayload, GetByIdResponse<T>>(
+      firebaseFunctions,
+      'getById'
+    )({ collection, id });
+  };
+
 // Initialize all of the firebase functions
 export const callableFunctions: CallableFunctions = {
-  getCompanyById: httpsCallable(firebaseFunctions, 'getCompanyById'),
-  createCompany: httpsCallable(firebaseFunctions, 'createCompany'),
-  updateCompany: httpsCallable(firebaseFunctions, 'updateCompany'),
-  getCommunityById: httpsCallable(firebaseFunctions, 'getCommunityById'),
-  createCommunity: httpsCallable(firebaseFunctions, 'createCommunity'),
-  updateCommunity: httpsCallable(firebaseFunctions, 'updateCommunity'),
+  areasGetAll: getAllCallable('Area'),
+  areasGetById: getByIdCallable('Area'),
+  areasCreate: httpsCallable(firebaseFunctions, 'areasCreate'),
+  areasUpdate: httpsCallable(firebaseFunctions, 'areasUpdate'),
+
+  buildersGetAll: getAllCallable('Builder'),
+  buildersGetById: getByIdCallable('Builder'),
+  buildersCreate: httpsCallable(firebaseFunctions, 'buildersCreate'),
+  buildersUpdate: httpsCallable(firebaseFunctions, 'buildersUpdate'),
+
+  communitiesGetAll: getAllCallable('Community'),
+  communitiesGeyById: getByIdCallable('Community'),
+  communitiesCreate: httpsCallable(firebaseFunctions, 'communitiesCreate'),
+  communitiesUpdate: httpsCallable(firebaseFunctions, 'communitiesUpdate'),
+
+  companiesGetAll: getAllCallable('Company'),
+  companiesGetById: getByIdCallable('Company'),
+  companiesCreate: httpsCallable(firebaseFunctions, 'companiesCreate'),
+  companiesUpdate: httpsCallable(firebaseFunctions, 'companiesUpdate'),
+
+  contractorsGetAll: getAllCallable('Contractor'),
+  contractorsGetById: getByIdCallable('Contractor'),
+  contractorsCreate: httpsCallable(firebaseFunctions, 'contractorsCreate'),
+  contractorsUpdate: httpsCallable(firebaseFunctions, 'contractorsUpdate'),
+
+  reportersGetAll: getAllCallable('Reporter'),
+  reportersGetById: getByIdCallable('Reporter'),
+  reportersCreate: httpsCallable(firebaseFunctions, 'reportersCreate'),
+  reportersUpdate: httpsCallable(firebaseFunctions, 'reportersUpdate'),
+
+  scopesGetAll: getAllCallable('Scope'),
+  scopesGetById: getByIdCallable('Scope'),
+  scopesCreate: httpsCallable(firebaseFunctions, 'scopesCreate'),
+  scopesUpdate: httpsCallable(firebaseFunctions, 'scopesUpdate'),
 };

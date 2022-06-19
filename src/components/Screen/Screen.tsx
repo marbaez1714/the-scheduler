@@ -9,12 +9,16 @@ const Screen = ({ title, children }: ScreenProps) => {
       <div className="flex flex-grow">
         {/* Side Bar */}
         <SideBar />
-        {/* Page Content */}
+        {/* Screen */}
         <div className="flex flex-col flex-grow">
+          {/* Header */}
           <header className="font-medium text-3xl text-slate-900 bg-slate-100 p-4 border-b-slate-200 border-b">
             {title}
           </header>
-          <div className="flex flex-grow bg-slate-50 px-8 py-4">{children}</div>
+          {/* Page */}
+          <div className="flex flex-grow items-center justify-center bg-slate-50 px-8 py-4 shadow-inner">
+            {children}
+          </div>
         </div>
       </div>
       <StatusBar />

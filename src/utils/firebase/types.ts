@@ -1,82 +1,133 @@
-// COPY AND PASTED FROM FUNCTIONS //
+// ***** Documents *****
+type DocId = { id: string };
 
-// *********************** //
-// ***** Collections ***** //
-// *********************** //
-type CollectionNames = 'admin' | 'companies' | 'communities';
-
-// *********************** //
-// ****** Documents ****** //
-// *********************** //
-interface StoreDocumentTypes {
-  Company: {
+interface StoreDocument {
+  Area: {
     name: string;
-    notes?: string;
-    primaryAddress?: string;
-    primaryEmail?: string;
-    primaryPhone?: string;
+    nameSpanish: string;
+    notes: string;
+  };
+  Builder: {
+    name: string;
+    primaryPhone: string;
+    primaryEmail: string;
+    companyId: string;
+    notes: string;
   };
   Community: {
     name: string;
     companyId: string;
-    location: string;
-    notes?: string;
+    notes: string;
+  };
+  Company: {
+    name: string;
+    primaryAddress: string;
+    primaryEmail: string;
+    primaryPhone: string;
+    notes: string;
+  };
+  Contractor: {
+    name: string;
+    primaryPhone: string;
+    assignedJobs: string[];
+    notes: string;
+  };
+  JobSite: {
+    name: string;
+    communityId: string;
+    notes: string;
+  };
+  Reporter: {
+    name: string;
+    primaryPhone: string;
+    primaryEmail: string;
+    notes: string;
+  };
+  Scope: {
+    name: string;
+    nameSpanish: string;
+    description: string;
+    notes: string;
+  };
+  Supplier: {
+    name: string;
+    phoneNumber: string;
+    notes: string;
   };
 }
 
-type StoreDocumentNames = keyof StoreDocumentTypes;
+type StoreDocumentNames = keyof StoreDocument;
 
-// ************************ //
-// ***** Shared Types ***** //
-// ************************ //
-
-// Document Meta
-type UpdateMeta = {
+// Meta Data Fields
+type CreateMeta = {
   updatedBy: string;
-  updatedTime: Record<string, any>;
-};
-
-type CreateMeta = UpdateMeta & {
+  updatedTime: any;
   createdBy: string;
-  createdTime: Record<string, any>;
+  createdTime: any;
 };
 
-// General Documents
-type StoreCreateDocument<T extends StoreDocumentNames> = CreateMeta &
-  Required<StoreDocumentTypes[T]>;
+type UpdateMeta = Omit<CreateMeta, 'createdBy' | 'createdTime'>;
 
-type StoreUpdateDocument<T extends StoreDocumentNames> = UpdateMeta &
-  Required<StoreDocumentTypes[T]>;
+// ***** Create / Update - Documents *****
+type NewDocumentData<T extends StoreDocumentNames> = CreateMeta &
+  Required<StoreDocument[T]>;
 
-// General Payloads
-type CreatePayloadTypes<T extends StoreDocumentNames> = StoreDocumentTypes[T];
+type UpdatedDocumentData<T extends StoreDocumentNames> = UpdateMeta &
+  Partial<StoreDocument[T]>;
 
-type UpdatePayloadTypes<T extends StoreDocumentNames> = {
-  id: string;
-} & StoreDocumentTypes[T];
+// ***** PAYLOADS *****
 
-// Get Payloads
-type GetByIdPayload = { id: string };
-
-type GetCompaniesPayload = {
+// Params
+type PaginationParams = {
   orderBy?: string;
   lastRef?: string;
   pageSize?: number;
 };
-type GetCommunitiesPayload = {
-  orderBy?: string;
-  lastRef?: string;
-  pageSize?: number;
-  companyId?: string;
+
+// Get by ID
+type GetByIdPayload = { collection: StoreDocumentNames; id: string };
+
+// Get all
+type GetAllPayload = { collection: StoreDocumentNames };
+
+// Create
+type CreatePayload<T extends StoreDocumentNames> = Partial<StoreDocument[T]>;
+
+// Update
+type UpdatePayload<T extends StoreDocumentNames> = Partial<
+  DocId & StoreDocument[T]
+>;
+
+type UpdateContractorAssignmentsPayload = {
+  contractorId: string;
+  operation: 'add' | 'remove';
+  assignmentId: string;
 };
+
+// Get Paginated
+interface GetPayload {
+  Companies: PaginationParams;
+  Communities: PaginationParams & {
+    companyId?: StoreDocument['Community']['companyId'];
+  };
+  Scopes: PaginationParams;
+  Reporters: PaginationParams;
+  Contractors: PaginationParams;
+}
 
 // Response Objects
 type GetByIdResponse<T extends StoreDocumentNames> = {
-  document: StoreCreateDocument<T>;
+  document: StoreDocument[T];
+};
+
+type GetAllResponse<T extends StoreDocumentNames> = {
+  documents: StoreDocument[T][];
+  size: number;
 };
 
 type GetResponse<T extends StoreDocumentNames> = {
-  documents: StoreCreateDocument<T>[];
+  documents: StoreDocument[T][];
+  lastRef: string | number;
   size: number;
 };
 
@@ -89,15 +140,25 @@ type UpdateResponse = {
 };
 
 export type {
-  // Payloads
+  // Documents
+  StoreDocumentNames,
+  NewDocumentData,
+  UpdatedDocumentData,
+  // Create / Update Payloads
+  CreatePayload,
+  UpdatePayload,
+  UpdateContractorAssignmentsPayload,
+  // Get Payloads
   GetByIdPayload,
-  CreatePayloadTypes,
-  UpdatePayloadTypes,
-  GetCompaniesPayload,
-  GetCommunitiesPayload,
-  // Responses
+  GetAllPayload,
+  GetPayload,
+  // Create / Update Responses
   CreateResponse,
   UpdateResponse,
+  // Get Responses
   GetByIdResponse,
+  GetAllResponse,
   GetResponse,
+  // General
+  PaginationParams,
 };

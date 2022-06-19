@@ -61,8 +61,8 @@ export const SideBar = () => {
         {/* Manage Data - Collapsable Content */}
         <Collapse in={expandManage} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {manageDataItems.map((item) => (
-              <ListItemButton className="pl-8">
+            {manageDataItems.map((item, index) => (
+              <ListItemButton className="pl-8" key={index}>
                 <ListItemIcon className="text-white">
                   <Icon>{item.icon}</Icon>
                 </ListItemIcon>

@@ -1,87 +1,85 @@
-import { useMemo, useState } from 'react';
-import { Button, Icon, InputAdornment, TextField } from '@mui/material';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { AddCompanyFields } from 'src/utils/forms';
-import { CreatePayloadTypes } from 'src/utils/firebase/types';
+import { Button, TextField } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useFirebase } from 'src/hooks/useFirebase';
 
 export const AddCompany = () => {
-  // Hooks
-  const { createCompany } = useFirebase();
+  useEffect(() => {
+    console.log('fire');
+  }, []);
 
-  // State
-  const [companyData, setCompanyData] = useState<CreatePayloadTypes<'Company'>>(
-    {
-      name: '',
-      primaryAddress: '',
-      primaryEmail: '',
-      primaryPhone: '',
-      notes: '',
-    }
-  );
+  // - HOOKS - //
+  const { companiesCreate } = useFirebase();
 
-  // Functions
-  const handleChange =
-    (param: string) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setCompanyData((prev) => ({ ...prev, [param]: e.target.value }));
+  // - STATE - //
+  const [companyName, setCompanyName] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [notes, setNotes] = useState('');
+
+  // - ACTIONS - //
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const payload = {
+      name: companyName.trim(),
+      primaryAddress: address.trim(),
+      primaryEmail: email.trim(),
+      primaryPhone: phoneNumber.trim(),
+      notes: notes.trim(),
     };
 
-  const handleSubmit = () => {
-    if (companyData.name) {
-      toast.promise(createCompany(companyData), {
-        loading: 'Saving',
-        success: (response) => response.data.message,
-        error: (error) => error.message,
+    if (payload.name) {
+      toast.promise(companiesCreate(payload), {
+        loading: `Creating entry for ${payload.name}`,
+        success: `${payload.name} added!`,
+        error: `Error creating new company.`,
       });
     }
   };
 
-  // Helpers
+  // - HELPERS - //
   const canSubmit = useMemo(() => {
-    return !!companyData.name;
-  }, [companyData]);
+    return !!companyName && companyName.trim() !== '';
+  }, [companyName]);
 
   return (
-    <div className="flex flex-col divide-y space-y-6">
-      {/* Input Fields */}
+    <form
+      className="flex flex-col divide-y space-y-6"
+      onSubmit={(e) => handleSubmit(e)}
+    >
+      {/* Form Fields */}
       <div className="flex flex-col space-y-6">
-        {AddCompanyFields.map(
-          ({ label, param, required, icon, ...props }, index) => (
-            <TextField
-              key={index}
-              {...props}
-              required={required}
-              onChange={handleChange(param)}
-              label={required ? label : `${label} (optional)`}
-              InputProps={{
-                startAdornment: icon && (
-                  <InputAdornment position="start">
-                    <Icon>{icon}</Icon>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          )
-        )}
+        {/* Company Name */}
+        <TextField
+          label="Company Name"
+          onChange={(e) => setCompanyName(e.target.value)}
+        />
+        {/* Address */}
+        <TextField
+          label="Address"
+          onChange={(e) => setAddress(e.target.value)}
+        />
+        {/* Email */}
+        <TextField label="Email" onChange={(e) => setEmail(e.target.value)} />
+        {/* Phone Number */}
+        <TextField
+          label="Phone Number"
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        {/* Notes */}
+        <TextField
+          label="Notes"
+          multiline
+          onChange={(e) => setNotes(e.target.value)}
+        />
       </div>
       {/* Actions */}
       <div className="flex justify-end space-x-4 pt-6">
-        <Button
-          onClick={() => {
-            toast.success('hello');
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          disabled={!canSubmit}
-          onClick={handleSubmit}
-        >
+        <Button variant="contained" type="submit" disabled={!canSubmit}>
           Submit
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
