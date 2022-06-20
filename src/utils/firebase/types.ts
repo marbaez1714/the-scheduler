@@ -148,6 +148,7 @@ export type {
   StoreDocumentNames,
   NewDocumentData,
   UpdatedDocumentData,
+  ResponseDocument,
   // Create / Update Payloads
   CreatePayload,
   UpdatePayload,

@@ -75,6 +75,9 @@ export interface FirebaseContextParams extends CallableFunctions {
     loading: AuthStateHook['1'];
     error: AuthStateHook['2'];
   };
+  storeData: {
+    companies?: GetAllResponse<'Company'>;
+  };
 }
 
 export interface FirebaseProviderProps {

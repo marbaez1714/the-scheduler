@@ -1,5 +1,6 @@
 export { default as Company } from './Company';
 export * from './Company';
 
-export { AddCompany } from './AddCompany';
-export { ModifyCompany } from './ModifyCompany';
+export { CompanyList } from './CompanyList';
+export { CompanyAddForm } from './CompanyAddForm';
+export { CompanyModifyForm } from './CompanyModifyForm';

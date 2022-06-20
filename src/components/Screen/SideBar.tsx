@@ -32,7 +32,7 @@ export const SideBar = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between bg-slate-900 text-white w-1/5">
+    <div className="flex flex-col flex-shrink-0 justify-between bg-slate-900 text-white max-w-1/4 min-w-1/4">
       <List>
         {/* Header */}
         <ListItem className="text-2xl font-bold mb-4">the-scheduler</ListItem>

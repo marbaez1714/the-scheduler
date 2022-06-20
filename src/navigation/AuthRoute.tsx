@@ -13,7 +13,7 @@ export const AuthRoute = ({ component }: AuthRouteProps) => {
     return <Loading />;
   }
 
-  if (!authState.user) {
+  if (!authState.authorized) {
     return <Navigate to={AppRoutes.Base} state={{ from: location }} replace />;
   }
 

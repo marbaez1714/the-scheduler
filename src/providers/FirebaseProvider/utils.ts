@@ -47,6 +47,11 @@ const getByIdCallable =
 
 // Initialize all of the firebase functions
 export const callableFunctions: CallableFunctions = {
+  // Collection - GET ALL
+  // Collection - GET BY ID
+  // Collection - CREATE
+  // Collection - UPDATE
+
   areasGetAll: getAllCallable('Area'),
   areasGetById: getByIdCallable('Area'),
   areasCreate: httpsCallable(firebaseFunctions, 'areasCreate'),

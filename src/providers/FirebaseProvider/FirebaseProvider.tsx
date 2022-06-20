@@ -4,12 +4,12 @@ import {
   GoogleAuthProvider as fbGoogleAuthProvider,
   signInWithPopup as fbSignInWithPopup,
   signOut as fbSignOut,
-  User as fbAuth,
 } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FirebaseContextParams, FirebaseProviderProps } from './types';
 import { callableFunctions, firebaseAuth } from './utils';
+import { GetAllResponse } from 'src/utils/firebase/types';
 
 // Initial Context
 const initialContext: FirebaseContextParams = {
@@ -21,6 +21,9 @@ const initialContext: FirebaseContextParams = {
     loading: false,
     error: undefined,
   },
+  storeData: {
+    companies: undefined,
+  },
   ...callableFunctions,
 };
 
@@ -30,19 +33,41 @@ export const FirebaseContext =
 
 // Provider
 const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
-  // ********** Hooks **********
+  // - HOOKS - //
   const [authUser, authLoading, authError] = useAuthState(firebaseAuth);
 
-  // ********** State **********
+  // - STATE - //
   const [authorized, setAuthorized] = useState(false);
+  const [checkingAuthorized, setCheckingAuthorized] = useState(true);
+  const [companiesData, setCompaniesData] =
+    useState<GetAllResponse<'Company'>>();
 
-  // ********** Functions **********
+  // - EFFECTS - //
+  useEffect(() => {
+    if (authorized) {
+      // Get all companies
+      !companiesData && refreshCompanies();
+    }
+  }, [authorized]);
+
+  useEffect(() => {
+    if (authUser) {
+      setCheckingAuthorized(true);
+      authUser
+        .getIdTokenResult(true)
+        .then((result) => {
+          setAuthorized(!!result.claims.authorized);
+        })
+        .finally(() => setCheckingAuthorized(false));
+    }
+  }, [authUser]);
+
+  // - CONTEXT FUNCTIONS - //
 
   // Auth
   const signInGoogle = async () => {
     const googleProvider = new fbGoogleAuthProvider();
-    const { user } = await fbSignInWithPopup(firebaseAuth, googleProvider);
-    await _handleSignIn(user);
+    await fbSignInWithPopup(firebaseAuth, googleProvider);
   };
 
   const signOut = async () => {
@@ -50,27 +75,41 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     await fbSignOut(firebaseAuth);
   };
 
-  // ********** Helpers **********
-  const _handleSignIn = async (user: fbAuth) => {
-    await user.getIdTokenResult(true).then((idToken) => {
-      setAuthorized(!!idToken.claims.authorized);
+  // App Data
+  const refreshCompanies = async () => {
+    await callableFunctions.companiesGetAll().then((response) => {
+      setCompaniesData(response.data);
     });
   };
 
-  // ********** Setting Context **********
+  // TODO REFRESH ALL DATA
+
+  // - HELPERS - //
+  const _signIn = {
+    google: signInGoogle,
+  };
+
+  const _authState = {
+    authorized: authorized,
+    user: authUser,
+    loading: authLoading || checkingAuthorized,
+    error: authError,
+  };
+
+  const _storeData = {
+    companies: companiesData,
+  };
+
+  // - SETTING CONTEXT - //
   const context = {
-    signIn: { google: signInGoogle },
+    signIn: _signIn,
     signOut,
-    authState: {
-      authorized: authorized,
-      user: authUser,
-      loading: authLoading,
-      error: authError,
-    },
+    authState: _authState,
+    storeData: _storeData,
     ...callableFunctions,
   };
 
-  // ********** Provider **********
+  // - PROVIDER - //
   return (
     <FirebaseContext.Provider value={context}>
       {children}

@@ -3,7 +3,7 @@ import { useFirebase } from 'src/hooks/useFirebase';
 
 const Login = () => {
   // Hooks
-  const { signIn } = useFirebase();
+  const { signIn, signOut } = useFirebase();
 
   // Actions
   const handleLoginClick = () => {
@@ -16,6 +16,7 @@ const Login = () => {
       <Button onClick={handleLoginClick} variant="contained" size="large">
         Google Login
       </Button>
+      <Button onClick={() => signOut()}>Sign Out</Button>
     </div>
   );
 };
