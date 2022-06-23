@@ -1,7 +1,9 @@
-export type FormField = {
-  label: string;
-  param: string;
-  icon?: string;
-  required?: boolean;
-  multiline?: boolean;
-};
+export interface AddFormData {
+  company: {
+    name: string;
+    primaryAddress: string;
+    primaryEmail: string;
+    primaryPhone: string;
+    notes: string;
+  };
+}
