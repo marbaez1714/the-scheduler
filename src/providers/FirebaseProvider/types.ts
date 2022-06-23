@@ -16,16 +16,22 @@ import {
 // ----- Cloud Function Types ----- //
 // -------------------------------- //
 
+type GetAllCallable<T extends StoreDocumentNames> = () => ReturnType<
+  HttpsCallable<GetAllPayload, GetAllResponse<T>>
+>;
+
+type GetByIdCallable<T extends StoreDocumentNames> = (
+  id: string
+) => ReturnType<HttpsCallable<GetByIdPayload, GetByIdResponse<T>>>;
+
 interface Callable<T extends StoreDocumentNames> {
-  GetAll: () => ReturnType<HttpsCallable<GetAllPayload, GetAllResponse<T>>>;
-  GetById: (
-    id: string
-  ) => ReturnType<HttpsCallable<GetByIdPayload, GetByIdResponse<T>>>;
+  GetAll: GetAllCallable<T>;
+  GetById: GetByIdCallable<T>;
   Create: HttpsCallable<CreatePayload<T>, CreateResponse>;
   Update: HttpsCallable<UpdatePayload<T>, UpdateResponse>;
 }
 
-export interface CallableFunctions {
+interface CallableFunctions {
   areasGetAll: Callable<'Area'>['GetAll'];
   areasGetById: Callable<'Area'>['GetById'];
   areasCreate: Callable<'Area'>['Create'];
@@ -66,7 +72,7 @@ export interface CallableFunctions {
 // -------------------------- //
 // ----- Provider Types ----- //
 // -------------------------- //
-export interface FirebaseContextParams extends CallableFunctions {
+interface FirebaseContextParams extends CallableFunctions {
   signIn: { google: () => Promise<void> };
   signOut: () => Promise<void>;
   authState: {
@@ -77,9 +83,16 @@ export interface FirebaseContextParams extends CallableFunctions {
   };
   storeData: {
     companies?: GetAllResponse<'Company'>;
+    reporters?: GetAllResponse<'Reporter'>;
+  };
+  refreshStoreData: {
+    companies: () => Promise<void>;
+    reporters: () => Promise<void>;
   };
 }
 
-export interface FirebaseProviderProps {
+interface FirebaseProviderProps {
   children: React.ReactNode;
 }
+
+export type { CallableFunctions, FirebaseContextParams, FirebaseProviderProps };

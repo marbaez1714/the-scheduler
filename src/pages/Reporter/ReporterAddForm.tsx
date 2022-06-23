@@ -7,16 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowBack } from '@mui/icons-material';
 import { formatString } from 'src/utils/forms';
 
-export const CompanyAddForm = () => {
+export const ReporterAddForm = () => {
   // - HOOKS - //
-  const { companiesCreate, refreshStoreData } = useFirebase();
+  const { reportersCreate, refreshStoreData } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
-  const [name, setName] = useState('');
-  const [primaryAddress, setPrimaryAddress] = useState('');
-  const [primaryEmail, setPrimaryEmail] = useState('');
+  const [reporterName, setReporterName] = useState('');
   const [primaryPhone, setPrimaryPhone] = useState('');
+  const [primaryEmail, setPrimaryEmail] = useState('');
   const [notes, setNotes] = useState('');
 
   // - ACTIONS - //
@@ -28,16 +27,15 @@ export const CompanyAddForm = () => {
     e.preventDefault();
 
     try {
-      // Create new company
-      await companiesCreate({
-        name: formatString(name),
-        primaryAddress: formatString(primaryAddress),
+      // Create new reporter
+      await reportersCreate({
+        name: formatString(reporterName),
         primaryEmail: formatString(primaryEmail),
         primaryPhone: formatString(primaryPhone),
         notes: formatString(notes),
       });
-      // Refresh companies in data store
-      await refreshStoreData.companies();
+      // Refresh reporters in data store
+      await refreshStoreData.reporters();
       // Reset inputs
       resetInputs();
     } catch (e: any) {
@@ -47,14 +45,13 @@ export const CompanyAddForm = () => {
 
   // - HELPERS - //
   const canSubmit = useMemo(() => {
-    return !!name && name.trim() !== '';
-  }, [name]);
+    return !!reporterName && reporterName.trim() !== '';
+  }, [reporterName]);
 
   const resetInputs = () => {
-    setName('');
-    setPrimaryAddress('');
-    setPrimaryEmail('');
+    setReporterName('');
     setPrimaryPhone('');
+    setPrimaryEmail('');
     setNotes('');
   };
 
@@ -67,17 +64,11 @@ export const CompanyAddForm = () => {
         className="w-full grid grid-cols-2 gap-4"
         onSubmit={(e) => handleSubmit(e)}
       >
-        {/* Company Name */}
+        {/* Reporter Name */}
         <TextField
-          label="Company Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        {/* Address */}
-        <TextField
-          label="Address"
-          value={primaryAddress}
-          onChange={(e) => setPrimaryAddress(e.target.value)}
+          label="Name"
+          value={reporterName}
+          onChange={(e) => setReporterName(e.target.value)}
         />
         {/* Email */}
         <TextField

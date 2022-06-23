@@ -24,6 +24,10 @@ const initialContext: FirebaseContextParams = {
   storeData: {
     companies: undefined,
   },
+  refreshStoreData: {
+    companies: () => new Promise(() => {}),
+    reporters: () => new Promise(() => {}),
+  },
   ...callableFunctions,
 };
 
@@ -41,12 +45,15 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const [checkingAuthorized, setCheckingAuthorized] = useState(true);
   const [companiesData, setCompaniesData] =
     useState<GetAllResponse<'Company'>>();
+  const [reportersData, setReportersData] =
+    useState<GetAllResponse<'Reporter'>>();
 
   // - EFFECTS - //
   useEffect(() => {
     if (authorized) {
       // Get all companies
       !companiesData && refreshCompanies();
+      !reportersData && refreshReporters();
     }
   }, [authorized]);
 
@@ -82,6 +89,12 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     });
   };
 
+  const refreshReporters = async () => {
+    await callableFunctions.reportersGetAll().then((response) => {
+      setReportersData(response.data);
+    });
+  };
+
   // TODO REFRESH ALL DATA
 
   // - HELPERS - //
@@ -98,6 +111,12 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
 
   const _storeData = {
     companies: companiesData,
+    reporters: reportersData,
+  };
+
+  const _refreshStoreData = {
+    companies: refreshCompanies,
+    reporters: refreshReporters,
   };
 
   // - SETTING CONTEXT - //
@@ -106,6 +125,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     signOut,
     authState: _authState,
     storeData: _storeData,
+    refreshStoreData: _refreshStoreData,
     ...callableFunctions,
   };
 

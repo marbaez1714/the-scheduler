@@ -21,12 +21,13 @@ const firebaseConfig = {
 };
 
 // Create the Firebase app
-export const firebaseApp = fbInitializeApp(firebaseConfig);
+const firebaseApp = fbInitializeApp(firebaseConfig);
 
 // Initialize the Firebase auth and functions
-export const firebaseAuth = fbGetAuth(firebaseApp);
-export const firebaseFunctions = fbGetFunctions(firebaseApp);
+const firebaseAuth = fbGetAuth(firebaseApp);
+const firebaseFunctions = fbGetFunctions(firebaseApp);
 
+// Creates get all callable functions
 const getAllCallable =
   <T extends StoreDocumentNames>(collection: T) =>
   () => {
@@ -36,6 +37,7 @@ const getAllCallable =
     )({ collection });
   };
 
+// Creates get by id callable functions
 const getByIdCallable =
   <T extends StoreDocumentNames>(collection: T) =>
   (id: string) => {
@@ -46,7 +48,7 @@ const getByIdCallable =
   };
 
 // Initialize all of the firebase functions
-export const callableFunctions: CallableFunctions = {
+const callableFunctions: CallableFunctions = {
   // Collection - GET ALL
   // Collection - GET BY ID
   // Collection - CREATE
@@ -87,3 +89,5 @@ export const callableFunctions: CallableFunctions = {
   scopesCreate: httpsCallable(firebaseFunctions, 'scopesCreate'),
   scopesUpdate: httpsCallable(firebaseFunctions, 'scopesUpdate'),
 };
+
+export { firebaseApp, firebaseAuth, firebaseFunctions, callableFunctions };

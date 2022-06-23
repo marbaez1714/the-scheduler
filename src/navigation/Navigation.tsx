@@ -11,6 +11,8 @@ import {
   CompanyModifyForm,
 } from 'src/pages/Company';
 
+import { Reporter, ReporterList, ReporterAddForm } from 'src/pages/Reporter';
+
 const Navigation = () => {
   return (
     <Routes>
@@ -25,6 +27,11 @@ const Navigation = () => {
         <Route path="add" element={<AuthRoute component={<CompanyAddForm />} />} />
         {/* Modify */}
         <Route path=":companyId" element={<AuthRoute component={<CompanyModifyForm />} />}/>
+      </Route>
+      {/* Reporter */}
+      <Route path="/reporter" element={<AuthRoute component={<Reporter />} />}>
+        <Route index element={<AuthRoute component={<ReporterList />} />} />
+        <Route path="add" element={<AuthRoute component={<ReporterAddForm />} />} />
       </Route>
     </Routes>
   );

@@ -3,7 +3,7 @@ import { Screen } from 'src/components/Screen';
 
 const Company = () => {
   return (
-    <Screen title="Manage - Company">
+    <Screen title="Companies">
       <Outlet />
     </Screen>
   );
