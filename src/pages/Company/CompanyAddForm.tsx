@@ -1,129 +1,98 @@
-import { FormEventHandler } from 'react';
-import { IconButton, Button, TextField } from '@mui/material';
+import { IconButton, Button } from '@mui/material';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { Content } from 'src/components/Content';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBack } from '@mui/icons-material';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { AddFormData } from 'src/utils/forms/types';
-import { formRules } from 'src/utils/forms';
+import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { FormTextField } from 'src/components/FormTextField';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 export const CompanyAddForm = () => {
   // - HOOKS - //
+  // Form
   const {
     handleSubmit,
     control,
+    reset,
     formState: { isValid },
   } = useForm<AddFormData['company']>({
     mode: 'all',
-    defaultValues: {
-      name: '',
-      primaryAddress: '',
-      primaryEmail: '',
-      primaryPhone: '',
-      notes: '',
-    },
+    defaultValues: AddFormDefaultData.company,
   });
-
+  // Firebase
   const { companiesCreate, refreshStoreData } = useFirebase();
+  // Navigation
   const navigate = useNavigate();
 
   // - STATE - //
+  const [loading, setLoading] = useState(false);
 
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submitCompany: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-
-    // try {
-    //   // Create new company
-    //   await companiesCreate({});
-    //   // Refresh companies in data store
-    //   await refreshStoreData.companies();
-    //   // Reset inputs
-    //   resetInputs();
-    // } catch (e: any) {
-    //   e.message && toast.error(e.message);
-    // }
+  const submitCompany = async (data: AddFormData['company']) => {
+    try {
+      setLoading(true);
+      // Create new company
+      await companiesCreate(data);
+      // Refresh companies in data store
+      await refreshStoreData.companies();
+      // Reset inputs
+      reset();
+      setLoading(false);
+    } catch (e: any) {
+      e.message && toast.error(e.message);
+    }
   };
 
-  // - HELPERS - //
-
   return (
-    <Content className="flex flex-grow items-start space-x-4">
+    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
       <form
-        className="w-full grid grid-cols-2 gap-4"
-        onSubmit={handleSubmit((data) => console.log(data))}
+        className="form-card grid-cols-2"
+        onSubmit={handleSubmit(submitCompany)}
       >
+        {/* Title */}
+        <h1 className="form-title">Add a Company</h1>
         {/* Company Name */}
-        <Controller
+        <FormTextField
+          label="Company Name"
           name="name"
           control={control}
           rules={formRules.isNotEmpty}
-          render={({ field }) => <TextField label="Company Name" {...field} />}
         />
         {/* Address */}
-        <Controller
+        <FormTextField
+          label="Address"
           name="primaryAddress"
           control={control}
-          render={({ field: { onChange, value, ref } }) => (
-            <TextField
-              label="Address"
-              value={value}
-              onChange={onChange}
-              ref={ref}
-            />
-          )}
         />
         {/* Email */}
-        <Controller
-          name="primaryEmail"
-          control={control}
-          render={({ field: { onChange, value, ref } }) => (
-            <TextField
-              label="Email"
-              value={value}
-              onChange={onChange}
-              ref={ref}
-            />
-          )}
-        />
+        <FormTextField label="Email" name="primaryEmail" control={control} />
         {/* Phone number */}
-        <Controller
+        <FormTextField
+          label="Phone Number"
           name="primaryPhone"
           control={control}
-          render={({ field: { onChange, value, ref } }) => (
-            <TextField
-              label="Phone Number"
-              value={value}
-              onChange={onChange}
-              ref={ref}
-            />
-          )}
         />
-        {/* notes */}
-        <Controller
+        {/* Notes */}
+        <FormTextField
+          className="col-span-2"
+          label="Notes"
           name="notes"
           control={control}
-          render={({ field: { onChange, value, ref } }) => (
-            <TextField
-              label="Notes"
-              multiline
-              value={value}
-              onChange={onChange}
-              ref={ref}
-            />
-          )}
+          multiline
         />
-
         {/* Actions */}
-        <div className="col-span-2 text-right">
+        <div className="col-span-2 space-x-2 text-right">
+          <Button onClick={() => reset()}>Clear</Button>
           <Button variant="contained" type="submit" disabled={!isValid}>
             Submit
           </Button>

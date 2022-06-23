@@ -7,6 +7,8 @@ import { Content } from 'src/components/Content';
 import { ArrowBack } from '@mui/icons-material';
 import { formatString } from 'src/utils/forms';
 
+// TODO: REDO ALL OF IT
+
 export const CompanyModifyForm = () => {
   // - HOOKS - //
   const { companyId } = useParams();

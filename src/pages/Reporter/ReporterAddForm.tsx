@@ -1,104 +1,102 @@
-import { FormEventHandler, useMemo, useState } from 'react';
-import { IconButton, Button, TextField } from '@mui/material';
+import { IconButton, Button } from '@mui/material';
 import { useFirebase } from 'src/hooks/useFirebase';
-import toast from 'react-hot-toast';
 import { Content } from 'src/components/Content';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBack } from '@mui/icons-material';
-import { formatString } from 'src/utils/forms';
+import { useForm } from 'react-hook-form';
+import { AddFormData } from 'src/utils/forms/types';
+import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { FormTextField } from 'src/components/FormTextField';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 export const ReporterAddForm = () => {
   // - HOOKS - //
+  // Form
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { isValid },
+  } = useForm<AddFormData['reporter']>({
+    mode: 'all',
+    defaultValues: AddFormDefaultData.reporter,
+  });
+  // Firebase
   const { reportersCreate, refreshStoreData } = useFirebase();
+  // Navigation
   const navigate = useNavigate();
 
   // - STATE - //
-  const [reporterName, setReporterName] = useState('');
-  const [primaryPhone, setPrimaryPhone] = useState('');
-  const [primaryEmail, setPrimaryEmail] = useState('');
-  const [notes, setNotes] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-
+  const submitReporter = async (data: AddFormData['reporter']) => {
     try {
+      setLoading(true);
       // Create new reporter
-      await reportersCreate({
-        name: formatString(reporterName),
-        primaryEmail: formatString(primaryEmail),
-        primaryPhone: formatString(primaryPhone),
-        notes: formatString(notes),
-      });
+      await reportersCreate(data);
       // Refresh reporters in data store
       await refreshStoreData.reporters();
       // Reset inputs
-      resetInputs();
+      reset();
+      setLoading(false);
     } catch (e: any) {
       e.message && toast.error(e.message);
     }
   };
 
-  // - HELPERS - //
-  const canSubmit = useMemo(() => {
-    return !!reporterName && reporterName.trim() !== '';
-  }, [reporterName]);
-
-  const resetInputs = () => {
-    setReporterName('');
-    setPrimaryPhone('');
-    setPrimaryEmail('');
-    setNotes('');
-  };
-
   return (
-    <Content className="flex flex-grow items-start space-x-4">
+    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
       <form
-        className="w-full grid grid-cols-2 gap-4"
-        onSubmit={(e) => handleSubmit(e)}
+        className="form-card grid-cols-2"
+        onSubmit={handleSubmit(submitReporter)}
       >
-        {/* Reporter Name */}
-        <TextField
-          label="Name"
-          value={reporterName}
-          onChange={(e) => setReporterName(e.target.value)}
+        {/* Title */}
+        <h1 className="form-title">Add a Reporter</h1>
+        {/* Name */}
+        <FormTextField
+          label="Reporter Name"
+          name="name"
+          control={control}
+          rules={formRules.isNotEmpty}
         />
         {/* Email */}
-        <TextField
+        <FormTextField
           label="Email"
-          value={primaryEmail}
-          onChange={(e) => setPrimaryEmail(e.target.value)}
+          name="primaryEmail"
+          control={control}
+          rules={formRules.isNotEmpty}
         />
-        {/* Phone Number */}
-        <TextField
+        {/* Phone number */}
+        <FormTextField
           label="Phone Number"
-          value={primaryPhone}
-          onChange={(e) => setPrimaryPhone(e.target.value)}
+          name="primaryPhone"
+          control={control}
+          rules={formRules.isNotEmpty}
         />
         {/* Notes */}
-        <TextField
+        <FormTextField
           className="col-span-2"
           label="Notes"
+          name="notes"
+          control={control}
           multiline
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
         />
         {/* Actions */}
-        <Button
-          className="col-span-2 justify-self-end"
-          variant="contained"
-          type="submit"
-          disabled={!canSubmit}
-        >
-          Submit
-        </Button>
+        <div className="col-span-2 space-x-2 text-right">
+          <Button onClick={() => reset()}>Clear</Button>
+          <Button variant="contained" type="submit" disabled={!isValid}>
+            Submit
+          </Button>
+        </div>
       </form>
     </Content>
   );

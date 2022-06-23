@@ -40,6 +40,7 @@ export const ReporterList = () => {
         {storeData.reporters && (
           <table className="table-auto w-full border-collapse bg-slate-100">
             <colgroup>
+              <col className="" />
               <col className="border-r" />
               <col className="border-r" />
               <col className="border-r" />
@@ -48,10 +49,12 @@ export const ReporterList = () => {
             <thead className="text-left text-white font-medium">
               {/* Header Row */}
               <tr className="bg-slate-600">
-                {/* Name */}
+                {/* Actions */}
                 <th className="p-2" colSpan={2}>
-                  Name
+                  Actions
                 </th>
+                {/* Name */}
+                <th className="p-2">Name</th>
                 {/* Phone Number */}
                 <th className="p-2">Phone Number</th>
                 {/* Email */}
@@ -61,13 +64,16 @@ export const ReporterList = () => {
             {/* Body */}
             <tbody>
               {storeData.reporters.documents.map((data) => (
-                <tr
-                  key={data.id}
-                  className="border-b transition-all hover:bg-slate-50"
-                >
+                <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
                   <td
-                    className="p-2 text-center cursor-pointer"
+                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
+                    onClick={handleEditClick(data.id)}
+                  >
+                    <Create className="text-sm" />
+                  </td>
+                  <td
+                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
                     onClick={handleEditClick(data.id)}
                   >
                     <Create className="text-sm" />

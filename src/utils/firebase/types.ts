@@ -145,6 +145,7 @@ type UpdateResponse = {
 
 export type {
   // Documents
+  StoreDocument,
   StoreDocumentNames,
   NewDocumentData,
   UpdatedDocumentData,

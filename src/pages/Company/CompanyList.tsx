@@ -49,10 +49,12 @@ export const CompanyList = () => {
             <thead className="text-left text-white font-medium">
               {/* Header Row */}
               <tr className="bg-slate-600">
-                {/* Name */}
+                {/* Actions */}
                 <th className="p-2" colSpan={2}>
-                  Company Name
+                  Actions
                 </th>
+                {/* Name */}
+                <th className="p-2">Company Name</th>
                 {/* Address */}
                 <th className="p-2">Office Address</th>
                 {/* Phone Number */}
@@ -64,13 +66,16 @@ export const CompanyList = () => {
             {/* Body */}
             <tbody>
               {storeData.companies.documents.map((data) => (
-                <tr
-                  key={data.id}
-                  className="border-b transition-all hover:bg-slate-50"
-                >
+                <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
                   <td
-                    className="p-2 text-center cursor-pointer"
+                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
+                    onClick={handleEditClick(data.id)}
+                  >
+                    <Create className="text-sm" />
+                  </td>
+                  <td
+                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
                     onClick={handleEditClick(data.id)}
                   >
                     <Create className="text-sm" />

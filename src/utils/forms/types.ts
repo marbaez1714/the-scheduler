@@ -1,9 +1,6 @@
+import { StoreDocument } from '../firebase/types';
+
 export interface AddFormData {
-  company: {
-    name: string;
-    primaryAddress: string;
-    primaryEmail: string;
-    primaryPhone: string;
-    notes: string;
-  };
+  company: StoreDocument['Company'];
+  reporter: StoreDocument['Reporter'];
 }

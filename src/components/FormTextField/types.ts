@@ -1,5 +1,8 @@
-import { UseControllerProps } from 'react-hook-form';
+import { FieldValues, UseControllerProps } from 'react-hook-form';
 
-export interface FormTextFieldProps extends UseControllerProps {
+export interface FormTextFieldProps<T extends FieldValues>
+  extends UseControllerProps<T> {
   label: string;
+  multiline?: boolean;
+  className?: string;
 }

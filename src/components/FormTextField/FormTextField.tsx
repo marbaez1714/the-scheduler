@@ -1,8 +1,13 @@
 import { TextField } from '@mui/material';
-import { useController } from 'react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import { FormTextFieldProps } from './types';
 
-const FormTextField = ({ label, ...rest }: FormTextFieldProps) => {
+const FormTextField = <T extends FieldValues>({
+  label,
+  className,
+  multiline,
+  ...rest
+}: FormTextFieldProps<T>) => {
   // - HOOKS - //
   const {
     field: { onChange, onBlur, name, value, ref },
@@ -19,6 +24,9 @@ const FormTextField = ({ label, ...rest }: FormTextFieldProps) => {
   // - JSX - //
   return (
     <TextField
+      className={className}
+      multiline={multiline}
+      type="text"
       label={label}
       onChange={onChange}
       onBlur={onBlur}
