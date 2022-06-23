@@ -36,52 +36,54 @@ export const ReporterList = () => {
       </div>
 
       {/* Reporter List */}
-      {storeData.reporters && (
-        <table className="table-auto w-full border-collapse overflow-hidden rounded drop-shadow bg-slate-100">
-          <colgroup>
-            <col className="border-r" />
-            <col className="border-r" />
-            <col className="border-r" />
-          </colgroup>
-          {/* Header */}
-          <thead className="text-left text-white font-medium">
-            {/* Header Row */}
-            <tr className="bg-slate-600">
-              {/* Name */}
-              <th className="p-2" colSpan={2}>
-                Name
-              </th>
-              {/* Phone Number */}
-              <th className="p-2">Phone Number</th>
-              {/* Email */}
-              <th className="p-2">Email</th>
-            </tr>
-          </thead>
-          {/* Body */}
-          <tbody>
-            {storeData.reporters.documents.map((data) => (
-              <tr
-                key={data.id}
-                className="border-b transition-all hover:bg-slate-50"
-              >
-                {/* Action */}
-                <td
-                  className="p-2 text-center cursor-pointer"
-                  onClick={handleEditClick(data.id)}
-                >
-                  <Create className="text-sm" />
-                </td>
+      <div className="overflow-auto rounded drop-shadow w-full">
+        {storeData.reporters && (
+          <table className="table-auto w-full border-collapse bg-slate-100">
+            <colgroup>
+              <col className="border-r" />
+              <col className="border-r" />
+              <col className="border-r" />
+            </colgroup>
+            {/* Header */}
+            <thead className="text-left text-white font-medium">
+              {/* Header Row */}
+              <tr className="bg-slate-600">
                 {/* Name */}
-                <td className="p-2">{data.name}</td>
+                <th className="p-2" colSpan={2}>
+                  Name
+                </th>
                 {/* Phone Number */}
-                <td className="p-2">{data.primaryPhone || '-'}</td>
-                {/* Address */}
-                <td className="p-2">{data.primaryEmail || '-'}</td>
+                <th className="p-2">Phone Number</th>
+                {/* Email */}
+                <th className="p-2">Email</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            {/* Body */}
+            <tbody>
+              {storeData.reporters.documents.map((data) => (
+                <tr
+                  key={data.id}
+                  className="border-b transition-all hover:bg-slate-50"
+                >
+                  {/* Action */}
+                  <td
+                    className="p-2 text-center cursor-pointer"
+                    onClick={handleEditClick(data.id)}
+                  >
+                    <Create className="text-sm" />
+                  </td>
+                  {/* Name */}
+                  <td className="p-2">{data.name}</td>
+                  {/* Phone Number */}
+                  <td className="p-2">{data.primaryPhone || '-'}</td>
+                  {/* Address */}
+                  <td className="p-2">{data.primaryEmail || '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </Content>
   );
 };
