@@ -12,7 +12,16 @@ import { useState } from 'react';
 
 export const CompanyAddForm = () => {
   // - HOOKS - //
-  // Form
+  // Firebase
+  const {
+    loading: loadingData,
+    companiesCreate,
+    refreshStoreData,
+  } = useFirebase();
+  // Navigation
+  const navigate = useNavigate();
+
+  // - FORMS - //
   const {
     handleSubmit,
     control,
@@ -22,13 +31,9 @@ export const CompanyAddForm = () => {
     mode: 'all',
     defaultValues: AddFormDefaultData.company,
   });
-  // Firebase
-  const { companiesCreate, refreshStoreData } = useFirebase();
-  // Navigation
-  const navigate = useNavigate();
 
   // - STATE - //
-  const [loading, setLoading] = useState(false);
+  const [createLoading, setCreateLoading] = useState(false);
 
   // - ACTIONS - //
   const handleBack = () => {
@@ -37,21 +42,24 @@ export const CompanyAddForm = () => {
 
   const submitCompany = async (data: AddFormData['company']) => {
     try {
-      setLoading(true);
+      setCreateLoading(true);
       // Create new company
       await companiesCreate(data);
       // Refresh companies in data store
       await refreshStoreData.companies();
       // Reset inputs
       reset();
-      setLoading(false);
+      setCreateLoading(false);
     } catch (e: any) {
       e.message && toast.error(e.message);
     }
   };
 
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
+    <Content
+      className="flex flex-grow items-start space-x-4"
+      loading={loadingData || createLoading}
+    >
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
@@ -66,7 +74,7 @@ export const CompanyAddForm = () => {
           label="Company Name"
           name="name"
           control={control}
-          rules={formRules.isNotEmpty}
+          rules={formRules.requiredNonEmptyString}
         />
         {/* Address */}
         <FormTextField

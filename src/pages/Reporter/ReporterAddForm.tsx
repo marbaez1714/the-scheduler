@@ -12,7 +12,16 @@ import { useState } from 'react';
 
 export const ReporterAddForm = () => {
   // - HOOKS - //
-  // Form
+  // Firebase
+  const {
+    loading: loadingData,
+    reportersCreate,
+    refreshStoreData,
+  } = useFirebase();
+  // Navigation
+  const navigate = useNavigate();
+
+  // - FORM - //
   const {
     handleSubmit,
     control,
@@ -22,13 +31,9 @@ export const ReporterAddForm = () => {
     mode: 'all',
     defaultValues: AddFormDefaultData.reporter,
   });
-  // Firebase
-  const { reportersCreate, refreshStoreData } = useFirebase();
-  // Navigation
-  const navigate = useNavigate();
 
   // - STATE - //
-  const [loading, setLoading] = useState(false);
+  const [createLoading, setCreateLoading] = useState(false);
 
   // - ACTIONS - //
   const handleBack = () => {
@@ -37,21 +42,24 @@ export const ReporterAddForm = () => {
 
   const submitReporter = async (data: AddFormData['reporter']) => {
     try {
-      setLoading(true);
+      setCreateLoading(true);
       // Create new reporter
       await reportersCreate(data);
       // Refresh reporters in data store
       await refreshStoreData.reporters();
       // Reset inputs
       reset();
-      setLoading(false);
+      setCreateLoading(false);
     } catch (e: any) {
       e.message && toast.error(e.message);
     }
   };
 
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
+    <Content
+      className="flex flex-grow items-start space-x-4"
+      loading={createLoading || loadingData}
+    >
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
@@ -66,21 +74,21 @@ export const ReporterAddForm = () => {
           label="Reporter Name"
           name="name"
           control={control}
-          rules={formRules.isNotEmpty}
+          rules={formRules.requiredNonEmptyString}
         />
         {/* Email */}
         <FormTextField
           label="Email"
           name="primaryEmail"
           control={control}
-          rules={formRules.isNotEmpty}
+          rules={formRules.requiredNonEmptyString}
         />
         {/* Phone number */}
         <FormTextField
           label="Phone Number"
           name="primaryPhone"
           control={control}
-          rules={formRules.isNotEmpty}
+          rules={formRules.requiredNonEmptyString}
         />
         {/* Notes */}
         <FormTextField

@@ -15,6 +15,7 @@ import { GetAllResponse } from 'src/utils/firebase/types';
 const initialContext: FirebaseContextParams = {
   signIn: { google: () => new Promise(() => {}) },
   signOut: () => new Promise(() => {}),
+  loading: false,
   authState: {
     authorized: false,
     user: undefined,
@@ -22,11 +23,22 @@ const initialContext: FirebaseContextParams = {
     error: undefined,
   },
   storeData: {
+    areas: undefined,
+    builders: undefined,
+    communities: undefined,
+    contractors: undefined,
     companies: undefined,
+    reporters: undefined,
+    scopes: undefined,
   },
   refreshStoreData: {
+    areas: () => new Promise(() => {}),
+    builders: () => new Promise(() => {}),
+    communities: () => new Promise(() => {}),
+    contractors: () => new Promise(() => {}),
     companies: () => new Promise(() => {}),
     reporters: () => new Promise(() => {}),
+    scopes: () => new Promise(() => {}),
   },
   ...callableFunctions,
 };
@@ -41,19 +53,50 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const [authUser, authLoading, authError] = useAuthState(firebaseAuth);
 
   // - STATE - //
+  // Auth
   const [authorized, setAuthorized] = useState(false);
   const [checkingAuthorized, setCheckingAuthorized] = useState(true);
+  // Data
+  const [areasData, setAreasData] = useState<GetAllResponse<'Area'>>();
+  const [buildersData, setBuildersData] = useState<GetAllResponse<'Builder'>>();
+  const [communitiesData, setCommunitiesData] =
+    useState<GetAllResponse<'Community'>>();
+  const [contractorsData, setContractorsData] =
+    useState<GetAllResponse<'Contractor'>>();
   const [companiesData, setCompaniesData] =
     useState<GetAllResponse<'Company'>>();
   const [reportersData, setReportersData] =
     useState<GetAllResponse<'Reporter'>>();
+  const [scopesData, setScopesData] = useState<GetAllResponse<'Scope'>>();
+  // Loading
+  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({
+    areas: false,
+    builders: false,
+    communities: false,
+    contractors: false,
+    companies: false,
+    reporters: false,
+    scopes: false,
+  });
 
   // - EFFECTS - //
   useEffect(() => {
     if (authorized) {
-      // Get all companies
+      // Get all base data
+      // areas
+      !areasData && refreshAreas();
+      // builders
+      !buildersData && refreshBuilders();
+      // communities
+      !communitiesData && refreshCommunities();
+      // contractors
+      !contractorsData && refreshContractors();
+      // companies
       !companiesData && refreshCompanies();
+      // reporters
       !reportersData && refreshReporters();
+      // scopes
+      !scopesData && refreshScopes();
     }
   }, [authorized]);
 
@@ -83,55 +126,135 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   };
 
   // App Data
+  const refreshAreas = async () => {
+    handleLoading('areas', true);
+    await callableFunctions
+      .areasGetAll()
+      .then((response) => {
+        setAreasData(response.data);
+      })
+      .finally(() => {
+        handleLoading('areas', false);
+      });
+  };
+
+  const refreshBuilders = async () => {
+    handleLoading('builders', true);
+    await callableFunctions
+      .buildersGetAll()
+      .then((response) => {
+        setBuildersData(response.data);
+      })
+      .finally(() => {
+        handleLoading('builders', false);
+      });
+  };
+
+  const refreshCommunities = async () => {
+    handleLoading('communities', true);
+    await callableFunctions
+      .communitiesGetAll()
+      .then((response) => {
+        setCommunitiesData(response.data);
+      })
+      .finally(() => {
+        handleLoading('communities', false);
+      });
+  };
+
+  const refreshContractors = async () => {
+    handleLoading('contractors', true);
+    await callableFunctions
+      .contractorsGetAll()
+      .then((response) => {
+        setContractorsData(response.data);
+      })
+      .finally(() => {
+        handleLoading('contractors', false);
+      });
+  };
+
   const refreshCompanies = async () => {
-    await callableFunctions.companiesGetAll().then((response) => {
-      setCompaniesData(response.data);
-    });
+    handleLoading('companies', true);
+    await callableFunctions
+      .companiesGetAll()
+      .then((response) => {
+        setCompaniesData(response.data);
+      })
+      .finally(() => {
+        handleLoading('companies', false);
+      });
   };
 
   const refreshReporters = async () => {
-    await callableFunctions.reportersGetAll().then((response) => {
-      setReportersData(response.data);
-    });
+    handleLoading('reporters', true);
+    await callableFunctions
+      .reportersGetAll()
+      .then((response) => {
+        setReportersData(response.data);
+      })
+      .then(() => {
+        handleLoading('reporters', false);
+      });
+  };
+
+  const refreshScopes = async () => {
+    handleLoading('scopes', true);
+    await callableFunctions
+      .scopesGetAll()
+      .then((response) => {
+        setScopesData(response.data);
+      })
+      .finally(() => {
+        handleLoading('scopes', false);
+      });
   };
 
   // TODO REFRESH ALL DATA
 
   // - HELPERS - //
-  const _signIn = {
-    google: signInGoogle,
-  };
-
-  const _authState = {
-    authorized: authorized,
-    user: authUser,
-    loading: authLoading || checkingAuthorized,
-    error: authError,
-  };
-
-  const _storeData = {
-    companies: companiesData,
-    reporters: reportersData,
-  };
-
-  const _refreshStoreData = {
-    companies: refreshCompanies,
-    reporters: refreshReporters,
+  const handleLoading = (param: string, state: boolean) => {
+    setLoadingStates((prev) => ({ ...prev, [param]: state }));
   };
 
   // - SETTING CONTEXT - //
-  const context = {
-    signIn: _signIn,
-    signOut,
-    authState: _authState,
-    storeData: _storeData,
-    refreshStoreData: _refreshStoreData,
-    ...callableFunctions,
-  };
 
   // - PROVIDER - //
   return (
-    <FirebaseContext.Provider value={context}>
+    <FirebaseContext.Provider
+      value={{
+        signIn: {
+          google: signInGoogle,
+        },
+        loading: Object.values(loadingStates).every((state) => state),
+        signOut,
+        authState: {
+          authorized: authorized,
+          user: authUser,
+          loading: authLoading || checkingAuthorized,
+          error: authError,
+        },
+        storeData: {
+          areas: areasData,
+          builders: buildersData,
+          communities: communitiesData,
+          contractors: contractorsData,
+          companies: companiesData,
+          reporters: reportersData,
+          scopes: scopesData,
+        },
+        refreshStoreData: {
+          areas: refreshAreas,
+          builders: refreshBuilders,
+          communities: refreshCommunities,
+          companies: refreshCompanies,
+          contractors: refreshContractors,
+          reporters: refreshReporters,
+          scopes: refreshScopes,
+        },
+        ...callableFunctions,
+      }}
+    >
       {children}
     </FirebaseContext.Provider>
   );

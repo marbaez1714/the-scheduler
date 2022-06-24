@@ -5,7 +5,13 @@ export const formatString = (value?: string) => {
 };
 
 export const formRules = {
-  isNotEmpty: { required: true, pattern: new RegExp('^(?!\\s*$).+') },
+  requiredNonEmptyString: {
+    required: true,
+    pattern: new RegExp('^(?!\\s*$).+'),
+  },
+  nonEmptyString: {
+    pattern: new RegExp('^(?!\\s*$).+'),
+  },
 };
 
 export const AddFormDefaultData: AddFormData = {
@@ -20,6 +26,11 @@ export const AddFormDefaultData: AddFormData = {
     name: '',
     primaryPhone: '',
     primaryEmail: '',
+    notes: '',
+  },
+  area: {
+    name: '',
+    nameSpanish: '',
     notes: '',
   },
 };

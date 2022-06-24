@@ -6,7 +6,7 @@ import { useFirebase } from 'src/hooks/useFirebase';
 
 export const ReporterList = () => {
   // - HOOKS - //
-  const { storeData } = useFirebase();
+  const { storeData, loading } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -24,7 +24,7 @@ export const ReporterList = () => {
 
   // - JSX - //
   return (
-    <Content className="flex w-full items-start space-x-4">
+    <Content className="flex w-full items-start space-x-4" loading={loading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">

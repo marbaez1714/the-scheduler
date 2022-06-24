@@ -75,6 +75,7 @@ interface CallableFunctions {
 interface FirebaseContextParams extends CallableFunctions {
   signIn: { google: () => Promise<void> };
   signOut: () => Promise<void>;
+  loading: boolean;
   authState: {
     authorized: boolean;
     user: AuthStateHook['0'];
@@ -82,12 +83,22 @@ interface FirebaseContextParams extends CallableFunctions {
     error: AuthStateHook['2'];
   };
   storeData: {
+    areas?: GetAllResponse<'Area'>;
+    builders?: GetAllResponse<'Builder'>;
+    communities?: GetAllResponse<'Community'>;
+    contractors?: GetAllResponse<'Contractor'>;
     companies?: GetAllResponse<'Company'>;
     reporters?: GetAllResponse<'Reporter'>;
+    scopes?: GetAllResponse<'Scope'>;
   };
   refreshStoreData: {
+    areas: () => Promise<void>;
+    builders: () => Promise<void>;
+    communities: () => Promise<void>;
+    contractors: () => Promise<void>;
     companies: () => Promise<void>;
     reporters: () => Promise<void>;
+    scopes: () => Promise<void>;
   };
 }
 
