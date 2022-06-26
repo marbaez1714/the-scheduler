@@ -10,12 +10,12 @@ import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export const ReporterAddForm = () => {
+export const SupplierAddForm = () => {
   // - HOOKS - //
   // Firebase
   const {
     loading: loadingData,
-    reportersCreate,
+    suppliersCreate,
     refreshStoreData,
   } = useFirebase();
   // Navigation
@@ -27,9 +27,9 @@ export const ReporterAddForm = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm<AddFormData['reporter']>({
+  } = useForm<AddFormData['supplier']>({
     mode: 'all',
-    defaultValues: AddFormDefaultData.reporter,
+    defaultValues: AddFormDefaultData.supplier,
   });
 
   // - STATE - //
@@ -40,13 +40,13 @@ export const ReporterAddForm = () => {
     navigate(-1);
   };
 
-  const submitReporter = async (data: AddFormData['reporter']) => {
+  const submit = async (data: AddFormData['supplier']) => {
     try {
       setCreateLoading(true);
-      // Create new reporter
-      await reportersCreate(data);
-      // Refresh reporters in data store
-      await refreshStoreData.reporters();
+      // Create new supplier
+      await suppliersCreate(data);
+      // Refresh suppliers in data store
+      await refreshStoreData.suppliers();
       // Reset inputs
       reset();
     } catch (e: any) {
@@ -64,32 +64,21 @@ export const ReporterAddForm = () => {
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
-      <form
-        className="form-card grid-cols-2"
-        onSubmit={handleSubmit(submitReporter)}
-      >
+      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
         {/* Title */}
-        <h1 className="form-title">Add a Reporter</h1>
+        <h1 className="form-title">Add a Supplier</h1>
         {/* Name */}
         <FormTextField
-          label="Reporter Name"
+          label="Supplier Name"
           name="name"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
-        {/* Email */}
-        <FormTextField
-          label="Email"
-          name="primaryEmail"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
-        {/* Phone number */}
+        {/* Phone Number */}
         <FormTextField
           label="Phone Number"
-          name="primaryPhone"
+          name="phoneNumber"
           control={control}
-          rules={formRules.requiredNonEmptyString}
         />
         {/* Notes */}
         <FormTextField

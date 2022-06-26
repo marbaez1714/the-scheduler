@@ -33,4 +33,9 @@ export const AddFormDefaultData: AddFormData = {
     nameSpanish: '',
     notes: '',
   },
+  supplier: {
+    name: '',
+    phoneNumber: '',
+    notes: '',
+  },
 };

@@ -10,14 +10,10 @@ import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export const ReporterAddForm = () => {
+export const AreaAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const {
-    loading: loadingData,
-    reportersCreate,
-    refreshStoreData,
-  } = useFirebase();
+  const { loading: loadingData, areasCreate, refreshStoreData } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -27,9 +23,9 @@ export const ReporterAddForm = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm<AddFormData['reporter']>({
+  } = useForm<AddFormData['area']>({
     mode: 'all',
-    defaultValues: AddFormDefaultData.reporter,
+    defaultValues: AddFormDefaultData.area,
   });
 
   // - STATE - //
@@ -40,13 +36,13 @@ export const ReporterAddForm = () => {
     navigate(-1);
   };
 
-  const submitReporter = async (data: AddFormData['reporter']) => {
+  const submit = async (data: AddFormData['area']) => {
     try {
       setCreateLoading(true);
-      // Create new reporter
-      await reportersCreate(data);
-      // Refresh reporters in data store
-      await refreshStoreData.reporters();
+      // Create new area
+      await areasCreate(data);
+      // Refresh areas in data store
+      await refreshStoreData.areas();
       // Reset inputs
       reset();
     } catch (e: any) {
@@ -64,30 +60,20 @@ export const ReporterAddForm = () => {
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
-      <form
-        className="form-card grid-cols-2"
-        onSubmit={handleSubmit(submitReporter)}
-      >
+      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
         {/* Title */}
-        <h1 className="form-title">Add a Reporter</h1>
+        <h1 className="form-title">Add an Area</h1>
         {/* Name */}
         <FormTextField
-          label="Reporter Name"
+          label="Area Name"
           name="name"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
-        {/* Email */}
+        {/* Name in Spanish */}
         <FormTextField
-          label="Email"
-          name="primaryEmail"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
-        {/* Phone number */}
-        <FormTextField
-          label="Phone Number"
-          name="primaryPhone"
+          label="Translation"
+          name="nameSpanish"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />

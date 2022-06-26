@@ -67,6 +67,11 @@ interface CallableFunctions {
   scopesGetById: Callable<'Scope'>['GetById'];
   scopesCreate: Callable<'Scope'>['Create'];
   scopesUpdate: Callable<'Scope'>['Update'];
+
+  suppliersGetAll: Callable<'Supplier'>['GetAll'];
+  suppliersGetById: Callable<'Supplier'>['GetById'];
+  suppliersCreate: Callable<'Supplier'>['Create'];
+  suppliersUpdate: Callable<'Supplier'>['Update'];
 }
 
 // -------------------------- //
@@ -90,6 +95,7 @@ interface FirebaseContextParams extends CallableFunctions {
     companies?: GetAllResponse<'Company'>;
     reporters?: GetAllResponse<'Reporter'>;
     scopes?: GetAllResponse<'Scope'>;
+    suppliers?: GetAllResponse<'Supplier'>;
   };
   refreshStoreData: {
     areas: () => Promise<void>;
@@ -99,6 +105,7 @@ interface FirebaseContextParams extends CallableFunctions {
     companies: () => Promise<void>;
     reporters: () => Promise<void>;
     scopes: () => Promise<void>;
+    suppliers: () => Promise<void>;
   };
 }
 

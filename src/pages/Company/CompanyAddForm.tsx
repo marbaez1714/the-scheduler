@@ -49,9 +49,10 @@ export const CompanyAddForm = () => {
       await refreshStoreData.companies();
       // Reset inputs
       reset();
-      setCreateLoading(false);
     } catch (e: any) {
       e.message && toast.error(e.message);
+    } finally {
+      setCreateLoading(false);
     }
   };
 

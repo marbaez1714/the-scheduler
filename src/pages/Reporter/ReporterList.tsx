@@ -30,7 +30,7 @@ export const ReporterList = () => {
         <IconButton title="back">
           <ArrowBack />
         </IconButton>
-        <IconButton onClick={handleAddClick} title="add a company">
+        <IconButton onClick={handleAddClick}>
           <AddBox />
         </IconButton>
       </div>
@@ -39,12 +39,6 @@ export const ReporterList = () => {
       <div className="overflow-auto rounded drop-shadow w-full">
         {storeData.reporters && (
           <table className="table-auto w-full border-collapse bg-slate-100">
-            <colgroup>
-              <col className="" />
-              <col className="border-r" />
-              <col className="border-r" />
-              <col className="border-r" />
-            </colgroup>
             {/* Header */}
             <thead className="text-left text-white font-medium">
               {/* Header Row */}

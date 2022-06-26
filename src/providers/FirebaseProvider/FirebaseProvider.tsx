@@ -30,6 +30,7 @@ const initialContext: FirebaseContextParams = {
     companies: undefined,
     reporters: undefined,
     scopes: undefined,
+    suppliers: undefined,
   },
   refreshStoreData: {
     areas: () => new Promise(() => {}),
@@ -39,6 +40,7 @@ const initialContext: FirebaseContextParams = {
     companies: () => new Promise(() => {}),
     reporters: () => new Promise(() => {}),
     scopes: () => new Promise(() => {}),
+    suppliers: () => new Promise(() => {}),
   },
   ...callableFunctions,
 };
@@ -68,6 +70,8 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const [reportersData, setReportersData] =
     useState<GetAllResponse<'Reporter'>>();
   const [scopesData, setScopesData] = useState<GetAllResponse<'Scope'>>();
+  const [suppliersData, setSuppliersData] =
+    useState<GetAllResponse<'Supplier'>>();
   // Loading
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({
     areas: false,
@@ -77,6 +81,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     companies: false,
     reporters: false,
     scopes: false,
+    suppliers: false,
   });
 
   // - EFFECTS - //
@@ -97,6 +102,8 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
       !reportersData && refreshReporters();
       // scopes
       !scopesData && refreshScopes();
+      // suppliers
+      !suppliersData && refreshSuppliers();
     }
   }, [authorized]);
 
@@ -210,6 +217,18 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
       });
   };
 
+  const refreshSuppliers = async () => {
+    handleLoading('suppliers', true);
+    await callableFunctions
+      .suppliersGetAll()
+      .then((response) => {
+        setSuppliersData(response.data);
+      })
+      .finally(() => {
+        handleLoading('suppliers', false);
+      });
+  };
+
   // TODO REFRESH ALL DATA
 
   // - HELPERS - //
@@ -242,6 +261,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
           companies: companiesData,
           reporters: reportersData,
           scopes: scopesData,
+          suppliers: suppliersData,
         },
         refreshStoreData: {
           areas: refreshAreas,
@@ -251,6 +271,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
           contractors: refreshContractors,
           reporters: refreshReporters,
           scopes: refreshScopes,
+          suppliers: refreshSuppliers,
         },
         ...callableFunctions,
       }}

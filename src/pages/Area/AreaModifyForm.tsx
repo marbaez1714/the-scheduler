@@ -1,6 +1,6 @@
 import { Content } from 'src/components/Content';
 
-export const CompanyModifyForm = () => {
+export const AreaModifyForm = () => {
   // - HOOKS - //
 
   // - STATE - //

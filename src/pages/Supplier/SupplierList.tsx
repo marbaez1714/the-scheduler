@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
 import { useFirebase } from 'src/hooks/useFirebase';
 
-export const CompanyList = () => {
+export const SupplierList = () => {
   // - HOOKS - //
   const { storeData, loading } = useFirebase();
   const navigate = useNavigate();
@@ -35,29 +35,25 @@ export const CompanyList = () => {
         </IconButton>
       </div>
 
-      {/* Company List */}
+      {/* Supplier List */}
       <div className="overflow-auto rounded drop-shadow w-full">
-        {storeData.companies && (
+        {storeData.suppliers && (
           <table className="table-auto w-full border-collapse bg-slate-100">
             {/* Header */}
             <thead className="text-left text-white font-medium">
               {/* Header Row */}
               <tr className="bg-slate-600">
                 {/* Actions */}
-                <th className="p-2"></th>
+                <th className="p-2">Actions</th>
                 {/* Name */}
-                <th className="p-2">Company Name</th>
-                {/* Address */}
-                <th className="p-2">Office Address</th>
-                {/* Phone Number */}
+                <th className="p-2">Name</th>
+                {/* Name Spanish */}
                 <th className="p-2">Phone Number</th>
-                {/* Email */}
-                <th className="p-2">Email</th>
               </tr>
             </thead>
             {/* Body */}
             <tbody>
-              {storeData.companies.documents.map((data) => (
+              {storeData.suppliers.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
                   <td
@@ -68,12 +64,8 @@ export const CompanyList = () => {
                   </td>
                   {/* Name */}
                   <td className="p-2">{data.name}</td>
-                  {/* Address */}
-                  <td className="p-2">{data.primaryAddress || '-'}</td>
-                  {/* Phone Number */}
-                  <td className="p-2">{data.primaryPhone || '-'}</td>
-                  {/* Address */}
-                  <td className="p-2">{data.primaryEmail || '-'}</td>
+                  {/* Name Spanish */}
+                  <td className="p-2">{data.phoneNumber}</td>
                 </tr>
               ))}
             </tbody>

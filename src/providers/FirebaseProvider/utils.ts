@@ -3,13 +3,16 @@ import { getAuth as fbGetAuth } from 'firebase/auth';
 import {
   getFunctions as fbGetFunctions,
   httpsCallable,
+  HttpsCallableResult,
 } from 'firebase/functions';
 import {
+  CreateResponse,
   GetAllPayload,
   GetAllResponse,
   GetByIdPayload,
   GetByIdResponse,
   StoreDocumentNames,
+  UpdateResponse,
 } from 'src/utils/firebase/types';
 import { CallableFunctions } from './types';
 
@@ -53,7 +56,6 @@ const callableFunctions: CallableFunctions = {
   // Collection - GET BY ID
   // Collection - CREATE
   // Collection - UPDATE
-
   areasGetAll: getAllCallable('Area'),
   areasGetById: getByIdCallable('Area'),
   areasCreate: httpsCallable(firebaseFunctions, 'areasCreate'),
@@ -88,6 +90,11 @@ const callableFunctions: CallableFunctions = {
   scopesGetById: getByIdCallable('Scope'),
   scopesCreate: httpsCallable(firebaseFunctions, 'scopesCreate'),
   scopesUpdate: httpsCallable(firebaseFunctions, 'scopesUpdate'),
+
+  suppliersGetAll: getAllCallable('Supplier'),
+  suppliersGetById: getByIdCallable('Supplier'),
+  suppliersCreate: httpsCallable(firebaseFunctions, 'suppliersCreate'),
+  suppliersUpdate: httpsCallable(firebaseFunctions, 'suppliersUpdate'),
 };
 
 export { firebaseApp, firebaseAuth, firebaseFunctions, callableFunctions };
