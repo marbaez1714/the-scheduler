@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
 import { useFirebase } from 'src/hooks/useFirebase';
 
-export const AreaList = () => {
+export const ContractorList = () => {
   // - HOOKS - //
   const { storeData, loading } = useFirebase();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const AreaList = () => {
   };
 
   // - HELPERS - //
-  const headers = ['Actions', 'Name', 'Translation (Spanish)'];
+  const headers = ['Actions', 'Name', 'Phone Number'];
 
   // - JSX - //
   return (
@@ -38,9 +38,9 @@ export const AreaList = () => {
         </IconButton>
       </div>
 
-      {/* Area List */}
+      {/* Contractor List */}
       <div className="overflow-auto rounded drop-shadow w-full">
-        {storeData.areas && (
+        {storeData.contractors && (
           <table className="table-auto w-full border-collapse bg-slate-100">
             {/* Header */}
             <thead className="text-left text-white font-medium">
@@ -55,7 +55,7 @@ export const AreaList = () => {
             </thead>
             {/* Body */}
             <tbody>
-              {storeData.areas.documents.map((data) => (
+              {storeData.contractors.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
                   <td
@@ -66,8 +66,8 @@ export const AreaList = () => {
                   </td>
                   {/* Name */}
                   <td className="p-2">{data.name}</td>
-                  {/* Name Spanish */}
-                  <td className="p-2">{data.nameSpanish}</td>
+                  {/* Phone Number */}
+                  <td className="p-2">{data.primaryPhone}</td>
                 </tr>
               ))}
             </tbody>

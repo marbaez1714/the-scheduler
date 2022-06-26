@@ -10,10 +10,14 @@ import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export const AreaAddForm = () => {
+export const ContractorAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, areasCreate, refreshStoreData } = useFirebase();
+  const {
+    loading: loadingData,
+    contractorsCreate,
+    refreshStoreData,
+  } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -23,9 +27,9 @@ export const AreaAddForm = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm<AddFormData['area']>({
+  } = useForm<AddFormData['contractor']>({
     mode: 'all',
-    defaultValues: AddFormDefaultData.area,
+    defaultValues: AddFormDefaultData.contractor,
   });
 
   // - STATE - //
@@ -36,13 +40,13 @@ export const AreaAddForm = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['area']) => {
+  const submit = async (data: AddFormData['contractor']) => {
     try {
       setCreateLoading(true);
-      // Create new area
-      await areasCreate(data);
-      // Refresh areas in data store
-      await refreshStoreData.areas();
+      // Create new contractor
+      await contractorsCreate(data);
+      // Refresh contractor in data store
+      await refreshStoreData.contractors();
       // Reset inputs
       reset();
     } catch (e: any) {
@@ -62,18 +66,18 @@ export const AreaAddForm = () => {
       </IconButton>
       <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
         {/* Title */}
-        <h1 className="form-title">Add an Area</h1>
-        {/* Name REQUIRED */}
+        <h1 className="form-title">Add a Contractor</h1>
+        {/* Name */}
         <FormTextField
-          label="Area Name"
+          label="Full Name"
           name="name"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
-        {/* Name in Spanish REQUIRED */}
+        {/* Phone Number */}
         <FormTextField
-          label="Translation"
-          name="nameSpanish"
+          label="Phone Number"
+          name="primaryPhone"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />

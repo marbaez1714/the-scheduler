@@ -15,6 +15,13 @@ import {
 } from 'src/pages/Company';
 
 import {
+  Contractor,
+  ContractorList,
+  ContractorAddForm,
+  ContractorModifyForm,
+} from 'src/pages/Contractor';
+
+import {
   Reporter,
   ReporterList,
   ReporterAddForm,
@@ -28,6 +35,13 @@ import {
   SupplierModifyForm,
 } from 'src/pages/Supplier';
 
+import {
+  Scope,
+  ScopeList,
+  ScopeAddForm,
+  ScopeModifyForm,
+} from 'src/pages/Scope';
+
 const Navigation = () => {
   return (
     <Routes>
@@ -35,7 +49,7 @@ const Navigation = () => {
       <Route path={AppRoutes.Base} element={<Login />} />
       {/* ***** SECURE ROUTES ***** */}
       {/* Area */}
-      <Route path="/area" element={<AuthRoute component={<Area />} />}>
+      <Route path={AppRoutes.Area} element={<AuthRoute component={<Area />} />}>
         <Route index element={<AuthRoute component={<AreaList />} />} />
         <Route path="add" element={<AuthRoute component={<AreaAddForm />} />} />
         <Route
@@ -44,7 +58,10 @@ const Navigation = () => {
         />
       </Route>
       {/* Company */}
-      <Route path="/company" element={<AuthRoute component={<Company />} />}>
+      <Route
+        path={AppRoutes.Company}
+        element={<AuthRoute component={<Company />} />}
+      >
         <Route index element={<AuthRoute component={<CompanyList />} />} />
         <Route
           path="add"
@@ -55,8 +72,27 @@ const Navigation = () => {
           element={<AuthRoute component={<CompanyModifyForm />} />}
         />
       </Route>
+      {/* Contractor */}
+      <Route
+        path={AppRoutes.Contractor}
+        element={<AuthRoute component={<Contractor />} />}
+      >
+        <Route index element={<AuthRoute component={<ContractorList />} />} />
+        <Route
+          path="add"
+          element={<AuthRoute component={<ContractorAddForm />} />}
+        />
+        <Route
+          path=":contractorId"
+          element={<AuthRoute component={<ContractorModifyForm />} />}
+        />
+      </Route>
+
       {/* Reporter */}
-      <Route path="/reporter" element={<AuthRoute component={<Reporter />} />}>
+      <Route
+        path={AppRoutes.Reporter}
+        element={<AuthRoute component={<Reporter />} />}
+      >
         <Route index element={<AuthRoute component={<ReporterList />} />} />
         <Route
           path="add"
@@ -67,8 +103,27 @@ const Navigation = () => {
           element={<AuthRoute component={<ReporterModifyForm />} />}
         />
       </Route>
+      {/* Scope */}
+      <Route
+        path={AppRoutes.Scope}
+        element={<AuthRoute component={<Scope />} />}
+      >
+        <Route index element={<AuthRoute component={<ScopeList />} />} />
+        <Route
+          path="add"
+          element={<AuthRoute component={<ScopeAddForm />} />}
+        />
+        <Route
+          path=":scopeId"
+          element={<AuthRoute component={<ScopeModifyForm />} />}
+        />
+      </Route>
+
       {/* Supplier */}
-      <Route path="/supplier" element={<AuthRoute component={<Supplier />} />}>
+      <Route
+        path={AppRoutes.Supplier}
+        element={<AuthRoute component={<Supplier />} />}
+      >
         <Route index element={<AuthRoute component={<SupplierList />} />} />
         <Route
           path="add"

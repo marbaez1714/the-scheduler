@@ -10,10 +10,14 @@ import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-export const AreaAddForm = () => {
+export const ScopeAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, areasCreate, refreshStoreData } = useFirebase();
+  const {
+    loading: loadingData,
+    scopesCreate,
+    refreshStoreData,
+  } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -23,9 +27,9 @@ export const AreaAddForm = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm<AddFormData['area']>({
+  } = useForm<AddFormData['scope']>({
     mode: 'all',
-    defaultValues: AddFormDefaultData.area,
+    defaultValues: AddFormDefaultData.scope,
   });
 
   // - STATE - //
@@ -36,13 +40,13 @@ export const AreaAddForm = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['area']) => {
+  const submit = async (data: AddFormData['scope']) => {
     try {
       setCreateLoading(true);
-      // Create new area
-      await areasCreate(data);
-      // Refresh areas in data store
-      await refreshStoreData.areas();
+      // Create new scope
+      await scopesCreate(data);
+      // Refresh scopes in data store
+      await refreshStoreData.scopes();
       // Reset inputs
       reset();
     } catch (e: any) {
@@ -62,19 +66,26 @@ export const AreaAddForm = () => {
       </IconButton>
       <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
         {/* Title */}
-        <h1 className="form-title">Add an Area</h1>
+        <h1 className="form-title">Add a Scopes</h1>
         {/* Name REQUIRED */}
         <FormTextField
-          label="Area Name"
+          label="Scope Name"
           name="name"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
-        {/* Name in Spanish REQUIRED */}
+        {/* Name (Spanish) REQUIRED */}
         <FormTextField
           label="Translation"
           name="nameSpanish"
           control={control}
+          rules={formRules.requiredNonEmptyString}
+        />
+        {/* Description REQUIRED */}
+        <FormTextField
+          control={control}
+          label="Description"
+          name="description"
           rules={formRules.requiredNonEmptyString}
         />
         {/* Notes */}

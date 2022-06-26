@@ -22,6 +22,9 @@ export const SupplierList = () => {
     navigate('add');
   };
 
+  // - HELPERS - //
+  const headers = ['Actions', 'Name', 'Phone Number'];
+
   // - JSX - //
   return (
     <Content className="flex w-full items-start space-x-4" loading={loading}>
@@ -43,12 +46,11 @@ export const SupplierList = () => {
             <thead className="text-left text-white font-medium">
               {/* Header Row */}
               <tr className="bg-slate-600">
-                {/* Actions */}
-                <th className="p-2">Actions</th>
-                {/* Name */}
-                <th className="p-2">Name</th>
-                {/* Name Spanish */}
-                <th className="p-2">Phone Number</th>
+                {headers.map((item, index) => (
+                  <th className="p-2" key={index}>
+                    {item}
+                  </th>
+                ))}
               </tr>
             </thead>
             {/* Body */}
@@ -64,7 +66,7 @@ export const SupplierList = () => {
                   </td>
                   {/* Name */}
                   <td className="p-2">{data.name}</td>
-                  {/* Name Spanish */}
+                  {/* Phone Number */}
                   <td className="p-2">{data.phoneNumber}</td>
                 </tr>
               ))}

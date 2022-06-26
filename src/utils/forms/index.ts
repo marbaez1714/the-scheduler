@@ -38,4 +38,15 @@ export const AddFormDefaultData: AddFormData = {
     phoneNumber: '',
     notes: '',
   },
+  scope: {
+    name: '',
+    nameSpanish: '',
+    description: '',
+    notes: '',
+  },
+  contractor: {
+    name: '',
+    primaryPhone: '',
+    notes: '',
+  },
 };

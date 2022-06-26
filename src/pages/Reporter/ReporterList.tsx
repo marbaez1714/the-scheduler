@@ -22,6 +22,9 @@ export const ReporterList = () => {
     navigate('add');
   };
 
+  // - HELPERS - //
+  const headers = ['Actions', 'Name', 'Phone Number', 'Email'];
+
   // - JSX - //
   return (
     <Content className="flex w-full items-start space-x-4" loading={loading}>
@@ -43,16 +46,11 @@ export const ReporterList = () => {
             <thead className="text-left text-white font-medium">
               {/* Header Row */}
               <tr className="bg-slate-600">
-                {/* Actions */}
-                <th className="p-2" colSpan={2}>
-                  Actions
-                </th>
-                {/* Name */}
-                <th className="p-2">Name</th>
-                {/* Phone Number */}
-                <th className="p-2">Phone Number</th>
-                {/* Email */}
-                <th className="p-2">Email</th>
+                {headers.map((item, index) => (
+                  <th className="p-2" key={index}>
+                    {item}
+                  </th>
+                ))}
               </tr>
             </thead>
             {/* Body */}
@@ -60,12 +58,6 @@ export const ReporterList = () => {
               {storeData.reporters.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <td
-                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
-                    onClick={handleEditClick(data.id)}
-                  >
-                    <Create className="text-sm" />
-                  </td>
                   <td
                     className="p-2 text-center cursor-pointer hover:bg-slate-200"
                     onClick={handleEditClick(data.id)}

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { AppRoutes } from 'src/utils/constants/routes';
 import {
   Archive,
   DataObject,
@@ -7,7 +9,6 @@ import {
 } from '@mui/icons-material';
 import {
   Collapse,
-  Divider,
   Icon,
   List,
   ListItem,
@@ -15,20 +16,29 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const manageDataItems = [
-  { title: 'Companies', icon: 'apartment' },
-  { title: 'Communities', icon: 'map' },
-  { title: 'Reporter', icon: 'reporter' },
-  { title: 'Installer', icon: 'engineering' },
+  { title: 'Areas', target: AppRoutes.Area, icon: 'location_searching' },
+  { title: 'Companies', target: AppRoutes.Company, icon: 'apartment' },
+  { title: 'Contractors', target: AppRoutes.Contractor, icon: 'engineering' },
+  { title: 'Communities', target: '', icon: 'map' },
+  { title: 'Reporter', target: AppRoutes.Reporter, icon: 'reporter' },
+  { title: 'Scope', target: AppRoutes.Scope, icon: 'assignment' },
+  { title: 'Supplier', target: AppRoutes.Supplier, icon: 'inventory' },
 ];
 
 export const SideBar = () => {
+  const navigate = useNavigate();
+
   const [expandManage, setExpandManage] = useState(false);
 
   const handleExpand = () => {
     setExpandManage((prev) => !prev);
+  };
+
+  const handleNavigate = (target: string) => () => {
+    navigate(`${target}`);
   };
 
   return (
@@ -62,7 +72,11 @@ export const SideBar = () => {
         <Collapse in={expandManage} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {manageDataItems.map((item, index) => (
-              <ListItemButton className="pl-8" key={index}>
+              <ListItemButton
+                className="pl-8"
+                key={index}
+                onClick={handleNavigate(item.target)}
+              >
                 <ListItemIcon className="text-white">
                   <Icon>{item.icon}</Icon>
                 </ListItemIcon>
