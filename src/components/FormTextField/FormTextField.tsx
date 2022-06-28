@@ -24,6 +24,7 @@ const FormTextField = <T extends FieldValues>({
   // - JSX - //
   return (
     <TextField
+      required={!!rest.rules?.required}
       className={className}
       multiline={multiline}
       type="text"

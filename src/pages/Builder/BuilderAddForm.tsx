@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { IconButton, Button } from '@mui/material';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { Content } from 'src/components/Content';
@@ -6,14 +7,22 @@ import { ArrowBack } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { AddFormData } from 'src/utils/forms/types';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import {
+  FormAutocomplete,
+  FormAutocompleteOption,
+} from 'src/components/FormAutocomplete';
 import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
 
 export const BuilderAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, areasCreate, refreshStoreData } = useFirebase();
+  const {
+    loading: loadingData,
+    buildersCreate,
+    storeData: { companies: companiesData },
+    refreshStoreData,
+  } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -23,26 +32,41 @@ export const BuilderAddForm = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm<AddFormData['area']>({
+  } = useForm<AddFormData['builder']>({
     mode: 'all',
-    defaultValues: AddFormDefaultData.area,
+    defaultValues: AddFormDefaultData.builder,
   });
 
   // - STATE - //
   const [createLoading, setCreateLoading] = useState(false);
+  const [companyOptions, setCompanyOptions] = useState<
+    FormAutocompleteOption[]
+  >([]);
+
+  // - EFFECTS - //
+  useEffect(() => {
+    if (companiesData?.documents.length) {
+      setCompanyOptions(
+        companiesData.documents.map((doc) => ({
+          label: doc.name || 'Missing Name',
+          value: doc.id,
+        }))
+      );
+    }
+  }, [companiesData]);
 
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['area']) => {
+  const submit = async (data: AddFormData['builder']) => {
     try {
       setCreateLoading(true);
-      // Create new area
-      await areasCreate(data);
-      // Refresh areas in data store
-      await refreshStoreData.areas();
+      // Create new builder
+      await buildersCreate(data);
+      // Refresh builders in data store
+      await refreshStoreData.builders();
       // Reset inputs
       reset();
     } catch (e: any) {
@@ -62,11 +86,37 @@ export const BuilderAddForm = () => {
       </IconButton>
       <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
         {/* Title */}
-        <h1 className="form-title">Add an Area</h1>
+        <h1 className="form-title">Add a Builder</h1>
+
+        {/* Company REQUIRED */}
+        <FormAutocomplete
+          label="Company"
+          control={control}
+          name="companyId"
+          rules={formRules.requiredNonEmptyString}
+          options={companyOptions}
+        />
+
         {/* Name REQUIRED */}
         <FormTextField
-          label="Area Name"
+          label="Name"
+          control={control}
           name="name"
+          rules={formRules.requiredNonEmptyString}
+        />
+
+        {/* Phone Number REQUIRED */}
+        <FormTextField
+          label="Phone Number"
+          name="primaryPhone"
+          control={control}
+          rules={formRules.requiredNonEmptyString}
+        />
+
+        {/* Email REQUIRED */}
+        <FormTextField
+          label="Email"
+          name="primaryEmail"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
@@ -79,6 +129,7 @@ export const BuilderAddForm = () => {
           control={control}
           multiline
         />
+
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">
           <Button onClick={() => reset()}>Clear</Button>

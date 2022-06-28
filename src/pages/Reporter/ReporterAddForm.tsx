@@ -70,21 +70,21 @@ export const ReporterAddForm = () => {
       >
         {/* Title */}
         <h1 className="form-title">Add a Reporter</h1>
-        {/* Name */}
+        {/* Name REQUIRED */}
         <FormTextField
           label="Reporter Name"
           name="name"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
-        {/* Email */}
+        {/* Email REQUIRED */}
         <FormTextField
           label="Email"
           name="primaryEmail"
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
-        {/* Phone number */}
+        {/* Phone number REQUIRED */}
         <FormTextField
           label="Phone Number"
           name="primaryPhone"

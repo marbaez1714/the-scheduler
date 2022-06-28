@@ -41,7 +41,7 @@ export const AreaList = () => {
       {/* Area List */}
       <div className="overflow-auto rounded drop-shadow w-full">
         {storeData.areas && (
-          <table className="table-auto w-full border-collapse bg-slate-100">
+          <table className="w-full border-collapse bg-slate-100">
             {/* Header */}
             <thead className="text-left text-white font-medium">
               {/* Header Row */}

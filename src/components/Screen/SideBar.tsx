@@ -83,7 +83,7 @@ export const SideBar = () => {
                 onClick={handleNavigate(item.target)}
               >
                 <ListItemIcon className="text-white">
-                  <Icon>{item.icon}</Icon>
+                  <Icon className="text-white">{item.icon}</Icon>
                 </ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
