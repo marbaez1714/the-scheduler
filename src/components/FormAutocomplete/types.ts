@@ -6,4 +6,5 @@ export interface FormAutocompleteProps<T extends FieldValues>
   extends UseControllerProps<T> {
   label: string;
   options: FormAutocompleteOption[];
+  className?: string;
 }

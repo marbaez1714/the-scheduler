@@ -25,6 +25,14 @@ export const BuilderList = () => {
   // - HELPERS - //
   const headers = ['Actions', 'Name', 'Phone Number', 'Email', 'Company'];
 
+  const getCompany = (companyId: string) => {
+    return (
+      storeData?.companies?.documents.find(
+        (company) => company.id === companyId
+      )?.name || '-'
+    );
+  };
+
   // - JSX - //
   return (
     <Content className="flex w-full items-start space-x-4" loading={loading}>
@@ -71,7 +79,7 @@ export const BuilderList = () => {
                   {/* Email */}
                   <td className="p-2">{data.primaryEmail}</td>
                   {/* Company */}
-                  <td className="p-2">{data.companyId}</td>
+                  <td className="p-2">{getCompany(data.companyId)}</td>
                 </tr>
               ))}
             </tbody>

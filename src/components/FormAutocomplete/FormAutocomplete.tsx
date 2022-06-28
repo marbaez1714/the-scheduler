@@ -5,6 +5,7 @@ import { FormAutocompleteProps } from './types';
 const FormAutocomplete = <TFieldValues extends FieldValues>({
   label,
   options,
+  className,
   ...rest
 }: FormAutocompleteProps<TFieldValues>) => {
   // - HOOKS - //
@@ -23,6 +24,7 @@ const FormAutocomplete = <TFieldValues extends FieldValues>({
   // - JSX - //
   return (
     <Autocomplete
+      className={className}
       isOptionEqualToValue={(option, value) => option.value === value.value}
       options={options}
       value={getValue()}
