@@ -29,6 +29,11 @@ export const AddFormDefaultData: AddFormData = {
     primaryPhone: '',
     notes: '',
   },
+  community: {
+    name: '',
+    companyId: '',
+    notes: '',
+  },
   reporter: {
     name: '',
     primaryPhone: '',

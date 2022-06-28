@@ -4,6 +4,7 @@ export enum AppRoutes {
   Area = '/area',
   Builder = '/builder',
   Company = '/company',
+  Community = '/community',
   Contractor = '/contractor',
   Reporter = '/reporter',
   Scope = '/scope',

@@ -2,6 +2,7 @@ import { AddBox, ArrowBack, Create } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
+import { TableHeader } from 'src/components/TableHeader';
 import { useFirebase } from 'src/hooks/useFirebase';
 
 export const CompanyList = () => {
@@ -22,6 +23,15 @@ export const CompanyList = () => {
     navigate('add');
   };
 
+  // - HELPERS - //
+  const columns = [
+    '',
+    'Company Name',
+    'Office Address',
+    'Phone Number',
+    'Email',
+  ];
+
   // - JSX - //
   return (
     <Content className="flex w-full items-start space-x-4" loading={loading}>
@@ -39,22 +49,7 @@ export const CompanyList = () => {
       <div className="overflow-auto rounded drop-shadow w-full">
         {storeData.companies && (
           <table className="table-auto w-full border-collapse bg-slate-100">
-            {/* Header */}
-            <thead className="text-left text-white font-medium">
-              {/* Header Row */}
-              <tr className="bg-slate-600">
-                {/* Actions */}
-                <th className="p-2"></th>
-                {/* Name */}
-                <th className="p-2">Company Name</th>
-                {/* Address */}
-                <th className="p-2">Office Address</th>
-                {/* Phone Number */}
-                <th className="p-2">Phone Number</th>
-                {/* Email */}
-                <th className="p-2">Email</th>
-              </tr>
-            </thead>
+            <TableHeader columns={columns} />
             {/* Body */}
             <tbody>
               {storeData.companies.documents.map((data) => (

@@ -2,6 +2,7 @@ import { AddBox, ArrowBack, Create } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
+import { TableHeader } from 'src/components/TableHeader';
 import { useFirebase } from 'src/hooks/useFirebase';
 
 export const ReporterList = () => {
@@ -23,7 +24,7 @@ export const ReporterList = () => {
   };
 
   // - HELPERS - //
-  const headers = ['Actions', 'Name', 'Phone Number', 'Email'];
+  const columns = ['', 'Name', 'Phone Number', 'Email'];
 
   // - JSX - //
   return (
@@ -39,20 +40,10 @@ export const ReporterList = () => {
       </div>
 
       {/* Reporter List */}
-      <div className="overflow-auto rounded drop-shadow w-full">
+      <div className="overflow-auto rounded drop-shadow">
         {storeData.reporters && (
           <table className="table-auto w-full border-collapse bg-slate-100">
-            {/* Header */}
-            <thead className="text-left text-white font-medium">
-              {/* Header Row */}
-              <tr className="bg-slate-600">
-                {headers.map((item, index) => (
-                  <th className="p-2" key={index}>
-                    {item}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+            <TableHeader columns={columns} />
             {/* Body */}
             <tbody>
               {storeData.reporters.documents.map((data) => (

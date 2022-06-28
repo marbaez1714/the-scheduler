@@ -22,6 +22,13 @@ import {
 } from 'src/pages/Company';
 
 import {
+  Community,
+  CommunityList,
+  CommunityAddForm,
+  CommunityModifyForm,
+} from 'src/pages/Community';
+
+import {
   Contractor,
   ContractorList,
   ContractorAddForm,
@@ -94,6 +101,23 @@ const Navigation = () => {
           element={<AuthRoute component={<CompanyModifyForm />} />}
         />
       </Route>
+
+      {/* Community */}
+      <Route
+        path={AppRoutes.Community}
+        element={<AuthRoute component={<Community />} />}
+      >
+        <Route index element={<AuthRoute component={<CommunityList />} />} />
+        <Route
+          path="add"
+          element={<AuthRoute component={<CommunityAddForm />} />}
+        />
+        <Route
+          path=":companyId"
+          element={<AuthRoute component={<CommunityModifyForm />} />}
+        />
+      </Route>
+
       {/* Contractor */}
       <Route
         path={AppRoutes.Contractor}

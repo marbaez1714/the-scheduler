@@ -5,14 +5,10 @@ import { Content } from 'src/components/Content';
 import { TableHeader } from 'src/components/TableHeader';
 import { useFirebase } from 'src/hooks/useFirebase';
 
-export const ScopeList = () => {
+export const CommunityList = () => {
   // - HOOKS - //
   const { storeData, loading } = useFirebase();
   const navigate = useNavigate();
-
-  // - STATE - //
-
-  // - EFFECTS - //
 
   // - ACTIONS - //
   const handleEditClick = (id: string) => () => {
@@ -24,7 +20,15 @@ export const ScopeList = () => {
   };
 
   // - HELPERS - //
-  const columns = ['', 'Name', 'Translation (Spanish)', 'Description'];
+  const columns = ['', 'Name', 'Company'];
+
+  const getCompany = (companyId: string) => {
+    return (
+      storeData?.companies?.documents.find(
+        (company) => company.id === companyId
+      )?.name || '-'
+    );
+  };
 
   // - JSX - //
   return (
@@ -39,14 +43,14 @@ export const ScopeList = () => {
         </IconButton>
       </div>
 
-      {/* Scope List */}
+      {/* Company List */}
       <div className="overflow-auto rounded drop-shadow">
-        {storeData.scopes && (
+        {storeData.communities && (
           <table className="table-auto w-full border-collapse bg-slate-100">
             <TableHeader columns={columns} />
             {/* Body */}
             <tbody>
-              {storeData.scopes.documents.map((data) => (
+              {storeData.communities.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
                   <td
@@ -57,10 +61,8 @@ export const ScopeList = () => {
                   </td>
                   {/* Name */}
                   <td className="p-2">{data.name}</td>
-                  {/* Name Spanish */}
-                  <td className="p-2">{data.nameSpanish}</td>
-                  {/* Description */}
-                  <td className="p-2">{data.description}</td>
+                  {/* Company */}
+                  <td className="p-2">{getCompany(data.companyId)}</td>
                 </tr>
               ))}
             </tbody>

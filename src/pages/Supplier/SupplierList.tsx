@@ -2,6 +2,8 @@ import { AddBox, ArrowBack, Create } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
+import { TableActionCell } from 'src/components/TableActionCell';
+import { TableHeader } from 'src/components/TableHeader';
 import { useFirebase } from 'src/hooks/useFirebase';
 
 export const SupplierList = () => {
@@ -23,7 +25,7 @@ export const SupplierList = () => {
   };
 
   // - HELPERS - //
-  const headers = ['Actions', 'Name', 'Phone Number'];
+  const columns = ['', 'Name', 'Phone Number'];
 
   // - JSX - //
   return (
@@ -39,20 +41,10 @@ export const SupplierList = () => {
       </div>
 
       {/* Supplier List */}
-      <div className="overflow-auto rounded drop-shadow w-full">
+      <div className="overflow-auto rounded drop-shadow">
         {storeData.suppliers && (
           <table className="table-auto w-full border-collapse bg-slate-100">
-            {/* Header */}
-            <thead className="text-left text-white font-medium">
-              {/* Header Row */}
-              <tr className="bg-slate-600">
-                {headers.map((item, index) => (
-                  <th className="p-2" key={index}>
-                    {item}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+            <TableHeader columns={columns} />
             {/* Body */}
             <tbody>
               {storeData.suppliers.documents.map((data) => (
@@ -64,6 +56,10 @@ export const SupplierList = () => {
                   >
                     <Create className="text-sm" />
                   </td>
+                  <TableActionCell
+                    onClick={handleEditClick(data.id)}
+                    iconName="create"
+                  />
                   {/* Name */}
                   <td className="p-2">{data.name}</td>
                   {/* Phone Number */}

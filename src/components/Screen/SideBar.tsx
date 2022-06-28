@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { AppRoutes } from 'src/utils/constants/routes';
 import {
   Archive,
   DataObject,
@@ -17,21 +16,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
-const manageDataItems = [
-  { title: 'Areas', target: AppRoutes.Area, icon: 'location_searching' },
-  {
-    title: 'Builder',
-    target: AppRoutes.Builder,
-    icon: 'connect_without_contact',
-  },
-  { title: 'Companies', target: AppRoutes.Company, icon: 'apartment' },
-  { title: 'Contractors', target: AppRoutes.Contractor, icon: 'engineering' },
-  { title: 'Communities', target: '', icon: 'map' },
-  { title: 'Reporter', target: AppRoutes.Reporter, icon: 'reporter' },
-  { title: 'Scope', target: AppRoutes.Scope, icon: 'assignment' },
-  { title: 'Supplier', target: AppRoutes.Supplier, icon: 'inventory' },
-];
+import { manageDataItems } from './utils';
 
 export const SideBar = () => {
   const navigate = useNavigate();
