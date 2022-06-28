@@ -15,6 +15,13 @@ export const formRules = {
 };
 
 export const AddFormDefaultData: AddFormData = {
+  builder: {
+    name: '',
+    primaryPhone: '',
+    primaryEmail: '',
+    companyId: '',
+    notes: '',
+  },
   company: {
     name: '',
     primaryAddress: '',

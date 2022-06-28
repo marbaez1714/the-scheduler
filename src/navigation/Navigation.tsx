@@ -8,6 +8,13 @@ import { AppRoutes } from 'src/utils/constants/routes';
 import { Area, AreaList, AreaAddForm, AreaModifyForm } from 'src/pages/Area';
 
 import {
+  Builder,
+  BuilderList,
+  BuilderAddForm,
+  BuilderModifyForm,
+} from 'src/pages/Builder';
+
+import {
   Company,
   CompanyList,
   CompanyAddForm,
@@ -55,6 +62,21 @@ const Navigation = () => {
         <Route
           path=":areaId"
           element={<AuthRoute component={<AreaModifyForm />} />}
+        />
+      </Route>
+      {/* Builder */}
+      <Route
+        path={AppRoutes.Builder}
+        element={<AuthRoute component={<Builder />} />}
+      >
+        <Route index element={<AuthRoute component={<BuilderList />} />} />
+        <Route
+          path="add"
+          element={<AuthRoute component={<BuilderAddForm />} />}
+        />
+        <Route
+          path=":builderId"
+          element={<AuthRoute component={<BuilderModifyForm />} />}
         />
       </Route>
       {/* Company */}

@@ -1,6 +1,7 @@
 import { StoreDocument } from '../firebase/types';
 
 export interface AddFormData {
+  builder: StoreDocument['Builder'];
   company: StoreDocument['Company'];
   contractor: Omit<StoreDocument['Contractor'], 'assignedJobs'>;
   reporter: StoreDocument['Reporter'];
