@@ -4,7 +4,7 @@ import { SideBar } from './SideBar';
 
 const Screen = ({ title, children }: ScreenProps) => {
   return (
-    <div className="flex flex-col h-screen w-screen font-roboto">
+    <div className="flex flex-col h-screen w-screen font-roboto text-slate-900">
       {/* Page */}
       <div className="flex flex-grow">
         {/* Side Bar */}
@@ -12,7 +12,7 @@ const Screen = ({ title, children }: ScreenProps) => {
         {/* Screen */}
         <div className="flex flex-col flex-grow overflow-hidden">
           {/* Header */}
-          <header className="font-medium text-3xl text-slate-900 bg-slate-100 p-4 border-b-slate-200 border-b">
+          <header className="font-medium text-3xl bg-slate-100 p-4 border-b-slate-200 border-b">
             {title}
           </header>
           {/* Page */}

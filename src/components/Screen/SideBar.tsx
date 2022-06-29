@@ -1,21 +1,9 @@
+import { DataObject, TableChart } from '@mui/icons-material';
+import { Collapse } from '@mui/material';
 import { useState } from 'react';
-import {
-  Archive,
-  DataObject,
-  ExpandLess,
-  ExpandMore,
-  TableChart,
-} from '@mui/icons-material';
-import {
-  Collapse,
-  Icon,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { SideBarLink } from './SideBarLink';
+import { SideBarButton } from './SideBarButton';
 import { manageDataItems } from './utils';
 
 export const SideBar = () => {
@@ -32,25 +20,37 @@ export const SideBar = () => {
   };
 
   return (
-    <div className="flex flex-col flex-shrink-0 justify-between bg-slate-900 text-white max-w-1/4 min-w-1/4">
-      <List>
-        {/* Header */}
+    <div className="flex flex-col bg-slate-900 text-white">
+      <h1 className="text-2xl font-bold py-3 pl-6 pr-10">the_scheduler</h1>
+      <ul className="font-medium whitespace-nowrap">
+        <SideBarLink to="/company" icon="table_chart" title="Dispatch" />
+        <SideBarLink to="/create_job" icon="add_circle" title="Create Job" />
+        <SideBarButton
+          leftIcon="data_object"
+          rightIcon={expandManage ? 'expand_less' : 'expand_more'}
+          title="Manage Data"
+          onClick={handleExpand}
+        />
+        {expandManage &&
+          manageDataItems.map((item, index) => (
+            <SideBarLink className="pl-10" {...item} key={index} />
+          ))}
+      </ul>
+
+      {/* <List>
         <ListItem className="text-2xl font-bold mb-4">the-scheduler</ListItem>
-        {/* Dispatch */}
         <ListItemButton>
           <ListItemIcon>
             <TableChart className="text-white" />
           </ListItemIcon>
           <ListItemText primary="Dispatch" />
         </ListItemButton>
-        {/* Archive */}
         <ListItemButton>
           <ListItemIcon>
             <Archive className="text-white" />
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </ListItemButton>
-        {/* Manage Data */}
         <ListItemButton onClick={handleExpand}>
           <ListItemIcon>
             <DataObject className="text-white" />
@@ -58,7 +58,6 @@ export const SideBar = () => {
           <ListItemText primary="Manage Data" />
           {expandManage ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        {/* Manage Data - Collapsable Content */}
         <Collapse in={expandManage} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {manageDataItems.map((item, index) => (
@@ -75,8 +74,7 @@ export const SideBar = () => {
             ))}
           </List>
         </Collapse>
-      </List>
-      {/* TODO: Add account stuff */}
+      </List> */}
     </div>
   );
 };

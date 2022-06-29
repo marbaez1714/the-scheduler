@@ -2,7 +2,6 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 import { useFirebase } from 'src/hooks/useFirebase';
 import { Loading } from 'src/pages/Loading';
-import { AppRoutes } from 'src/utils/constants/routes';
 import { AuthRouteProps } from './types';
 
 export const AuthRoute = ({ component }: AuthRouteProps) => {
@@ -14,7 +13,7 @@ export const AuthRoute = ({ component }: AuthRouteProps) => {
   }
 
   if (!authState.authorized) {
-    return <Navigate to={AppRoutes.Base} state={{ from: location }} replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
   return <>{component}</>;

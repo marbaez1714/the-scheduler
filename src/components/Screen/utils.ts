@@ -1,16 +1,14 @@
-import { AppRoutes } from 'src/utils/constants/routes';
-
 export const manageDataItems = [
-  { title: 'Areas', target: AppRoutes.Area, icon: 'location_searching' },
+  { title: 'Areas', to: '/manage/area', icon: 'location_searching' },
   {
     title: 'Builder',
-    target: AppRoutes.Builder,
+    to: '/manage/builder',
     icon: 'connect_without_contact',
   },
-  { title: 'Communities', target: AppRoutes.Community, icon: 'map' },
-  { title: 'Companies', target: AppRoutes.Company, icon: 'apartment' },
-  { title: 'Contractors', target: AppRoutes.Contractor, icon: 'engineering' },
-  { title: 'Reporter', target: AppRoutes.Reporter, icon: 'summarize' },
-  { title: 'Scope', target: AppRoutes.Scope, icon: 'assignment' },
-  { title: 'Supplier', target: AppRoutes.Supplier, icon: 'inventory' },
+  { title: 'Communities', to: '/manage/community', icon: 'map' },
+  { title: 'Companies', to: '/manage/company', icon: 'apartment' },
+  { title: 'Contractors', to: '/manage/contractor', icon: 'engineering' },
+  { title: 'Reporter', to: '/manage/reporter', icon: 'summarize' },
+  { title: 'Scope', to: '/manage/scope', icon: 'assignment' },
+  { title: 'Supplier', to: '/manage/supplier', icon: 'inventory' },
 ];

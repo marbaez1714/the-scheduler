@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Screen } from 'src/components/Screen';
 
-const Reporter = () => {
+const ManageData = () => {
   // - HOOKS - //
 
   // - STATE - //
@@ -14,10 +14,10 @@ const Reporter = () => {
 
   // - JSX - //
   return (
-    <Screen title="Reporters">
+    <Screen title="Manage">
       <Outlet />
     </Screen>
   );
 };
 
-export default Reporter;
+export default ManageData;
