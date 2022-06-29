@@ -229,14 +229,10 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
       });
   };
 
-  // TODO REFRESH ALL DATA
-
   // - HELPERS - //
   const handleLoading = (param: string, state: boolean) => {
     setLoadingStates((prev) => ({ ...prev, [param]: state }));
   };
-
-  // - SETTING CONTEXT - //
 
   // - PROVIDER - //
   return (
