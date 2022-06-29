@@ -14,8 +14,8 @@ const TableActionCell = ({ onClick, iconName }: TableActionCellProps) => {
 
   // - JSX - //
   return (
-    <td className="p-0">
-      <button>
+    <td className="py-2 px-4 first:pl-6 last:pr-6">
+      <button className="flex" onClick={onClick}>
         <Icon>{iconName}</Icon>
       </button>
     </td>

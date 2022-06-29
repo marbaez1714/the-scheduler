@@ -50,20 +50,18 @@ export const SupplierList = () => {
               {storeData.suppliers.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <td
-                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
-                    onClick={handleEditClick(data.id)}
-                  >
-                    <Create className="text-sm" />
-                  </td>
                   <TableActionCell
                     onClick={handleEditClick(data.id)}
                     iconName="create"
                   />
                   {/* Name */}
-                  <td className="p-2">{data.name}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.name}
+                  </td>
                   {/* Phone Number */}
-                  <td className="p-2">{data.phoneNumber}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.phoneNumber}
+                  </td>
                 </tr>
               ))}
             </tbody>

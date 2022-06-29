@@ -62,6 +62,7 @@ const Navigation = () => {
       {/* ***** PUBLIC ROUTES ***** */}
       <Route path={AppRoutes.Base} element={<Login />} />
       {/* ***** SECURE ROUTES ***** */}
+
       {/* Area */}
       <Route path={AppRoutes.Area} element={<AuthRoute component={<Area />} />}>
         <Route index element={<AuthRoute component={<AreaList />} />} />
@@ -101,7 +102,6 @@ const Navigation = () => {
           element={<AuthRoute component={<CompanyModifyForm />} />}
         />
       </Route>
-
       {/* Community */}
       <Route
         path={AppRoutes.Community}
@@ -117,7 +117,6 @@ const Navigation = () => {
           element={<AuthRoute component={<CommunityModifyForm />} />}
         />
       </Route>
-
       {/* Contractor */}
       <Route
         path={AppRoutes.Contractor}
@@ -133,7 +132,6 @@ const Navigation = () => {
           element={<AuthRoute component={<ContractorModifyForm />} />}
         />
       </Route>
-
       {/* Reporter */}
       <Route
         path={AppRoutes.Reporter}
@@ -164,7 +162,6 @@ const Navigation = () => {
           element={<AuthRoute component={<ScopeModifyForm />} />}
         />
       </Route>
-
       {/* Supplier */}
       <Route
         path={AppRoutes.Supplier}

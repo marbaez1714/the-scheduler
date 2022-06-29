@@ -13,7 +13,7 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
 
   // - JSX - //
   return (
-    <thead className="text-left text-white font-medium">
+    <thead className="text-left text-white font-medium whitespace-nowrap">
       {/* Header Row */}
       <tr className="bg-slate-600">
         {/* Columns */}

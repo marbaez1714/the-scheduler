@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { TableHeader } from 'src/components/TableHeader';
+import { TableActionCell } from 'src/components/TableActionCell';
 
 export const ContractorList = () => {
   // - HOOKS - //
@@ -49,16 +50,18 @@ export const ContractorList = () => {
               {storeData.contractors.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <td
-                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
+                  <TableActionCell
                     onClick={handleEditClick(data.id)}
-                  >
-                    <Create className="text-sm" />
-                  </td>
+                    iconName="create"
+                  />
                   {/* Name */}
-                  <td className="p-2">{data.name}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.name}
+                  </td>
                   {/* Phone Number */}
-                  <td className="p-2">{data.primaryPhone}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryPhone}
+                  </td>
                 </tr>
               ))}
             </tbody>

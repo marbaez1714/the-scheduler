@@ -7,10 +7,10 @@ export const manageDataItems = [
     target: AppRoutes.Builder,
     icon: 'connect_without_contact',
   },
+  { title: 'Communities', target: AppRoutes.Community, icon: 'map' },
   { title: 'Companies', target: AppRoutes.Company, icon: 'apartment' },
   { title: 'Contractors', target: AppRoutes.Contractor, icon: 'engineering' },
-  { title: 'Communities', target: AppRoutes.Community, icon: 'map' },
-  { title: 'Reporter', target: AppRoutes.Reporter, icon: 'reporter' },
+  { title: 'Reporter', target: AppRoutes.Reporter, icon: 'summarize' },
   { title: 'Scope', target: AppRoutes.Scope, icon: 'assignment' },
   { title: 'Supplier', target: AppRoutes.Supplier, icon: 'inventory' },
 ];

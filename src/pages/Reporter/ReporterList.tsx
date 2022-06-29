@@ -2,6 +2,7 @@ import { AddBox, ArrowBack, Create } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
+import { TableActionCell } from 'src/components/TableActionCell';
 import { TableHeader } from 'src/components/TableHeader';
 import { useFirebase } from 'src/hooks/useFirebase';
 
@@ -49,18 +50,22 @@ export const ReporterList = () => {
               {storeData.reporters.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <td
-                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
+                  <TableActionCell
                     onClick={handleEditClick(data.id)}
-                  >
-                    <Create className="text-sm" />
-                  </td>
+                    iconName="create"
+                  />
                   {/* Name */}
-                  <td className="p-2">{data.name}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.name}
+                  </td>
                   {/* Phone Number */}
-                  <td className="p-2">{data.primaryPhone || '-'}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryPhone || '-'}
+                  </td>
                   {/* Address */}
-                  <td className="p-2">{data.primaryEmail || '-'}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryEmail || '-'}
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -2,6 +2,8 @@ import { AddBox, ArrowBack, Create } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
+import { TableActionCell } from 'src/components/TableActionCell';
+import { TableHeader } from 'src/components/TableHeader';
 import { useFirebase } from 'src/hooks/useFirebase';
 
 export const BuilderList = () => {
@@ -23,7 +25,7 @@ export const BuilderList = () => {
   };
 
   // - HELPERS - //
-  const headers = ['Actions', 'Name', 'Phone Number', 'Email', 'Company'];
+  const columns = ['', 'Name', 'Phone Number', 'Email', 'Company'];
 
   const getCompany = (companyId: string) => {
     return (
@@ -47,39 +49,35 @@ export const BuilderList = () => {
       </div>
 
       {/* Builder List */}
-      <div className="overflow-auto rounded drop-shadow w-full">
+      <div className="overflow-auto rounded drop-shadow">
         {storeData.builders && (
           <table className="table-auto w-full border-collapse bg-slate-100">
-            {/* Header */}
-            <thead className="text-left text-white font-medium">
-              {/* Header Row */}
-              <tr className="bg-slate-600">
-                {headers.map((item, index) => (
-                  <th className="p-2" key={index}>
-                    {item}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+            <TableHeader columns={columns} />
             {/* Body */}
             <tbody>
               {storeData.builders.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <td
-                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
+                  <TableActionCell
                     onClick={handleEditClick(data.id)}
-                  >
-                    <Create className="text-sm" />
-                  </td>
+                    iconName="create"
+                  />
                   {/* Name */}
-                  <td className="p-2">{data.name}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.name}
+                  </td>
                   {/* Phone Number */}
-                  <td className="p-2">{data.primaryPhone}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryPhone}
+                  </td>
                   {/* Email */}
-                  <td className="p-2">{data.primaryEmail}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryEmail}
+                  </td>
                   {/* Company */}
-                  <td className="p-2">{getCompany(data.companyId)}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {getCompany(data.companyId)}
+                  </td>
                 </tr>
               ))}
             </tbody>

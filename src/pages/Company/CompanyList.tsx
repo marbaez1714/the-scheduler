@@ -2,6 +2,7 @@ import { AddBox, ArrowBack, Create } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
+import { TableActionCell } from 'src/components/TableActionCell';
 import { TableHeader } from 'src/components/TableHeader';
 import { useFirebase } from 'src/hooks/useFirebase';
 
@@ -46,7 +47,7 @@ export const CompanyList = () => {
       </div>
 
       {/* Company List */}
-      <div className="overflow-auto rounded drop-shadow w-full">
+      <div className="overflow-auto rounded drop-shadow">
         {storeData.companies && (
           <table className="table-auto w-full border-collapse bg-slate-100">
             <TableHeader columns={columns} />
@@ -55,20 +56,26 @@ export const CompanyList = () => {
               {storeData.companies.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <td
-                    className="p-2 text-center cursor-pointer hover:bg-slate-200"
+                  <TableActionCell
                     onClick={handleEditClick(data.id)}
-                  >
-                    <Create className="text-sm" />
-                  </td>
+                    iconName="create"
+                  />
                   {/* Name */}
-                  <td className="p-2">{data.name}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.name}
+                  </td>
                   {/* Address */}
-                  <td className="p-2">{data.primaryAddress || '-'}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryAddress || '-'}
+                  </td>
                   {/* Phone Number */}
-                  <td className="p-2">{data.primaryPhone || '-'}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryPhone || '-'}
+                  </td>
                   {/* Address */}
-                  <td className="p-2">{data.primaryEmail || '-'}</td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">
+                    {data.primaryEmail || '-'}
+                  </td>
                 </tr>
               ))}
             </tbody>
