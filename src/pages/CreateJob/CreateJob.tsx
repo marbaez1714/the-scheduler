@@ -1,8 +1,10 @@
-import { Button, Divider } from '@mui/material';
+import { Button, Divider, TextField } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Content } from 'src/components/Content';
 import { FormAutocomplete } from 'src/components/FormAutocomplete';
+import { FormDatePicker } from 'src/components/FormDatePicker';
 import { FormTextField } from 'src/components/FormTextField';
 import { Screen } from 'src/components/Screen';
 import { useFirebase } from 'src/hooks/useFirebase';
@@ -73,6 +75,13 @@ const CreateJob = () => {
             className="col-span-2"
             control={control}
             label="Address"
+            name=""
+          />
+
+          <FormDatePicker
+            className="col-span-2"
+            control={control}
+            label="Start Date"
             name=""
           />
 
