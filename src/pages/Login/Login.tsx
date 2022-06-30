@@ -1,9 +1,20 @@
 import { Button } from '@mui/material';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFirebase } from 'src/hooks/useFirebase';
 
 const Login = () => {
   // Hooks
-  const { signIn, signOut } = useFirebase();
+  const {
+    signIn,
+    authState: { authorized },
+  } = useFirebase();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    authorized && navigate('/dashboard');
+  }, [authorized]);
 
   // Actions
   const handleLoginClick = () => {
@@ -16,7 +27,6 @@ const Login = () => {
       <Button onClick={handleLoginClick} variant="contained" size="large">
         Google Login
       </Button>
-      <Button onClick={() => signOut()}>Sign Out</Button>
     </div>
   );
 };

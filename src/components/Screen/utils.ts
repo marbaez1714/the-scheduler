@@ -9,6 +9,6 @@ export const manageDataItems = [
   { title: 'Companies', to: '/manage/company', icon: 'apartment' },
   { title: 'Contractors', to: '/manage/contractor', icon: 'engineering' },
   { title: 'Reporter', to: '/manage/reporter', icon: 'summarize' },
-  { title: 'Scope', to: '/manage/scope', icon: 'assignment' },
+  { title: 'Scope', to: '/manage/scope', icon: 'handyman' },
   { title: 'Supplier', to: '/manage/supplier', icon: 'inventory' },
 ];

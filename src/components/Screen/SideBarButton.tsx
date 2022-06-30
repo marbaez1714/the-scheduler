@@ -21,17 +21,16 @@ export const SideBarButton = ({
 
   // - JSX - //
   return (
-    <li
+    <button
       className={classNames(
-        'px-6 py-3 hover:bg-slate-800 transition-all',
+        'flex items-center px-6 py-3 hover:bg-slate-800 transition-all',
         className
       )}
+      onClick={onClick}
     >
-      <button className="flex items-center" onClick={onClick}>
-        {leftIcon && <Icon className="text-white">{leftIcon}</Icon>}
-        <span className="ml-3 mr-8">{title}</span>
-        {rightIcon && <Icon className="text-white">{rightIcon}</Icon>}
-      </button>
-    </li>
+      {leftIcon && <Icon className="text-white">{leftIcon}</Icon>}
+      <span className="ml-3 mr-8">{title}</span>
+      {rightIcon && <Icon className="text-white">{rightIcon}</Icon>}
+    </button>
   );
 };

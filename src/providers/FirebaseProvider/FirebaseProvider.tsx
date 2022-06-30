@@ -108,16 +108,8 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   }, [authorized]);
 
   useEffect(() => {
-    if (authUser) {
-      setCheckingAuthorized(true);
-      authUser
-        .getIdTokenResult(true)
-        .then((result) => {
-          setAuthorized(!!result.claims.authorized);
-        })
-        .finally(() => setCheckingAuthorized(false));
-    }
-  }, [authUser]);
+    _checkAuth();
+  }, [authUser, authLoading]);
 
   // - CONTEXT FUNCTIONS - //
 
@@ -134,103 +126,119 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
 
   // App Data
   const refreshAreas = async () => {
-    handleLoading('areas', true);
+    _toggleLoading('areas', true);
     await callableFunctions
       .areasGetAll()
       .then((response) => {
         setAreasData(response.data);
       })
       .finally(() => {
-        handleLoading('areas', false);
+        _toggleLoading('areas', false);
       });
   };
 
   const refreshBuilders = async () => {
-    handleLoading('builders', true);
+    _toggleLoading('builders', true);
     await callableFunctions
       .buildersGetAll()
       .then((response) => {
         setBuildersData(response.data);
       })
       .finally(() => {
-        handleLoading('builders', false);
+        _toggleLoading('builders', false);
       });
   };
 
   const refreshCommunities = async () => {
-    handleLoading('communities', true);
+    _toggleLoading('communities', true);
     await callableFunctions
       .communitiesGetAll()
       .then((response) => {
         setCommunitiesData(response.data);
       })
       .finally(() => {
-        handleLoading('communities', false);
+        _toggleLoading('communities', false);
       });
   };
 
   const refreshContractors = async () => {
-    handleLoading('contractors', true);
+    _toggleLoading('contractors', true);
     await callableFunctions
       .contractorsGetAll()
       .then((response) => {
         setContractorsData(response.data);
       })
       .finally(() => {
-        handleLoading('contractors', false);
+        _toggleLoading('contractors', false);
       });
   };
 
   const refreshCompanies = async () => {
-    handleLoading('companies', true);
+    _toggleLoading('companies', true);
     await callableFunctions
       .companiesGetAll()
       .then((response) => {
         setCompaniesData(response.data);
       })
       .finally(() => {
-        handleLoading('companies', false);
+        _toggleLoading('companies', false);
       });
   };
 
   const refreshReporters = async () => {
-    handleLoading('reporters', true);
+    _toggleLoading('reporters', true);
     await callableFunctions
       .reportersGetAll()
       .then((response) => {
         setReportersData(response.data);
       })
       .then(() => {
-        handleLoading('reporters', false);
+        _toggleLoading('reporters', false);
       });
   };
 
   const refreshScopes = async () => {
-    handleLoading('scopes', true);
+    _toggleLoading('scopes', true);
     await callableFunctions
       .scopesGetAll()
       .then((response) => {
         setScopesData(response.data);
       })
       .finally(() => {
-        handleLoading('scopes', false);
+        _toggleLoading('scopes', false);
       });
   };
 
   const refreshSuppliers = async () => {
-    handleLoading('suppliers', true);
+    _toggleLoading('suppliers', true);
     await callableFunctions
       .suppliersGetAll()
       .then((response) => {
         setSuppliersData(response.data);
       })
       .finally(() => {
-        handleLoading('suppliers', false);
+        _toggleLoading('suppliers', false);
       });
   };
 
   // - HELPERS - //
-  const handleLoading = (param: string, state: boolean) => {
+  const _checkAuth = async () => {
+    setCheckingAuthorized(true);
+
+    if (authLoading) {
+      return;
+    }
+
+    if (authUser) {
+      await authUser.getIdTokenResult(true).then((result) => {
+        setAuthorized(!!result.claims.authorized);
+      });
+    }
+
+    setCheckingAuthorized(false);
+  };
+
+  const _toggleLoading = (param: string, state: boolean) => {
     setLoadingStates((prev) => ({ ...prev, [param]: state }));
   };
 

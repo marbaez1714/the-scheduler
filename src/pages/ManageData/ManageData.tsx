@@ -14,7 +14,7 @@ const ManageData = () => {
 
   // - JSX - //
   return (
-    <Screen title="Manage">
+    <Screen title="Manage Data">
       <Outlet />
     </Screen>
   );

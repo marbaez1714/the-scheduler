@@ -3,6 +3,8 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import { Login } from 'src/pages/Login';
 import { AuthRoute } from './AuthRoute';
 
+import { Dashboard } from 'src/pages/Dashboard';
+
 import {
   // Base
   ManageData,
@@ -48,6 +50,12 @@ const Navigation = () => {
       <Route index element={<Login />} />
       {/* ***** SECURE ROUTES ***** */}
 
+      {/* Dashboard */}
+      <Route
+        path="/dashboard"
+        element={<AuthRoute component={<Dashboard />} />}
+      />
+      {/* Manage */}
       <Route path="/manage" element={<AuthRoute component={<ManageData />} />}>
         {/* Area */}
         <Route path="area" element={<AuthRoute component={<Outlet />} />}>
@@ -146,6 +154,7 @@ const Navigation = () => {
           />
         </Route>
       </Route>
+      {/* Create Job */}
       <Route
         path="/create_job"
         element={<AuthRoute component={<CreateJob />} />}

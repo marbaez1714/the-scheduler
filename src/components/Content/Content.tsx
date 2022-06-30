@@ -16,7 +16,17 @@ const Content = ({ className, children, loading }: ContentProps) => {
   // - JSX - //
   return (
     <>
-      <div className={classNames(className, 'w-full', 'p-8')}>{children}</div>
+      <div
+        className={classNames(
+          className,
+          'w-full',
+          'h-full',
+          'p-8',
+          'overflow-auto'
+        )}
+      >
+        {children}
+      </div>
       <Backdrop open={!!loading}>
         <CircularProgress />
       </Backdrop>
