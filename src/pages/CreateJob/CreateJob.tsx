@@ -1,60 +1,74 @@
+import { Button, Divider } from '@mui/material';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Content } from 'src/components/Content';
 import { FormAutocomplete } from 'src/components/FormAutocomplete';
 import { FormTextField } from 'src/components/FormTextField';
 import { Screen } from 'src/components/Screen';
+import { useFirebase } from 'src/hooks/useFirebase';
 
 const CreateJob = () => {
-  // - HOOKS - //
-  const { control } = useForm();
+  // ----- HOOKS ----- //
+  const { storeData } = useFirebase();
 
-  // - STATE - //
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { isValid },
+  } = useForm();
 
-  // - EFFECTS - //
+  // ----- STATE ----- //
 
-  // - ACTIONS - //
+  // ----- EFFECTS ----- //
 
-  // - HELPERS - //
-  // address: this.job.address,
-  //         communityId: this.job.community,
-  //         date: this.job.date,
-  //         builderId: this.job.builder,
-  //         installerId: "" || this.job.installer,
-  //         reporterId: this.job.reporter,
-  //         sowId: this.job.scope,
-  //         areaId: this.job.area,
-  //         lineItems: this.job.lineItems,
-  // - JSX - //
+  // ----- ACTIONS ----- //
+
+  // ----- FORM OPTIONS ----- //
+  const areaOptions = useMemo(() => {
+    const documents = storeData.areas?.documents ?? [];
+    return documents.map((item) => ({ label: item.name, value: item.id }));
+  }, [storeData.areas]);
+
+  const builderOptions = useMemo(() => {
+    const documents = storeData.builders?.documents ?? [];
+    return documents.map((item) => ({ label: item.name, value: item.id }));
+  }, [storeData.builders]);
+
+  const communityOptions = useMemo(() => {
+    const documents = storeData.communities?.documents ?? [];
+    return documents.map((item) => ({ label: item.name, value: item.id }));
+  }, [storeData.communities]);
+
+  const contractorsOptions = useMemo(() => {
+    const documents = storeData.contractors?.documents ?? [];
+    return documents.map((item) => ({ label: item.name, value: item.id }));
+  }, [storeData.contractors]);
+
+  const reporterOptions = useMemo(() => {
+    const documents = storeData.reporters?.documents ?? [];
+    return documents.map((item) => ({ label: item.name, value: item.id }));
+  }, [storeData.reporters]);
+
+  const scopeOptions = useMemo(() => {
+    const documents = storeData.scopes?.documents ?? [];
+    return documents.map((item) => ({ label: item.name, value: item.id }));
+  }, [storeData.scopes]);
+
+  const supplierOptions = useMemo(() => {
+    const documents = storeData.suppliers?.documents ?? [];
+    return documents.map((item) => ({ label: item.name, value: item.id }));
+  }, [storeData.suppliers]);
+
+  // ----- HELPERS ----- //
+  // ----- JSX ----- //
   return (
-    <Screen title="Manage">
+    <Screen title="Create a Job">
       <Content>
         <form className="form-card grid-cols-2" onSubmit={console.log}>
           <h1 className="form-title col-span-2">Create a New Job</h1>
 
-          <FormAutocomplete
-            className="col-span-2"
-            control={control}
-            label="Company"
-            options={[]}
-            name={''}
-          />
-
-          <FormAutocomplete
-            className="col-span-2"
-            control={control}
-            label="Community"
-            options={[]}
-            name={''}
-          />
-
-          <FormAutocomplete
-            className="col-span-2"
-            control={control}
-            label="Builder"
-            options={[]}
-            name={''}
-          />
-
+          {/* Address */}
           <FormTextField
             className="col-span-2"
             control={control}
@@ -62,49 +76,84 @@ const CreateJob = () => {
             name=""
           />
 
+          {/* Community */}
           <FormAutocomplete
-            className="col-span-2"
+            className="col-span-1"
+            control={control}
+            label="Community"
+            options={communityOptions}
+            name={''}
+          />
+          {/* Builder */}
+          <FormAutocomplete
+            className="col-span-1"
+            control={control}
+            label="Builder"
+            options={builderOptions}
+            name={''}
+          />
+
+          {/* Installer */}
+          <FormAutocomplete
+            className="col-span-1"
             control={control}
             label="Installer"
-            options={[]}
+            options={contractorsOptions}
             name={''}
           />
-
+          {/* Reporter */}
           <FormAutocomplete
-            className="col-span-2"
+            className="col-span-1"
             control={control}
             label="Reporter"
-            options={[]}
+            options={reporterOptions}
             name={''}
           />
-
+          {/* Scope */}
           <FormAutocomplete
-            className="col-span-2"
+            className="col-span-1"
             control={control}
             label="Scope"
-            options={[]}
+            options={scopeOptions}
             name={''}
           />
-
+          {/* Area */}
           <FormAutocomplete
-            className="col-span-2"
+            className="col-span-1"
             control={control}
             label="Area"
-            options={[]}
+            options={areaOptions}
             name={''}
           />
 
           <FormTextField
-            className="col-span-2"
+            className="col-span-1"
             control={control}
             label="Line Item 1"
             name=""
           />
+
+          <FormAutocomplete
+            className="col-span-1"
+            control={control}
+            label="Supplier 1"
+            options={supplierOptions}
+            name={''}
+          />
+
           <FormTextField
-            className="col-span-2"
+            className="col-span-1"
             control={control}
             label="Line Item 2"
             name=""
+          />
+
+          <FormAutocomplete
+            className="col-span-1"
+            control={control}
+            label="Supplier 2"
+            options={supplierOptions}
+            name={''}
           />
 
           <FormTextField
@@ -114,6 +163,14 @@ const CreateJob = () => {
             name=""
             multiline
           />
+
+          {/* Actions */}
+          <div className="col-span-2 space-x-2 text-right">
+            <Button onClick={() => reset()}>Clear</Button>
+            <Button variant="contained" type="submit" disabled={!isValid}>
+              Submit
+            </Button>
+          </div>
         </form>
       </Content>
     </Screen>

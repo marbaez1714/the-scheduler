@@ -9,17 +9,6 @@ export const SideBarLink = ({
   icon,
   className,
 }: SideBarLinkProps) => {
-  // - HOOKS - //
-
-  // - STATE - //
-
-  // - EFFECTS - //
-
-  // - ACTIONS - //
-
-  // - HELPERS - //
-
-  // - JSX - //
   return (
     <li
       className={classNames(

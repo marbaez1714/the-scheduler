@@ -22,7 +22,7 @@ code {
 
 @layer components {
   .form-card {
-    @apply w-full grid gap-6 shadow-lg p-8 rounded-lg bg-slate-100;
+    @apply w-full grid gap-6 shadow p-8 rounded-lg bg-slate-100;
   }
   .form-title {
     @apply col-span-2 text-2xl tracking-wide text-slate-800;

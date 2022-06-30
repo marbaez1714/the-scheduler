@@ -3,6 +3,10 @@ export interface ScreenProps {
   children: React.ReactNode;
 }
 
+export interface HeaderProps {
+  children: React.ReactNode;
+}
+
 export interface SideBarLinkProps {
   title: string;
   to: string;

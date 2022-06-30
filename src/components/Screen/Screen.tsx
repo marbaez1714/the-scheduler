@@ -1,6 +1,7 @@
 import { ScreenProps } from './types';
 import { StatusBar } from './StatusBar';
 import { SideBar } from './SideBar';
+import { Header } from './Header';
 
 const Screen = ({ title, children }: ScreenProps) => {
   return (
@@ -12,9 +13,7 @@ const Screen = ({ title, children }: ScreenProps) => {
         {/* Screen */}
         <div className="flex flex-col flex-grow overflow-hidden">
           {/* Header */}
-          <header className="z-10 tracking-wide font-medium text-3xl bg-slate-100 p-4 border-b-slate-200 border-b text-center shadow-md">
-            {title}
-          </header>
+          <Header>{title}</Header>
           {/* Page */}
           <div className="flex flex-grow items-start justify-stretch bg-neutral-200 overflow-hidden">
             {children}
