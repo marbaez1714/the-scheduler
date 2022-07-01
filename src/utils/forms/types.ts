@@ -10,3 +10,21 @@ export interface AddFormData {
   supplier: StoreDocument['Supplier'];
   scope: StoreDocument['Scope'];
 }
+
+export type LineItem = {
+  orderNumber: string;
+  supplierId: string;
+};
+
+export interface CreateJobData {
+  address: string;
+  builderId?: string;
+  contractorId?: string;
+  reporterId?: string;
+  startDate: Date | null;
+  communityId?: string;
+  scopeId?: string;
+  areaId?: string;
+  lineItems?: LineItem[];
+  notes?: string;
+}

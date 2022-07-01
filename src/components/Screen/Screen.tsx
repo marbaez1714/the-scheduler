@@ -15,7 +15,7 @@ const Screen = ({ title, children }: ScreenProps) => {
           {/* Header */}
           <Header>{title}</Header>
           {/* Page */}
-          <div className="flex flex-grow items-start justify-stretch bg-neutral-200 overflow-hidden">
+          <div className="flex flex-grow items-start justify-stretch bg-slate-300 overflow-hidden">
             {children}
           </div>
         </div>
