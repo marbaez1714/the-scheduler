@@ -1,6 +1,8 @@
 // ***** Documents *****
 type DocId = { id: string };
 
+type LineItem = { orderNumber: string; supplierId: string };
+
 interface StoreDocument {
   Area: {
     name: string;
@@ -29,13 +31,23 @@ interface StoreDocument {
   Contractor: {
     name: string;
     primaryPhone: string;
-    assignedJobs: string[];
     notes: string;
   };
-  JobSite: {
+  JobLegacy: {
     name: string;
+    areaId: string;
+    builderId: string;
     communityId: string;
+    contractorId: string;
+    lineItems: LineItem[];
+    reporterId: string;
+    scopeId: string;
+    completedDate: string;
+    startDate: string;
     notes: string;
+    active: boolean;
+    inProgress: boolean;
+    isImportant: boolean;
   };
   Reporter: {
     name: string;
@@ -69,11 +81,9 @@ type CreateMeta = {
 type UpdateMeta = Omit<CreateMeta, 'createdBy' | 'createdTime'>;
 
 // ***** Create / Update - Documents *****
-type NewDocumentData<T extends StoreDocumentNames> = CreateMeta &
-  Required<StoreDocument[T]>;
+type NewDocumentData<T extends StoreDocumentNames> = CreateMeta & Required<StoreDocument[T]>;
 
-type UpdatedDocumentData<T extends StoreDocumentNames> = UpdateMeta &
-  Partial<StoreDocument[T]>;
+type UpdatedDocumentData<T extends StoreDocumentNames> = UpdateMeta & Partial<StoreDocument[T]>;
 
 // ***** PAYLOADS *****
 
@@ -94,15 +104,7 @@ type GetAllPayload = { collection: StoreDocumentNames };
 type CreatePayload<T extends StoreDocumentNames> = Partial<StoreDocument[T]>;
 
 // Update
-type UpdatePayload<T extends StoreDocumentNames> = Partial<
-  DocId & StoreDocument[T]
->;
-
-type UpdateContractorAssignmentsPayload = {
-  contractorId: string;
-  operation: 'add' | 'remove';
-  assignmentId: string;
-};
+type UpdatePayload<T extends StoreDocumentNames> = Partial<DocId & StoreDocument[T]>;
 
 // Get Paginated
 interface GetPayload {
@@ -145,6 +147,7 @@ type UpdateResponse = {
 
 export type {
   // Documents
+  LineItem,
   StoreDocument,
   StoreDocumentNames,
   NewDocumentData,
@@ -153,7 +156,6 @@ export type {
   // Create / Update Payloads
   CreatePayload,
   UpdatePayload,
-  UpdateContractorAssignmentsPayload,
   // Get Payloads
   GetByIdPayload,
   GetAllPayload,

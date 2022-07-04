@@ -1,4 +1,4 @@
-import { AddBox, ArrowBack, Create } from '@mui/icons-material';
+import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
@@ -28,11 +28,7 @@ export const BuilderList = () => {
   const columns = ['', 'Name', 'Phone Number', 'Email', 'Company'];
 
   const getCompany = (companyId: string) => {
-    return (
-      storeData?.companies?.documents.find(
-        (company) => company.id === companyId
-      )?.name || '-'
-    );
+    return storeData?.companies?.documents.find((company) => company.id === companyId)?.name || '-';
   };
 
   // - JSX - //
@@ -58,26 +54,15 @@ export const BuilderList = () => {
               {storeData.builders.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <TableActionCell
-                    onClick={handleEditClick(data.id)}
-                    iconName="create"
-                  />
+                  <TableActionCell onClick={handleEditClick(data.id)} iconName="create" />
                   {/* Name */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.name}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                   {/* Phone Number */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.primaryPhone}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryPhone}</td>
                   {/* Email */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.primaryEmail}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryEmail}</td>
                   {/* Company */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {getCompany(data.companyId)}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{getCompany(data.companyId)}</td>
                 </tr>
               ))}
             </tbody>

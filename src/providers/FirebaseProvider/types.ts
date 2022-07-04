@@ -10,7 +10,7 @@ import {
   StoreDocumentNames,
   UpdatePayload,
   UpdateResponse,
-} from 'src/utils/firebase/types';
+} from 'src/utils/cloudFunctionTypes';
 
 // -------------------------------- //
 // ----- Cloud Function Types ----- //

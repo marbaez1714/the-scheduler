@@ -9,7 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FirebaseContextParams, FirebaseProviderProps } from './types';
 import { callableFunctions, firebaseAuth } from './utils';
-import { GetAllResponse } from 'src/utils/firebase/types';
+import { GetAllResponse } from 'src/utils/cloudFunctionTypes';
 
 // Initial Context
 const initialContext: FirebaseContextParams = {
@@ -122,7 +122,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshAreas = async () => {
     _toggleLoading('areas', true);
     await callableFunctions
-      .areasGetAll()
+      .areaGetAll()
       .then((response) => {
         setAreasData(response.data);
       })
@@ -134,7 +134,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshBuilders = async () => {
     _toggleLoading('builders', true);
     await callableFunctions
-      .buildersGetAll()
+      .builderGetAll()
       .then((response) => {
         setBuildersData(response.data);
       })
@@ -146,7 +146,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshCommunities = async () => {
     _toggleLoading('communities', true);
     await callableFunctions
-      .communitiesGetAll()
+      .communityGetAll()
       .then((response) => {
         setCommunitiesData(response.data);
       })
@@ -158,7 +158,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshContractors = async () => {
     _toggleLoading('contractors', true);
     await callableFunctions
-      .contractorsGetAll()
+      .contractorGetAll()
       .then((response) => {
         setContractorsData(response.data);
       })
@@ -170,7 +170,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshCompanies = async () => {
     _toggleLoading('companies', true);
     await callableFunctions
-      .companiesGetAll()
+      .companyGetAll()
       .then((response) => {
         setCompaniesData(response.data);
       })
@@ -182,7 +182,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshReporters = async () => {
     _toggleLoading('reporters', true);
     await callableFunctions
-      .reportersGetAll()
+      .reporterGetAll()
       .then((response) => {
         setReportersData(response.data);
       })
@@ -194,7 +194,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshScopes = async () => {
     _toggleLoading('scopes', true);
     await callableFunctions
-      .scopesGetAll()
+      .scopeGetAll()
       .then((response) => {
         setScopesData(response.data);
       })
@@ -206,7 +206,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const refreshSuppliers = async () => {
     _toggleLoading('suppliers', true);
     await callableFunctions
-      .suppliersGetAll()
+      .supplierGetAll()
       .then((response) => {
         setSuppliersData(response.data);
       })

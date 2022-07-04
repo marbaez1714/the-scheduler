@@ -1,4 +1,4 @@
-import { AddBox, ArrowBack, Create } from '@mui/icons-material';
+import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
@@ -50,18 +50,11 @@ export const AreaList = () => {
               {storeData.areas.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <TableActionCell
-                    onClick={handleEditClick(data.id)}
-                    iconName="create"
-                  />
+                  <TableActionCell onClick={handleEditClick(data.id)} iconName="create" />
                   {/* Name */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.name}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                   {/* Name Spanish */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.nameSpanish}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.nameSpanish}</td>
                 </tr>
               ))}
             </tbody>

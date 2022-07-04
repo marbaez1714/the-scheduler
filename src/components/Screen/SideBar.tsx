@@ -1,7 +1,4 @@
-import { DataObject, TableChart } from '@mui/icons-material';
-import { Collapse } from '@mui/material';
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { SideBarLink } from './SideBarLink';
 import { SideBarButton } from './SideBarButton';
 import { manageDataItems } from './utils';
@@ -10,16 +7,10 @@ import { useFirebase } from 'src/hooks/useFirebase';
 export const SideBar = () => {
   const { signOut } = useFirebase();
 
-  const navigate = useNavigate();
-
   const [expandManage, setExpandManage] = useState(false);
 
   const handleExpand = () => {
     setExpandManage((prev) => !prev);
-  };
-
-  const handleNavigate = (target: string) => () => {
-    navigate(`${target}`);
   };
 
   return (
@@ -35,56 +26,9 @@ export const SideBar = () => {
           title="Manage Data"
           onClick={handleExpand}
         />
-        {expandManage &&
-          manageDataItems.map((item, index) => (
-            <SideBarLink className="pl-10" {...item} key={index} />
-          ))}
+        {expandManage && manageDataItems.map((item, index) => <SideBarLink className="pl-10" {...item} key={index} />)}
       </ul>
-      <SideBarButton
-        className="mt-auto"
-        leftIcon="logout"
-        title="Logout"
-        onClick={signOut}
-      />
-
-      {/* <List>
-        <ListItem className="text-2xl font-bold mb-4">the-scheduler</ListItem>
-        <ListItemButton>
-          <ListItemIcon>
-            <TableChart className="text-white" />
-          </ListItemIcon>
-          <ListItemText primary="Dispatch" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <Archive className="text-white" />
-          </ListItemIcon>
-          <ListItemText primary="Archive" />
-        </ListItemButton>
-        <ListItemButton onClick={handleExpand}>
-          <ListItemIcon>
-            <DataObject className="text-white" />
-          </ListItemIcon>
-          <ListItemText primary="Manage Data" />
-          {expandManage ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={expandManage} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {manageDataItems.map((item, index) => (
-              <ListItemButton
-                className="pl-8"
-                key={index}
-                onClick={handleNavigate(item.target)}
-              >
-                <ListItemIcon className="text-white">
-                  <Icon className="text-white">{item.icon}</Icon>
-                </ListItemIcon>
-                <ListItemText primary={item.title} />
-              </ListItemButton>
-            ))}
-          </List>
-        </Collapse>
-      </List> */}
+      <SideBarButton className="mt-auto" leftIcon="logout" title="Logout" onClick={signOut} />
     </div>
   );
 };

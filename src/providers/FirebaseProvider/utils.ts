@@ -7,7 +7,7 @@ import {
   GetByIdPayload,
   GetByIdResponse,
   StoreDocumentNames,
-} from 'src/utils/firebase/types';
+} from 'src/utils/cloudFunctionTypes';
 import { CallableFunctions } from './types';
 
 // Firebase Config

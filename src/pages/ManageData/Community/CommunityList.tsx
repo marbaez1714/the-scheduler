@@ -1,4 +1,4 @@
-import { AddBox, ArrowBack, Create } from '@mui/icons-material';
+import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
@@ -24,11 +24,7 @@ export const CommunityList = () => {
   const columns = ['', 'Name', 'Company'];
 
   const getCompany = (companyId: string) => {
-    return (
-      storeData?.companies?.documents.find(
-        (company) => company.id === companyId
-      )?.name || '-'
-    );
+    return storeData?.companies?.documents.find((company) => company.id === companyId)?.name || '-';
   };
 
   // - JSX - //
@@ -54,18 +50,11 @@ export const CommunityList = () => {
               {storeData.communities.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <TableActionCell
-                    onClick={handleEditClick(data.id)}
-                    iconName="create"
-                  />
+                  <TableActionCell onClick={handleEditClick(data.id)} iconName="create" />
                   {/* Name */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.name}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                   {/* Company */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {getCompany(data.companyId)}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{getCompany(data.companyId)}</td>
                 </tr>
               ))}
             </tbody>

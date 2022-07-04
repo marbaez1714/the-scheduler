@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Content } from 'src/components/Content';
 import { Screen } from 'src/components/Screen';
 

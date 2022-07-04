@@ -1,4 +1,4 @@
-import { AddBox, ArrowBack, Create } from '@mui/icons-material';
+import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
@@ -25,13 +25,7 @@ export const CompanyList = () => {
   };
 
   // - HELPERS - //
-  const columns = [
-    '',
-    'Company Name',
-    'Office Address',
-    'Phone Number',
-    'Email',
-  ];
+  const columns = ['', 'Company Name', 'Office Address', 'Phone Number', 'Email'];
 
   // - JSX - //
   return (
@@ -56,26 +50,15 @@ export const CompanyList = () => {
               {storeData.companies.documents.map((data) => (
                 <tr key={data.id} className="border-b transition-all">
                   {/* Action */}
-                  <TableActionCell
-                    onClick={handleEditClick(data.id)}
-                    iconName="create"
-                  />
+                  <TableActionCell onClick={handleEditClick(data.id)} iconName="create" />
                   {/* Name */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.name}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                   {/* Address */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.primaryAddress || '-'}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryAddress || '-'}</td>
                   {/* Phone Number */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.primaryPhone || '-'}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryPhone || '-'}</td>
                   {/* Address */}
-                  <td className="py-2 px-4 first:pl-6 last:pr-6">
-                    {data.primaryEmail || '-'}
-                  </td>
+                  <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryEmail || '-'}</td>
                 </tr>
               ))}
             </tbody>

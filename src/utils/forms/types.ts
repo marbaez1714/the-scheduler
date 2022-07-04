@@ -1,20 +1,15 @@
-import { StoreDocument } from '../firebase/types';
+import { LineItem, StoreDocument } from '../cloudFunctionTypes';
 
 export interface AddFormData {
   builder: StoreDocument['Builder'];
   company: StoreDocument['Company'];
   community: StoreDocument['Community'];
-  contractor: Omit<StoreDocument['Contractor'], 'assignedJobs'>;
+  contractor: StoreDocument['Contractor'];
   reporter: StoreDocument['Reporter'];
   area: StoreDocument['Area'];
   supplier: StoreDocument['Supplier'];
   scope: StoreDocument['Scope'];
 }
-
-export type LineItem = {
-  orderNumber: string;
-  supplierId: string;
-};
 
 export interface CreateJobData {
   address: string;
