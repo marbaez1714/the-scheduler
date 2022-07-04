@@ -13,11 +13,7 @@ import { useState } from 'react';
 export const CompanyAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const {
-    loading: loadingData,
-    companiesCreate,
-    refreshStoreData,
-  } = useFirebase();
+  const { loading: loadingData, companyCreate, refreshStoreData } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -44,7 +40,7 @@ export const CompanyAddForm = () => {
     try {
       setCreateLoading(true);
       // Create new company
-      await companiesCreate(data);
+      await companyCreate(data);
       // Refresh companies in data store
       await refreshStoreData.companies();
       // Reset inputs
@@ -57,48 +53,23 @@ export const CompanyAddForm = () => {
   };
 
   return (
-    <Content
-      className="flex flex-grow items-start space-x-4"
-      loading={loadingData || createLoading}
-    >
+    <Content className="flex flex-grow items-start space-x-4" loading={loadingData || createLoading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
-      <form
-        className="form-card grid-cols-2"
-        onSubmit={handleSubmit(submitCompany)}
-      >
+      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submitCompany)}>
         {/* Title */}
         <h1 className="form-title">Add a Company</h1>
         {/* Company Name */}
-        <FormTextField
-          label="Company Name"
-          name="name"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Company Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
         {/* Address */}
-        <FormTextField
-          label="Address"
-          name="primaryAddress"
-          control={control}
-        />
+        <FormTextField label="Address" name="primaryAddress" control={control} />
         {/* Email */}
         <FormTextField label="Email" name="primaryEmail" control={control} />
         {/* Phone number */}
-        <FormTextField
-          label="Phone Number"
-          name="primaryPhone"
-          control={control}
-        />
+        <FormTextField label="Phone Number" name="primaryPhone" control={control} />
         {/* Notes */}
-        <FormTextField
-          className="col-span-2"
-          label="Notes"
-          name="notes"
-          control={control}
-          multiline
-        />
+        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">
           <Button onClick={() => reset()}>Clear</Button>

@@ -13,11 +13,7 @@ import { useState } from 'react';
 export const ScopeAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const {
-    loading: loadingData,
-    scopesCreate,
-    refreshStoreData,
-  } = useFirebase();
+  const { loading: loadingData, scopeCreate, refreshStoreData } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -44,7 +40,7 @@ export const ScopeAddForm = () => {
     try {
       setCreateLoading(true);
       // Create new scope
-      await scopesCreate(data);
+      await scopeCreate(data);
       // Refresh scopes in data store
       await refreshStoreData.scopes();
       // Reset inputs
@@ -57,10 +53,7 @@ export const ScopeAddForm = () => {
   };
 
   return (
-    <Content
-      className="flex flex-grow items-start space-x-4"
-      loading={createLoading || loadingData}
-    >
+    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
@@ -68,12 +61,7 @@ export const ScopeAddForm = () => {
         {/* Title */}
         <h1 className="form-title">Add a Scopes</h1>
         {/* Name REQUIRED */}
-        <FormTextField
-          label="Scope Name"
-          name="name"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Scope Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
         {/* Name (Spanish) REQUIRED */}
         <FormTextField
           label="Translation"
@@ -89,13 +77,7 @@ export const ScopeAddForm = () => {
           rules={formRules.requiredNonEmptyString}
         />
         {/* Notes */}
-        <FormTextField
-          className="col-span-2"
-          label="Notes"
-          name="notes"
-          control={control}
-          multiline
-        />
+        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">
           <Button onClick={() => reset()}>Clear</Button>

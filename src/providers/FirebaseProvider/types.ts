@@ -30,46 +30,37 @@ interface Callable<T extends StoreDocumentNames> {
 }
 
 interface CallableFunctions {
-  areasGetAll: Callable<'Area'>['GetAll'];
-  areasGetById: Callable<'Area'>['GetById'];
-  areasCreate: Callable<'Area'>['Create'];
-  areasUpdate: Callable<'Area'>['Update'];
+  areaGetAll: Callable<'Area'>['GetAll'];
+  areaGetById: Callable<'Area'>['GetById'];
+  areaCreate: Callable<'Area'>['Create'];
 
-  buildersGetAll: Callable<'Builder'>['GetAll'];
-  buildersGetById: Callable<'Builder'>['GetById'];
-  buildersCreate: Callable<'Builder'>['Create'];
-  buildersUpdate: Callable<'Builder'>['Update'];
+  builderGetAll: Callable<'Builder'>['GetAll'];
+  builderGetById: Callable<'Builder'>['GetById'];
+  builderCreate: Callable<'Builder'>['Create'];
 
-  communitiesGetAll: Callable<'Community'>['GetAll'];
-  communitiesGeyById: Callable<'Community'>['GetById'];
-  communitiesCreate: Callable<'Community'>['Create'];
-  communitiesUpdate: Callable<'Community'>['Update'];
+  communityGetAll: Callable<'Community'>['GetAll'];
+  communityGeyById: Callable<'Community'>['GetById'];
+  communityCreate: Callable<'Community'>['Create'];
 
-  contractorsGetAll: Callable<'Contractor'>['GetAll'];
-  contractorsGetById: Callable<'Contractor'>['GetById'];
-  contractorsCreate: Callable<'Contractor'>['Create'];
-  contractorsUpdate: Callable<'Contractor'>['Update'];
-  // contractorsUpdateAssignments
+  contractorGetAll: Callable<'Contractor'>['GetAll'];
+  contractorGetById: Callable<'Contractor'>['GetById'];
+  contractorCreate: Callable<'Contractor'>['Create'];
 
-  companiesGetAll: Callable<'Company'>['GetAll'];
-  companiesGetById: Callable<'Company'>['GetById'];
-  companiesCreate: Callable<'Company'>['Create'];
-  companiesUpdate: Callable<'Company'>['Update'];
+  companyGetAll: Callable<'Company'>['GetAll'];
+  companyGetById: Callable<'Company'>['GetById'];
+  companyCreate: Callable<'Company'>['Create'];
 
-  reportersGetAll: Callable<'Reporter'>['GetAll'];
-  reportersGetById: Callable<'Reporter'>['GetById'];
-  reportersCreate: Callable<'Reporter'>['Create'];
-  reportersUpdate: Callable<'Reporter'>['Update'];
+  reporterGetAll: Callable<'Reporter'>['GetAll'];
+  reporterGetById: Callable<'Reporter'>['GetById'];
+  reporterCreate: Callable<'Reporter'>['Create'];
 
-  scopesGetAll: Callable<'Scope'>['GetAll'];
-  scopesGetById: Callable<'Scope'>['GetById'];
-  scopesCreate: Callable<'Scope'>['Create'];
-  scopesUpdate: Callable<'Scope'>['Update'];
+  scopeGetAll: Callable<'Scope'>['GetAll'];
+  scopeGetById: Callable<'Scope'>['GetById'];
+  scopeCreate: Callable<'Scope'>['Create'];
 
-  suppliersGetAll: Callable<'Supplier'>['GetAll'];
-  suppliersGetById: Callable<'Supplier'>['GetById'];
-  suppliersCreate: Callable<'Supplier'>['Create'];
-  suppliersUpdate: Callable<'Supplier'>['Update'];
+  supplierGetAll: Callable<'Supplier'>['GetAll'];
+  supplierGetById: Callable<'Supplier'>['GetById'];
+  supplierCreate: Callable<'Supplier'>['Create'];
 }
 
 // -------------------------- //

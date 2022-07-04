@@ -1,9 +1,6 @@
 import { initializeApp as fbInitializeApp } from 'firebase/app';
 import { getAuth as fbGetAuth } from 'firebase/auth';
-import {
-  getFunctions as fbGetFunctions,
-  httpsCallable,
-} from 'firebase/functions';
+import { getFunctions as fbGetFunctions, httpsCallable } from 'firebase/functions';
 import {
   GetAllPayload,
   GetAllResponse,
@@ -31,20 +28,14 @@ const firebaseFunctions = fbGetFunctions(firebaseApp);
 const getAllCallable =
   <T extends StoreDocumentNames>(collection: T) =>
   () => {
-    return httpsCallable<GetAllPayload, GetAllResponse<T>>(
-      firebaseFunctions,
-      'getAll'
-    )({ collection });
+    return httpsCallable<GetAllPayload, GetAllResponse<T>>(firebaseFunctions, 'getAll')({ collection });
   };
 
 // Creates get by id callable functions
 const getByIdCallable =
   <T extends StoreDocumentNames>(collection: T) =>
   (id: string) => {
-    return httpsCallable<GetByIdPayload, GetByIdResponse<T>>(
-      firebaseFunctions,
-      'getById'
-    )({ collection, id });
+    return httpsCallable<GetByIdPayload, GetByIdResponse<T>>(firebaseFunctions, 'getById')({ collection, id });
   };
 
 // Initialize all of the firebase functions
@@ -52,46 +43,37 @@ const callableFunctions: CallableFunctions = {
   // Collection - GET ALL
   // Collection - GET BY ID
   // Collection - CREATE
-  // Collection - UPDATE
-  areasGetAll: getAllCallable('Area'),
-  areasGetById: getByIdCallable('Area'),
-  areasCreate: httpsCallable(firebaseFunctions, 'areasCreate'),
-  areasUpdate: httpsCallable(firebaseFunctions, 'areasUpdate'),
+  areaGetAll: getAllCallable('Area'),
+  areaGetById: getByIdCallable('Area'),
+  areaCreate: httpsCallable(firebaseFunctions, 'areaCreate'),
 
-  buildersGetAll: getAllCallable('Builder'),
-  buildersGetById: getByIdCallable('Builder'),
-  buildersCreate: httpsCallable(firebaseFunctions, 'buildersCreate'),
-  buildersUpdate: httpsCallable(firebaseFunctions, 'buildersUpdate'),
+  builderGetAll: getAllCallable('Builder'),
+  builderGetById: getByIdCallable('Builder'),
+  builderCreate: httpsCallable(firebaseFunctions, 'builderCreate'),
 
-  communitiesGetAll: getAllCallable('Community'),
-  communitiesGeyById: getByIdCallable('Community'),
-  communitiesCreate: httpsCallable(firebaseFunctions, 'communitiesCreate'),
-  communitiesUpdate: httpsCallable(firebaseFunctions, 'communitiesUpdate'),
+  communityGetAll: getAllCallable('Community'),
+  communityGeyById: getByIdCallable('Community'),
+  communityCreate: httpsCallable(firebaseFunctions, 'communityCreate'),
 
-  companiesGetAll: getAllCallable('Company'),
-  companiesGetById: getByIdCallable('Company'),
-  companiesCreate: httpsCallable(firebaseFunctions, 'companiesCreate'),
-  companiesUpdate: httpsCallable(firebaseFunctions, 'companiesUpdate'),
+  companyGetAll: getAllCallable('Company'),
+  companyGetById: getByIdCallable('Company'),
+  companyCreate: httpsCallable(firebaseFunctions, 'companyCreate'),
 
-  contractorsGetAll: getAllCallable('Contractor'),
-  contractorsGetById: getByIdCallable('Contractor'),
-  contractorsCreate: httpsCallable(firebaseFunctions, 'contractorsCreate'),
-  contractorsUpdate: httpsCallable(firebaseFunctions, 'contractorsUpdate'),
+  contractorGetAll: getAllCallable('Contractor'),
+  contractorGetById: getByIdCallable('Contractor'),
+  contractorCreate: httpsCallable(firebaseFunctions, 'contractorCreate'),
 
-  reportersGetAll: getAllCallable('Reporter'),
-  reportersGetById: getByIdCallable('Reporter'),
-  reportersCreate: httpsCallable(firebaseFunctions, 'reportersCreate'),
-  reportersUpdate: httpsCallable(firebaseFunctions, 'reportersUpdate'),
+  reporterGetAll: getAllCallable('Reporter'),
+  reporterGetById: getByIdCallable('Reporter'),
+  reporterCreate: httpsCallable(firebaseFunctions, 'reporterCreate'),
 
-  scopesGetAll: getAllCallable('Scope'),
-  scopesGetById: getByIdCallable('Scope'),
-  scopesCreate: httpsCallable(firebaseFunctions, 'scopesCreate'),
-  scopesUpdate: httpsCallable(firebaseFunctions, 'scopesUpdate'),
+  scopeGetAll: getAllCallable('Scope'),
+  scopeGetById: getByIdCallable('Scope'),
+  scopeCreate: httpsCallable(firebaseFunctions, 'scopeCreate'),
 
-  suppliersGetAll: getAllCallable('Supplier'),
-  suppliersGetById: getByIdCallable('Supplier'),
-  suppliersCreate: httpsCallable(firebaseFunctions, 'suppliersCreate'),
-  suppliersUpdate: httpsCallable(firebaseFunctions, 'suppliersUpdate'),
+  supplierGetAll: getAllCallable('Supplier'),
+  supplierGetById: getByIdCallable('Supplier'),
+  supplierCreate: httpsCallable(firebaseFunctions, 'supplierCreate'),
 };
 
 export { firebaseApp, firebaseAuth, firebaseFunctions, callableFunctions };

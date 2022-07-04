@@ -7,10 +7,7 @@ import { ArrowBack } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { AddFormData } from 'src/utils/forms/types';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import {
-  FormAutocomplete,
-  FormAutocompleteOption,
-} from 'src/components/FormAutocomplete';
+import { FormAutocomplete, FormAutocompleteOption } from 'src/components/FormAutocomplete';
 import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
 
@@ -19,7 +16,7 @@ export const BuilderAddForm = () => {
   // Firebase
   const {
     loading: loadingData,
-    buildersCreate,
+    builderCreate,
     storeData: { companies: companiesData },
     refreshStoreData,
   } = useFirebase();
@@ -39,9 +36,7 @@ export const BuilderAddForm = () => {
 
   // - STATE - //
   const [createLoading, setCreateLoading] = useState(false);
-  const [companyOptions, setCompanyOptions] = useState<
-    FormAutocompleteOption[]
-  >([]);
+  const [companyOptions, setCompanyOptions] = useState<FormAutocompleteOption[]>([]);
 
   // - EFFECTS - //
   useEffect(() => {
@@ -64,7 +59,7 @@ export const BuilderAddForm = () => {
     try {
       setCreateLoading(true);
       // Create new builder
-      await buildersCreate(data);
+      await builderCreate(data);
       // Refresh builders in data store
       await refreshStoreData.builders();
       // Reset inputs
@@ -77,10 +72,7 @@ export const BuilderAddForm = () => {
   };
 
   return (
-    <Content
-      className="flex flex-grow items-start space-x-4"
-      loading={createLoading || loadingData}
-    >
+    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
@@ -98,12 +90,7 @@ export const BuilderAddForm = () => {
         />
 
         {/* Name REQUIRED */}
-        <FormTextField
-          label="Name"
-          control={control}
-          name="name"
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Name" control={control} name="name" rules={formRules.requiredNonEmptyString} />
 
         {/* Phone Number REQUIRED */}
         <FormTextField
@@ -114,21 +101,10 @@ export const BuilderAddForm = () => {
         />
 
         {/* Email REQUIRED */}
-        <FormTextField
-          label="Email"
-          name="primaryEmail"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Email" name="primaryEmail" control={control} rules={formRules.requiredNonEmptyString} />
 
         {/* Notes */}
-        <FormTextField
-          className="col-span-2"
-          label="Notes"
-          name="notes"
-          control={control}
-          multiline
-        />
+        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
 
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">

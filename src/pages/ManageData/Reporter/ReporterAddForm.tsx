@@ -13,11 +13,7 @@ import { useState } from 'react';
 export const ReporterAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const {
-    loading: loadingData,
-    reportersCreate,
-    refreshStoreData,
-  } = useFirebase();
+  const { loading: loadingData, reporterCreate, refreshStoreData } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -44,7 +40,7 @@ export const ReporterAddForm = () => {
     try {
       setCreateLoading(true);
       // Create new reporter
-      await reportersCreate(data);
+      await reporterCreate(data);
       // Refresh reporters in data store
       await refreshStoreData.reporters();
       // Reset inputs
@@ -57,33 +53,17 @@ export const ReporterAddForm = () => {
   };
 
   return (
-    <Content
-      className="flex flex-grow items-start space-x-4"
-      loading={createLoading || loadingData}
-    >
+    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
-      <form
-        className="form-card grid-cols-2"
-        onSubmit={handleSubmit(submitReporter)}
-      >
+      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submitReporter)}>
         {/* Title */}
         <h1 className="form-title">Add a Reporter</h1>
         {/* Name REQUIRED */}
-        <FormTextField
-          label="Reporter Name"
-          name="name"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Reporter Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
         {/* Email REQUIRED */}
-        <FormTextField
-          label="Email"
-          name="primaryEmail"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Email" name="primaryEmail" control={control} rules={formRules.requiredNonEmptyString} />
         {/* Phone number REQUIRED */}
         <FormTextField
           label="Phone Number"
@@ -92,13 +72,7 @@ export const ReporterAddForm = () => {
           rules={formRules.requiredNonEmptyString}
         />
         {/* Notes */}
-        <FormTextField
-          className="col-span-2"
-          label="Notes"
-          name="notes"
-          control={control}
-          multiline
-        />
+        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">
           <Button onClick={() => reset()}>Clear</Button>

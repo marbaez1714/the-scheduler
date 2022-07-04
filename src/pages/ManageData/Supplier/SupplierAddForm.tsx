@@ -13,11 +13,7 @@ import { useState } from 'react';
 export const SupplierAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const {
-    loading: loadingData,
-    suppliersCreate,
-    refreshStoreData,
-  } = useFirebase();
+  const { loading: loadingData, supplierCreate, refreshStoreData } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -44,7 +40,7 @@ export const SupplierAddForm = () => {
     try {
       setCreateLoading(true);
       // Create new supplier
-      await suppliersCreate(data);
+      await supplierCreate(data);
       // Refresh suppliers in data store
       await refreshStoreData.suppliers();
       // Reset inputs
@@ -57,10 +53,7 @@ export const SupplierAddForm = () => {
   };
 
   return (
-    <Content
-      className="flex flex-grow items-start space-x-4"
-      loading={createLoading || loadingData}
-    >
+    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
@@ -68,26 +61,11 @@ export const SupplierAddForm = () => {
         {/* Title */}
         <h1 className="form-title">Add a Supplier</h1>
         {/* Name */}
-        <FormTextField
-          label="Supplier Name"
-          name="name"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Supplier Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
         {/* Phone Number */}
-        <FormTextField
-          label="Phone Number"
-          name="phoneNumber"
-          control={control}
-        />
+        <FormTextField label="Phone Number" name="phoneNumber" control={control} />
         {/* Notes */}
-        <FormTextField
-          className="col-span-2"
-          label="Notes"
-          name="notes"
-          control={control}
-          multiline
-        />
+        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">
           <Button onClick={() => reset()}>Clear</Button>

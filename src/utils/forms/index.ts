@@ -65,12 +65,12 @@ export const AddFormDefaultData: AddFormData = {
 
 export const CreateJobDefaultData: CreateJobData = {
   address: '',
+  areaId: '',
   builderId: '',
+  communityId: '',
   contractorId: '',
   reporterId: '',
-  startDate: null,
-  communityId: '',
   scopeId: '',
-  areaId: '',
+  startDate: null,
   notes: '',
 };

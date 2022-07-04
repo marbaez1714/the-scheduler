@@ -13,7 +13,7 @@ import { useState } from 'react';
 export const AreaAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, areasCreate, refreshStoreData } = useFirebase();
+  const { loading: loadingData, areaCreate, refreshStoreData } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ export const AreaAddForm = () => {
     try {
       setCreateLoading(true);
       // Create new area
-      await areasCreate(data);
+      await areaCreate(data);
       // Refresh areas in data store
       await refreshStoreData.areas();
       // Reset inputs
@@ -53,10 +53,7 @@ export const AreaAddForm = () => {
   };
 
   return (
-    <Content
-      className="flex flex-grow items-start space-x-4"
-      loading={createLoading || loadingData}
-    >
+    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
@@ -64,12 +61,7 @@ export const AreaAddForm = () => {
         {/* Title */}
         <h1 className="form-title">Add an Area</h1>
         {/* Name REQUIRED */}
-        <FormTextField
-          label="Area Name"
-          name="name"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Area Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
         {/* Name in Spanish REQUIRED */}
         <FormTextField
           label="Translation"
@@ -78,13 +70,7 @@ export const AreaAddForm = () => {
           rules={formRules.requiredNonEmptyString}
         />
         {/* Notes */}
-        <FormTextField
-          className="col-span-2"
-          label="Notes"
-          name="notes"
-          control={control}
-          multiline
-        />
+        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">
           <Button onClick={() => reset()}>Clear</Button>
