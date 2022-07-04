@@ -3,16 +3,13 @@ import { getAuth as fbGetAuth } from 'firebase/auth';
 import {
   getFunctions as fbGetFunctions,
   httpsCallable,
-  HttpsCallableResult,
 } from 'firebase/functions';
 import {
-  CreateResponse,
   GetAllPayload,
   GetAllResponse,
   GetByIdPayload,
   GetByIdResponse,
   StoreDocumentNames,
-  UpdateResponse,
 } from 'src/utils/firebase/types';
 import { CallableFunctions } from './types';
 

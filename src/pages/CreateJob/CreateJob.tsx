@@ -9,7 +9,9 @@ import { Screen } from 'src/components/Screen';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { CreateJobDefaultData, formRules } from 'src/utils/forms';
 import { CreateJobData, LineItem } from 'src/utils/forms/types';
-import { AddCircle, Delete } from '@mui/icons-material';
+import { AddCircle } from '@mui/icons-material';
+import { LineItemTable } from 'src/components/LineItemTable';
+import { AppMessages } from 'src/utils/messages';
 
 const CreateJob = () => {
   // ----- HOOKS ----- //
@@ -59,9 +61,20 @@ const CreateJob = () => {
 
   const removeLineItem = (index: number) => {
     setLineItems((prev) => {
-      prev.splice(index, 1);
-      return prev;
+      const allLineItems = prev;
+      allLineItems.splice(index, 1);
+      return [...allLineItems];
     });
+  };
+
+  const handleReset = () => {
+    const resetConfirmed = confirm(AppMessages.ConfirmReset);
+    if (resetConfirmed) {
+      setOrderNumber('');
+      setOrderSupplierId('');
+      setLineItems([]);
+      reset();
+    }
   };
 
   // ----- FORM OPTIONS ----- //
@@ -103,9 +116,7 @@ const CreateJob = () => {
   // ----- HELPERS ----- //
   const getOrderSupplierValue = () => {
     const missingLabel = { label: 'Missing Label', value: orderSupplierId };
-    const selectedOption = supplierOptions.find(
-      (option) => option.value === orderSupplierId
-    );
+    const selectedOption = supplierOptions.find((option) => option.value === orderSupplierId);
 
     return orderSupplierId ? selectedOption || missingLabel : null;
   };
@@ -135,16 +146,9 @@ const CreateJob = () => {
           />
 
           {/* Job Information */}
-          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">
-            Job Information
-          </h2>
+          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">Job Information</h2>
 
-          <FormDatePicker
-            className="col-span-1"
-            control={control}
-            label="Start Date"
-            name="startDate"
-          />
+          <FormDatePicker className="col-span-1" control={control} label="Start Date" name="startDate" />
 
           {/* Builder */}
           <FormAutocomplete
@@ -180,93 +184,36 @@ const CreateJob = () => {
             name="scopeId"
           />
           {/* Area */}
-          <FormAutocomplete
-            className="col-span-1"
-            control={control}
-            label="Area"
-            options={areaOptions}
-            name="areaId"
-          />
+          <FormAutocomplete className="col-span-1" control={control} label="Area" options={areaOptions} name="areaId" />
 
           {/* Line Items */}
-          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">
-            Order Information
-          </h2>
-          <div className="col-span-2 pb-4 space-y-6">
-            {/* Inputs */}
-            <div className="flex items-center space-x-6">
-              {/* Order Number Input */}
-              <TextField
-                className="w-1/2"
-                label="Order Number"
-                value={orderNumber}
-                onChange={handleOrderNumberChange}
-              />
-              {/* Supplier Select */}
-              <Autocomplete
-                className="w-1/2"
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value.value
-                }
-                options={supplierOptions}
-                value={getOrderSupplierValue()}
-                getOptionLabel={(option) => option.label}
-                renderInput={(params) => (
-                  <TextField {...params} label="Supplier" variant="outlined" />
-                )}
-                onChange={(_, data) =>
-                  handleOrderSupplierChange(data?.value || '')
-                }
-              />
-              <IconButton
-                onClick={handleAddLineItemClick}
-                disabled={!orderNumber || !orderSupplierId}
-              >
-                <AddCircle />
-              </IconButton>
-            </div>
-
-            <table className="text-left">
-              <thead>
-                <tr>
-                  <th className="py-2 px-2">Order Number</th>
-                  <th className="py-2 px-2">Supplier</th>
-                  <th className="py-2 px-2"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {lineItems.map((item, index) => (
-                  <tr key={index}>
-                    <td className="py-2 px-2">
-                      {index + 1} - {item.orderNumber}
-                    </td>
-                    <td className="py-2 px-2">{item.supplierId}</td>
-                    <td className="py-2 px-2">
-                      <button>
-                        <Delete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">Order Information</h2>
+          <div className="col-span-2 space-x-6 flex items-center">
+            {/* Order Number Input */}
+            <TextField className="w-1/2" label="Order Number" value={orderNumber} onChange={handleOrderNumberChange} />
+            {/* Supplier Select */}
+            <Autocomplete
+              className="w-1/2"
+              isOptionEqualToValue={(option, value) => option.value === value.value}
+              options={supplierOptions}
+              value={getOrderSupplierValue()}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => <TextField {...params} label="Supplier" variant="outlined" />}
+              onChange={(_, data) => handleOrderSupplierChange(data?.value || '')}
+            />
+            <IconButton onClick={handleAddLineItemClick} disabled={!orderNumber || !orderSupplierId}>
+              <AddCircle />
+            </IconButton>
           </div>
+          {lineItems.length > 0 && <LineItemTable lineItems={lineItems} onRemove={removeLineItem} />}
 
-          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">
-            Detail
-          </h2>
+          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">Detail</h2>
 
-          <FormTextField
-            multiline
-            className="col-span-2"
-            control={control}
-            label="Notes"
-            name="notes"
-          />
+          <FormTextField multiline className="col-span-2" control={control} label="Notes" name="notes" />
 
           {/* Actions */}
           <div className="col-span-2 space-x-2 text-right">
-            <Button onClick={() => reset()}>Clear</Button>
+            <Button onClick={handleReset}>Clear</Button>
             <Button variant="contained" type="submit" disabled={!isValid}>
               Submit
             </Button>

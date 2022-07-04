@@ -46,8 +46,7 @@ const initialContext: FirebaseContextParams = {
 };
 
 // Context
-export const FirebaseContext =
-  createContext<FirebaseContextParams>(initialContext);
+export const FirebaseContext = createContext<FirebaseContextParams>(initialContext);
 
 // Provider
 const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
@@ -61,17 +60,12 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   // Data
   const [areasData, setAreasData] = useState<GetAllResponse<'Area'>>();
   const [buildersData, setBuildersData] = useState<GetAllResponse<'Builder'>>();
-  const [communitiesData, setCommunitiesData] =
-    useState<GetAllResponse<'Community'>>();
-  const [contractorsData, setContractorsData] =
-    useState<GetAllResponse<'Contractor'>>();
-  const [companiesData, setCompaniesData] =
-    useState<GetAllResponse<'Company'>>();
-  const [reportersData, setReportersData] =
-    useState<GetAllResponse<'Reporter'>>();
+  const [communitiesData, setCommunitiesData] = useState<GetAllResponse<'Community'>>();
+  const [contractorsData, setContractorsData] = useState<GetAllResponse<'Contractor'>>();
+  const [companiesData, setCompaniesData] = useState<GetAllResponse<'Company'>>();
+  const [reportersData, setReportersData] = useState<GetAllResponse<'Reporter'>>();
   const [scopesData, setScopesData] = useState<GetAllResponse<'Scope'>>();
-  const [suppliersData, setSuppliersData] =
-    useState<GetAllResponse<'Supplier'>>();
+  const [suppliersData, setSuppliersData] = useState<GetAllResponse<'Supplier'>>();
   // Loading
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({
     areas: false,

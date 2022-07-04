@@ -16,9 +16,7 @@ import {
 // ----- Cloud Function Types ----- //
 // -------------------------------- //
 
-type GetAllCallable<T extends StoreDocumentNames> = () => ReturnType<
-  HttpsCallable<GetAllPayload, GetAllResponse<T>>
->;
+type GetAllCallable<T extends StoreDocumentNames> = () => ReturnType<HttpsCallable<GetAllPayload, GetAllResponse<T>>>;
 
 type GetByIdCallable<T extends StoreDocumentNames> = (
   id: string
