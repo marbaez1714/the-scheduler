@@ -61,6 +61,10 @@ interface CallableFunctions {
   supplierGetAll: Callable<'Supplier'>['GetAll'];
   supplierGetById: Callable<'Supplier'>['GetById'];
   supplierCreate: Callable<'Supplier'>['Create'];
+
+  jobLegacyGetAll: Callable<'JobLegacy'>['GetAll'];
+  jobLegacyGetById: Callable<'JobLegacy'>['GetById'];
+  jobLegacyCreate: Callable<'JobLegacy'>['Create'];
 }
 
 // -------------------------- //

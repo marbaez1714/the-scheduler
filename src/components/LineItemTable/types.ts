@@ -1,4 +1,4 @@
-import { LineItem } from 'src/utils/forms/types';
+import { LineItem } from 'src/utils/cloudFunctionTypes';
 
 export interface LineItemTableProps {
   lineItems: LineItem[];

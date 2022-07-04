@@ -8,14 +8,15 @@ import { FormTextField } from 'src/components/FormTextField';
 import { Screen } from 'src/components/Screen';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { CreateJobDefaultData, formRules } from 'src/utils/forms';
-import { CreateJobData, LineItem } from 'src/utils/forms/types';
+import { CreateJobData } from 'src/utils/forms/types';
 import { AddCircle } from '@mui/icons-material';
 import { LineItemTable } from 'src/components/LineItemTable';
 import { AppMessages } from 'src/utils/messages';
+import { LineItem } from 'src/utils/cloudFunctionTypes';
 
 const CreateJob = () => {
   // ----- HOOKS ----- //
-  const { storeData } = useFirebase();
+  const { storeData, jobLegacyCreate } = useFirebase();
 
   const {
     handleSubmit,
@@ -36,8 +37,24 @@ const CreateJob = () => {
 
   // ----- ACTIONS ----- //
   const submit = (data: CreateJobData) => {
-    console.log(data);
+    console.log(new Date(`${data.startDate}`));
   };
+
+  // const submit = async (data: AddFormData['builder']) => {
+  //   try {
+  //     setCreateLoading(true);
+  //     // Create new builder
+  //     await builderCreate(data);
+  //     // Refresh builders in data store
+  //     await refreshStoreData.builders();
+  //     // Reset inputs
+  //     reset();
+  //   } catch (e: any) {
+  //     e.message && toast.error(e.message);
+  //   } finally {
+  //     setCreateLoading(false);
+  //   }
+  // };
 
   const handleOrderNumberChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setOrderNumber(e.target.value);
