@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useMemo, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { Autocomplete, Button, IconButton, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { Content } from 'src/components/Content';
@@ -13,10 +13,21 @@ import { AddCircle } from '@mui/icons-material';
 import { LineItemTable } from 'src/components/LineItemTable';
 import { AppMessages } from 'src/utils/messages';
 import { LineItem } from 'src/utils/cloudFunctionTypes';
+import { toast } from 'react-hot-toast';
+import { useOptions } from 'src/hooks/useOptions';
 
 const CreateJob = () => {
   // ----- HOOKS ----- //
-  const { storeData, jobLegacyCreate } = useFirebase();
+  const { jobLegacyCreate } = useFirebase();
+  const {
+    areaOptions,
+    builderOptions,
+    contractorsOptions,
+    communityOptions,
+    reporterOptions,
+    scopeOptions,
+    supplierOptions,
+  } = useOptions();
 
   const {
     handleSubmit,
@@ -33,28 +44,31 @@ const CreateJob = () => {
   const [orderSupplierId, setOrderSupplierId] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
 
+  const [createLoading, setCreateLoading] = useState(false);
+
   // ----- EFFECTS ----- //
 
   // ----- ACTIONS ----- //
-  const submit = (data: AddFormData['jobLegacy']) => {
-    console.log(data.startDate?.getTime());
+  const submit = async (data: AddFormData['jobLegacy']) => {
+    try {
+      setCreateLoading(true);
+      // Create the new job
+      await jobLegacyCreate({
+        ...data,
+        lineItems: lineItems,
+        startDate: data.startDate?.getTime(),
+      });
+      // Reset inputs
+      setOrderNumber('');
+      setOrderSupplierId('');
+      setLineItems([]);
+      reset();
+    } catch (e: any) {
+      e.message && toast.error(e.message);
+    } finally {
+      setCreateLoading(false);
+    }
   };
-
-  // const submit = async (data: AddFormData['builder']) => {
-  //   try {
-  //     setCreateLoading(true);
-  //     // Create new builder
-  //     await builderCreate(data);
-  //     // Refresh builders in data store
-  //     await refreshStoreData.builders();
-  //     // Reset inputs
-  //     reset();
-  //   } catch (e: any) {
-  //     e.message && toast.error(e.message);
-  //   } finally {
-  //     setCreateLoading(false);
-  //   }
-  // };
 
   const handleOrderNumberChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setOrderNumber(e.target.value);
@@ -94,42 +108,6 @@ const CreateJob = () => {
     }
   };
 
-  // ----- FORM OPTIONS ----- //
-  const areaOptions = useMemo(() => {
-    const documents = storeData.areas?.documents ?? [];
-    return documents.map((item) => ({ label: item.name, value: item.id }));
-  }, [storeData.areas]);
-
-  const builderOptions = useMemo(() => {
-    const documents = storeData.builders?.documents ?? [];
-    return documents.map((item) => ({ label: item.name, value: item.id }));
-  }, [storeData.builders]);
-
-  const communityOptions = useMemo(() => {
-    const documents = storeData.communities?.documents ?? [];
-    return documents.map((item) => ({ label: item.name, value: item.id }));
-  }, [storeData.communities]);
-
-  const contractorsOptions = useMemo(() => {
-    const documents = storeData.contractors?.documents ?? [];
-    return documents.map((item) => ({ label: item.name, value: item.id }));
-  }, [storeData.contractors]);
-
-  const reporterOptions = useMemo(() => {
-    const documents = storeData.reporters?.documents ?? [];
-    return documents.map((item) => ({ label: item.name, value: item.id }));
-  }, [storeData.reporters]);
-
-  const scopeOptions = useMemo(() => {
-    const documents = storeData.scopes?.documents ?? [];
-    return documents.map((item) => ({ label: item.name, value: item.id }));
-  }, [storeData.scopes]);
-
-  const supplierOptions = useMemo(() => {
-    const documents = storeData.suppliers?.documents ?? [];
-    return documents.map((item) => ({ label: item.name, value: item.id }));
-  }, [storeData.suppliers]);
-
   // ----- HELPERS ----- //
   const getOrderSupplierValue = () => {
     const missingLabel = { label: 'Missing Label', value: orderSupplierId };
@@ -141,7 +119,7 @@ const CreateJob = () => {
   // ----- JSX ----- //
   return (
     <Screen title="Create Job">
-      <Content>
+      <Content loading={createLoading}>
         <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
           {/* Location  */}
           <h2 className="col-span-2 text-xl tracking-wide">Location</h2>
