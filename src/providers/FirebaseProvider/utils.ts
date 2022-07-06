@@ -1,13 +1,11 @@
 import { initializeApp as fbInitializeApp } from 'firebase/app';
 import { getAuth as fbGetAuth } from 'firebase/auth';
-import { getFunctions as fbGetFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
+import { getFunctions as fbGetFunctions, httpsCallable } from 'firebase/functions';
 import {
-  CreateResponse,
   GetAllPayload,
   GetAllResponse,
   GetByIdPayload,
   GetByIdResponse,
-  LineItem,
   StoreDocumentNames,
 } from 'src/utils/cloudFunctionTypes';
 import { CallableFunctions } from './types';

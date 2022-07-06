@@ -5,7 +5,7 @@ import { Content } from 'src/components/Content';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBack } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
-import { AddFormData } from 'src/utils/forms/types';
+import { AddFormData } from 'src/utils/formTypes';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
 import { FormAutocomplete, FormAutocompleteOption } from 'src/components/FormAutocomplete';
 import { FormTextField } from 'src/components/FormTextField';
@@ -29,7 +29,7 @@ export const BuilderAddForm = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm<AddFormData['builder']>({
+  } = useForm({
     mode: 'all',
     defaultValues: AddFormDefaultData.builder,
   });

@@ -1,9 +1,9 @@
 // ***** Documents *****
-type DocId = { id: string };
+export type DocId = { id: string };
 
-type LineItem = { orderNumber: string; supplierId: string };
+export type LineItem = { orderNumber: string; supplierId: string };
 
-interface StoreDocument {
+export interface StoreDocument {
   Area: {
     name: string;
     nameSpanish: string;
@@ -42,8 +42,8 @@ interface StoreDocument {
     lineItems: LineItem[];
     reporterId: string;
     scopeId: string;
-    completedDate: string;
-    startDate: string;
+    completedDate: any | null;
+    startDate: any | null;
     notes: string;
     active: boolean;
     inProgress: boolean;
@@ -68,46 +68,59 @@ interface StoreDocument {
   };
 }
 
-type StoreDocumentNames = keyof StoreDocument;
+export type StoreDocumentNames = keyof StoreDocument;
+
+export type PartialDocument<T extends StoreDocumentNames> = Partial<StoreDocument[T]>;
 
 // Meta Data Fields
-type CreateMeta = {
+export type CreateMeta = {
   updatedBy: string;
   updatedTime: any;
   createdBy: string;
   createdTime: any;
 };
 
-type UpdateMeta = Omit<CreateMeta, 'createdBy' | 'createdTime'>;
+export type UpdateMeta = Omit<CreateMeta, 'createdBy' | 'createdTime'>;
 
 // ***** Create / Update - Documents *****
-type NewDocumentData<T extends StoreDocumentNames> = CreateMeta & Required<StoreDocument[T]>;
-
-type UpdatedDocumentData<T extends StoreDocumentNames> = UpdateMeta & Partial<StoreDocument[T]>;
+export type NewDocumentData<T extends StoreDocumentNames> = CreateMeta & Required<StoreDocument[T]>;
 
 // ***** PAYLOADS *****
 
 // Params
-type PaginationParams = {
+export type PaginationParams = {
   orderBy?: string;
   lastRef?: string;
   pageSize?: number;
 };
 
 // Get by ID
-type GetByIdPayload = { collection: StoreDocumentNames; id: string };
+export type GetByIdPayload = { collection: StoreDocumentNames; id: string };
 
 // Get all
-type GetAllPayload = { collection: StoreDocumentNames };
+export type GetAllPayload = { collection: StoreDocumentNames };
 
 // Create
-type CreatePayload<T extends StoreDocumentNames> = Partial<StoreDocument[T]>;
+export interface CreatePayload {
+  Area: PartialDocument<'Area'>;
+  Builder: PartialDocument<'Builder'>;
+  Community: PartialDocument<'Community'>;
+  Company: PartialDocument<'Company'>;
+  Contractor: PartialDocument<'Contractor'>;
+  Reporter: PartialDocument<'Reporter'>;
+  Scope: PartialDocument<'Scope'>;
+  Supplier: PartialDocument<'Supplier'>;
+  JobLegacy: Omit<
+    PartialDocument<'JobLegacy'>,
+    'completedDate' | 'startDate' | 'active' | 'inProgress' | 'isImportant'
+  > & { startDate?: number };
+}
 
 // Update
-type UpdatePayload<T extends StoreDocumentNames> = Partial<DocId & StoreDocument[T]>;
+export type UpdatePayload<T extends StoreDocumentNames> = Partial<DocId & StoreDocument[T]>;
 
 // Get Paginated
-interface GetPayload {
+export interface GetPayload {
   Companies: PaginationParams;
   Communities: PaginationParams & {
     companyId?: StoreDocument['Community']['companyId'];
@@ -118,55 +131,25 @@ interface GetPayload {
 }
 
 // Response Objects
-type ResponseDocument<T extends StoreDocumentNames> = {
+export type ResponseDocument<T extends StoreDocumentNames> = {
   id: string;
 } & StoreDocument[T];
 
-type GetByIdResponse<T extends StoreDocumentNames> = {
+export type GetByIdResponse<T extends StoreDocumentNames> = {
   document: ResponseDocument<T>;
 };
 
-type GetAllResponse<T extends StoreDocumentNames> = {
+export type GetAllResponse<T extends StoreDocumentNames> = {
   documents: ResponseDocument<T>[];
   size: number;
 };
 
-type GetResponse<T extends StoreDocumentNames> = {
+export type GetResponse<T extends StoreDocumentNames> = {
   documents: ResponseDocument<T>[];
   lastRef: string | number;
   size: number;
 };
 
-type CreateResponse = {
+export type CreateResponse = {
   message: string;
-};
-
-type UpdateResponse = {
-  message: string;
-};
-
-export type {
-  // Documents
-  LineItem,
-  StoreDocument,
-  StoreDocumentNames,
-  NewDocumentData,
-  UpdatedDocumentData,
-  ResponseDocument,
-  // Create / Update Payloads
-  CreatePayload,
-  UpdatePayload,
-  // Get Payloads
-  GetByIdPayload,
-  GetAllPayload,
-  GetPayload,
-  // Create / Update Responses
-  CreateResponse,
-  UpdateResponse,
-  // Get Responses
-  GetByIdResponse,
-  GetAllResponse,
-  GetResponse,
-  // General
-  PaginationParams,
 };

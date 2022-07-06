@@ -1,4 +1,4 @@
-import { LineItem, StoreDocument } from '../cloudFunctionTypes';
+import { StoreDocument } from './cloudFunctionTypes';
 
 export interface AddFormData {
   builder: StoreDocument['Builder'];
@@ -9,17 +9,15 @@ export interface AddFormData {
   area: StoreDocument['Area'];
   supplier: StoreDocument['Supplier'];
   scope: StoreDocument['Scope'];
-}
-
-export interface CreateJobData {
-  address: string;
-  builderId?: string;
-  contractorId?: string;
-  reporterId?: string;
-  startDate: Date | null;
-  communityId?: string;
-  scopeId?: string;
-  areaId?: string;
-  lineItems?: LineItem[];
-  notes?: string;
+  jobLegacy: {
+    name: string;
+    areaId: string;
+    builderId: string;
+    communityId: string;
+    contractorId: string;
+    reporterId: string;
+    scopeId: string;
+    startDate: Date | null;
+    notes: string;
+  };
 }

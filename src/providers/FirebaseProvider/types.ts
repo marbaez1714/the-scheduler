@@ -8,8 +8,6 @@ import {
   GetByIdPayload,
   GetByIdResponse,
   StoreDocumentNames,
-  UpdatePayload,
-  UpdateResponse,
 } from 'src/utils/cloudFunctionTypes';
 
 // -------------------------------- //
@@ -25,8 +23,7 @@ type GetByIdCallable<T extends StoreDocumentNames> = (
 interface Callable<T extends StoreDocumentNames> {
   GetAll: GetAllCallable<T>;
   GetById: GetByIdCallable<T>;
-  Create: HttpsCallable<CreatePayload<T>, CreateResponse>;
-  Update: HttpsCallable<UpdatePayload<T>, UpdateResponse>;
+  Create: HttpsCallable<CreatePayload[T], CreateResponse>;
 }
 
 interface CallableFunctions {

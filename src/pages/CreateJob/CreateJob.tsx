@@ -7,8 +7,8 @@ import { FormDatePicker } from 'src/components/FormDatePicker';
 import { FormTextField } from 'src/components/FormTextField';
 import { Screen } from 'src/components/Screen';
 import { useFirebase } from 'src/hooks/useFirebase';
-import { CreateJobDefaultData, formRules } from 'src/utils/forms';
-import { CreateJobData } from 'src/utils/forms/types';
+import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { AddFormData } from 'src/utils/formTypes';
 import { AddCircle } from '@mui/icons-material';
 import { LineItemTable } from 'src/components/LineItemTable';
 import { AppMessages } from 'src/utils/messages';
@@ -23,9 +23,9 @@ const CreateJob = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm<CreateJobData>({
+  } = useForm({
     mode: 'all',
-    defaultValues: CreateJobDefaultData,
+    defaultValues: AddFormDefaultData.jobLegacy,
   });
 
   // ----- STATE ----- //
@@ -36,8 +36,8 @@ const CreateJob = () => {
   // ----- EFFECTS ----- //
 
   // ----- ACTIONS ----- //
-  const submit = (data: CreateJobData) => {
-    console.log(new Date(`${data.startDate}`));
+  const submit = (data: AddFormData['jobLegacy']) => {
+    console.log(data.startDate?.getTime());
   };
 
   // const submit = async (data: AddFormData['builder']) => {
@@ -151,7 +151,7 @@ const CreateJob = () => {
             control={control}
             rules={formRules.requiredNonEmptyString}
             label="Address"
-            name="address"
+            name="name"
           />
           {/* Community */}
           <FormAutocomplete

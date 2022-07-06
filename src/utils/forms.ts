@@ -1,4 +1,4 @@
-import { AddFormData, CreateJobData } from './types';
+import { AddFormData } from './formTypes';
 
 export const formatString = (value?: string) => {
   return value?.trim() || '';
@@ -61,16 +61,15 @@ export const AddFormDefaultData: AddFormData = {
     primaryPhone: '',
     notes: '',
   },
-};
-
-export const CreateJobDefaultData: CreateJobData = {
-  address: '',
-  areaId: '',
-  builderId: '',
-  communityId: '',
-  contractorId: '',
-  reporterId: '',
-  scopeId: '',
-  startDate: null,
-  notes: '',
+  jobLegacy: {
+    name: '',
+    areaId: '',
+    builderId: '',
+    communityId: '',
+    contractorId: '',
+    reporterId: '',
+    scopeId: '',
+    startDate: null,
+    notes: '',
+  },
 };
