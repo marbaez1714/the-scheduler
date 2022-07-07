@@ -62,8 +62,8 @@ export const ReporterAddForm = () => {
         <h1 className="form-title">Add a Reporter</h1>
         {/* Name REQUIRED */}
         <FormTextField label="Reporter Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
-        {/* Email REQUIRED */}
-        <FormTextField label="Email" name="primaryEmail" control={control} rules={formRules.requiredNonEmptyString} />
+        {/* Email */}
+        <FormTextField label="Email" name="primaryEmail" control={control} />
         {/* Phone number REQUIRED */}
         <FormTextField
           label="Phone Number"

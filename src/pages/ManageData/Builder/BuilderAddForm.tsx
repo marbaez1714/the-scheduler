@@ -100,8 +100,8 @@ export const BuilderAddForm = () => {
           rules={formRules.requiredNonEmptyString}
         />
 
-        {/* Email REQUIRED */}
-        <FormTextField label="Email" name="primaryEmail" control={control} rules={formRules.requiredNonEmptyString} />
+        {/* Email */}
+        <FormTextField label="Email" name="primaryEmail" control={control} />
 
         {/* Notes */}
         <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />

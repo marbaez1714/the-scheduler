@@ -69,13 +69,8 @@ export const ScopeAddForm = () => {
           control={control}
           rules={formRules.requiredNonEmptyString}
         />
-        {/* Description REQUIRED */}
-        <FormTextField
-          control={control}
-          label="Description"
-          name="description"
-          rules={formRules.requiredNonEmptyString}
-        />
+        {/* Description */}
+        <FormTextField control={control} label="Description" name="description" />
         {/* Notes */}
         <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}
