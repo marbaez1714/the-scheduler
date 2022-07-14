@@ -42,8 +42,8 @@ export interface StoreDocument {
     lineItems: LineItem[];
     reporterId: string;
     scopeId: string;
-    completedDate: any | null;
-    startDate: any | null;
+    completedDate: any;
+    startDate: any;
     notes: string;
     active: boolean;
     inProgress: boolean;
@@ -84,6 +84,8 @@ export type UpdateMeta = Omit<CreateMeta, 'createdBy' | 'createdTime'>;
 
 // ***** Create / Update - Documents *****
 export type NewDocumentData<T extends StoreDocumentNames> = CreateMeta & Required<StoreDocument[T]>;
+
+export type LegacyDocumentData<T extends StoreDocumentNames> = NewDocumentData<T> & { legacy: true };
 
 // ***** PAYLOADS *****
 

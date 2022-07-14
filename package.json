@@ -7,8 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts",
-    "dev": "env-cmd -f .env.local yarn react-scripts start"
+    "lint": "eslint . --ext .ts"
   },
   "browserslist": {
     "production": [
@@ -27,6 +26,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.5",
+    "@headlessui/react": "^1.6.6",
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.4",
     "@mui/x-date-pickers": "^5.0.0-alpha.7",
@@ -55,7 +55,6 @@
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "autoprefixer": "^10.4.7",
-    "env-cmd": "^10.1.0",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
     "postcss": "^8.4.13",

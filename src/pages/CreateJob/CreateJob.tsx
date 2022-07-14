@@ -118,7 +118,7 @@ const CreateJob = () => {
 
   // ----- JSX ----- //
   return (
-    <Screen title="Create Job">
+    <Screen>
       <Content loading={createLoading}>
         <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
           {/* Location  */}

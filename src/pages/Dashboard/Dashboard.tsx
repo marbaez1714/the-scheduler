@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   // - JSX - //
   return (
-    <Screen title="Dashboard">
+    <Screen>
       <Content className="grid grid-cols-4">
         <div className="p-8 h-[1000px] bg-slate-500">test</div>
         {/* <Link
