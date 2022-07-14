@@ -18,7 +18,7 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
       <tr className="bg-slate-600">
         {/* Columns */}
         {columns.map((item, index) => (
-          <th className="py-2 px-4 first:pl-6 last:pr-6" key={index}>
+          <th className="py-2 px-4 text-lg first:pl-6 last:pr-6" key={index}>
             {item}
           </th>
         ))}
