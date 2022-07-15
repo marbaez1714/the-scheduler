@@ -61,7 +61,7 @@ export const CommunityAddForm = () => {
       // Create new community
       await communityCreate(data);
       // Refresh communities in data store
-      await refreshStoreData.communities();
+      await refreshStoreData('Community');
       // Reset inputs
       reset();
     } catch (e: any) {

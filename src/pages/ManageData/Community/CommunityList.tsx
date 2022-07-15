@@ -1,23 +1,35 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
 import { TableHeader } from 'src/components/TableHeader';
 import { TableMenuCell } from 'src/components/TableMenu';
 import { useFirebase } from 'src/hooks/useFirebase';
+import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { confirmArchive } from '../utils';
 
 export const CommunityList = () => {
   // - HOOKS - //
-  const { storeData, loading } = useFirebase();
+  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - ACTIONS - //
-  const handleEditClick = (id: string) => () => {
-    navigate(id);
+
+  const handleArchiveClick = ({ name, id }: ResponseDocument<'Community'>) => {
+    confirmArchive(name) &&
+      toast.promise(removeStoreDocument('Community', id), {
+        loading: `Archiving ${name}`,
+        success: `${name} - Removed from communities.`,
+        error: `Error removing ${name}`,
+      });
   };
 
-  const handleAddClick = () => {
-    navigate('add');
+  const getMenuActions = (data: ResponseDocument<'Community'>) => {
+    return [
+      { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
+      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+    ];
   };
 
   // - HELPERS - //
@@ -25,13 +37,6 @@ export const CommunityList = () => {
 
   const getCompany = (companyId: string) => {
     return storeData?.companies?.documents.find((company) => company.id === companyId)?.name || '-';
-  };
-
-  const getMenuActions = (id: string) => {
-    return [
-      { icon: 'edit', label: 'Edit', onClick: handleEditClick(id) },
-      { icon: 'delete', label: 'Delete', onClick: handleEditClick(id) },
-    ];
   };
 
   // - JSX - //
@@ -42,7 +47,7 @@ export const CommunityList = () => {
         <IconButton title="back">
           <ArrowBack />
         </IconButton>
-        <IconButton onClick={handleAddClick}>
+        <IconButton onClick={() => navigate('add')}>
           <AddBox />
         </IconButton>
       </div>
@@ -56,7 +61,7 @@ export const CommunityList = () => {
             {storeData.communities.documents.map((data) => (
               <tr key={data.id} className="border-b transition-all">
                 {/* Action */}
-                <TableMenuCell menuActions={getMenuActions(data.id)} />
+                <TableMenuCell menuActions={getMenuActions(data)} />
                 {/* Name */}
                 <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                 {/* Company */}

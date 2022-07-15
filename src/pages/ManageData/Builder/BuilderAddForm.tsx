@@ -61,7 +61,7 @@ export const BuilderAddForm = () => {
       // Create new builder
       await builderCreate(data);
       // Refresh builders in data store
-      await refreshStoreData.builders();
+      await refreshStoreData('Builder');
       // Reset inputs
       reset();
     } catch (e: any) {

@@ -1,14 +1,17 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
 import { TableHeader } from 'src/components/TableHeader';
 import { TableMenuCell } from 'src/components/TableMenu';
 import { useFirebase } from 'src/hooks/useFirebase';
+import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { confirmArchive } from '../utils';
 
 export const SupplierList = () => {
   // - HOOKS - //
-  const { storeData, loading } = useFirebase();
+  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -16,23 +19,24 @@ export const SupplierList = () => {
   // - EFFECTS - //
 
   // - ACTIONS - //
-  const handleEditClick = (id: string) => () => {
-    navigate(id);
+  const handleArchiveClick = ({ name, id }: ResponseDocument<'Supplier'>) => {
+    confirmArchive(name) &&
+      toast.promise(removeStoreDocument('Scope', id), {
+        loading: `Archiving ${name}`,
+        success: `${name} - Removed from suppliers.`,
+        error: `Error removing ${name}`,
+      });
   };
 
-  const handleAddClick = () => {
-    navigate('add');
+  const getMenuActions = (data: ResponseDocument<'Supplier'>) => {
+    return [
+      { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
+      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+    ];
   };
 
   // - HELPERS - //
   const columns = ['', 'Name', 'Phone Number'];
-
-  const getMenuActions = (id: string) => {
-    return [
-      { icon: 'edit', label: 'Edit', onClick: handleEditClick(id) },
-      { icon: 'delete', label: 'Delete', onClick: handleEditClick(id) },
-    ];
-  };
 
   // - JSX - //
   return (
@@ -42,7 +46,7 @@ export const SupplierList = () => {
         <IconButton title="back">
           <ArrowBack />
         </IconButton>
-        <IconButton onClick={handleAddClick}>
+        <IconButton onClick={() => navigate('add')}>
           <AddBox />
         </IconButton>
       </div>
@@ -56,7 +60,7 @@ export const SupplierList = () => {
             {storeData.suppliers.documents.map((data) => (
               <tr key={data.id} className="border-b transition-all">
                 {/* Action */}
-                <TableMenuCell menuActions={getMenuActions(data.id)} />
+                <TableMenuCell menuActions={getMenuActions(data)} />
                 {/* Name */}
                 <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                 {/* Phone Number */}

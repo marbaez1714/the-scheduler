@@ -42,7 +42,7 @@ export const SupplierAddForm = () => {
       // Create new supplier
       await supplierCreate(data);
       // Refresh suppliers in data store
-      await refreshStoreData.suppliers();
+      await refreshStoreData('Supplier');
       // Reset inputs
       reset();
     } catch (e: any) {

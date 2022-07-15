@@ -42,7 +42,7 @@ export const AreaAddForm = () => {
       // Create new area
       await areaCreate(data);
       // Refresh areas in data store
-      await refreshStoreData.areas();
+      await refreshStoreData('Area');
       // Reset inputs
       reset();
     } catch (e: any) {

@@ -42,7 +42,7 @@ export const ContractorAddForm = () => {
       // Create new contractor
       await contractorCreate(data);
       // Refresh contractor in data store
-      await refreshStoreData.contractors();
+      await refreshStoreData('Contractor');
       // Reset inputs
       reset();
     } catch (e: any) {

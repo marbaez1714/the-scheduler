@@ -42,7 +42,7 @@ export const CompanyAddForm = () => {
       // Create new company
       await companyCreate(data);
       // Refresh companies in data store
-      await refreshStoreData.companies();
+      await refreshStoreData('Company');
       // Reset inputs
       reset();
     } catch (e: any) {

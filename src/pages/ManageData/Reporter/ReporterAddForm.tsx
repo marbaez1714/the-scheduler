@@ -42,7 +42,7 @@ export const ReporterAddForm = () => {
       // Create new reporter
       await reporterCreate(data);
       // Refresh reporters in data store
-      await refreshStoreData.reporters();
+      await refreshStoreData('Reporter');
       // Reset inputs
       reset();
     } catch (e: any) {

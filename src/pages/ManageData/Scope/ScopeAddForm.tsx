@@ -42,7 +42,7 @@ export const ScopeAddForm = () => {
       // Create new scope
       await scopeCreate(data);
       // Refresh scopes in data store
-      await refreshStoreData.scopes();
+      await refreshStoreData('Scope');
       // Reset inputs
       reset();
     } catch (e: any) {

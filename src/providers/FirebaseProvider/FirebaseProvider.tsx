@@ -8,8 +8,16 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FirebaseContextParams, FirebaseProviderProps } from './types';
-import { callableFunctions, firebaseAuth } from './utils';
-import { GetAllResponse } from 'src/utils/cloudFunctionTypes';
+import { callableFunctions, firebaseAuth, firebaseFunctions } from './utils';
+import {
+  ArchiveDocumentPayload,
+  ArchiveResponse,
+  GetAllPayload,
+  GetAllResponse,
+  StoreDocumentNames,
+} from 'src/utils/cloudFunctionTypes';
+import { httpsCallable } from 'firebase/functions';
+import toast from 'react-hot-toast';
 
 // Initial Context
 const initialContext: FirebaseContextParams = {
@@ -32,16 +40,8 @@ const initialContext: FirebaseContextParams = {
     scopes: undefined,
     suppliers: undefined,
   },
-  refreshStoreData: {
-    areas: () => new Promise(() => {}),
-    builders: () => new Promise(() => {}),
-    communities: () => new Promise(() => {}),
-    contractors: () => new Promise(() => {}),
-    companies: () => new Promise(() => {}),
-    reporters: () => new Promise(() => {}),
-    scopes: () => new Promise(() => {}),
-    suppliers: () => new Promise(() => {}),
-  },
+  refreshStoreData: () => new Promise(() => {}),
+  archiveStoreDocument: () => new Promise(() => {}),
   ...callableFunctions,
 };
 
@@ -58,46 +58,37 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   const [authorized, setAuthorized] = useState(false);
   const [checkingAuthorized, setCheckingAuthorized] = useState(true);
   // Data
-  const [areasData, setAreasData] = useState<GetAllResponse<'Area'>>();
-  const [buildersData, setBuildersData] = useState<GetAllResponse<'Builder'>>();
-  const [communitiesData, setCommunitiesData] = useState<GetAllResponse<'Community'>>();
-  const [contractorsData, setContractorsData] = useState<GetAllResponse<'Contractor'>>();
-  const [companiesData, setCompaniesData] = useState<GetAllResponse<'Company'>>();
-  const [reportersData, setReportersData] = useState<GetAllResponse<'Reporter'>>();
-  const [scopesData, setScopesData] = useState<GetAllResponse<'Scope'>>();
-  const [suppliersData, setSuppliersData] = useState<GetAllResponse<'Supplier'>>();
+  const [areaData, setAreaData] = useState<GetAllResponse<'Area'>>();
+  const [builderData, setBuilderData] = useState<GetAllResponse<'Builder'>>();
+  const [communityData, setCommunityData] = useState<GetAllResponse<'Community'>>();
+  const [contractorData, setContractorData] = useState<GetAllResponse<'Contractor'>>();
+  const [companyData, setCompanyData] = useState<GetAllResponse<'Company'>>();
+  const [reporterData, setReporterData] = useState<GetAllResponse<'Reporter'>>();
+  const [scopeData, setScopeData] = useState<GetAllResponse<'Scope'>>();
+  const [supplierData, setSupplierData] = useState<GetAllResponse<'Supplier'>>();
   // Loading
-  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({
-    areas: false,
-    builders: false,
-    communities: false,
-    contractors: false,
-    companies: false,
-    reporters: false,
-    scopes: false,
-    suppliers: false,
-  });
+  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
 
   // - EFFECTS - //
   useEffect(() => {
     if (authorized) {
       // Get all base data
       // areas
-      !areasData && refreshAreas();
+      !areaData && refreshStoreData('Area');
       // builders
-      !buildersData && refreshBuilders();
+      !builderData && refreshStoreData('Builder');
       // communities
-      !communitiesData && refreshCommunities();
-      // contractors
-      !contractorsData && refreshContractors();
+      !communityData && refreshStoreData('Community');
       // companies
-      !companiesData && refreshCompanies();
+      !companyData && refreshStoreData('Company');
+      // contractors
+      !contractorData && refreshStoreData('Contractor');
       // reporters
-      !reportersData && refreshReporters();
+      !reporterData && refreshStoreData('Reporter');
       // scopes
-      !scopesData && refreshScopes();
+      !scopeData && refreshStoreData('Scope');
       // suppliers
-      !suppliersData && refreshSuppliers();
+      !supplierData && refreshStoreData('Supplier');
     }
   }, [authorized]);
 
@@ -119,100 +110,63 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   };
 
   // App Data
-  const refreshAreas = async () => {
-    _toggleLoading('areas', true);
-    await callableFunctions
-      .areaGetAll()
-      .then((response) => {
-        setAreasData(response.data);
+  const refreshStoreData = async <T extends StoreDocumentNames>(collection: T) => {
+    const getAll = httpsCallable<GetAllPayload, GetAllResponse<T>>(firebaseFunctions, 'getAll');
+
+    _toggleLoading(collection, true);
+
+    await getAll({ collection, status: 'active' })
+      .then((resp) => {
+        switch (collection) {
+          case 'Area':
+            setAreaData(resp.data as GetAllResponse<'Area'>);
+            break;
+          case 'Builder':
+            setBuilderData(resp.data as GetAllResponse<'Builder'>);
+            break;
+          case 'Community':
+            setCommunityData(resp.data as GetAllResponse<'Community'>);
+            break;
+          case 'Company':
+            setCompanyData(resp.data as GetAllResponse<'Company'>);
+            break;
+          case 'Contractor':
+            setContractorData(resp.data as GetAllResponse<'Contractor'>);
+            break;
+          case 'Reporter':
+            setReporterData(resp.data as GetAllResponse<'Reporter'>);
+            break;
+          case 'Scope':
+            setScopeData(resp.data as GetAllResponse<'Scope'>);
+            break;
+          case 'Supplier':
+            setSupplierData(resp.data as GetAllResponse<'Supplier'>);
+            break;
+          default:
+            console.warn('incorrect collection for getAll');
+        }
       })
       .finally(() => {
-        _toggleLoading('areas', false);
+        _toggleLoading(collection, false);
       });
   };
 
-  const refreshBuilders = async () => {
-    _toggleLoading('builders', true);
-    await callableFunctions
-      .builderGetAll()
-      .then((response) => {
-        setBuildersData(response.data);
-      })
-      .finally(() => {
-        _toggleLoading('builders', false);
-      });
-  };
+  const archiveStoreDocument = async (collection: StoreDocumentNames, id: string) => {
+    const archiveDocument = httpsCallable<ArchiveDocumentPayload, ArchiveResponse>(
+      firebaseFunctions,
+      'archiveDocument'
+    );
 
-  const refreshCommunities = async () => {
-    _toggleLoading('communities', true);
-    await callableFunctions
-      .communityGetAll()
-      .then((response) => {
-        setCommunitiesData(response.data);
-      })
-      .finally(() => {
-        _toggleLoading('communities', false);
-      });
-  };
+    _toggleLoading(collection, true);
 
-  const refreshContractors = async () => {
-    _toggleLoading('contractors', true);
-    await callableFunctions
-      .contractorGetAll()
-      .then((response) => {
-        setContractorsData(response.data);
-      })
-      .finally(() => {
-        _toggleLoading('contractors', false);
-      });
-  };
-
-  const refreshCompanies = async () => {
-    _toggleLoading('companies', true);
-    await callableFunctions
-      .companyGetAll()
-      .then((response) => {
-        setCompaniesData(response.data);
-      })
-      .finally(() => {
-        _toggleLoading('companies', false);
-      });
-  };
-
-  const refreshReporters = async () => {
-    _toggleLoading('reporters', true);
-    await callableFunctions
-      .reporterGetAll()
-      .then((response) => {
-        setReportersData(response.data);
-      })
-      .then(() => {
-        _toggleLoading('reporters', false);
-      });
-  };
-
-  const refreshScopes = async () => {
-    _toggleLoading('scopes', true);
-    await callableFunctions
-      .scopeGetAll()
-      .then((response) => {
-        setScopesData(response.data);
-      })
-      .finally(() => {
-        _toggleLoading('scopes', false);
-      });
-  };
-
-  const refreshSuppliers = async () => {
-    _toggleLoading('suppliers', true);
-    await callableFunctions
-      .supplierGetAll()
-      .then((response) => {
-        setSuppliersData(response.data);
-      })
-      .finally(() => {
-        _toggleLoading('suppliers', false);
-      });
+    try {
+      await archiveDocument({ collection, id });
+      await refreshStoreData(collection);
+    } catch (e: any) {
+      e.message && toast.error(e.message);
+    } finally {
+      _toggleLoading(collection, false);
+    }
   };
 
   // - HELPERS - //
@@ -243,7 +197,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
         signIn: {
           google: signInGoogle,
         },
-        loading: Object.values(loadingStates).every((state) => state),
+        loading: Object.values(loadingStates).some((state) => state),
         signOut,
         authState: {
           authorized: authorized,
@@ -252,25 +206,17 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
           error: authError,
         },
         storeData: {
-          areas: areasData,
-          builders: buildersData,
-          communities: communitiesData,
-          contractors: contractorsData,
-          companies: companiesData,
-          reporters: reportersData,
-          scopes: scopesData,
-          suppliers: suppliersData,
+          areas: areaData,
+          builders: builderData,
+          communities: communityData,
+          contractors: contractorData,
+          companies: companyData,
+          reporters: reporterData,
+          scopes: scopeData,
+          suppliers: supplierData,
         },
-        refreshStoreData: {
-          areas: refreshAreas,
-          builders: refreshBuilders,
-          communities: refreshCommunities,
-          companies: refreshCompanies,
-          contractors: refreshContractors,
-          reporters: refreshReporters,
-          scopes: refreshScopes,
-          suppliers: refreshSuppliers,
-        },
+        refreshStoreData,
+        archiveStoreDocument,
         ...callableFunctions,
       }}
     >

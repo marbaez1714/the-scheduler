@@ -1,16 +1,18 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
 import { TableHeader } from 'src/components/TableHeader';
 import { TableMenuCell } from 'src/components/TableMenu';
 import { useFirebase } from 'src/hooks/useFirebase';
-import { useModal } from 'src/hooks/useModal';
+import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { confirmArchive } from '../utils';
 
 export const AreaList = () => {
   // - HOOKS - //
-  const { storeData, loading } = useFirebase();
-  const { toggleConfirmationModal } = useModal();
+  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -18,23 +20,24 @@ export const AreaList = () => {
   // - EFFECTS - //
 
   // - ACTIONS - //
-  const handleEditClick = (id: string) => () => {
-    navigate(id);
+  const handleArchiveClick = ({ name, id }: ResponseDocument<'Area'>) => {
+    confirmArchive(name) &&
+      toast.promise(removeStoreDocument('Area', id), {
+        loading: `Archiving ${name}`,
+        success: `${name} - Removed from areas.`,
+        error: `Error removing ${name}`,
+      });
   };
 
-  const handleAddClick = () => {
-    navigate('add');
+  const getMenuActions = (data: ResponseDocument<'Area'>) => {
+    return [
+      { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
+      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+    ];
   };
 
   // - HELPERS - //
   const columns = ['', 'Name', 'Translation (Spanish)'];
-
-  const getMenuActions = (id: string) => {
-    return [
-      { icon: 'edit', label: 'Edit', onClick: handleEditClick(id) },
-      { icon: 'delete', label: 'Delete', onClick: toggleConfirmationModal },
-    ];
-  };
 
   // - JSX - //
   return (
@@ -44,7 +47,7 @@ export const AreaList = () => {
         <IconButton title="back">
           <ArrowBack />
         </IconButton>
-        <IconButton onClick={handleAddClick}>
+        <IconButton onClick={() => navigate('add')}>
           <AddBox />
         </IconButton>
       </div>
@@ -58,7 +61,7 @@ export const AreaList = () => {
             {storeData.areas.documents.map((data) => (
               <tr key={data.id} className="border-b last:border-b-0 transition-all">
                 {/* Action */}
-                <TableMenuCell menuActions={getMenuActions(data.id)} />
+                <TableMenuCell menuActions={getMenuActions(data)} />
                 {/* Name */}
                 <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                 {/* Name Spanish */}

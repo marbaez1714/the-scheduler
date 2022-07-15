@@ -10,19 +10,16 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import Navigation from './navigation/Navigation';
-import { ModalProvider } from './providers/ModalProvider';
 
 function App() {
   return (
     <FirebaseProvider>
-      <ModalProvider>
-        <BrowserRouter>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Navigation />
-            <Toaster />
-          </LocalizationProvider>
-        </BrowserRouter>
-      </ModalProvider>
+      <BrowserRouter>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Navigation />
+          <Toaster />
+        </LocalizationProvider>
+      </BrowserRouter>
     </FirebaseProvider>
   );
 }

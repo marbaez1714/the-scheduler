@@ -78,14 +78,14 @@ export type CreateMeta = {
   updatedTime: any;
   createdBy: string;
   createdTime: any;
+  archived?: boolean;
+  legacy?: boolean;
 };
 
-export type UpdateMeta = Omit<CreateMeta, 'createdBy' | 'createdTime'>;
+export type UpdateMeta = Omit<CreateMeta, 'createdBy' | 'createdTime' | 'archived' | 'legacy'>;
 
 // ***** Create / Update - Documents *****
 export type NewDocumentData<T extends StoreDocumentNames> = CreateMeta & Required<StoreDocument[T]>;
-
-export type LegacyDocumentData<T extends StoreDocumentNames> = NewDocumentData<T> & { legacy: true };
 
 // ***** PAYLOADS *****
 
@@ -100,7 +100,11 @@ export type PaginationParams = {
 export type GetByIdPayload = { collection: StoreDocumentNames; id: string };
 
 // Get all
-export type GetAllPayload = { collection: StoreDocumentNames };
+export type GetAllPayload = { collection: StoreDocumentNames; status?: 'all' | 'active' | 'archived' };
+
+// Archive document
+
+export type ArchiveDocumentPayload = { collection: StoreDocumentNames; id: string };
 
 // Create
 export interface CreatePayload {
@@ -153,5 +157,9 @@ export type GetResponse<T extends StoreDocumentNames> = {
 };
 
 export type CreateResponse = {
+  message: string;
+};
+
+export type ArchiveResponse = {
   message: string;
 };

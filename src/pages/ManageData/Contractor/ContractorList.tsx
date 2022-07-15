@@ -5,6 +5,9 @@ import { Content } from 'src/components/Content';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { TableHeader } from 'src/components/TableHeader';
 import { TableMenuCell } from 'src/components/TableMenu';
+import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { confirmArchive } from '../utils';
+import toast from 'react-hot-toast';
 
 export const ContractorList = () => {
   // - HOOKS - //
@@ -16,23 +19,24 @@ export const ContractorList = () => {
   // - EFFECTS - //
 
   // - ACTIONS - //
-  const handleEditClick = (id: string) => () => {
-    navigate(id);
+  const handleArchiveClick = ({ name, id }: ResponseDocument<'Contractor'>) => {
+    confirmArchive(name) &&
+      toast.promise(removeStoreDocument('Contractor', id), {
+        loading: `Archiving ${name}`,
+        success: `${name} - Removed from contractors.`,
+        error: `Error removing ${name}`,
+      });
   };
 
-  const handleAddClick = () => {
-    navigate('add');
+  const getMenuActions = (data: ResponseDocument<'Contractor'>) => {
+    return [
+      { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
+      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+    ];
   };
 
   // - HELPERS - //
   const columns = ['', 'Name', 'Phone Number'];
-
-  const getMenuActions = (id: string) => {
-    return [
-      { icon: 'edit', label: 'Edit', onClick: handleEditClick(id) },
-      { icon: 'delete', label: 'Delete', onClick: handleEditClick(id) },
-    ];
-  };
 
   // - JSX - //
   return (
@@ -42,7 +46,7 @@ export const ContractorList = () => {
         <IconButton title="back">
           <ArrowBack />
         </IconButton>
-        <IconButton onClick={handleAddClick}>
+        <IconButton onClick={() => navigate('add')}>
           <AddBox />
         </IconButton>
       </div>
@@ -56,7 +60,7 @@ export const ContractorList = () => {
             {storeData.contractors.documents.map((data) => (
               <tr key={data.id} className="border-b transition-all">
                 {/* Action */}
-                <TableMenuCell menuActions={getMenuActions(data.id)} />
+                <TableMenuCell menuActions={getMenuActions(data)} />
                 {/* Name */}
                 <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                 {/* Phone Number */}
@@ -69,3 +73,6 @@ export const ContractorList = () => {
     </Content>
   );
 };
+function removeStoreDocument(arg0: string, id: string): Promise<unknown> {
+  throw new Error('Function not implemented.');
+}
