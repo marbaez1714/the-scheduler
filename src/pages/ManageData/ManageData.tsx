@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Screen } from 'src/components/Screen';
+import { Screen } from 'src/components';
 
 const ManageData = () => {
   // - HOOKS - //

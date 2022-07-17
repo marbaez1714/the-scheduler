@@ -51,11 +51,7 @@ const LineItemTable = ({ lineItems, onRemove }: LineItemTableProps) => {
               <td className="pl-6 pr-4 py-2 rounded-l">{item.orderNumber}</td>
               <td className="px-4 py-2">{supplierNames[item.supplierId]}</td>
               <td className="pl-4 pr-6 py-2 text-right rounded-r">
-                <IconButton
-                  className="text-sm"
-                  size="small"
-                  onClick={handleRemoveClick(index)}
-                >
+                <IconButton className="text-sm" size="small" onClick={handleRemoveClick(index)}>
                   <Delete fontSize="small" />
                 </IconButton>
               </td>

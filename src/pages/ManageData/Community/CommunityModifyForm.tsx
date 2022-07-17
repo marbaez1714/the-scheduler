@@ -1,4 +1,4 @@
-import { Content } from 'src/components/Content';
+import { Content } from 'src/components';
 
 export const CommunityModifyForm = () => {
   // - HOOKS - //

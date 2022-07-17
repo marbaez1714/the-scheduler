@@ -2,9 +2,7 @@ import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content } from 'src/components/Content';
-import { TableHeader } from 'src/components/TableHeader';
-import { TableMenuCell } from 'src/components/TableMenu';
+import { Content, TableHeader, TableMenuCell } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
 import { confirmArchive } from '../utils';
@@ -15,10 +13,6 @@ export const AreaList = () => {
   const navigate = useNavigate();
 
   // - STATE - //
-
-  // - EFFECTS - //
-
-  // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Area'>) => {
     confirmArchive(name) &&
       toast.promise(archiveStoreDocument('Area', id), {
@@ -35,7 +29,6 @@ export const AreaList = () => {
     ];
   };
 
-  // - HELPERS - //
   const columns = ['', 'Name', 'Translation (Spanish)'];
 
   // - JSX - //

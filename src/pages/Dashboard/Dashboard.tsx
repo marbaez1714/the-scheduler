@@ -1,5 +1,4 @@
-import { Content } from 'src/components/Content';
-import { Screen } from 'src/components/Screen';
+import { Content, Screen } from 'src/components';
 
 const Dashboard = () => {
   // - HOOKS - //

@@ -1,13 +1,11 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content } from 'src/components/Content';
+import { Content, TableHeader, TableMenuCell } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
-import { TableHeader } from 'src/components/TableHeader';
-import { TableMenuCell } from 'src/components/TableMenu';
 import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
 import { confirmArchive } from '../utils';
-import toast from 'react-hot-toast';
 
 export const ContractorList = () => {
   // - HOOKS - //

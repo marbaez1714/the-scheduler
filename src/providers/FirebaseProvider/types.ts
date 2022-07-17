@@ -17,39 +17,34 @@ type GetByIdCallable<T extends StoreDocumentNames> = (
   id: string
 ) => ReturnType<HttpsCallable<GetByIdPayload, GetByIdResponse<T>>>;
 
-interface Callable<T extends StoreDocumentNames> {
-  GetById: GetByIdCallable<T>;
-  Create: HttpsCallable<CreatePayload[T], CreateResponse>;
-}
-
 interface CallableFunctions {
   // Collection Specific
-  areaGetById: Callable<'Area'>['GetById'];
-  areaCreate: Callable<'Area'>['Create'];
+  areaGetById: GetByIdCallable<'Area'>;
+  areaCreate: HttpsCallable<CreatePayload['Area'], CreateResponse>;
 
-  builderGetById: Callable<'Builder'>['GetById'];
-  builderCreate: Callable<'Builder'>['Create'];
+  builderGetById: GetByIdCallable<'Builder'>;
+  builderCreate: HttpsCallable<CreatePayload['Builder'], CreateResponse>;
 
-  communityGeyById: Callable<'Community'>['GetById'];
-  communityCreate: Callable<'Community'>['Create'];
+  communityGeyById: GetByIdCallable<'Community'>;
+  communityCreate: HttpsCallable<CreatePayload['Community'], CreateResponse>;
 
-  contractorGetById: Callable<'Contractor'>['GetById'];
-  contractorCreate: Callable<'Contractor'>['Create'];
+  contractorGetById: GetByIdCallable<'Contractor'>;
+  contractorCreate: HttpsCallable<CreatePayload['Contractor'], CreateResponse>;
 
-  companyGetById: Callable<'Company'>['GetById'];
-  companyCreate: Callable<'Company'>['Create'];
+  companyGetById: GetByIdCallable<'Company'>;
+  companyCreate: HttpsCallable<CreatePayload['Company'], CreateResponse>;
 
-  reporterGetById: Callable<'Reporter'>['GetById'];
-  reporterCreate: Callable<'Reporter'>['Create'];
+  reporterGetById: GetByIdCallable<'Reporter'>;
+  reporterCreate: HttpsCallable<CreatePayload['Reporter'], CreateResponse>;
 
-  scopeGetById: Callable<'Scope'>['GetById'];
-  scopeCreate: Callable<'Scope'>['Create'];
+  scopeGetById: GetByIdCallable<'Scope'>;
+  scopeCreate: HttpsCallable<CreatePayload['Scope'], CreateResponse>;
 
-  supplierGetById: Callable<'Supplier'>['GetById'];
-  supplierCreate: Callable<'Supplier'>['Create'];
+  supplierGetById: GetByIdCallable<'Supplier'>;
+  supplierCreate: HttpsCallable<CreatePayload['Supplier'], CreateResponse>;
 
-  jobLegacyGetById: Callable<'JobLegacy'>['GetById'];
-  jobLegacyCreate: Callable<'JobLegacy'>['Create'];
+  jobLegacyGetById: GetByIdCallable<'JobLegacy'>;
+  jobLegacyCreate: HttpsCallable<CreatePayload['JobLegacy'], CreateResponse>;
 }
 
 // -------------------------- //

@@ -1,12 +1,11 @@
 import { IconButton, Button } from '@mui/material';
 import { useFirebase } from 'src/hooks/useFirebase';
-import { Content } from 'src/components/Content';
+import { Content, FormTextField } from 'src/components';
 import { useNavigate } from 'react-router-dom';
 import { ArrowBack } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { AddFormData } from 'src/utils/formTypes';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 

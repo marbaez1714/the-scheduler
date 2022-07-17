@@ -1,16 +1,11 @@
 import { ChangeEventHandler, useState } from 'react';
 import { Autocomplete, Button, IconButton, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Content } from 'src/components/Content';
-import { FormAutocomplete } from 'src/components/FormAutocomplete';
-import { FormDatePicker } from 'src/components/FormDatePicker';
-import { FormTextField } from 'src/components/FormTextField';
-import { Screen } from 'src/components/Screen';
+import { Content, FormAutocomplete, FormDatePicker, FormTextField, LineItemTable, Screen } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
 import { AddFormData } from 'src/utils/formTypes';
 import { AddCircle } from '@mui/icons-material';
-import { LineItemTable } from 'src/components/LineItemTable';
 import { AppMessages } from 'src/utils/messages';
 import { LineItem } from 'src/utils/cloudFunctionTypes';
 import { toast } from 'react-hot-toast';

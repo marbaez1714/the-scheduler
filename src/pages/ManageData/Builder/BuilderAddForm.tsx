@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
-import { IconButton, Button } from '@mui/material';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { Content } from 'src/components/Content';
-import { useNavigate } from 'react-router-dom';
 import { ArrowBack } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { AddFormData } from 'src/utils/formTypes';
-import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { FormAutocomplete, FormAutocompleteOption } from 'src/components/FormAutocomplete';
-import { FormTextField } from 'src/components/FormTextField';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { Content, FormAutocomplete, FormAutocompleteOption, FormTextField } from 'src/components';
+import { useFirebase } from 'src/hooks/useFirebase';
+import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { AddFormData } from 'src/utils/formTypes';
 
 export const BuilderAddForm = () => {
   // - HOOKS - //
