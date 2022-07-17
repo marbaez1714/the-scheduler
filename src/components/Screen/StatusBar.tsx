@@ -4,14 +4,10 @@ export const StatusBar = () => {
   const { authState } = useFirebase();
 
   return (
-    <div className="bg-slate-200 flex py-1 px-2 opacity-75 shadow-md z-10">
+    <div className="bg-slate-200 flex py-1 px-2 opacity-50 shadow-md z-10">
+      <p className="text-xs text-slate-800 px-4">Version: {process.env.REACT_APP_VERSION}</p>
       <p className="text-xs text-slate-800 px-4">
-        Version: {process.env.REACT_APP_VERSION}
-      </p>
-      <p className="text-xs text-slate-800 px-4">
-        {authState.user !== null
-          ? 'Status: Authorized'
-          : 'Status: Unauthorized'}
+        {authState.authorized ? 'Status: Authorized' : 'Status: Unauthorized'}
       </p>
     </div>
   );

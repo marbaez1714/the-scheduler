@@ -47,7 +47,7 @@ export const AddFormDefaultData: AddFormData = {
   },
   supplier: {
     name: '',
-    phoneNumber: '',
+    primaryPhone: '',
     notes: '',
   },
   scope: {

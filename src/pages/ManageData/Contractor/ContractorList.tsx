@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 
 export const ContractorList = () => {
   // - HOOKS - //
-  const { storeData, loading } = useFirebase();
+  const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -21,7 +21,7 @@ export const ContractorList = () => {
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Contractor'>) => {
     confirmArchive(name) &&
-      toast.promise(removeStoreDocument('Contractor', id), {
+      toast.promise(archiveStoreDocument('Contractor', id), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from contractors.`,
         error: `Error removing ${name}`,
@@ -73,6 +73,3 @@ export const ContractorList = () => {
     </Content>
   );
 };
-function removeStoreDocument(arg0: string, id: string): Promise<unknown> {
-  throw new Error('Function not implemented.');
-}

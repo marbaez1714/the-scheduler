@@ -63,7 +63,7 @@ export interface StoreDocument {
   };
   Supplier: {
     name: string;
-    phoneNumber: string;
+    primaryPhone: string;
     notes: string;
   };
 }

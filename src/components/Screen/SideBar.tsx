@@ -3,6 +3,9 @@ import { SideBarLink } from './SideBarLink';
 import { SideBarButton } from './SideBarButton';
 import { manageDataItems } from './utils';
 import { useFirebase } from 'src/hooks/useFirebase';
+import { Link } from 'react-router-dom';
+import { Icon, IconButton } from '@mui/material';
+import { ChevronLeft } from '@mui/icons-material';
 
 export const SideBar = () => {
   const { signOut } = useFirebase();
@@ -31,13 +34,16 @@ export const SideBar = () => {
   return (
     <div className="flex flex-col bg-slate-900 text-white z-10 shadow-md">
       {/* Title */}
-      <SideBarButton
-        title="the_scheduler"
-        leftIcon={sideBarOpen ? 'chevron_left' : 'menu'}
-        className="text-2xl font-bold py-3 h-14"
-        expanded={sideBarOpen}
-        onClick={toggleSideBar}
-      />
+      <div className="flex items-center py-3 justify-center">
+        {sideBarOpen && (
+          <Link to="/dashboard" className="text-2xl font-bold ml-6 mr-auto">
+            the_scheduler
+          </Link>
+        )}
+        <button className="mx-4 h-8 text-white flex items-center" onClick={toggleSideBar}>
+          <Icon>{sideBarOpen ? 'chevron_left' : 'menu'} </Icon>
+        </button>
+      </div>
 
       {/* Side Bar options */}
       <div className="flex-col font-medium whitespace-nowrap">

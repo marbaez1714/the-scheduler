@@ -11,7 +11,7 @@ import { confirmArchive } from '../utils';
 
 export const CompanyList = () => {
   // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
+  const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -21,7 +21,7 @@ export const CompanyList = () => {
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Company'>) => {
     confirmArchive(name) &&
-      toast.promise(removeStoreDocument('Company', id), {
+      toast.promise(archiveStoreDocument('Company', id), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from companies.`,
         error: `Error removing ${name}`,

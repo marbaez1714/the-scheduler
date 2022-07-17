@@ -11,7 +11,7 @@ import { confirmArchive } from '../utils';
 
 export const SupplierList = () => {
   // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
+  const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -21,7 +21,7 @@ export const SupplierList = () => {
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Supplier'>) => {
     confirmArchive(name) &&
-      toast.promise(removeStoreDocument('Scope', id), {
+      toast.promise(archiveStoreDocument('Scope', id), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from suppliers.`,
         error: `Error removing ${name}`,
@@ -64,7 +64,7 @@ export const SupplierList = () => {
                 {/* Name */}
                 <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
                 {/* Phone Number */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.phoneNumber}</td>
+                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryPhone}</td>
               </tr>
             ))}
           </tbody>

@@ -1,6 +1,5 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content } from 'src/components/Content';
@@ -12,7 +11,7 @@ import { confirmArchive } from '../utils';
 
 export const AreaList = () => {
   // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
+  const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -22,7 +21,7 @@ export const AreaList = () => {
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Area'>) => {
     confirmArchive(name) &&
-      toast.promise(removeStoreDocument('Area', id), {
+      toast.promise(archiveStoreDocument('Area', id), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from areas.`,
         error: `Error removing ${name}`,

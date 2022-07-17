@@ -11,7 +11,7 @@ import { confirmArchive } from '../utils';
 
 export const BuilderList = () => {
   // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
+  const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -21,7 +21,7 @@ export const BuilderList = () => {
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Builder'>) => {
     confirmArchive(name) &&
-      toast.promise(removeStoreDocument('Builder', id), {
+      toast.promise(archiveStoreDocument('Builder', id), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from builders.`,
         error: `Error removing ${name}`,

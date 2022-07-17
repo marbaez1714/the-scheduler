@@ -11,7 +11,7 @@ import { confirmArchive } from '../utils';
 
 export const ReporterList = () => {
   // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
+  const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - STATE - //
@@ -21,7 +21,7 @@ export const ReporterList = () => {
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Reporter'>) => {
     confirmArchive(name) &&
-      toast.promise(removeStoreDocument('Reporter', id), {
+      toast.promise(archiveStoreDocument('Reporter', id), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from reporters.`,
         error: `Error removing ${name}`,

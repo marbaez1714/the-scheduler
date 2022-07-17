@@ -63,7 +63,7 @@ export const SupplierAddForm = () => {
         {/* Name */}
         <FormTextField label="Supplier Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
         {/* Phone Number */}
-        <FormTextField label="Phone Number" name="phoneNumber" control={control} />
+        <FormTextField label="Phone Number" name="primaryPhone" control={control} />
         {/* Notes */}
         <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}

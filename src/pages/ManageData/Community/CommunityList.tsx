@@ -11,14 +11,14 @@ import { confirmArchive } from '../utils';
 
 export const CommunityList = () => {
   // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument: removeStoreDocument } = useFirebase();
+  const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - ACTIONS - //
 
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Community'>) => {
     confirmArchive(name) &&
-      toast.promise(removeStoreDocument('Community', id), {
+      toast.promise(archiveStoreDocument('Community', id), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from communities.`,
         error: `Error removing ${name}`,
