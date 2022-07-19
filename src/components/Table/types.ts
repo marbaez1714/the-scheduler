@@ -9,6 +9,14 @@ export interface DateCellProps {
   timestamp: any;
 }
 
-export interface IconCellProps {
-  icon: string;
+export interface DataIdCellProps {
+  data: { id: string; legacy: boolean };
+}
+
+export interface MenuCellProps {
+  menuActions: {
+    icon: string;
+    label: string;
+    onClick: () => void;
+  }[];
 }

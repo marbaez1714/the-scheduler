@@ -1,4 +1,4 @@
-import { AddBox, ArrowBack, Check } from '@mui/icons-material';
+import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -33,17 +33,20 @@ export const AreaList = () => {
 
   const tableColumns: DocumentTableColumns<'Area'> = [
     {
-      header: 'General',
-      columns: [
-        { accessorKey: 'name', cell: (data) => data.getValue(), header: 'Name' },
-        { accessorKey: 'nameSpanish', cell: (data) => data.getValue(), header: 'Spanish Translation' },
-      ],
-    },
-    {
-      header: 'Metadata',
+      header: 'Areas',
       columns: [
         {
+          accessorFn: (data) => data,
+          id: 'menu',
+          header: '',
+          enableSorting: false,
+          cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.getValue())} />,
+        },
+        { accessorKey: 'name', cell: (data) => data.getValue(), header: 'Name' },
+        { accessorKey: 'nameSpanish', cell: (data) => data.getValue(), header: 'Spanish Translation' },
+        {
           accessorKey: 'createdTime',
+          enableGlobalFilter: true,
           cell: (data) => <Table.DateCell timestamp={data.getValue()} />,
           header: 'Created',
         },
@@ -53,9 +56,9 @@ export const AreaList = () => {
           header: 'Updated',
         },
         {
-          accessorKey: 'legacy',
-          cell: (data) => (data.getValue() ? <Check fontSize="inherit" /> : ''),
-          header: 'Legacy',
+          accessorFn: (data) => data,
+          header: 'ID',
+          cell: (data) => <Table.DataIdCell data={data.getValue()} />,
         },
       ],
     },
