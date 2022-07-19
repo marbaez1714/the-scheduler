@@ -4,8 +4,7 @@ import { SideBarButton } from './SideBarButton';
 import { manageDataItems } from './utils';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { Link } from 'react-router-dom';
-import { Icon, IconButton } from '@mui/material';
-import { ChevronLeft } from '@mui/icons-material';
+import { Icon } from '@mui/material';
 
 export const SideBar = () => {
   const { signOut } = useFirebase();

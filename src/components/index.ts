@@ -6,3 +6,4 @@ export * from './LineItemTable';
 export * from './Screen';
 export * from './TableHeader';
 export * from './TableMenu';
+export * from './Table';

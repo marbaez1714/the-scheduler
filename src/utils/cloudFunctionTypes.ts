@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 // ***** Documents *****
 export type DocId = { id: string };
 
@@ -42,8 +44,8 @@ export interface StoreDocument {
     lineItems: LineItem[];
     reporterId: string;
     scopeId: string;
-    completedDate: any;
-    startDate: any;
+    completedDate: Timestamp | null;
+    startDate: Timestamp | null;
     notes: string;
     active: boolean;
     inProgress: boolean;
@@ -75,9 +77,9 @@ export type PartialDocument<T extends StoreDocumentNames> = Partial<StoreDocumen
 // Meta Data Fields
 export type CreateMeta = {
   updatedBy: string;
-  updatedTime: any;
+  updatedTime: Timestamp;
   createdBy: string;
-  createdTime: any;
+  createdTime: Timestamp;
   archived?: boolean;
   legacy?: boolean;
 };
@@ -139,7 +141,8 @@ export interface GetPayload {
 // Response Objects
 export type ResponseDocument<T extends StoreDocumentNames> = {
   id: string;
-} & StoreDocument[T];
+} & StoreDocument[T] &
+  CreateMeta;
 
 export type GetByIdResponse<T extends StoreDocumentNames> = {
   document: ResponseDocument<T>;

@@ -1,17 +1,6 @@
 import { TableHeaderProps } from './types';
 
 const TableHeader = ({ columns }: TableHeaderProps) => {
-  // - HOOKS - //
-
-  // - STATE - //
-
-  // - EFFECTS - //
-
-  // - ACTIONS - //
-
-  // - HELPERS - //
-
-  // - JSX - //
   return (
     <thead className="text-left text-white font-medium whitespace-nowrap">
       {/* Header Row */}
