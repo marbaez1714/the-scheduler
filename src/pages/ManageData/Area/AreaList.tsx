@@ -37,13 +37,12 @@ export const AreaList = () => {
       id: 'menu',
       header: '',
       enableSorting: false,
-      accessorFn: (data) => data,
-      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.getValue())} />,
+      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <span className="text-sm">{getValue()}</span>, header: 'Name' },
+    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Name' },
     {
       accessorKey: 'nameSpanish',
-      cell: ({ getValue }) => <span className="text-sm">{getValue()}</span>,
+      cell: ({ getValue }) => <Table.TextCell text={getValue()} />,
       header: 'Spanish Translation',
     },
     {

@@ -1,10 +1,12 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, TableHeader, TableMenuCell } from 'src/components';
+import { Content, Table } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { DocumentTableColumns } from 'src/utils/tableTypes';
 import { confirmArchive } from '../utils';
 
 export const CommunityList = () => {
@@ -31,11 +33,42 @@ export const CommunityList = () => {
   };
 
   // - HELPERS - //
-  const columns = ['', 'Name', 'Company'];
-
   const getCompany = (companyId: string) => {
     return storeData?.companies?.documents.find((company) => company.id === companyId)?.name || '-';
   };
+
+  const tableColumns: DocumentTableColumns<'Community'> = [
+    {
+      id: 'menu',
+      header: '',
+      enableSorting: false,
+      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
+    },
+    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Name' },
+    {
+      id: 'companyId',
+      header: 'Company',
+      accessorFn: (row) => getCompany(row.companyId),
+      cell: ({ getValue }) => <Table.TextCell text={getValue()} />,
+    },
+    {
+      id: 'createdTime',
+      header: 'Created',
+      accessorFn: (row) => format(new Date(row.createdTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.createdTime} />,
+    },
+    {
+      id: 'updatedTime',
+      header: 'Updated',
+      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
+    },
+    {
+      header: 'ID',
+      accessorKey: 'id',
+      cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
+    },
+  ];
 
   // - JSX - //
   return (
@@ -52,22 +85,7 @@ export const CommunityList = () => {
 
       {/* Company List */}
       {storeData.communities && (
-        <table className="table-auto w-full border-collapse bg-slate-100 drop-shadow">
-          <TableHeader columns={columns} />
-          {/* Body */}
-          <tbody>
-            {storeData.communities.documents.map((data) => (
-              <tr key={data.id} className="border-b transition-all">
-                {/* Action */}
-                <TableMenuCell menuActions={getMenuActions(data)} />
-                {/* Name */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
-                {/* Company */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{getCompany(data.companyId)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table title="Community List" data={storeData.communities?.documents ?? []} columns={tableColumns} />
       )}
     </Content>
   );

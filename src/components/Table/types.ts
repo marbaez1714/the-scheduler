@@ -26,3 +26,7 @@ export interface HeaderCellProps {
   title: string;
   subtitle?: string;
 }
+
+export interface TextCellProps {
+  text?: string;
+}

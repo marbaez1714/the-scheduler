@@ -1,20 +1,18 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, TableHeader, TableMenuCell } from 'src/components';
+import { Content, Table } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { DocumentTableColumns } from 'src/utils/tableTypes';
 import { confirmArchive } from '../utils';
 
 export const CompanyList = () => {
   // - HOOKS - //
   const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
-
-  // - STATE - //
-
-  // - EFFECTS - //
 
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Company'>) => {
@@ -34,7 +32,39 @@ export const CompanyList = () => {
   };
 
   // - HELPERS - //
-  const columns = ['', 'Company Name', 'Office Address', 'Phone Number', 'Email'];
+  const tableColumns: DocumentTableColumns<'Company'> = [
+    {
+      id: 'menu',
+      header: '',
+      enableSorting: false,
+      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
+    },
+    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Name' },
+    {
+      accessorKey: 'primaryPhone',
+      cell: ({ getValue }) => <Table.TextCell text={getValue()} />,
+      header: 'Phone Number',
+    },
+    { accessorKey: 'primaryEmail', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Email' },
+    { accessorKey: 'primaryAddress', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Address' },
+    {
+      id: 'createdTime',
+      header: 'Created',
+      accessorFn: (row) => format(new Date(row.createdTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.createdTime} />,
+    },
+    {
+      id: 'updatedTime',
+      header: 'Updated',
+      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
+    },
+    {
+      header: 'ID',
+      accessorKey: 'id',
+      cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
+    },
+  ];
 
   // - JSX - //
   return (
@@ -51,26 +81,7 @@ export const CompanyList = () => {
 
       {/* Company List */}
       {storeData.companies && (
-        <table className="table-auto w-full border-collapse bg-slate-100 drop-shadow">
-          <TableHeader columns={columns} />
-          {/* Body */}
-          <tbody>
-            {storeData.companies.documents.map((data) => (
-              <tr key={data.id} className="border-b transition-all">
-                {/* Action */}
-                <TableMenuCell menuActions={getMenuActions(data)} />
-                {/* Name */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
-                {/* Address */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryAddress || '-'}</td>
-                {/* Phone Number */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryPhone || '-'}</td>
-                {/* Address */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryEmail || '-'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table title="Community List" data={storeData.companies?.documents ?? []} columns={tableColumns} />
       )}
     </Content>
   );

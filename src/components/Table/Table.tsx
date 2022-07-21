@@ -18,6 +18,7 @@ import { MenuCell } from './MenuCell';
 import { TableProps } from './types';
 import { HeaderCell } from './HeaderCell';
 import { TextField } from '@mui/material';
+import { TextCell } from './TextCell';
 
 const Table = ({ title, data, columns }: TableProps) => {
   // ----- STATE ----- //
@@ -116,5 +117,6 @@ Table.HeaderCell = HeaderCell;
 Table.DateCell = DateCell;
 Table.DataIdCell = DataIdCell;
 Table.MenuCell = MenuCell;
+Table.TextCell = TextCell;
 
 export default Table;
