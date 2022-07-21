@@ -1,5 +1,6 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content, Table } from 'src/components';
@@ -33,34 +34,34 @@ export const AreaList = () => {
 
   const tableColumns: DocumentTableColumns<'Area'> = [
     {
-      header: 'Areas',
-      columns: [
-        {
-          accessorFn: (data) => data,
-          id: 'menu',
-          header: '',
-          enableSorting: false,
-          cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.getValue())} />,
-        },
-        { accessorKey: 'name', cell: (data) => data.getValue(), header: 'Name' },
-        { accessorKey: 'nameSpanish', cell: (data) => data.getValue(), header: 'Spanish Translation' },
-        {
-          accessorKey: 'createdTime',
-          enableGlobalFilter: true,
-          cell: (data) => <Table.DateCell timestamp={data.getValue()} />,
-          header: 'Created',
-        },
-        {
-          accessorKey: 'updatedTime',
-          cell: (data) => <Table.DateCell timestamp={data.getValue()} />,
-          header: 'Updated',
-        },
-        {
-          accessorFn: (data) => data,
-          header: 'ID',
-          cell: (data) => <Table.DataIdCell data={data.getValue()} />,
-        },
-      ],
+      id: 'menu',
+      header: '',
+      enableSorting: false,
+      accessorFn: (data) => data,
+      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.getValue())} />,
+    },
+    { accessorKey: 'name', cell: ({ getValue }) => <span className="text-sm">{getValue()}</span>, header: 'Name' },
+    {
+      accessorKey: 'nameSpanish',
+      cell: ({ getValue }) => <span className="text-sm">{getValue()}</span>,
+      header: 'Spanish Translation',
+    },
+    {
+      id: 'createdTime',
+      header: 'Created',
+      accessorFn: (row) => format(new Date(row.createdTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.createdTime} />,
+    },
+    {
+      id: 'updatedTime',
+      header: 'Updated',
+      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
+    },
+    {
+      header: 'ID',
+      accessorKey: 'id',
+      cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
     },
   ];
 
@@ -77,7 +78,7 @@ export const AreaList = () => {
       </div>
 
       {/* Area List */}
-      {storeData.areas && <Table data={storeData.areas?.documents ?? []} columns={tableColumns} />}
+      {storeData.areas && <Table title="Area List" data={storeData.areas?.documents ?? []} columns={tableColumns} />}
     </Content>
   );
 };

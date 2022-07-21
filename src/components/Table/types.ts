@@ -1,12 +1,13 @@
 import { ColumnDef } from '@tanstack/react-table';
 
 export interface TableProps {
+  title: string;
   data: any[];
   columns: ColumnDef<any>[];
 }
 
 export interface DateCellProps {
-  timestamp: any;
+  timestamp: string;
 }
 
 export interface DataIdCellProps {
@@ -19,4 +20,9 @@ export interface MenuCellProps {
     label: string;
     onClick: () => void;
   }[];
+}
+
+export interface HeaderCellProps {
+  title: string;
+  subtitle?: string;
 }

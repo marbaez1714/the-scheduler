@@ -2,9 +2,10 @@ import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, TableHeader, TableMenuCell } from 'src/components';
+import { Content, Table, TableHeader, TableMenuCell } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { DocumentTableColumns } from 'src/utils/tableTypes';
 import { confirmArchive } from '../utils';
 
 export const BuilderList = () => {

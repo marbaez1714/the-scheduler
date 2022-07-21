@@ -16,16 +16,16 @@ import { DataIdCell } from './DataIdCell';
 import { DateCell } from './DateCell';
 import { MenuCell } from './MenuCell';
 import { TableProps } from './types';
+import { HeaderCell } from './HeaderCell';
+import { TextField } from '@mui/material';
 
-const Table = ({ data, columns }: TableProps) => {
+const Table = ({ title, data, columns }: TableProps) => {
   // ----- STATE ----- //
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
 
   // ----- UTILS ----- //
   const globalFilterFn: FilterFn<any> = (row, columnId, value, addMeta) => {
-    console.log(columnId);
-
     // Rank the item
     const itemRank = rankItem(row.getValue(columnId), value);
 
@@ -57,13 +57,22 @@ const Table = ({ data, columns }: TableProps) => {
   };
 
   return (
-    <div>
-      <input onChange={(e) => setGlobalFilter(e.target.value)} />
-
-      <table className="table-auto w-full border-collapse bg-slate-100 drop-shadow">
-        <thead className="text-left text-white font-medium whitespace-nowrap">
+    <div className="form-card w-auto">
+      <div className="flex items-center">
+        <h1 className="form-title mr-auto">{title}</h1>
+        <TextField
+          label="Search"
+          variant="filled"
+          className="w-1/2"
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          size="small"
+        />
+      </div>
+      <table className="table-auto w-full border-collapse bg-slate-100 drop-shadow whitespace-nowrap">
+        <thead className="text-left text-white bg-slate-600 font-medium">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr className="bg-slate-600" key={headerGroup.id}>
+            <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th
                   className="py-2 px-4 first:pl-6 last:pr-6"
@@ -103,6 +112,7 @@ const Table = ({ data, columns }: TableProps) => {
   );
 };
 
+Table.HeaderCell = HeaderCell;
 Table.DateCell = DateCell;
 Table.DataIdCell = DataIdCell;
 Table.MenuCell = MenuCell;

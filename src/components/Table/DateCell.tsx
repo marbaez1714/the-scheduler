@@ -1,11 +1,14 @@
-import { formatTimestamp } from 'src/utils/helpers';
+import { format } from 'date-fns';
+import { useMemo } from 'react';
 import { DateCellProps } from './types';
 
 export const DateCell = ({ timestamp }: DateCellProps) => {
+  const timestampDate = useMemo(() => new Date(timestamp), [timestamp]);
+
   return (
     <div>
-      <p className="text-sm">{formatTimestamp(timestamp, 'P')}</p>
-      <p className="text-xs">{formatTimestamp(timestamp, 'p')}</p>
+      <p className="text-sm">{format(timestampDate, 'P')}</p>
+      <p className="text-xs">{format(timestampDate, 'p')}</p>
     </div>
   );
 };
