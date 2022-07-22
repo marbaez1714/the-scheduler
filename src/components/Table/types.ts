@@ -28,5 +28,9 @@ export interface HeaderCellProps {
 }
 
 export interface TextCellProps {
-  text?: string;
+  value?: string;
+}
+
+export interface PhoneNumberCellProps {
+  value?: string;
 }

@@ -1,20 +1,18 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, TableHeader, TableMenuCell } from 'src/components';
+import { Content, Table } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
+import { DocumentTableColumns } from 'src/utils/tableTypes';
 import { confirmArchive } from '../utils';
 
 export const ContractorList = () => {
   // - HOOKS - //
   const { storeData, loading, archiveStoreDocument } = useFirebase();
   const navigate = useNavigate();
-
-  // - STATE - //
-
-  // - EFFECTS - //
 
   // - ACTIONS - //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Contractor'>) => {
@@ -34,7 +32,37 @@ export const ContractorList = () => {
   };
 
   // - HELPERS - //
-  const columns = ['', 'Name', 'Phone Number'];
+  const tableColumns: DocumentTableColumns<'Contractor'> = [
+    {
+      id: 'menu',
+      header: '',
+      enableSorting: false,
+      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
+    },
+    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
+    {
+      accessorKey: 'primaryPhone',
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
+      header: 'Phone Number',
+    },
+    {
+      id: 'createdTime',
+      header: 'Created',
+      accessorFn: (row) => format(new Date(row.createdTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.createdTime} />,
+    },
+    {
+      id: 'updatedTime',
+      header: 'Updated',
+      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
+      cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
+    },
+    {
+      header: 'ID',
+      accessorKey: 'id',
+      cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
+    },
+  ];
 
   // - JSX - //
   return (
@@ -51,22 +79,7 @@ export const ContractorList = () => {
 
       {/* Contractor List */}
       {storeData.contractors && (
-        <table className="table-auto w-full border-collapse bg-slate-100 drop-shadow">
-          <TableHeader columns={columns} />
-          {/* Body */}
-          <tbody>
-            {storeData.contractors.documents.map((data) => (
-              <tr key={data.id} className="border-b transition-all">
-                {/* Action */}
-                <TableMenuCell menuActions={getMenuActions(data)} />
-                {/* Name */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.name}</td>
-                {/* Phone Number */}
-                <td className="py-2 px-4 first:pl-6 last:pr-6">{data.primaryPhone}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table title="Contractor List" data={storeData.contractors?.documents ?? []} columns={tableColumns} />
       )}
     </Content>
   );

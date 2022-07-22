@@ -39,10 +39,10 @@ export const AreaList = () => {
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Name' },
+    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
       accessorKey: 'nameSpanish',
-      cell: ({ getValue }) => <Table.TextCell text={getValue()} />,
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
       header: 'Spanish Translation',
     },
     {

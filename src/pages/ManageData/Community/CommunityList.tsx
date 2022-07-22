@@ -44,12 +44,12 @@ export const CommunityList = () => {
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Name' },
+    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
       id: 'companyId',
       header: 'Company',
       accessorFn: (row) => getCompany(row.companyId),
-      cell: ({ getValue }) => <Table.TextCell text={getValue()} />,
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },
     {
       id: 'createdTime',

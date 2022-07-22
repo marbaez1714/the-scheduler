@@ -13,14 +13,6 @@ const FormDatePicker = <TFieldValues extends FieldValues>({
     field: { onChange, onBlur, name, value, ref },
   } = useController(rest);
 
-  // - STATE - //
-
-  // - EFFECTS - //
-
-  // - ACTIONS - //
-
-  // - HELPERS - //
-
   // - JSX - //
   return (
     <DatePicker
@@ -28,14 +20,7 @@ const FormDatePicker = <TFieldValues extends FieldValues>({
       value={value}
       onChange={onChange}
       ref={ref}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          onBlur={onBlur}
-          className={className}
-          name={name}
-        />
-      )}
+      renderInput={(params) => <TextField {...params} onBlur={onBlur} className={className} name={name} />}
     />
   );
 };

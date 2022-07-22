@@ -39,14 +39,14 @@ export const CompanyList = () => {
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Name' },
+    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
       accessorKey: 'primaryPhone',
-      cell: ({ getValue }) => <Table.TextCell text={getValue()} />,
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
       header: 'Phone Number',
     },
-    { accessorKey: 'primaryEmail', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Email' },
-    { accessorKey: 'primaryAddress', cell: ({ getValue }) => <Table.TextCell text={getValue()} />, header: 'Address' },
+    { accessorKey: 'primaryEmail', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Email' },
+    { accessorKey: 'primaryAddress', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Address' },
     {
       id: 'createdTime',
       header: 'Created',
@@ -81,7 +81,7 @@ export const CompanyList = () => {
 
       {/* Company List */}
       {storeData.companies && (
-        <Table title="Community List" data={storeData.companies?.documents ?? []} columns={tableColumns} />
+        <Table title="Company List" data={storeData.companies?.documents ?? []} columns={tableColumns} />
       )}
     </Content>
   );

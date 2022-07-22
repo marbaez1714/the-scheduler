@@ -19,6 +19,7 @@ import { TableProps } from './types';
 import { HeaderCell } from './HeaderCell';
 import { TextField } from '@mui/material';
 import { TextCell } from './TextCell';
+import { PhoneNumberCell } from './PhoneNumberCell';
 
 const Table = ({ title, data, columns }: TableProps) => {
   // ----- STATE ----- //
@@ -118,5 +119,6 @@ Table.DateCell = DateCell;
 Table.DataIdCell = DataIdCell;
 Table.MenuCell = MenuCell;
 Table.TextCell = TextCell;
+Table.PhoneNumberCell = PhoneNumberCell;
 
 export default Table;

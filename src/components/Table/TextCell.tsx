@@ -1,5 +1,5 @@
 import { TextCellProps } from './types';
 
-export const TextCell = ({ text }: TextCellProps) => {
-  return <span className="text-sm">{text || '-'}</span>;
+export const TextCell = ({ value }: TextCellProps) => {
+  return <span className="text-sm max-w-sm whitespace-normal">{value || '-'}</span>;
 };
