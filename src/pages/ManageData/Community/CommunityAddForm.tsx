@@ -1,24 +1,18 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, FormAutocomplete, FormAutocompleteOption, FormTextField } from 'src/components';
+import { Content, FormAutocomplete, FormTextField } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
+import { useOptions } from 'src/hooks/useOptions';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
 import { AddFormData } from 'src/utils/formTypes';
 
 export const CommunityAddForm = () => {
   // - HOOKS - //
-  // Firebase
-  const {
-    loading: loadingData,
-    communityCreate,
-    storeData: { companies: companiesData },
-    refreshStoreData,
-  } = useFirebase();
-  // Navigation
+  const { companyOptions } = useOptions();
+  const { loading: loadingData, createDocument } = useFirebase();
   const navigate = useNavigate();
 
   // - FORM - //
@@ -32,45 +26,17 @@ export const CommunityAddForm = () => {
     defaultValues: AddFormDefaultData.community,
   });
 
-  // - STATE - //
-  const [createLoading, setCreateLoading] = useState(false);
-  const [companyOptions, setCompanyOptions] = useState<FormAutocompleteOption[]>([]);
-
-  // - EFFECTS - //
-  useEffect(() => {
-    if (companiesData?.documents.length) {
-      setCompanyOptions(
-        companiesData.documents.map((doc) => ({
-          label: doc.name || 'Missing Name',
-          value: doc.id,
-        }))
-      );
-    }
-  }, [companiesData]);
-
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['community']) => {
-    try {
-      setCreateLoading(true);
-      // Create new community
-      await communityCreate(data);
-      // Refresh communities in data store
-      await refreshStoreData('Community');
-      // Reset inputs
-      reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+  const submit = (data: AddFormData['community']) => {
+    createDocument('Community', data).then(() => reset());
   };
 
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

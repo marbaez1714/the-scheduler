@@ -12,7 +12,7 @@ import { AddFormData } from 'src/utils/formTypes';
 export const ScopeAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, scopeCreate, refreshStoreData } = useFirebase();
+  const { loading: loadingData, createDocument } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -27,32 +27,17 @@ export const ScopeAddForm = () => {
     defaultValues: AddFormDefaultData.scope,
   });
 
-  // - STATE - //
-  const [createLoading, setCreateLoading] = useState(false);
-
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['scope']) => {
-    try {
-      setCreateLoading(true);
-      // Create new scope
-      await scopeCreate(data);
-      // Refresh scopes in data store
-      await refreshStoreData('Scope');
-      // Reset inputs
-      reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+  const submit = (data: AddFormData['scope']) => {
+    createDocument('Scope', data).then(() => reset());
   };
 
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

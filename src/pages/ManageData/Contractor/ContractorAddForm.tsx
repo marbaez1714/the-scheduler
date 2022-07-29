@@ -1,8 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content, FormTextField } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
@@ -12,7 +10,7 @@ import { AddFormData } from 'src/utils/formTypes';
 export const ContractorAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, contractorCreate, refreshStoreData } = useFirebase();
+  const { loading: loadingData, createDocument } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -27,32 +25,17 @@ export const ContractorAddForm = () => {
     defaultValues: AddFormDefaultData.contractor,
   });
 
-  // - STATE - //
-  const [createLoading, setCreateLoading] = useState(false);
-
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['contractor']) => {
-    try {
-      setCreateLoading(true);
-      // Create new contractor
-      await contractorCreate(data);
-      // Refresh contractor in data store
-      await refreshStoreData('Contractor');
-      // Reset inputs
-      reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+  const submit = (data: AddFormData['contractor']) => {
+    createDocument('Contractor', data).then(() => reset());
   };
 
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

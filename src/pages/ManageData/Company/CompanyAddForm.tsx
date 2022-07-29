@@ -1,8 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content, FormTextField } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
@@ -12,7 +10,7 @@ import { AddFormData } from 'src/utils/formTypes';
 export const CompanyAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, companyCreate, refreshStoreData } = useFirebase();
+  const { loading: loadingData, createDocument } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -27,36 +25,21 @@ export const CompanyAddForm = () => {
     defaultValues: AddFormDefaultData.company,
   });
 
-  // - STATE - //
-  const [createLoading, setCreateLoading] = useState(false);
-
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submitCompany = async (data: AddFormData['company']) => {
-    try {
-      setCreateLoading(true);
-      // Create new company
-      await companyCreate(data);
-      // Refresh companies in data store
-      await refreshStoreData('Company');
-      // Reset inputs
-      reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+  const submit = (data: AddFormData['company']) => {
+    createDocument('Company', data).then(() => reset());
   };
 
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loadingData || createLoading}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
-      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submitCompany)}>
+      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
         {/* Title */}
         <h1 className="form-title">Add a Company</h1>
         {/* Company Name */}

@@ -5,22 +5,56 @@ import {
   signInWithPopup as fbSignInWithPopup,
   signOut as fbSignOut,
 } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
-import { FirebaseContextParams, FirebaseProviderProps } from './types';
+import { AuthStateHook, useAuthState } from 'react-firebase-hooks/auth';
+import { CallableFunctions } from './types';
 import { callableFunctions, firebaseAuth, firebaseFunctions } from './utils';
 import {
   ArchiveDocumentPayload,
   ArchiveResponse,
+  CreatePayload,
+  CreateResponse,
   GetAllPayload,
   GetAllResponse,
+  StoreDocument,
   StoreDocumentNames,
 } from 'src/utils/cloudFunctionTypes';
-import { httpsCallable } from 'firebase/functions';
+import { HttpsCallable, httpsCallable } from 'firebase/functions';
 import toast from 'react-hot-toast';
 
+interface ContextType extends CallableFunctions {
+  signIn: { google: () => Promise<void> };
+  signOut: () => Promise<void>;
+  loading: boolean;
+  authState: {
+    authorized: boolean;
+    user: AuthStateHook['0'];
+    loading: AuthStateHook['1'];
+    error: AuthStateHook['2'];
+  };
+  storeData: {
+    areas?: GetAllResponse<'Area'>;
+    builders?: GetAllResponse<'Builder'>;
+    communities?: GetAllResponse<'Community'>;
+    contractors?: GetAllResponse<'Contractor'>;
+    companies?: GetAllResponse<'Company'>;
+    reporters?: GetAllResponse<'Reporter'>;
+    scopes?: GetAllResponse<'Scope'>;
+    suppliers?: GetAllResponse<'Supplier'>;
+  };
+  refreshStoreData: (collection: StoreDocumentNames) => Promise<void>;
+  archiveStoreDocument: (collection: StoreDocumentNames, id: string) => Promise<void>;
+  createDocument: <TCollection extends StoreDocumentNames, YPayload extends CreatePayload[TCollection]>(
+    collection: TCollection,
+    data: YPayload
+  ) => Promise<void>;
+}
+
+interface ProviderProps {
+  children: React.ReactNode;
+}
+
 // Initial Context
-const initialContext: FirebaseContextParams = {
+const initialContext: ContextType = {
   signIn: { google: () => new Promise(() => {}) },
   signOut: () => new Promise(() => {}),
   loading: false,
@@ -42,18 +76,19 @@ const initialContext: FirebaseContextParams = {
   },
   refreshStoreData: () => new Promise(() => {}),
   archiveStoreDocument: () => new Promise(() => {}),
+  createDocument: () => new Promise(() => {}),
   ...callableFunctions,
 };
 
 // Context
-export const FirebaseContext = createContext<FirebaseContextParams>(initialContext);
+export const FirebaseContext = createContext<ContextType>(initialContext);
 
 // Provider
-const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
-  // - HOOKS - //
+export const FirebaseProvider = ({ children }: ProviderProps) => {
+  /** CUSTOM **/
   const [authUser, authLoading, authError] = useAuthState(firebaseAuth);
 
-  // - STATE - //
+  /** STATE **/
   // Auth
   const [authorized, setAuthorized] = useState(false);
   const [checkingAuthorized, setCheckingAuthorized] = useState(true);
@@ -69,7 +104,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
   // Loading
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
 
-  // - EFFECTS - //
+  /** EFFECTS **/
   useEffect(() => {
     if (authorized) {
       // Get all base data
@@ -96,8 +131,7 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     _checkAuth();
   }, [authUser, authLoading]);
 
-  // - CONTEXT FUNCTIONS - //
-
+  /** FUNCTIONS **/
   // Auth
   const signInGoogle = async () => {
     const googleProvider = new fbGoogleAuthProvider();
@@ -169,7 +203,59 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     }
   };
 
-  // - HELPERS - //
+  const createDocument = async <TCollection extends StoreDocumentNames, YPayload = CreatePayload[TCollection]>(
+    collection: TCollection,
+    data: YPayload
+  ) => {
+    let functionName = '';
+
+    switch (collection) {
+      case 'Area':
+        functionName = 'areaCreate';
+        break;
+      case 'Builder':
+        functionName = 'builderCreate';
+        break;
+      case 'Community':
+        functionName = 'communityCreate';
+        break;
+      case 'Company':
+        functionName = 'companyCreate';
+        break;
+      case 'Contractor':
+        functionName = 'contractorCreate';
+        break;
+      case 'JobLegacy':
+        functionName = 'jobLegacyCreate';
+        break;
+      case 'Reporter':
+        functionName = 'reporterCreate';
+        break;
+      case 'Scope':
+        functionName = 'scopeCreate';
+        break;
+      case 'Supplier':
+        functionName = 'supplierCreate';
+        break;
+    }
+
+    const createDocumentCallable: HttpsCallable<YPayload, CreateResponse> = httpsCallable(
+      firebaseFunctions,
+      functionName
+    );
+
+    try {
+      _toggleLoading(collection, true);
+      await createDocumentCallable(data);
+      await refreshStoreData(collection);
+    } catch (e: any) {
+      e.message && toast.error(e.message);
+    } finally {
+      _toggleLoading(collection, false);
+    }
+  };
+
+  /** HELPERS **/
   const _checkAuth = async () => {
     setCheckingAuthorized(true);
 
@@ -190,39 +276,34 @@ const FirebaseProvider = ({ children }: FirebaseProviderProps) => {
     setLoadingStates((prev) => ({ ...prev, [param]: state }));
   };
 
-  // - PROVIDER - //
-  return (
-    <FirebaseContext.Provider
-      value={{
-        signIn: {
-          google: signInGoogle,
-        },
-        loading: Object.values(loadingStates).some((state) => state),
-        signOut,
-        authState: {
-          authorized: authorized,
-          user: authUser,
-          loading: authLoading || checkingAuthorized,
-          error: authError,
-        },
-        storeData: {
-          areas: areaData,
-          builders: builderData,
-          communities: communityData,
-          contractors: contractorData,
-          companies: companyData,
-          reporters: reporterData,
-          scopes: scopeData,
-          suppliers: supplierData,
-        },
-        refreshStoreData,
-        archiveStoreDocument,
-        ...callableFunctions,
-      }}
-    >
-      {children}
-    </FirebaseContext.Provider>
-  );
-};
+  const _providerValues = {
+    signIn: {
+      google: signInGoogle,
+    },
+    loading: Object.values(loadingStates).some((state) => state),
+    signOut,
+    authState: {
+      authorized: authorized,
+      user: authUser,
+      loading: authLoading || checkingAuthorized,
+      error: authError,
+    },
+    storeData: {
+      areas: areaData,
+      builders: builderData,
+      communities: communityData,
+      contractors: contractorData,
+      companies: companyData,
+      reporters: reporterData,
+      scopes: scopeData,
+      suppliers: supplierData,
+    },
+    refreshStoreData,
+    archiveStoreDocument,
+    createDocument,
+    ...callableFunctions,
+  };
 
-export default FirebaseProvider;
+  /** PROVIDER **/
+  return <FirebaseContext.Provider value={_providerValues}>{children}</FirebaseContext.Provider>;
+};

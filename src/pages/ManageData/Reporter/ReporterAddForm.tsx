@@ -1,8 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Content, FormTextField } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
@@ -12,7 +10,7 @@ import { AddFormData } from 'src/utils/formTypes';
 export const ReporterAddForm = () => {
   // - HOOKS - //
   // Firebase
-  const { loading: loadingData, reporterCreate, refreshStoreData } = useFirebase();
+  const { loading: loadingData, createDocument } = useFirebase();
   // Navigation
   const navigate = useNavigate();
 
@@ -27,36 +25,21 @@ export const ReporterAddForm = () => {
     defaultValues: AddFormDefaultData.reporter,
   });
 
-  // - STATE - //
-  const [createLoading, setCreateLoading] = useState(false);
-
   // - ACTIONS - //
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submitReporter = async (data: AddFormData['reporter']) => {
-    try {
-      setCreateLoading(true);
-      // Create new reporter
-      await reporterCreate(data);
-      // Refresh reporters in data store
-      await refreshStoreData('Reporter');
-      // Reset inputs
-      reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+  const submit = (data: AddFormData['reporter']) => {
+    createDocument('Reporter', data).then(() => reset());
   };
 
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loadingData}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>
-      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submitReporter)}>
+      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
         {/* Title */}
         <h1 className="form-title">Add a Reporter</h1>
         {/* Name REQUIRED */}
