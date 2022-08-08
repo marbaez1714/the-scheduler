@@ -4,23 +4,34 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import { BrowserRouter } from 'react-router-dom';
-import { FirebaseProvider } from './providers/FirebaseProvider';
-import { Toaster } from 'react-hot-toast';
+import { Auth0Provider } from '@auth0/auth0-react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { Toaster } from 'react-hot-toast';
+
+import { FirebaseProvider } from './providers/FirebaseProvider';
 
 import Navigation from './navigation/Navigation';
 
+const auth0Props = {
+  domain: process.env.REACT_APP_AUTH0_DOMAIN ?? '',
+  clientId: process.env.REACT_APP_AUTH0_CLIENT_ID ?? '',
+  redirectUri: window.location.origin,
+  audience: process.env.REACT_APP_AUTH0_AUDIENCE ?? '',
+};
+
 function App() {
   return (
-    <FirebaseProvider>
-      <BrowserRouter>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Navigation />
-          <Toaster />
-        </LocalizationProvider>
-      </BrowserRouter>
-    </FirebaseProvider>
+    <Auth0Provider {...auth0Props}>
+      <FirebaseProvider>
+        <BrowserRouter>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Navigation />
+            <Toaster />
+          </LocalizationProvider>
+        </BrowserRouter>
+      </FirebaseProvider>
+    </Auth0Provider>
   );
 }
 
