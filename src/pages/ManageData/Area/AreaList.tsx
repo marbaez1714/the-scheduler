@@ -1,8 +1,10 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { Area, GetAllAreasQuery, useGetAllAreasQuery } from 'src/api';
 import { Content, Table } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
@@ -12,7 +14,10 @@ import { confirmArchive } from '../utils';
 export const AreaList = () => {
   // ----- HOOKS ----- //
   const { storeData, loading, archiveStoreDocument } = useFirebase();
+
   const navigate = useNavigate();
+
+  const { data } = useGetAllAreasQuery();
 
   // ----- ACTIONS ----- //
   const handleArchiveClick = ({ name, id }: ResponseDocument<'Area'>) => {
@@ -32,7 +37,7 @@ export const AreaList = () => {
     ];
   };
 
-  const tableColumns: DocumentTableColumns<'Area'> = [
+  const tableColumns: ColumnDef<Area[]> = [
     {
       id: 'menu',
       header: '',
@@ -77,7 +82,7 @@ export const AreaList = () => {
       </div>
 
       {/* Area List */}
-      {storeData.areas && <Table title="Area List" data={storeData.areas?.documents ?? []} columns={tableColumns} />}
+      {storeData.areas && <Table title="Area List" data={data?.areasAll ?? []} columns={tableColumns} />}
     </Content>
   );
 };

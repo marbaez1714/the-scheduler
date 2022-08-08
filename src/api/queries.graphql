@@ -1,0 +1,14 @@
+query GetAllAreas {
+  areasAll {
+    id
+    name
+    nameSpanish
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}

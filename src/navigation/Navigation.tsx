@@ -1,10 +1,9 @@
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 import { Login } from 'src/pages/Login';
-import { AuthRoute } from './AuthRoute';
+import { ProtectedRoute } from './ProtectedRoute';
 
 import { Dashboard } from 'src/pages/Dashboard';
-
 import {
   // Base
   ManageData,
@@ -52,62 +51,62 @@ const Navigation = () => {
       {/* ***** SECURE ROUTES ***** */}
 
       {/* Dashboard */}
-      <Route path="/dashboard" element={<AuthRoute component={<Dashboard />} />} />
+      <Route path="/dashboard" element={<ProtectedRoute component={Dashboard} />} />
       {/* Manage */}
-      <Route path="/manage" element={<AuthRoute component={<ManageData />} />}>
+      <Route path="/manage" element={<ProtectedRoute component={ManageData} />}>
         {/* Area */}
-        <Route path="area" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<AreaList />} />} />
-          <Route path="add" element={<AuthRoute component={<AreaAddForm />} />} />
-          <Route path=":areaId" element={<AuthRoute component={<AreaModifyForm />} />} />
+        <Route path="area" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={AreaList} />} />
+          <Route path="add" element={<ProtectedRoute component={AreaAddForm} />} />
+          <Route path=":areaId" element={<ProtectedRoute component={AreaModifyForm} />} />
         </Route>
         {/* Builder */}
-        <Route path="builder" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<BuilderList />} />} />
-          <Route path="add" element={<AuthRoute component={<BuilderAddForm />} />} />
-          <Route path=":builderId" element={<AuthRoute component={<BuilderModifyForm />} />} />
+        <Route path="builder" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={BuilderList} />} />
+          <Route path="add" element={<ProtectedRoute component={BuilderAddForm} />} />
+          <Route path=":builderId" element={<ProtectedRoute component={BuilderModifyForm} />} />
         </Route>
         {/* Company */}
-        <Route path="company" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<CompanyList />} />} />
-          <Route path="add" element={<AuthRoute component={<CompanyAddForm />} />} />
-          <Route path=":companyId" element={<AuthRoute component={<CompanyModifyForm />} />} />
+        <Route path="company" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={CompanyList} />} />
+          <Route path="add" element={<ProtectedRoute component={CompanyAddForm} />} />
+          <Route path=":companyId" element={<ProtectedRoute component={CompanyModifyForm} />} />
         </Route>
         {/* Community */}
-        <Route path="community" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<CommunityList />} />} />
-          <Route path="add" element={<AuthRoute component={<CommunityAddForm />} />} />
-          <Route path=":companyId" element={<AuthRoute component={<CommunityModifyForm />} />} />
+        <Route path="community" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={CommunityList} />} />
+          <Route path="add" element={<ProtectedRoute component={CommunityAddForm} />} />
+          <Route path=":companyId" element={<ProtectedRoute component={CommunityModifyForm} />} />
         </Route>
         {/* Contractor */}
-        <Route path="contractor" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<ContractorList />} />} />
-          <Route path="add" element={<AuthRoute component={<ContractorAddForm />} />} />
-          <Route path=":contractorId" element={<AuthRoute component={<ContractorModifyForm />} />} />
+        <Route path="contractor" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={ContractorList} />} />
+          <Route path="add" element={<ProtectedRoute component={ContractorAddForm} />} />
+          <Route path=":contractorId" element={<ProtectedRoute component={ContractorModifyForm} />} />
         </Route>
         {/* Reporter */}
-        <Route path="reporter" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<ReporterList />} />} />
-          <Route path="add" element={<AuthRoute component={<ReporterAddForm />} />} />
-          <Route path=":reporterId" element={<AuthRoute component={<ReporterModifyForm />} />} />
+        <Route path="reporter" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={ReporterList} />} />
+          <Route path="add" element={<ProtectedRoute component={ReporterAddForm} />} />
+          <Route path=":reporterId" element={<ProtectedRoute component={ReporterModifyForm} />} />
         </Route>
         {/* Scope */}
-        <Route path="scope" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<ScopeList />} />} />
-          <Route path="add" element={<AuthRoute component={<ScopeAddForm />} />} />
-          <Route path=":scopeId" element={<AuthRoute component={<ScopeModifyForm />} />} />
+        <Route path="scope" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={ScopeList} />} />
+          <Route path="add" element={<ProtectedRoute component={ScopeAddForm} />} />
+          <Route path=":scopeId" element={<ProtectedRoute component={ScopeModifyForm} />} />
         </Route>
         {/* Supplier */}
-        <Route path="supplier" element={<AuthRoute component={<Outlet />} />}>
-          <Route index element={<AuthRoute component={<SupplierList />} />} />
-          <Route path="add" element={<AuthRoute component={<SupplierAddForm />} />} />
-          <Route path=":supplierId" element={<AuthRoute component={<SupplierModifyForm />} />} />
+        <Route path="supplier" element={<ProtectedRoute component={Outlet} />}>
+          <Route index element={<ProtectedRoute component={SupplierList} />} />
+          <Route path="add" element={<ProtectedRoute component={SupplierAddForm} />} />
+          <Route path=":supplierId" element={<ProtectedRoute component={SupplierModifyForm} />} />
         </Route>
       </Route>
       {/* Create Job */}
-      <Route path="/create_job" element={<AuthRoute component={<CreateJob />} />} />
+      <Route path="/create_job" element={<ProtectedRoute component={CreateJob} />} />
       {/* 404 Page */}
-      <Route path="*" element={<AuthRoute component={<NotFound />} />} />
+      <Route path="*" element={<ProtectedRoute component={NotFound} />} />
     </Routes>
   );
 };
