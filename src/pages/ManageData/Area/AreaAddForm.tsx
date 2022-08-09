@@ -1,22 +1,19 @@
-import { IconButton, Button } from '@mui/material';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { Content, FormTextField } from 'src/components';
 import { useNavigate } from 'react-router-dom';
-import { ArrowBack } from '@mui/icons-material';
-import { useForm } from 'react-hook-form';
-import { AddFormData } from 'src/utils/formTypes';
-import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { IconButton, Button } from '@mui/material';
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ArrowBack } from '@mui/icons-material';
+
+import { Content, FormTextField } from 'src/components';
+import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { CreateAreaInput, useCreateAreaMutation } from 'src/api';
 
 export const AreaAddForm = () => {
-  // - HOOKS - //
-  // Firebase
-  const { loading: loadingData, areaCreate, refreshStoreData } = useFirebase();
-  // Navigation
+  /**
+   * Custom Hooks
+   */
   const navigate = useNavigate();
 
-  // - FORM - //
   const {
     handleSubmit,
     control,
@@ -27,32 +24,35 @@ export const AreaAddForm = () => {
     defaultValues: AddFormDefaultData.area,
   });
 
-  // - STATE - //
-  const [createLoading, setCreateLoading] = useState(false);
+  /**
+   * Data
+   */
+  const [createArea, { loading: createAreaLoading }] = useCreateAreaMutation({
+    onCompleted: (data) => {
+      toast.success(data.createArea.message);
+      reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-  // - ACTIONS - //
+  /**
+   * Callbacks
+   */
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['area']) => {
-    try {
-      setCreateLoading(true);
-      // Create new area
-      await areaCreate(data);
-      // Refresh areas in data store
-      await refreshStoreData('Area');
-      // Reset inputs
-      reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+  const submit = async (data: CreateAreaInput) => {
+    createArea({ variables: { data } });
   };
 
+  /**
+   * Render
+   */
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={createAreaLoading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

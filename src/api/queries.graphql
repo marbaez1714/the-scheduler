@@ -1,5 +1,5 @@
-query GetAllAreas {
-  areasAll {
+query GetAreas($options: QueryOptions) {
+  areas(options: $options) {
     id
     name
     nameSpanish
@@ -13,8 +13,8 @@ query GetAllAreas {
   }
 }
 
-query GetAllBuilders {
-  buildersAll {
+query GetBuilders($options: QueryOptions) {
+  builders(options: $options) {
     id
     name
     primaryPhone
@@ -30,8 +30,8 @@ query GetAllBuilders {
   }
 }
 
-query GetAllCommunities {
-  communitiesAll {
+query GetCommunities($options: QueryOptions) {
+  communities(options: $options) {
     id
     name
     companyId
@@ -45,8 +45,8 @@ query GetAllCommunities {
   }
 }
 
-query GetAllCompanies {
-  companiesAll {
+query GetCompanies($options: QueryOptions) {
+  companies(options: $options) {
     id
     name
     primaryAddress
@@ -62,8 +62,8 @@ query GetAllCompanies {
   }
 }
 
-query GetAllContractors {
-  contractorsAll {
+query GetContractors($options: QueryOptions) {
+  contractors(options: $options) {
     id
     name
     primaryPhone
@@ -77,8 +77,8 @@ query GetAllContractors {
   }
 }
 
-query GetAllReporters {
-  reportersAll {
+query GetReporters($options: QueryOptions) {
+  reporters(options: $options) {
     id
     name
     primaryPhone
@@ -93,8 +93,8 @@ query GetAllReporters {
   }
 }
 
-query GetAllScopes {
-  scopesAll {
+query GetScopes($options: QueryOptions) {
+  scopes(options: $options) {
     id
     name
     nameSpanish
@@ -109,8 +109,8 @@ query GetAllScopes {
   }
 }
 
-query GetAllSuppliers {
-  suppliersAll {
+query GetSuppliers($options: QueryOptions) {
+  suppliers(options: $options) {
     id
     name
     primaryPhone

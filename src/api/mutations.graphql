@@ -45,3 +45,51 @@ mutation ArchiveSupplier($id: ID!) {
     message
   }
 }
+
+mutation CreateArea($data: CreateAreaInput!) {
+  createArea(data: $data) {
+    message
+  }
+}
+
+mutation CreateBuilder($data: CreateBuilderInput!) {
+  createBuilder(data: $data) {
+    message
+  }
+}
+
+mutation CreateCommunity($data: CreateCommunityInput!) {
+  createCommunity(data: $data) {
+    message
+  }
+}
+
+mutation CreateCompany($data: CreateCompanyInput!) {
+  createCompany(data: $data) {
+    message
+  }
+}
+
+mutation CreateContractor($data: CreateContractorInput!) {
+  createContractor(data: $data) {
+    message
+  }
+}
+
+mutation CreateReporter($data: CreateReporterInput!) {
+  createReporter(data: $data) {
+    message
+  }
+}
+
+mutation CreateScope($data: CreateScopeInput!) {
+  createScope(data: $data) {
+    message
+  }
+}
+
+mutation CreateSupplier($data: CreateSupplierInput!) {
+  createSupplier(data: $data) {
+    message
+  }
+}

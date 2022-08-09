@@ -7,7 +7,7 @@ import { Icon } from '@mui/material';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export const SideBar = () => {
-  const { logout } = useAuth0();
+  const { logout, getAccessTokenSilently } = useAuth0();
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [manageExpanded, setManageExpanded] = useState(false);
@@ -63,6 +63,13 @@ export const SideBar = () => {
           ))}
       </div>
       {/* Sign out button at the end */}
+      <SideBarButton
+        className="mt-auto"
+        leftIcon="token"
+        title="Get Token"
+        expanded={sideBarOpen}
+        onClick={() => getAccessTokenSilently().then((value) => console.log(value))}
+      />
       <SideBarButton className="mt-auto" leftIcon="logout" title="Logout" expanded={sideBarOpen} onClick={logout} />
     </div>
   );

@@ -323,26 +323,30 @@ export type MutationDeleteLineItemLegacyArgs = {
   id: Scalars['ID'];
 };
 
+export type PaginationOptions = {
+  page: Scalars['Int'];
+  pageSize: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
   areaById?: Maybe<Area>;
-  areasAll: Array<Area>;
+  areas: Array<Area>;
   builderById?: Maybe<Builder>;
-  buildersAll: Array<Builder>;
-  communitiesAll: Array<Community>;
+  builders: Array<Builder>;
+  communities: Array<Community>;
   communityById?: Maybe<Community>;
-  companiesAll: Array<Company>;
+  companies: Array<Company>;
   companyById?: Maybe<Company>;
   contractorById?: Maybe<Contractor>;
-  contractorsAll: Array<Contractor>;
+  contractors: Array<Contractor>;
   jobLegacyById?: Maybe<JobLegacy>;
-  jobsLegacyAll: Array<JobLegacy>;
   reporterById?: Maybe<Reporter>;
-  reportersAll: Array<Reporter>;
+  reporters: Array<Reporter>;
   scopeById?: Maybe<Scope>;
-  scopesAll: Array<Scope>;
+  scopes: Array<Scope>;
   supplierById?: Maybe<Supplier>;
-  suppliersAll: Array<Supplier>;
+  suppliers: Array<Supplier>;
 };
 
 
@@ -351,13 +355,33 @@ export type QueryAreaByIdArgs = {
 };
 
 
+export type QueryAreasArgs = {
+  options?: InputMaybe<QueryOptions>;
+};
+
+
 export type QueryBuilderByIdArgs = {
   id: Scalars['ID'];
 };
 
 
+export type QueryBuildersArgs = {
+  options?: InputMaybe<QueryOptions>;
+};
+
+
+export type QueryCommunitiesArgs = {
+  options?: InputMaybe<QueryOptions>;
+};
+
+
 export type QueryCommunityByIdArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryCompaniesArgs = {
+  options?: InputMaybe<QueryOptions>;
 };
 
 
@@ -371,6 +395,11 @@ export type QueryContractorByIdArgs = {
 };
 
 
+export type QueryContractorsArgs = {
+  options?: InputMaybe<QueryOptions>;
+};
+
+
 export type QueryJobLegacyByIdArgs = {
   id: Scalars['ID'];
 };
@@ -381,13 +410,34 @@ export type QueryReporterByIdArgs = {
 };
 
 
+export type QueryReportersArgs = {
+  options?: InputMaybe<QueryOptions>;
+};
+
+
 export type QueryScopeByIdArgs = {
   id: Scalars['ID'];
 };
 
 
+export type QueryScopesArgs = {
+  options?: InputMaybe<QueryOptions>;
+};
+
+
 export type QuerySupplierByIdArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QuerySuppliersArgs = {
+  options?: InputMaybe<QueryOptions>;
+};
+
+export type QueryOptions = {
+  archived?: InputMaybe<Scalars['Boolean']>;
+  pagination?: InputMaybe<PaginationOptions>;
+  sorting?: InputMaybe<SortingOptions>;
 };
 
 export type Reporter = {
@@ -418,6 +468,16 @@ export type Scope = {
   notes?: Maybe<Scalars['String']>;
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
+};
+
+export enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc'
+}
+
+export type SortingOptions = {
+  field: Scalars['String'];
+  order: SortOrder;
 };
 
 export type Supplier = {
@@ -524,45 +584,117 @@ export type ArchiveSupplierMutationVariables = Exact<{
 
 export type ArchiveSupplierMutation = { __typename?: 'Mutation', archiveSupplier: { __typename?: 'MessageResponse', message: string } };
 
-export type GetAllAreasQueryVariables = Exact<{ [key: string]: never; }>;
+export type CreateAreaMutationVariables = Exact<{
+  data: CreateAreaInput;
+}>;
 
 
-export type GetAllAreasQuery = { __typename?: 'Query', areasAll: Array<{ __typename?: 'Area', id: string, name: string, nameSpanish: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+export type CreateAreaMutation = { __typename?: 'Mutation', createArea: { __typename?: 'MessageResponse', message: string } };
 
-export type GetAllBuildersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllBuildersQuery = { __typename?: 'Query', buildersAll: Array<{ __typename?: 'Builder', id: string, name: string, primaryPhone: string, primaryEmail?: string | null, companyId: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
-
-export type GetAllCommunitiesQueryVariables = Exact<{ [key: string]: never; }>;
+export type CreateBuilderMutationVariables = Exact<{
+  data: CreateBuilderInput;
+}>;
 
 
-export type GetAllCommunitiesQuery = { __typename?: 'Query', communitiesAll: Array<{ __typename?: 'Community', id: string, name: string, companyId: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+export type CreateBuilderMutation = { __typename?: 'Mutation', createBuilder: { __typename?: 'MessageResponse', message: string } };
 
-export type GetAllCompaniesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllCompaniesQuery = { __typename?: 'Query', companiesAll: Array<{ __typename?: 'Company', id: string, name: string, primaryAddress?: string | null, primaryEmail?: string | null, primaryPhone?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
-
-export type GetAllContractorsQueryVariables = Exact<{ [key: string]: never; }>;
+export type CreateCommunityMutationVariables = Exact<{
+  data: CreateCommunityInput;
+}>;
 
 
-export type GetAllContractorsQuery = { __typename?: 'Query', contractorsAll: Array<{ __typename?: 'Contractor', id: string, name: string, primaryPhone: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+export type CreateCommunityMutation = { __typename?: 'Mutation', createCommunity: { __typename?: 'MessageResponse', message: string } };
 
-export type GetAllReportersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllReportersQuery = { __typename?: 'Query', reportersAll: Array<{ __typename?: 'Reporter', id: string, name: string, primaryPhone: string, primaryEmail?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
-
-export type GetAllScopesQueryVariables = Exact<{ [key: string]: never; }>;
+export type CreateCompanyMutationVariables = Exact<{
+  data: CreateCompanyInput;
+}>;
 
 
-export type GetAllScopesQuery = { __typename?: 'Query', scopesAll: Array<{ __typename?: 'Scope', id: string, name: string, nameSpanish: string, description?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+export type CreateCompanyMutation = { __typename?: 'Mutation', createCompany: { __typename?: 'MessageResponse', message: string } };
 
-export type GetAllSuppliersQueryVariables = Exact<{ [key: string]: never; }>;
+export type CreateContractorMutationVariables = Exact<{
+  data: CreateContractorInput;
+}>;
 
 
-export type GetAllSuppliersQuery = { __typename?: 'Query', suppliersAll: Array<{ __typename?: 'Supplier', id: string, name: string, primaryPhone?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+export type CreateContractorMutation = { __typename?: 'Mutation', createContractor: { __typename?: 'MessageResponse', message: string } };
+
+export type CreateReporterMutationVariables = Exact<{
+  data: CreateReporterInput;
+}>;
+
+
+export type CreateReporterMutation = { __typename?: 'Mutation', createReporter: { __typename?: 'MessageResponse', message: string } };
+
+export type CreateScopeMutationVariables = Exact<{
+  data: CreateScopeInput;
+}>;
+
+
+export type CreateScopeMutation = { __typename?: 'Mutation', createScope: { __typename?: 'MessageResponse', message: string } };
+
+export type CreateSupplierMutationVariables = Exact<{
+  data: CreateSupplierInput;
+}>;
+
+
+export type CreateSupplierMutation = { __typename?: 'Mutation', createSupplier: { __typename?: 'MessageResponse', message: string } };
+
+export type GetAreasQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetAreasQuery = { __typename?: 'Query', areas: Array<{ __typename?: 'Area', id: string, name: string, nameSpanish: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+
+export type GetBuildersQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetBuildersQuery = { __typename?: 'Query', builders: Array<{ __typename?: 'Builder', id: string, name: string, primaryPhone: string, primaryEmail?: string | null, companyId: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+
+export type GetCommunitiesQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetCommunitiesQuery = { __typename?: 'Query', communities: Array<{ __typename?: 'Community', id: string, name: string, companyId: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+
+export type GetCompaniesQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetCompaniesQuery = { __typename?: 'Query', companies: Array<{ __typename?: 'Company', id: string, name: string, primaryAddress?: string | null, primaryEmail?: string | null, primaryPhone?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+
+export type GetContractorsQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetContractorsQuery = { __typename?: 'Query', contractors: Array<{ __typename?: 'Contractor', id: string, name: string, primaryPhone: string, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+
+export type GetReportersQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetReportersQuery = { __typename?: 'Query', reporters: Array<{ __typename?: 'Reporter', id: string, name: string, primaryPhone: string, primaryEmail?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+
+export type GetScopesQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetScopesQuery = { __typename?: 'Query', scopes: Array<{ __typename?: 'Scope', id: string, name: string, nameSpanish: string, description?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
+
+export type GetSuppliersQueryVariables = Exact<{
+  options?: InputMaybe<QueryOptions>;
+}>;
+
+
+export type GetSuppliersQuery = { __typename?: 'Query', suppliers: Array<{ __typename?: 'Supplier', id: string, name: string, primaryPhone?: string | null, notes?: string | null, updatedBy: string, createdBy: string, createdTime: string, updatedTime: string, archived: boolean, legacy: boolean }> };
 
 
 export const ArchiveAreaDocument = gql`
@@ -829,9 +961,273 @@ export function useArchiveSupplierMutation(baseOptions?: Apollo.MutationHookOpti
 export type ArchiveSupplierMutationHookResult = ReturnType<typeof useArchiveSupplierMutation>;
 export type ArchiveSupplierMutationResult = Apollo.MutationResult<ArchiveSupplierMutation>;
 export type ArchiveSupplierMutationOptions = Apollo.BaseMutationOptions<ArchiveSupplierMutation, ArchiveSupplierMutationVariables>;
-export const GetAllAreasDocument = gql`
-    query GetAllAreas {
-  areasAll {
+export const CreateAreaDocument = gql`
+    mutation CreateArea($data: CreateAreaInput!) {
+  createArea(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateAreaMutationFn = Apollo.MutationFunction<CreateAreaMutation, CreateAreaMutationVariables>;
+
+/**
+ * __useCreateAreaMutation__
+ *
+ * To run a mutation, you first call `useCreateAreaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAreaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAreaMutation, { data, loading, error }] = useCreateAreaMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateAreaMutation(baseOptions?: Apollo.MutationHookOptions<CreateAreaMutation, CreateAreaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateAreaMutation, CreateAreaMutationVariables>(CreateAreaDocument, options);
+      }
+export type CreateAreaMutationHookResult = ReturnType<typeof useCreateAreaMutation>;
+export type CreateAreaMutationResult = Apollo.MutationResult<CreateAreaMutation>;
+export type CreateAreaMutationOptions = Apollo.BaseMutationOptions<CreateAreaMutation, CreateAreaMutationVariables>;
+export const CreateBuilderDocument = gql`
+    mutation CreateBuilder($data: CreateBuilderInput!) {
+  createBuilder(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateBuilderMutationFn = Apollo.MutationFunction<CreateBuilderMutation, CreateBuilderMutationVariables>;
+
+/**
+ * __useCreateBuilderMutation__
+ *
+ * To run a mutation, you first call `useCreateBuilderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBuilderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBuilderMutation, { data, loading, error }] = useCreateBuilderMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateBuilderMutation(baseOptions?: Apollo.MutationHookOptions<CreateBuilderMutation, CreateBuilderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateBuilderMutation, CreateBuilderMutationVariables>(CreateBuilderDocument, options);
+      }
+export type CreateBuilderMutationHookResult = ReturnType<typeof useCreateBuilderMutation>;
+export type CreateBuilderMutationResult = Apollo.MutationResult<CreateBuilderMutation>;
+export type CreateBuilderMutationOptions = Apollo.BaseMutationOptions<CreateBuilderMutation, CreateBuilderMutationVariables>;
+export const CreateCommunityDocument = gql`
+    mutation CreateCommunity($data: CreateCommunityInput!) {
+  createCommunity(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateCommunityMutationFn = Apollo.MutationFunction<CreateCommunityMutation, CreateCommunityMutationVariables>;
+
+/**
+ * __useCreateCommunityMutation__
+ *
+ * To run a mutation, you first call `useCreateCommunityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommunityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommunityMutation, { data, loading, error }] = useCreateCommunityMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateCommunityMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommunityMutation, CreateCommunityMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommunityMutation, CreateCommunityMutationVariables>(CreateCommunityDocument, options);
+      }
+export type CreateCommunityMutationHookResult = ReturnType<typeof useCreateCommunityMutation>;
+export type CreateCommunityMutationResult = Apollo.MutationResult<CreateCommunityMutation>;
+export type CreateCommunityMutationOptions = Apollo.BaseMutationOptions<CreateCommunityMutation, CreateCommunityMutationVariables>;
+export const CreateCompanyDocument = gql`
+    mutation CreateCompany($data: CreateCompanyInput!) {
+  createCompany(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateCompanyMutationFn = Apollo.MutationFunction<CreateCompanyMutation, CreateCompanyMutationVariables>;
+
+/**
+ * __useCreateCompanyMutation__
+ *
+ * To run a mutation, you first call `useCreateCompanyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCompanyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCompanyMutation, { data, loading, error }] = useCreateCompanyMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateCompanyMutation(baseOptions?: Apollo.MutationHookOptions<CreateCompanyMutation, CreateCompanyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, options);
+      }
+export type CreateCompanyMutationHookResult = ReturnType<typeof useCreateCompanyMutation>;
+export type CreateCompanyMutationResult = Apollo.MutationResult<CreateCompanyMutation>;
+export type CreateCompanyMutationOptions = Apollo.BaseMutationOptions<CreateCompanyMutation, CreateCompanyMutationVariables>;
+export const CreateContractorDocument = gql`
+    mutation CreateContractor($data: CreateContractorInput!) {
+  createContractor(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateContractorMutationFn = Apollo.MutationFunction<CreateContractorMutation, CreateContractorMutationVariables>;
+
+/**
+ * __useCreateContractorMutation__
+ *
+ * To run a mutation, you first call `useCreateContractorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateContractorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createContractorMutation, { data, loading, error }] = useCreateContractorMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateContractorMutation(baseOptions?: Apollo.MutationHookOptions<CreateContractorMutation, CreateContractorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateContractorMutation, CreateContractorMutationVariables>(CreateContractorDocument, options);
+      }
+export type CreateContractorMutationHookResult = ReturnType<typeof useCreateContractorMutation>;
+export type CreateContractorMutationResult = Apollo.MutationResult<CreateContractorMutation>;
+export type CreateContractorMutationOptions = Apollo.BaseMutationOptions<CreateContractorMutation, CreateContractorMutationVariables>;
+export const CreateReporterDocument = gql`
+    mutation CreateReporter($data: CreateReporterInput!) {
+  createReporter(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateReporterMutationFn = Apollo.MutationFunction<CreateReporterMutation, CreateReporterMutationVariables>;
+
+/**
+ * __useCreateReporterMutation__
+ *
+ * To run a mutation, you first call `useCreateReporterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateReporterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createReporterMutation, { data, loading, error }] = useCreateReporterMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateReporterMutation(baseOptions?: Apollo.MutationHookOptions<CreateReporterMutation, CreateReporterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateReporterMutation, CreateReporterMutationVariables>(CreateReporterDocument, options);
+      }
+export type CreateReporterMutationHookResult = ReturnType<typeof useCreateReporterMutation>;
+export type CreateReporterMutationResult = Apollo.MutationResult<CreateReporterMutation>;
+export type CreateReporterMutationOptions = Apollo.BaseMutationOptions<CreateReporterMutation, CreateReporterMutationVariables>;
+export const CreateScopeDocument = gql`
+    mutation CreateScope($data: CreateScopeInput!) {
+  createScope(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateScopeMutationFn = Apollo.MutationFunction<CreateScopeMutation, CreateScopeMutationVariables>;
+
+/**
+ * __useCreateScopeMutation__
+ *
+ * To run a mutation, you first call `useCreateScopeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateScopeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createScopeMutation, { data, loading, error }] = useCreateScopeMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateScopeMutation(baseOptions?: Apollo.MutationHookOptions<CreateScopeMutation, CreateScopeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateScopeMutation, CreateScopeMutationVariables>(CreateScopeDocument, options);
+      }
+export type CreateScopeMutationHookResult = ReturnType<typeof useCreateScopeMutation>;
+export type CreateScopeMutationResult = Apollo.MutationResult<CreateScopeMutation>;
+export type CreateScopeMutationOptions = Apollo.BaseMutationOptions<CreateScopeMutation, CreateScopeMutationVariables>;
+export const CreateSupplierDocument = gql`
+    mutation CreateSupplier($data: CreateSupplierInput!) {
+  createSupplier(data: $data) {
+    message
+  }
+}
+    `;
+export type CreateSupplierMutationFn = Apollo.MutationFunction<CreateSupplierMutation, CreateSupplierMutationVariables>;
+
+/**
+ * __useCreateSupplierMutation__
+ *
+ * To run a mutation, you first call `useCreateSupplierMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSupplierMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSupplierMutation, { data, loading, error }] = useCreateSupplierMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateSupplierMutation(baseOptions?: Apollo.MutationHookOptions<CreateSupplierMutation, CreateSupplierMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateSupplierMutation, CreateSupplierMutationVariables>(CreateSupplierDocument, options);
+      }
+export type CreateSupplierMutationHookResult = ReturnType<typeof useCreateSupplierMutation>;
+export type CreateSupplierMutationResult = Apollo.MutationResult<CreateSupplierMutation>;
+export type CreateSupplierMutationOptions = Apollo.BaseMutationOptions<CreateSupplierMutation, CreateSupplierMutationVariables>;
+export const GetAreasDocument = gql`
+    query GetAreas($options: QueryOptions) {
+  areas(options: $options) {
     id
     name
     nameSpanish
@@ -847,34 +1243,35 @@ export const GetAllAreasDocument = gql`
     `;
 
 /**
- * __useGetAllAreasQuery__
+ * __useGetAreasQuery__
  *
- * To run a query within a React component, call `useGetAllAreasQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllAreasQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAreasQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAreasQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllAreasQuery({
+ * const { data, loading, error } = useGetAreasQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllAreasQuery(baseOptions?: Apollo.QueryHookOptions<GetAllAreasQuery, GetAllAreasQueryVariables>) {
+export function useGetAreasQuery(baseOptions?: Apollo.QueryHookOptions<GetAreasQuery, GetAreasQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllAreasQuery, GetAllAreasQueryVariables>(GetAllAreasDocument, options);
+        return Apollo.useQuery<GetAreasQuery, GetAreasQueryVariables>(GetAreasDocument, options);
       }
-export function useGetAllAreasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllAreasQuery, GetAllAreasQueryVariables>) {
+export function useGetAreasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAreasQuery, GetAreasQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllAreasQuery, GetAllAreasQueryVariables>(GetAllAreasDocument, options);
+          return Apollo.useLazyQuery<GetAreasQuery, GetAreasQueryVariables>(GetAreasDocument, options);
         }
-export type GetAllAreasQueryHookResult = ReturnType<typeof useGetAllAreasQuery>;
-export type GetAllAreasLazyQueryHookResult = ReturnType<typeof useGetAllAreasLazyQuery>;
-export type GetAllAreasQueryResult = Apollo.QueryResult<GetAllAreasQuery, GetAllAreasQueryVariables>;
-export const GetAllBuildersDocument = gql`
-    query GetAllBuilders {
-  buildersAll {
+export type GetAreasQueryHookResult = ReturnType<typeof useGetAreasQuery>;
+export type GetAreasLazyQueryHookResult = ReturnType<typeof useGetAreasLazyQuery>;
+export type GetAreasQueryResult = Apollo.QueryResult<GetAreasQuery, GetAreasQueryVariables>;
+export const GetBuildersDocument = gql`
+    query GetBuilders($options: QueryOptions) {
+  builders(options: $options) {
     id
     name
     primaryPhone
@@ -892,34 +1289,35 @@ export const GetAllBuildersDocument = gql`
     `;
 
 /**
- * __useGetAllBuildersQuery__
+ * __useGetBuildersQuery__
  *
- * To run a query within a React component, call `useGetAllBuildersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllBuildersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetBuildersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBuildersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllBuildersQuery({
+ * const { data, loading, error } = useGetBuildersQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllBuildersQuery(baseOptions?: Apollo.QueryHookOptions<GetAllBuildersQuery, GetAllBuildersQueryVariables>) {
+export function useGetBuildersQuery(baseOptions?: Apollo.QueryHookOptions<GetBuildersQuery, GetBuildersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllBuildersQuery, GetAllBuildersQueryVariables>(GetAllBuildersDocument, options);
+        return Apollo.useQuery<GetBuildersQuery, GetBuildersQueryVariables>(GetBuildersDocument, options);
       }
-export function useGetAllBuildersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllBuildersQuery, GetAllBuildersQueryVariables>) {
+export function useGetBuildersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBuildersQuery, GetBuildersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllBuildersQuery, GetAllBuildersQueryVariables>(GetAllBuildersDocument, options);
+          return Apollo.useLazyQuery<GetBuildersQuery, GetBuildersQueryVariables>(GetBuildersDocument, options);
         }
-export type GetAllBuildersQueryHookResult = ReturnType<typeof useGetAllBuildersQuery>;
-export type GetAllBuildersLazyQueryHookResult = ReturnType<typeof useGetAllBuildersLazyQuery>;
-export type GetAllBuildersQueryResult = Apollo.QueryResult<GetAllBuildersQuery, GetAllBuildersQueryVariables>;
-export const GetAllCommunitiesDocument = gql`
-    query GetAllCommunities {
-  communitiesAll {
+export type GetBuildersQueryHookResult = ReturnType<typeof useGetBuildersQuery>;
+export type GetBuildersLazyQueryHookResult = ReturnType<typeof useGetBuildersLazyQuery>;
+export type GetBuildersQueryResult = Apollo.QueryResult<GetBuildersQuery, GetBuildersQueryVariables>;
+export const GetCommunitiesDocument = gql`
+    query GetCommunities($options: QueryOptions) {
+  communities(options: $options) {
     id
     name
     companyId
@@ -935,34 +1333,35 @@ export const GetAllCommunitiesDocument = gql`
     `;
 
 /**
- * __useGetAllCommunitiesQuery__
+ * __useGetCommunitiesQuery__
  *
- * To run a query within a React component, call `useGetAllCommunitiesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllCommunitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCommunitiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommunitiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllCommunitiesQuery({
+ * const { data, loading, error } = useGetCommunitiesQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllCommunitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllCommunitiesQuery, GetAllCommunitiesQueryVariables>) {
+export function useGetCommunitiesQuery(baseOptions?: Apollo.QueryHookOptions<GetCommunitiesQuery, GetCommunitiesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllCommunitiesQuery, GetAllCommunitiesQueryVariables>(GetAllCommunitiesDocument, options);
+        return Apollo.useQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(GetCommunitiesDocument, options);
       }
-export function useGetAllCommunitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCommunitiesQuery, GetAllCommunitiesQueryVariables>) {
+export function useGetCommunitiesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommunitiesQuery, GetCommunitiesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllCommunitiesQuery, GetAllCommunitiesQueryVariables>(GetAllCommunitiesDocument, options);
+          return Apollo.useLazyQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(GetCommunitiesDocument, options);
         }
-export type GetAllCommunitiesQueryHookResult = ReturnType<typeof useGetAllCommunitiesQuery>;
-export type GetAllCommunitiesLazyQueryHookResult = ReturnType<typeof useGetAllCommunitiesLazyQuery>;
-export type GetAllCommunitiesQueryResult = Apollo.QueryResult<GetAllCommunitiesQuery, GetAllCommunitiesQueryVariables>;
-export const GetAllCompaniesDocument = gql`
-    query GetAllCompanies {
-  companiesAll {
+export type GetCommunitiesQueryHookResult = ReturnType<typeof useGetCommunitiesQuery>;
+export type GetCommunitiesLazyQueryHookResult = ReturnType<typeof useGetCommunitiesLazyQuery>;
+export type GetCommunitiesQueryResult = Apollo.QueryResult<GetCommunitiesQuery, GetCommunitiesQueryVariables>;
+export const GetCompaniesDocument = gql`
+    query GetCompanies($options: QueryOptions) {
+  companies(options: $options) {
     id
     name
     primaryAddress
@@ -980,34 +1379,35 @@ export const GetAllCompaniesDocument = gql`
     `;
 
 /**
- * __useGetAllCompaniesQuery__
+ * __useGetCompaniesQuery__
  *
- * To run a query within a React component, call `useGetAllCompaniesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllCompaniesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCompaniesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCompaniesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllCompaniesQuery({
+ * const { data, loading, error } = useGetCompaniesQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllCompaniesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllCompaniesQuery, GetAllCompaniesQueryVariables>) {
+export function useGetCompaniesQuery(baseOptions?: Apollo.QueryHookOptions<GetCompaniesQuery, GetCompaniesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllCompaniesQuery, GetAllCompaniesQueryVariables>(GetAllCompaniesDocument, options);
+        return Apollo.useQuery<GetCompaniesQuery, GetCompaniesQueryVariables>(GetCompaniesDocument, options);
       }
-export function useGetAllCompaniesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCompaniesQuery, GetAllCompaniesQueryVariables>) {
+export function useGetCompaniesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCompaniesQuery, GetCompaniesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllCompaniesQuery, GetAllCompaniesQueryVariables>(GetAllCompaniesDocument, options);
+          return Apollo.useLazyQuery<GetCompaniesQuery, GetCompaniesQueryVariables>(GetCompaniesDocument, options);
         }
-export type GetAllCompaniesQueryHookResult = ReturnType<typeof useGetAllCompaniesQuery>;
-export type GetAllCompaniesLazyQueryHookResult = ReturnType<typeof useGetAllCompaniesLazyQuery>;
-export type GetAllCompaniesQueryResult = Apollo.QueryResult<GetAllCompaniesQuery, GetAllCompaniesQueryVariables>;
-export const GetAllContractorsDocument = gql`
-    query GetAllContractors {
-  contractorsAll {
+export type GetCompaniesQueryHookResult = ReturnType<typeof useGetCompaniesQuery>;
+export type GetCompaniesLazyQueryHookResult = ReturnType<typeof useGetCompaniesLazyQuery>;
+export type GetCompaniesQueryResult = Apollo.QueryResult<GetCompaniesQuery, GetCompaniesQueryVariables>;
+export const GetContractorsDocument = gql`
+    query GetContractors($options: QueryOptions) {
+  contractors(options: $options) {
     id
     name
     primaryPhone
@@ -1023,34 +1423,35 @@ export const GetAllContractorsDocument = gql`
     `;
 
 /**
- * __useGetAllContractorsQuery__
+ * __useGetContractorsQuery__
  *
- * To run a query within a React component, call `useGetAllContractorsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllContractorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetContractorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetContractorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllContractorsQuery({
+ * const { data, loading, error } = useGetContractorsQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllContractorsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllContractorsQuery, GetAllContractorsQueryVariables>) {
+export function useGetContractorsQuery(baseOptions?: Apollo.QueryHookOptions<GetContractorsQuery, GetContractorsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllContractorsQuery, GetAllContractorsQueryVariables>(GetAllContractorsDocument, options);
+        return Apollo.useQuery<GetContractorsQuery, GetContractorsQueryVariables>(GetContractorsDocument, options);
       }
-export function useGetAllContractorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllContractorsQuery, GetAllContractorsQueryVariables>) {
+export function useGetContractorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetContractorsQuery, GetContractorsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllContractorsQuery, GetAllContractorsQueryVariables>(GetAllContractorsDocument, options);
+          return Apollo.useLazyQuery<GetContractorsQuery, GetContractorsQueryVariables>(GetContractorsDocument, options);
         }
-export type GetAllContractorsQueryHookResult = ReturnType<typeof useGetAllContractorsQuery>;
-export type GetAllContractorsLazyQueryHookResult = ReturnType<typeof useGetAllContractorsLazyQuery>;
-export type GetAllContractorsQueryResult = Apollo.QueryResult<GetAllContractorsQuery, GetAllContractorsQueryVariables>;
-export const GetAllReportersDocument = gql`
-    query GetAllReporters {
-  reportersAll {
+export type GetContractorsQueryHookResult = ReturnType<typeof useGetContractorsQuery>;
+export type GetContractorsLazyQueryHookResult = ReturnType<typeof useGetContractorsLazyQuery>;
+export type GetContractorsQueryResult = Apollo.QueryResult<GetContractorsQuery, GetContractorsQueryVariables>;
+export const GetReportersDocument = gql`
+    query GetReporters($options: QueryOptions) {
+  reporters(options: $options) {
     id
     name
     primaryPhone
@@ -1067,34 +1468,35 @@ export const GetAllReportersDocument = gql`
     `;
 
 /**
- * __useGetAllReportersQuery__
+ * __useGetReportersQuery__
  *
- * To run a query within a React component, call `useGetAllReportersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllReportersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetReportersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReportersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllReportersQuery({
+ * const { data, loading, error } = useGetReportersQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllReportersQuery(baseOptions?: Apollo.QueryHookOptions<GetAllReportersQuery, GetAllReportersQueryVariables>) {
+export function useGetReportersQuery(baseOptions?: Apollo.QueryHookOptions<GetReportersQuery, GetReportersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllReportersQuery, GetAllReportersQueryVariables>(GetAllReportersDocument, options);
+        return Apollo.useQuery<GetReportersQuery, GetReportersQueryVariables>(GetReportersDocument, options);
       }
-export function useGetAllReportersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllReportersQuery, GetAllReportersQueryVariables>) {
+export function useGetReportersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReportersQuery, GetReportersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllReportersQuery, GetAllReportersQueryVariables>(GetAllReportersDocument, options);
+          return Apollo.useLazyQuery<GetReportersQuery, GetReportersQueryVariables>(GetReportersDocument, options);
         }
-export type GetAllReportersQueryHookResult = ReturnType<typeof useGetAllReportersQuery>;
-export type GetAllReportersLazyQueryHookResult = ReturnType<typeof useGetAllReportersLazyQuery>;
-export type GetAllReportersQueryResult = Apollo.QueryResult<GetAllReportersQuery, GetAllReportersQueryVariables>;
-export const GetAllScopesDocument = gql`
-    query GetAllScopes {
-  scopesAll {
+export type GetReportersQueryHookResult = ReturnType<typeof useGetReportersQuery>;
+export type GetReportersLazyQueryHookResult = ReturnType<typeof useGetReportersLazyQuery>;
+export type GetReportersQueryResult = Apollo.QueryResult<GetReportersQuery, GetReportersQueryVariables>;
+export const GetScopesDocument = gql`
+    query GetScopes($options: QueryOptions) {
+  scopes(options: $options) {
     id
     name
     nameSpanish
@@ -1111,34 +1513,35 @@ export const GetAllScopesDocument = gql`
     `;
 
 /**
- * __useGetAllScopesQuery__
+ * __useGetScopesQuery__
  *
- * To run a query within a React component, call `useGetAllScopesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllScopesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetScopesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetScopesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllScopesQuery({
+ * const { data, loading, error } = useGetScopesQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllScopesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllScopesQuery, GetAllScopesQueryVariables>) {
+export function useGetScopesQuery(baseOptions?: Apollo.QueryHookOptions<GetScopesQuery, GetScopesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllScopesQuery, GetAllScopesQueryVariables>(GetAllScopesDocument, options);
+        return Apollo.useQuery<GetScopesQuery, GetScopesQueryVariables>(GetScopesDocument, options);
       }
-export function useGetAllScopesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllScopesQuery, GetAllScopesQueryVariables>) {
+export function useGetScopesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScopesQuery, GetScopesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllScopesQuery, GetAllScopesQueryVariables>(GetAllScopesDocument, options);
+          return Apollo.useLazyQuery<GetScopesQuery, GetScopesQueryVariables>(GetScopesDocument, options);
         }
-export type GetAllScopesQueryHookResult = ReturnType<typeof useGetAllScopesQuery>;
-export type GetAllScopesLazyQueryHookResult = ReturnType<typeof useGetAllScopesLazyQuery>;
-export type GetAllScopesQueryResult = Apollo.QueryResult<GetAllScopesQuery, GetAllScopesQueryVariables>;
-export const GetAllSuppliersDocument = gql`
-    query GetAllSuppliers {
-  suppliersAll {
+export type GetScopesQueryHookResult = ReturnType<typeof useGetScopesQuery>;
+export type GetScopesLazyQueryHookResult = ReturnType<typeof useGetScopesLazyQuery>;
+export type GetScopesQueryResult = Apollo.QueryResult<GetScopesQuery, GetScopesQueryVariables>;
+export const GetSuppliersDocument = gql`
+    query GetSuppliers($options: QueryOptions) {
+  suppliers(options: $options) {
     id
     name
     primaryPhone
@@ -1154,31 +1557,32 @@ export const GetAllSuppliersDocument = gql`
     `;
 
 /**
- * __useGetAllSuppliersQuery__
+ * __useGetSuppliersQuery__
  *
- * To run a query within a React component, call `useGetAllSuppliersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllSuppliersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetSuppliersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSuppliersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAllSuppliersQuery({
+ * const { data, loading, error } = useGetSuppliersQuery({
  *   variables: {
+ *      options: // value for 'options'
  *   },
  * });
  */
-export function useGetAllSuppliersQuery(baseOptions?: Apollo.QueryHookOptions<GetAllSuppliersQuery, GetAllSuppliersQueryVariables>) {
+export function useGetSuppliersQuery(baseOptions?: Apollo.QueryHookOptions<GetSuppliersQuery, GetSuppliersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllSuppliersQuery, GetAllSuppliersQueryVariables>(GetAllSuppliersDocument, options);
+        return Apollo.useQuery<GetSuppliersQuery, GetSuppliersQueryVariables>(GetSuppliersDocument, options);
       }
-export function useGetAllSuppliersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllSuppliersQuery, GetAllSuppliersQueryVariables>) {
+export function useGetSuppliersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSuppliersQuery, GetSuppliersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllSuppliersQuery, GetAllSuppliersQueryVariables>(GetAllSuppliersDocument, options);
+          return Apollo.useLazyQuery<GetSuppliersQuery, GetSuppliersQueryVariables>(GetSuppliersDocument, options);
         }
-export type GetAllSuppliersQueryHookResult = ReturnType<typeof useGetAllSuppliersQuery>;
-export type GetAllSuppliersLazyQueryHookResult = ReturnType<typeof useGetAllSuppliersLazyQuery>;
-export type GetAllSuppliersQueryResult = Apollo.QueryResult<GetAllSuppliersQuery, GetAllSuppliersQueryVariables>;
+export type GetSuppliersQueryHookResult = ReturnType<typeof useGetSuppliersQuery>;
+export type GetSuppliersLazyQueryHookResult = ReturnType<typeof useGetSuppliersLazyQuery>;
+export type GetSuppliersQueryResult = Apollo.QueryResult<GetSuppliersQuery, GetSuppliersQueryVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

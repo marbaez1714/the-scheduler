@@ -5,34 +5,46 @@ import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-import { Area, useGetAllAreasQuery, useArchiveAreaMutation } from 'src/api';
+import { Area, useArchiveAreaMutation, useGetAreasQuery } from 'src/api';
 import { Content, Table } from 'src/components';
 import { confirmArchive } from '../utils';
 
 export const AreaList = () => {
-  // ----- HOOKS ----- //
+  /**
+   * Custom Hooks
+   */
   const navigate = useNavigate();
 
-  const { data: areasData, loading: areasLoading } = useGetAllAreasQuery();
-  const [archiveArea, { loading: archiveLoading }] = useArchiveAreaMutation();
+  /**
+   * Data
+   */
+  const {
+    data: areasData,
+    loading: areasLoading,
+    refetch: refetchAreas,
+  } = useGetAreasQuery({ fetchPolicy: 'cache-and-network' });
 
-  // ----- ACTIONS ----- //
-  const handleArchiveClick = ({ name, id }: Area) => {
-    const confirmed = confirmArchive(name);
+  const [archiveArea, { loading: archiveLoading }] = useArchiveAreaMutation({
+    onCompleted: (data) => {
+      toast.success(data.archiveArea.message);
+      refetchAreas();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-    if (confirmed) {
-      toast.promise(archiveArea({ variables: { id } }), {
-        loading: `Archiving ${name}`,
-        success: `${name} - Removed from areas.`,
-        error: `Error removing ${name}`,
-      });
-    }
-  };
-
+  /**
+   * Callbacks
+   */
   const getMenuActions = (data: Area) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+      {
+        icon: 'archive',
+        label: 'Archive',
+        onClick: () => confirmArchive(data.name) && archiveArea({ variables: { id: data.id } }),
+      },
     ];
   };
 
@@ -43,7 +55,11 @@ export const AreaList = () => {
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
+    {
+      accessorKey: 'name',
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
+      header: 'Name',
+    },
     {
       accessorKey: 'nameSpanish',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
@@ -68,6 +84,9 @@ export const AreaList = () => {
     },
   ];
 
+  /**
+   * Render
+   */
   return (
     <Content className="flex w-full items-start space-x-4" loading={areasLoading || archiveLoading}>
       <div className="flex flex-col space-y-2">
@@ -81,7 +100,7 @@ export const AreaList = () => {
       </div>
 
       {/* Area List */}
-      {!!areasData?.areasAll && <Table title="Area List" data={areasData.areasAll} columns={tableColumns} />}
+      {!!areasData?.areas && <Table title="Area List" data={areasData.areas} columns={tableColumns} />}
     </Content>
   );
 };

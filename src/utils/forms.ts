@@ -15,6 +15,11 @@ export const formRules = {
 };
 
 export const AddFormDefaultData: AddFormData = {
+  area: {
+    name: '',
+    nameSpanish: '',
+    notes: '',
+  },
   builder: {
     name: '',
     primaryPhone: '',
@@ -40,11 +45,7 @@ export const AddFormDefaultData: AddFormData = {
     primaryEmail: '',
     notes: '',
   },
-  area: {
-    name: '',
-    nameSpanish: '',
-    notes: '',
-  },
+
   supplier: {
     name: '',
     primaryPhone: '',

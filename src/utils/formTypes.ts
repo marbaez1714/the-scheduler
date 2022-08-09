@@ -1,12 +1,13 @@
+import { CreateAreaInput } from './../api/index';
 import { StoreDocument } from './cloudFunctionTypes';
 
 export interface AddFormData {
+  area: CreateAreaInput;
   builder: StoreDocument['Builder'];
   company: StoreDocument['Company'];
   community: StoreDocument['Community'];
   contractor: StoreDocument['Contractor'];
   reporter: StoreDocument['Reporter'];
-  area: StoreDocument['Area'];
   supplier: StoreDocument['Supplier'];
   scope: StoreDocument['Scope'];
   jobLegacy: {
