@@ -12,3 +12,114 @@ query GetAllAreas {
     legacy
   }
 }
+
+query GetAllBuilders {
+  buildersAll {
+    id
+    name
+    primaryPhone
+    primaryEmail
+    companyId
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}
+
+query GetAllCommunities {
+  communitiesAll {
+    id
+    name
+    companyId
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}
+
+query GetAllCompanies {
+  companiesAll {
+    id
+    name
+    primaryAddress
+    primaryEmail
+    primaryPhone
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}
+
+query GetAllContractors {
+  contractorsAll {
+    id
+    name
+    primaryPhone
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}
+
+query GetAllReporters {
+  reportersAll {
+    id
+    name
+    primaryPhone
+    primaryEmail
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}
+
+query GetAllScopes {
+  scopesAll {
+    id
+    name
+    nameSpanish
+    description
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}
+
+query GetAllSuppliers {
+  suppliersAll {
+    id
+    name
+    primaryPhone
+    notes
+    updatedBy
+    createdBy
+    createdTime
+    updatedTime
+    archived
+    legacy
+  }
+}

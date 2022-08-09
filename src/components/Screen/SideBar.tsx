@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { SideBarLink } from './SideBarLink';
 import { SideBarButton } from './SideBarButton';
 import { manageDataItems } from './utils';
-import { useFirebase } from 'src/hooks/useFirebase';
 import { Link } from 'react-router-dom';
 import { Icon } from '@mui/material';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const SideBar = () => {
-  const { signOut } = useFirebase();
+  const { logout } = useAuth0();
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [manageExpanded, setManageExpanded] = useState(false);
@@ -63,7 +63,7 @@ export const SideBar = () => {
           ))}
       </div>
       {/* Sign out button at the end */}
-      <SideBarButton className="mt-auto" leftIcon="logout" title="Logout" expanded={sideBarOpen} onClick={signOut} />
+      <SideBarButton className="mt-auto" leftIcon="logout" title="Logout" expanded={sideBarOpen} onClick={logout} />
     </div>
   );
 };

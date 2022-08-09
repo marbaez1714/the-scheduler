@@ -4,25 +4,24 @@ import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Area, GetAllAreasQuery, useGetAllAreasQuery } from 'src/api';
+
+import { Area, useGetAllAreasQuery, useArchiveAreaMutation } from 'src/api';
 import { Content, Table } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
-import { DocumentTableColumns } from 'src/utils/tableTypes';
 import { confirmArchive } from '../utils';
 
 export const AreaList = () => {
   // ----- HOOKS ----- //
-  const { storeData, loading, archiveStoreDocument } = useFirebase();
-
   const navigate = useNavigate();
 
-  const { data } = useGetAllAreasQuery();
+  const { data: areasData, loading: areasLoading } = useGetAllAreasQuery();
+  const [archiveArea, { loading: archiveLoading }] = useArchiveAreaMutation();
 
   // ----- ACTIONS ----- //
-  const handleArchiveClick = ({ name, id }: ResponseDocument<'Area'>) => {
-    if (confirmArchive(name)) {
-      toast.promise(archiveStoreDocument('Area', id), {
+  const handleArchiveClick = ({ name, id }: Area) => {
+    const confirmed = confirmArchive(name);
+
+    if (confirmed) {
+      toast.promise(archiveArea({ variables: { id } }), {
         loading: `Archiving ${name}`,
         success: `${name} - Removed from areas.`,
         error: `Error removing ${name}`,
@@ -30,14 +29,14 @@ export const AreaList = () => {
     }
   };
 
-  const getMenuActions = (data: ResponseDocument<'Area'>) => {
+  const getMenuActions = (data: Area) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
       { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
     ];
   };
 
-  const tableColumns: ColumnDef<Area[]> = [
+  const tableColumns: ColumnDef<Area>[] = [
     {
       id: 'menu',
       header: '',
@@ -70,7 +69,7 @@ export const AreaList = () => {
   ];
 
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading}>
+    <Content className="flex w-full items-start space-x-4" loading={areasLoading || archiveLoading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">
@@ -82,7 +81,7 @@ export const AreaList = () => {
       </div>
 
       {/* Area List */}
-      {storeData.areas && <Table title="Area List" data={data?.areasAll ?? []} columns={tableColumns} />}
+      {!!areasData?.areasAll && <Table title="Area List" data={areasData.areasAll} columns={tableColumns} />}
     </Content>
   );
 };

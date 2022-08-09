@@ -1,9 +1,9 @@
 import { ScreenProps } from './types';
 import { SideBar } from './SideBar';
-import { useFirebase } from 'src/hooks/useFirebase';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Screen = ({ children }: ScreenProps) => {
-  const { authState } = useFirebase();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <div className="flex flex-col h-screen w-screen font-roboto text-slate-900">
@@ -16,9 +16,7 @@ const Screen = ({ children }: ScreenProps) => {
       </div>
       <div className="bg-slate-200 flex py-1 px-2 opacity-50 shadow-md z-10">
         <p className="text-xs text-slate-800 px-4">Version: {process.env.REACT_APP_VERSION}</p>
-        <p className="text-xs text-slate-800 px-4">
-          {authState.authorized ? 'Status: Authorized' : 'Status: Unauthorized'}
-        </p>
+        <p className="text-xs text-slate-800 px-4">{isAuthenticated ? 'Status: Authorized' : 'Status: Unauthorized'}</p>
       </div>
     </div>
   );
