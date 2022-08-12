@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Content, FormAutocomplete, FormDatePicker, FormTextField, LineItemTable, Screen } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { AddFormData } from 'src/utils/formTypes';
+import { AddFormData } from 'src/utils/forms';
 import { AddCircle } from '@mui/icons-material';
 import { AppMessages } from 'src/utils/messages';
 import { LineItem } from 'src/utils/cloudFunctionTypes';

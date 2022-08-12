@@ -1,5 +1,29 @@
-import { AddFormData } from './formTypes';
+import {
+  CreateAreaInput,
+  CreateBuilderInput,
+  CreateCommunityInput,
+  CreateCompanyInput,
+  CreateContractorInput,
+  CreateJobLegacyInput,
+  CreateReporterInput,
+  CreateScopeInput,
+  CreateSupplierInput,
+} from './../api/index';
 
+// Types
+export interface AddFormData {
+  area: CreateAreaInput;
+  builder: CreateBuilderInput;
+  company: CreateCompanyInput;
+  community: CreateCommunityInput;
+  contractor: CreateContractorInput;
+  reporter: CreateReporterInput;
+  supplier: CreateSupplierInput;
+  scope: CreateScopeInput;
+  jobLegacy: CreateJobLegacyInput;
+}
+
+// Utils
 export const formatString = (value?: string) => {
   return value?.trim() || '';
 };
@@ -14,7 +38,7 @@ export const formRules = {
   },
 };
 
-export const AddFormDefaultData: AddFormData = {
+export const AddFormDefaultData: Partial<AddFormData> = {
   area: {
     name: '',
     nameSpanish: '',
@@ -45,7 +69,6 @@ export const AddFormDefaultData: AddFormData = {
     primaryEmail: '',
     notes: '',
   },
-
   supplier: {
     name: '',
     primaryPhone: '',
@@ -60,17 +83,6 @@ export const AddFormDefaultData: AddFormData = {
   contractor: {
     name: '',
     primaryPhone: '',
-    notes: '',
-  },
-  jobLegacy: {
-    name: '',
-    areaId: '',
-    builderId: '',
-    communityId: '',
-    contractorId: '',
-    reporterId: '',
-    scopeId: '',
-    startDate: null,
     notes: '',
   },
 };

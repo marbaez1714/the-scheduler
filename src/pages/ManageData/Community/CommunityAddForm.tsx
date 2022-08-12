@@ -7,7 +7,7 @@ import { Content, FormAutocomplete, FormTextField } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { useOptions } from 'src/hooks/useOptions';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { AddFormData } from 'src/utils/formTypes';
+import { AddFormData } from 'src/utils/forms';
 
 export const CommunityAddForm = () => {
   // - HOOKS - //
