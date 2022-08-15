@@ -100,7 +100,7 @@ export const AreaList = () => {
       </div>
 
       {/* Area List */}
-      {!!areasData?.areas && <Table title="Area List" data={areasData.areas} columns={tableColumns} />}
+      {!!areasData?.areas && <Table title="Area List" data={areasData.areas.data} columns={tableColumns} />}
     </Content>
   );
 };

@@ -1,27 +1,19 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, FormAutocomplete, FormAutocompleteOption, FormTextField } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
+import { CreateBuilderInput, useCreateBuilderMutation } from 'src/api';
+import { Content, FormAutocomplete, FormTextField } from 'src/components';
+import { useOptions } from 'src/hooks/useOptions';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { AddFormData } from 'src/utils/forms';
 
 export const BuilderAddForm = () => {
-  // - HOOKS - //
-  // Firebase
-  const {
-    loading: loadingData,
-    builderCreate,
-    storeData: { companies: companiesData },
-    refreshStoreData,
-  } = useFirebase();
-  // Navigation
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
-
-  // - FORM - //
+  const { companyOptions } = useOptions();
   const {
     handleSubmit,
     control,
@@ -32,45 +24,55 @@ export const BuilderAddForm = () => {
     defaultValues: AddFormDefaultData.builder,
   });
 
-  // - STATE - //
-  const [createLoading, setCreateLoading] = useState(false);
-  const [companyOptions, setCompanyOptions] = useState<FormAutocompleteOption[]>([]);
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  // - EFFECTS - //
-  useEffect(() => {
-    if (companiesData?.documents.length) {
-      setCompanyOptions(
-        companiesData.documents.map((doc) => ({
-          label: doc.name || 'Missing Name',
-          value: doc.id,
-        }))
-      );
-    }
-  }, [companiesData]);
+  /******************************/
+  /* State                      */
+  /******************************/
 
-  // - ACTIONS - //
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const [create, { loading }] = useCreateBuilderMutation({
+    onCompleted: (data) => {
+      toast.success(data.createBuilder.message);
+      reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = async (data: AddFormData['builder']) => {
-    try {
-      setCreateLoading(true);
-      // Create new builder
-      await builderCreate(data);
-      // Refresh builders in data store
-      await refreshStoreData('Builder');
-      // Reset inputs
-      reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+  const submit = async (data: CreateBuilderInput) => {
+    create({ variables: { data } });
   };
 
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={createLoading || loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

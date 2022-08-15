@@ -9,11 +9,10 @@ import { AddFormDefaultData, formRules } from 'src/utils/forms';
 import { CreateAreaInput, useCreateAreaMutation } from 'src/api';
 
 export const AreaAddForm = () => {
-  /**
-   * Custom Hooks
-   */
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
-
   const {
     handleSubmit,
     control,
@@ -24,10 +23,10 @@ export const AreaAddForm = () => {
     defaultValues: AddFormDefaultData.area,
   });
 
-  /**
-   * Data
-   */
-  const [createArea, { loading: createAreaLoading }] = useCreateAreaMutation({
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const [create, { loading }] = useCreateAreaMutation({
     onCompleted: (data) => {
       toast.success(data.createArea.message);
       reset();
@@ -37,22 +36,30 @@ export const AreaAddForm = () => {
     },
   });
 
-  /**
-   * Callbacks
-   */
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
   const handleBack = () => {
     navigate(-1);
   };
 
   const submit = async (data: CreateAreaInput) => {
-    createArea({ variables: { data } });
+    create({ variables: { data } });
   };
 
-  /**
-   * Render
-   */
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={createAreaLoading}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

@@ -29,6 +29,13 @@ export type Area = {
   updatedTime: Scalars['String'];
 };
 
+export type AreasResponse = {
+  __typename?: 'AreasResponse';
+  data: Array<Area>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
+};
+
 export type Builder = {
   __typename?: 'Builder';
   archived: Scalars['Boolean'];
@@ -46,6 +53,20 @@ export type Builder = {
   updatedTime: Scalars['String'];
 };
 
+export type BuildersResponse = {
+  __typename?: 'BuildersResponse';
+  data: Array<Builder>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
+};
+
+export type CommunitiesResponse = {
+  __typename?: 'CommunitiesResponse';
+  data: Array<Community>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
+};
+
 export type Community = {
   __typename?: 'Community';
   archived: Scalars['Boolean'];
@@ -59,6 +80,13 @@ export type Community = {
   notes?: Maybe<Scalars['String']>;
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
+};
+
+export type CompaniesResponse = {
+  __typename?: 'CompaniesResponse';
+  data: Array<Company>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
 };
 
 export type Company = {
@@ -90,6 +118,13 @@ export type Contractor = {
   primaryPhone: Scalars['String'];
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
+};
+
+export type ContractorsResponse = {
+  __typename?: 'ContractorsResponse';
+  data: Array<Contractor>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
 };
 
 export type CreateAreaInput = {
@@ -235,6 +270,11 @@ export type Mutation = {
   createScope: MessageResponse;
   createSupplier: MessageResponse;
   deleteLineItemLegacy: MessageResponse;
+  updateArea: MessageResponse;
+  updateBuilder: MessageResponse;
+  updateCommunity: MessageResponse;
+  updateCompany: MessageResponse;
+  updateContactor: MessageResponse;
 };
 
 export type MutationArchiveAreaArgs = {
@@ -313,30 +353,62 @@ export type MutationDeleteLineItemLegacyArgs = {
   id: Scalars['ID'];
 };
 
+export type MutationUpdateAreaArgs = {
+  data: UpdateAreaInput;
+  id: Scalars['ID'];
+};
+
+export type MutationUpdateBuilderArgs = {
+  data: UpdateBuilderInput;
+  id: Scalars['ID'];
+};
+
+export type MutationUpdateCommunityArgs = {
+  data: UpdateCommunityInput;
+  id: Scalars['ID'];
+};
+
+export type MutationUpdateCompanyArgs = {
+  data: UpdateCompanyInput;
+  id: Scalars['ID'];
+};
+
+export type MutationUpdateContactorArgs = {
+  data: UpdateContractorInput;
+  id: Scalars['ID'];
+};
+
 export type PaginationOptions = {
   page: Scalars['Int'];
   pageSize: Scalars['Int'];
 };
 
+export type PaginationResponse = {
+  __typename?: 'PaginationResponse';
+  page?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  totalCount: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
   areaById?: Maybe<Area>;
-  areas: Array<Area>;
+  areas: AreasResponse;
   builderById?: Maybe<Builder>;
-  builders: Array<Builder>;
-  communities: Array<Community>;
+  builders: BuildersResponse;
+  communities: CommunitiesResponse;
   communityById?: Maybe<Community>;
-  companies: Array<Company>;
+  companies: CompaniesResponse;
   companyById?: Maybe<Company>;
   contractorById?: Maybe<Contractor>;
-  contractors: Array<Contractor>;
+  contractors: ContractorsResponse;
   jobLegacyById?: Maybe<JobLegacy>;
   reporterById?: Maybe<Reporter>;
-  reporters: Array<Reporter>;
+  reporters: ReportersResponse;
   scopeById?: Maybe<Scope>;
-  scopes: Array<Scope>;
+  scopes: ScopesResponse;
   supplierById?: Maybe<Supplier>;
-  suppliers: Array<Supplier>;
+  suppliers: SuppliersResponse;
 };
 
 export type QueryAreaByIdArgs = {
@@ -428,6 +500,13 @@ export type Reporter = {
   updatedTime: Scalars['String'];
 };
 
+export type ReportersResponse = {
+  __typename?: 'ReportersResponse';
+  data: Array<Reporter>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
+};
+
 export type Scope = {
   __typename?: 'Scope';
   archived: Scalars['Boolean'];
@@ -443,12 +522,25 @@ export type Scope = {
   updatedTime: Scalars['String'];
 };
 
+export type ScopesResponse = {
+  __typename?: 'ScopesResponse';
+  data: Array<Scope>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
+};
+
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc',
 }
 
 export type SortingOptions = {
+  field: Scalars['String'];
+  order: SortOrder;
+};
+
+export type SortingResponse = {
+  __typename?: 'SortingResponse';
   field: Scalars['String'];
   order: SortOrder;
 };
@@ -465,6 +557,13 @@ export type Supplier = {
   primaryPhone?: Maybe<Scalars['String']>;
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
+};
+
+export type SuppliersResponse = {
+  __typename?: 'SuppliersResponse';
+  data: Array<Supplier>;
+  pagination: PaginationResponse;
+  sorting?: Maybe<SortingResponse>;
 };
 
 export type UpdateAreaInput = {
@@ -591,6 +690,15 @@ export type CreateBuilderMutation = {
   createBuilder: { __typename?: 'MessageResponse'; message: string };
 };
 
+export type CreateJobLegacyMutationVariables = Exact<{
+  data: CreateJobLegacyInput;
+}>;
+
+export type CreateJobLegacyMutation = {
+  __typename?: 'Mutation';
+  createJobLegacy: { __typename?: 'MessageResponse'; message: string };
+};
+
 export type CreateCommunityMutationVariables = Exact<{
   data: CreateCommunityInput;
 }>;
@@ -651,19 +759,29 @@ export type GetAreasQueryVariables = Exact<{
 
 export type GetAreasQuery = {
   __typename?: 'Query';
-  areas: Array<{
-    __typename?: 'Area';
-    id: string;
-    name: string;
-    nameSpanish: string;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  areas: {
+    __typename?: 'AreasResponse';
+    data: Array<{
+      __typename?: 'Area';
+      id: string;
+      name: string;
+      nameSpanish: string;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export type GetBuildersQueryVariables = Exact<{
@@ -672,21 +790,31 @@ export type GetBuildersQueryVariables = Exact<{
 
 export type GetBuildersQuery = {
   __typename?: 'Query';
-  builders: Array<{
-    __typename?: 'Builder';
-    id: string;
-    name: string;
-    primaryPhone?: string | null;
-    primaryEmail?: string | null;
-    companyId: string;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  builders: {
+    __typename?: 'BuildersResponse';
+    data: Array<{
+      __typename?: 'Builder';
+      id: string;
+      name: string;
+      primaryPhone?: string | null;
+      primaryEmail?: string | null;
+      companyId: string;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export type GetCommunitiesQueryVariables = Exact<{
@@ -695,19 +823,29 @@ export type GetCommunitiesQueryVariables = Exact<{
 
 export type GetCommunitiesQuery = {
   __typename?: 'Query';
-  communities: Array<{
-    __typename?: 'Community';
-    id: string;
-    name: string;
-    companyId: string;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  communities: {
+    __typename?: 'CommunitiesResponse';
+    data: Array<{
+      __typename?: 'Community';
+      id: string;
+      name: string;
+      companyId: string;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export type GetCompaniesQueryVariables = Exact<{
@@ -716,21 +854,31 @@ export type GetCompaniesQueryVariables = Exact<{
 
 export type GetCompaniesQuery = {
   __typename?: 'Query';
-  companies: Array<{
-    __typename?: 'Company';
-    id: string;
-    name: string;
-    primaryAddress?: string | null;
-    primaryEmail?: string | null;
-    primaryPhone?: string | null;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  companies: {
+    __typename?: 'CompaniesResponse';
+    data: Array<{
+      __typename?: 'Company';
+      id: string;
+      name: string;
+      primaryAddress?: string | null;
+      primaryEmail?: string | null;
+      primaryPhone?: string | null;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export type GetContractorsQueryVariables = Exact<{
@@ -739,19 +887,29 @@ export type GetContractorsQueryVariables = Exact<{
 
 export type GetContractorsQuery = {
   __typename?: 'Query';
-  contractors: Array<{
-    __typename?: 'Contractor';
-    id: string;
-    name: string;
-    primaryPhone: string;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  contractors: {
+    __typename?: 'ContractorsResponse';
+    data: Array<{
+      __typename?: 'Contractor';
+      id: string;
+      name: string;
+      primaryPhone: string;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export type GetReportersQueryVariables = Exact<{
@@ -760,20 +918,30 @@ export type GetReportersQueryVariables = Exact<{
 
 export type GetReportersQuery = {
   __typename?: 'Query';
-  reporters: Array<{
-    __typename?: 'Reporter';
-    id: string;
-    name: string;
-    primaryPhone: string;
-    primaryEmail?: string | null;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  reporters: {
+    __typename?: 'ReportersResponse';
+    data: Array<{
+      __typename?: 'Reporter';
+      id: string;
+      name: string;
+      primaryPhone: string;
+      primaryEmail?: string | null;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export type GetScopesQueryVariables = Exact<{
@@ -782,20 +950,30 @@ export type GetScopesQueryVariables = Exact<{
 
 export type GetScopesQuery = {
   __typename?: 'Query';
-  scopes: Array<{
-    __typename?: 'Scope';
-    id: string;
-    name: string;
-    nameSpanish: string;
-    description?: string | null;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  scopes: {
+    __typename?: 'ScopesResponse';
+    data: Array<{
+      __typename?: 'Scope';
+      id: string;
+      name: string;
+      nameSpanish: string;
+      description?: string | null;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export type GetSuppliersQueryVariables = Exact<{
@@ -804,19 +982,29 @@ export type GetSuppliersQueryVariables = Exact<{
 
 export type GetSuppliersQuery = {
   __typename?: 'Query';
-  suppliers: Array<{
-    __typename?: 'Supplier';
-    id: string;
-    name: string;
-    primaryPhone?: string | null;
-    notes?: string | null;
-    updatedBy: string;
-    createdBy: string;
-    createdTime: string;
-    updatedTime: string;
-    archived: boolean;
-    legacy: boolean;
-  }>;
+  suppliers: {
+    __typename?: 'SuppliersResponse';
+    data: Array<{
+      __typename?: 'Supplier';
+      id: string;
+      name: string;
+      primaryPhone?: string | null;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+    }>;
+    pagination: {
+      __typename?: 'PaginationResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+    };
+    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
+  };
 };
 
 export const ArchiveAreaDocument = gql`
@@ -1217,6 +1405,50 @@ export type CreateBuilderMutationOptions = Apollo.BaseMutationOptions<
   CreateBuilderMutation,
   CreateBuilderMutationVariables
 >;
+export const CreateJobLegacyDocument = gql`
+  mutation CreateJobLegacy($data: CreateJobLegacyInput!) {
+    createJobLegacy(data: $data) {
+      message
+    }
+  }
+`;
+export type CreateJobLegacyMutationFn = Apollo.MutationFunction<
+  CreateJobLegacyMutation,
+  CreateJobLegacyMutationVariables
+>;
+
+/**
+ * __useCreateJobLegacyMutation__
+ *
+ * To run a mutation, you first call `useCreateJobLegacyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateJobLegacyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createJobLegacyMutation, { data, loading, error }] = useCreateJobLegacyMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateJobLegacyMutation(
+  baseOptions?: Apollo.MutationHookOptions<CreateJobLegacyMutation, CreateJobLegacyMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateJobLegacyMutation, CreateJobLegacyMutationVariables>(
+    CreateJobLegacyDocument,
+    options
+  );
+}
+export type CreateJobLegacyMutationHookResult = ReturnType<typeof useCreateJobLegacyMutation>;
+export type CreateJobLegacyMutationResult = Apollo.MutationResult<CreateJobLegacyMutation>;
+export type CreateJobLegacyMutationOptions = Apollo.BaseMutationOptions<
+  CreateJobLegacyMutation,
+  CreateJobLegacyMutationVariables
+>;
 export const CreateCommunityDocument = gql`
   mutation CreateCommunity($data: CreateCommunityInput!) {
     createCommunity(data: $data) {
@@ -1457,16 +1689,27 @@ export type CreateSupplierMutationOptions = Apollo.BaseMutationOptions<
 export const GetAreasDocument = gql`
   query GetAreas($options: QueryOptions) {
     areas(options: $options) {
-      id
-      name
-      nameSpanish
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        nameSpanish
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;
@@ -1501,18 +1744,29 @@ export type GetAreasQueryResult = Apollo.QueryResult<GetAreasQuery, GetAreasQuer
 export const GetBuildersDocument = gql`
   query GetBuilders($options: QueryOptions) {
     builders(options: $options) {
-      id
-      name
-      primaryPhone
-      primaryEmail
-      companyId
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        primaryPhone
+        primaryEmail
+        companyId
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;
@@ -1551,16 +1805,27 @@ export type GetBuildersQueryResult = Apollo.QueryResult<GetBuildersQuery, GetBui
 export const GetCommunitiesDocument = gql`
   query GetCommunities($options: QueryOptions) {
     communities(options: $options) {
-      id
-      name
-      companyId
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        companyId
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;
@@ -1599,18 +1864,29 @@ export type GetCommunitiesQueryResult = Apollo.QueryResult<GetCommunitiesQuery, 
 export const GetCompaniesDocument = gql`
   query GetCompanies($options: QueryOptions) {
     companies(options: $options) {
-      id
-      name
-      primaryAddress
-      primaryEmail
-      primaryPhone
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        primaryAddress
+        primaryEmail
+        primaryPhone
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;
@@ -1649,16 +1925,27 @@ export type GetCompaniesQueryResult = Apollo.QueryResult<GetCompaniesQuery, GetC
 export const GetContractorsDocument = gql`
   query GetContractors($options: QueryOptions) {
     contractors(options: $options) {
-      id
-      name
-      primaryPhone
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        primaryPhone
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;
@@ -1697,17 +1984,28 @@ export type GetContractorsQueryResult = Apollo.QueryResult<GetContractorsQuery, 
 export const GetReportersDocument = gql`
   query GetReporters($options: QueryOptions) {
     reporters(options: $options) {
-      id
-      name
-      primaryPhone
-      primaryEmail
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        primaryPhone
+        primaryEmail
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;
@@ -1746,17 +2044,28 @@ export type GetReportersQueryResult = Apollo.QueryResult<GetReportersQuery, GetR
 export const GetScopesDocument = gql`
   query GetScopes($options: QueryOptions) {
     scopes(options: $options) {
-      id
-      name
-      nameSpanish
-      description
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        nameSpanish
+        description
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;
@@ -1793,16 +2102,27 @@ export type GetScopesQueryResult = Apollo.QueryResult<GetScopesQuery, GetScopesQ
 export const GetSuppliersDocument = gql`
   query GetSuppliers($options: QueryOptions) {
     suppliers(options: $options) {
-      id
-      name
-      primaryPhone
-      notes
-      updatedBy
-      createdBy
-      createdTime
-      updatedTime
-      archived
-      legacy
+      data {
+        id
+        name
+        primaryPhone
+        notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      pagination {
+        page
+        pageSize
+        totalCount
+      }
+      sorting {
+        field
+        order
+      }
     }
   }
 `;

@@ -1,59 +1,35 @@
 import { useMemo } from 'react';
-import { useFirebase } from './useFirebase';
+import {
+  useGetCompaniesQuery,
+  useGetAreasQuery,
+  useGetBuildersQuery,
+  useGetContractorsQuery,
+  useGetCommunitiesQuery,
+  useGetReportersQuery,
+  useGetSuppliersQuery,
+  useGetScopesQuery,
+} from 'src/api';
 
 const createOption = (item: { name: string; id: string }) => ({ label: item.name || 'Missing Name', value: item.id });
 
 export const useOptions = () => {
-  const { storeData } = useFirebase();
-
-  const areaOptions = useMemo(() => {
-    const documents = storeData.areas?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.areas]);
-
-  const builderOptions = useMemo(() => {
-    const documents = storeData.builders?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.builders]);
-
-  const communityOptions = useMemo(() => {
-    const documents = storeData.communities?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.communities]);
-
-  const companyOptions = useMemo(() => {
-    const documents = storeData.companies?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.companies]);
-
-  const contractorsOptions = useMemo(() => {
-    const documents = storeData.contractors?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.contractors]);
-
-  const reporterOptions = useMemo(() => {
-    const documents = storeData.reporters?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.reporters]);
-
-  const scopeOptions = useMemo(() => {
-    const documents = storeData.scopes?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.scopes]);
-
-  const supplierOptions = useMemo(() => {
-    const documents = storeData.suppliers?.documents ?? [];
-    return documents.map(createOption);
-  }, [storeData.suppliers]);
+  const { data: getAreasData } = useGetAreasQuery();
+  const { data: getBuildersData } = useGetBuildersQuery();
+  const { data: getCommunitiesData } = useGetCommunitiesQuery();
+  const { data: getCompaniesData } = useGetCompaniesQuery();
+  const { data: getContractorsData } = useGetContractorsQuery();
+  const { data: getReportersData } = useGetReportersQuery();
+  const { data: getScopesData } = useGetScopesQuery();
+  const { data: getSuppliersData } = useGetSuppliersQuery();
 
   return {
-    areaOptions,
-    builderOptions,
-    communityOptions,
-    companyOptions,
-    contractorsOptions,
-    reporterOptions,
-    scopeOptions,
-    supplierOptions,
+    areaOptions: getAreasData?.areas.data.map(createOption) ?? [],
+    builderOptions: getBuildersData?.builders.data.map(createOption) ?? [],
+    communityOptions: getCommunitiesData?.communities.data.map(createOption) ?? [],
+    companyOptions: getCompaniesData?.companies.data.map(createOption) ?? [],
+    contractorsOptions: getContractorsData?.contractors.data.map(createOption) ?? [],
+    reporterOptions: getReportersData?.reporters.data.map(createOption) ?? [],
+    scopeOptions: getScopesData?.scopes.data.map(createOption) ?? [],
+    supplierOptions: getSuppliersData?.suppliers.data.map(createOption) ?? [],
   };
 };

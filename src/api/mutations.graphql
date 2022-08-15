@@ -58,6 +58,12 @@ mutation CreateBuilder($data: CreateBuilderInput!) {
   }
 }
 
+mutation CreateJobLegacy($data: CreateJobLegacyInput!) {
+  createJobLegacy(data: $data) {
+    message
+  }
+}
+
 mutation CreateCommunity($data: CreateCommunityInput!) {
   createCommunity(data: $data) {
     message

@@ -13,12 +13,16 @@ const FormDatePicker = <TFieldValues extends FieldValues>({
     field: { onChange, onBlur, name, value, ref },
   } = useController(rest);
 
+  const handleChange = (value: Date | null, keyboardInputValue?: string) => {
+    onChange(value?.toISOString(), keyboardInputValue);
+  };
+
   // - JSX - //
   return (
     <DatePicker
       label={label}
       value={value}
-      onChange={onChange}
+      onChange={handleChange}
       ref={ref}
       renderInput={(params) => <TextField {...params} onBlur={onBlur} className={className} name={name} />}
     />

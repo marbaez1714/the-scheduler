@@ -1,125 +1,213 @@
 query GetAreas($options: QueryOptions) {
   areas(options: $options) {
-    id
-    name
-    nameSpanish
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      nameSpanish
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }
 
 query GetBuilders($options: QueryOptions) {
   builders(options: $options) {
-    id
-    name
-    primaryPhone
-    primaryEmail
-    companyId
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      primaryPhone
+      primaryEmail
+      companyId
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }
 
 query GetCommunities($options: QueryOptions) {
   communities(options: $options) {
-    id
-    name
-    companyId
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      companyId
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }
 
 query GetCompanies($options: QueryOptions) {
   companies(options: $options) {
-    id
-    name
-    primaryAddress
-    primaryEmail
-    primaryPhone
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      primaryAddress
+      primaryEmail
+      primaryPhone
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }
 
 query GetContractors($options: QueryOptions) {
   contractors(options: $options) {
-    id
-    name
-    primaryPhone
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      primaryPhone
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }
 
 query GetReporters($options: QueryOptions) {
   reporters(options: $options) {
-    id
-    name
-    primaryPhone
-    primaryEmail
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      primaryPhone
+      primaryEmail
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }
 
 query GetScopes($options: QueryOptions) {
   scopes(options: $options) {
-    id
-    name
-    nameSpanish
-    description
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      nameSpanish
+      description
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }
 
 query GetSuppliers($options: QueryOptions) {
   suppliers(options: $options) {
-    id
-    name
-    primaryPhone
-    notes
-    updatedBy
-    createdBy
-    createdTime
-    updatedTime
-    archived
-    legacy
+    data {
+      id
+      name
+      primaryPhone
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
   }
 }

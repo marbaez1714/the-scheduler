@@ -1,20 +1,17 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { CreateCompanyInput, useCreateCompanyMutation } from 'src/api';
 import { Content, FormTextField } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { AddFormData } from 'src/utils/forms';
 
 export const CompanyAddForm = () => {
-  // - HOOKS - //
-  // Firebase
-  const { loading: loadingData, createDocument } = useFirebase();
-  // Navigation
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
-
-  // - FORMS - //
   const {
     handleSubmit,
     control,
@@ -25,17 +22,55 @@ export const CompanyAddForm = () => {
     defaultValues: AddFormDefaultData.company,
   });
 
-  // - ACTIONS - //
+  /******************************/
+  /* Refs                       */
+  /******************************/
+
+  /******************************/
+  /* State                      */
+  /******************************/
+
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const [create, { loading }] = useCreateCompanyMutation({
+    onCompleted: (data) => {
+      toast.success(data.createCompany.message);
+      reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = (data: AddFormData['company']) => {
-    createDocument('Company', data).then(() => reset());
+  const submit = (data: CreateCompanyInput) => {
+    create({ variables: { data } });
   };
 
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

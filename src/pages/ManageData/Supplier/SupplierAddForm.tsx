@@ -1,20 +1,19 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { CreateSupplierInput, useCreateSupplierMutation } from 'src/api';
 import { Content, FormTextField } from 'src/components';
 import { useFirebase } from 'src/hooks/useFirebase';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
 import { AddFormData } from 'src/utils/forms';
 
 export const SupplierAddForm = () => {
-  // - HOOKS - //
-  // Firebase
-  const { loading: loadingData, createDocument } = useFirebase();
-  // Navigation
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
-
-  // - FORM - //
   const {
     handleSubmit,
     control,
@@ -25,17 +24,55 @@ export const SupplierAddForm = () => {
     defaultValues: AddFormDefaultData.supplier,
   });
 
-  // - ACTIONS - //
+  /******************************/
+  /* Refs                       */
+  /******************************/
+
+  /******************************/
+  /* State                      */
+  /******************************/
+
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const [create, { loading }] = useCreateSupplierMutation({
+    onCompleted: (data) => {
+      toast.success(data.createSupplier.message);
+      reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
   const handleBack = () => {
     navigate(-1);
   };
 
-  const submit = (data: AddFormData['supplier']) => {
-    createDocument('Supplier', data).then(() => reset());
+  const submit = (data: CreateSupplierInput) => {
+    create({ variables: { data } });
   };
 
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loadingData}>
+    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
       <IconButton onClick={handleBack} title="back">
         <ArrowBack />
       </IconButton>

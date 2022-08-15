@@ -2,18 +2,18 @@ import { ChangeEventHandler, useState } from 'react';
 import { Autocomplete, Button, IconButton, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { Content, FormAutocomplete, FormDatePicker, FormTextField, LineItemTable, Screen } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { AddFormData } from 'src/utils/forms';
 import { AddCircle } from '@mui/icons-material';
 import { AppMessages } from 'src/utils/messages';
 import { LineItem } from 'src/utils/cloudFunctionTypes';
 import { toast } from 'react-hot-toast';
 import { useOptions } from 'src/hooks/useOptions';
+import { CreateJobLegacyInput, useCreateJobLegacyMutation } from 'src/api';
 
 const CreateJob = () => {
-  // ----- HOOKS ----- //
-  const { jobLegacyCreate } = useFirebase();
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const {
     areaOptions,
     builderOptions,
@@ -33,36 +33,51 @@ const CreateJob = () => {
     mode: 'all',
     defaultValues: AddFormDefaultData.jobLegacy,
   });
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  // ----- STATE ----- //
+  /******************************/
+  /* State                      */
+  /******************************/
   const [orderNumber, setOrderNumber] = useState('');
   const [orderSupplierId, setOrderSupplierId] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
 
-  const [createLoading, setCreateLoading] = useState(false);
+  /******************************/
+  /* Context                    */
+  /******************************/
 
-  // ----- EFFECTS ----- //
-
-  // ----- ACTIONS ----- //
-  const submit = async (data: AddFormData['jobLegacy']) => {
-    try {
-      setCreateLoading(true);
-      // Create the new job
-      await jobLegacyCreate({
-        ...data,
-        lineItems: lineItems,
-        startDate: data.startDate?.getTime(),
-      });
-      // Reset inputs
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const [create, { loading }] = useCreateJobLegacyMutation({
+    onCompleted: (data) => {
+      toast.success(data.createJobLegacy.message);
       setOrderNumber('');
       setOrderSupplierId('');
       setLineItems([]);
       reset();
-    } catch (e: any) {
-      e.message && toast.error(e.message);
-    } finally {
-      setCreateLoading(false);
-    }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+
+  const submit = async (data: CreateJobLegacyInput) => {
+    create({ variables: { data } });
   };
 
   const handleOrderNumberChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -103,7 +118,6 @@ const CreateJob = () => {
     }
   };
 
-  // ----- HELPERS ----- //
   const getOrderSupplierValue = () => {
     const missingLabel = { label: 'Missing Label', value: orderSupplierId };
     const selectedOption = supplierOptions.find((option) => option.value === orderSupplierId);
@@ -111,10 +125,12 @@ const CreateJob = () => {
     return orderSupplierId ? selectedOption || missingLabel : null;
   };
 
-  // ----- JSX ----- //
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
     <Screen>
-      <Content loading={createLoading}>
+      <Content loading={loading}>
         <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
           {/* Location  */}
           <h2 className="col-span-2 text-xl tracking-wide">Location</h2>
