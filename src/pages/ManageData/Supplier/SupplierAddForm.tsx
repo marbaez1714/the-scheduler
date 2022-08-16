@@ -5,9 +5,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { CreateSupplierInput, useCreateSupplierMutation } from 'src/api';
 import { Content, FormTextField } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
-import { AddFormData } from 'src/utils/forms';
 
 export const SupplierAddForm = () => {
   /******************************/

@@ -1,33 +1,63 @@
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { TextField } from '@mui/material';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import {
   FilterFn,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  SortDirection,
   SortingState,
   useReactTable,
   getFilteredRowModel,
+  Header,
+  OnChangeFn,
 } from '@tanstack/react-table';
 import classNames from 'classnames';
+
 import { DataIdCell } from './DataIdCell';
 import { DateCell } from './DateCell';
 import { MenuCell } from './MenuCell';
 import { TableProps } from './types';
 import { HeaderCell } from './HeaderCell';
-import { TextField } from '@mui/material';
 import { TextCell } from './TextCell';
 import { PhoneNumberCell } from './PhoneNumberCell';
 
 const Table = ({ title, data, columns }: TableProps) => {
-  // ----- STATE ----- //
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
+
+  /******************************/
+  /* Refs                       */
+  /******************************/
+
+  /******************************/
+  /* State                      */
+  /******************************/
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  // ----- UTILS ----- //
-  const globalFilterFn: FilterFn<any> = (row, columnId, value, addMeta) => {
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+  const globalFilterFn: FilterFn<typeof data> = (row, columnId, value, addMeta) => {
     // Rank the item
     const itemRank = rankItem(row.getValue(columnId), value);
 
@@ -38,6 +68,13 @@ const Table = ({ title, data, columns }: TableProps) => {
     return itemRank.passed;
   };
 
+  const handleSearchChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
+    setGlobalFilter(e.target.value);
+  };
+
+  /******************************/
+  /* Table                      */
+  /******************************/
   const table = useReactTable({
     state: { sorting, globalFilter },
     data,
@@ -50,12 +87,18 @@ const Table = ({ title, data, columns }: TableProps) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const getSortIcon = (direction: SortDirection | false) => {
-    if (!direction) {
-      return null;
+  /******************************/
+  /* Render                     */
+  /******************************/
+  const sortIconRender = (direction: Header<any, unknown>) => {
+    switch (direction.column.getIsSorted()) {
+      case 'asc':
+        return <ExpandMore />;
+      case 'desc':
+        return <ExpandLess />;
+      default:
+        return null;
     }
-
-    return direction === 'asc' ? <ExpandMore /> : <ExpandLess />;
   };
 
   return (
@@ -67,7 +110,7 @@ const Table = ({ title, data, columns }: TableProps) => {
           variant="filled"
           className="w-1/2"
           value={globalFilter}
-          onChange={(e) => setGlobalFilter(e.target.value)}
+          onChange={handleSearchChange}
           size="small"
         />
       </div>
@@ -90,7 +133,7 @@ const Table = ({ title, data, columns }: TableProps) => {
                       )}
                     >
                       {flexRender(header.column.columnDef.header, header.getContext())}
-                      {getSortIcon(header.column.getIsSorted())}
+                      {sortIconRender(header)}
                     </div>
                   )}
                 </th>

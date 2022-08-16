@@ -1,52 +1,74 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { ColumnDef } from '@tanstack/react-table';
-import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { ColumnDef } from '@tanstack/react-table';
 
 import { Area, useArchiveAreaMutation, useGetAreasQuery } from 'src/api';
-import { Content, Table } from 'src/components';
+
+import { Content } from 'src/components/Content';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from '../utils';
+import { format } from 'date-fns';
 
 export const AreaList = () => {
-  /**
-   * Custom Hooks
-   */
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
 
-  /**
-   * Data
-   */
-  const {
-    data: areasData,
-    loading: areasLoading,
-    refetch: refetchAreas,
-  } = useGetAreasQuery({ fetchPolicy: 'cache-and-network' });
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  const [archiveArea, { loading: archiveLoading }] = useArchiveAreaMutation({
+  /******************************/
+  /* State                      */
+  /******************************/
+
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const { data, loading, refetch } = useGetAreasQuery({ fetchPolicy: 'cache-and-network' });
+
+  const [archive, { loading: archiveLoading }] = useArchiveAreaMutation({
     onCompleted: (data) => {
       toast.success(data.archiveArea.message);
-      refetchAreas();
+      refetch();
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
 
-  /**
-   * Callbacks
-   */
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
   const getMenuActions = (data: Area) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
       {
         icon: 'archive',
         label: 'Archive',
-        onClick: () => confirmArchive(data.name) && archiveArea({ variables: { id: data.id } }),
+        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
       },
     ];
   };
+
+  /******************************/
+  /* Render                     */
+  /******************************/
 
   const tableColumns: ColumnDef<Area>[] = [
     {
@@ -56,14 +78,16 @@ export const AreaList = () => {
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
     {
+      id: 'name',
+      header: 'Name',
       accessorKey: 'name',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-      header: 'Name',
     },
     {
+      id: 'nameSpanish',
+      header: 'Name Translation (Spanish)',
       accessorKey: 'nameSpanish',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-      header: 'Spanish Translation',
     },
     {
       id: 'createdTime',
@@ -78,17 +102,15 @@ export const AreaList = () => {
       cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
     },
     {
+      id: 'id',
       header: 'ID',
       accessorKey: 'id',
       cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
     },
   ];
 
-  /**
-   * Render
-   */
   return (
-    <Content className="flex w-full items-start space-x-4" loading={areasLoading || archiveLoading}>
+    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">
@@ -100,7 +122,7 @@ export const AreaList = () => {
       </div>
 
       {/* Area List */}
-      {!!areasData?.areas && <Table title="Area List" data={areasData.areas.data} columns={tableColumns} />}
+      {data?.areas && <Table title="Areas List" data={data.areas.data} columns={tableColumns} />}
     </Content>
   );
 };

@@ -1,43 +1,75 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+
+import { Community, useArchiveCommunityMutation, useGetCommunitiesQuery } from 'src/api';
+
 import { Content, Table } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
-import { DocumentTableColumns } from 'src/utils/tableTypes';
 import { confirmArchive } from '../utils';
 
 export const CommunityList = () => {
-  // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument } = useFirebase();
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
 
-  // - ACTIONS - //
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  const handleArchiveClick = ({ name, id }: ResponseDocument<'Community'>) => {
-    confirmArchive(name) &&
-      toast.promise(archiveStoreDocument('Community', id), {
-        loading: `Archiving ${name}`,
-        success: `${name} - Removed from communities.`,
-        error: `Error removing ${name}`,
-      });
-  };
+  /******************************/
+  /* State                      */
+  /******************************/
 
-  const getMenuActions = (data: ResponseDocument<'Community'>) => {
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const { data, loading, refetch } = useGetCommunitiesQuery({ fetchPolicy: 'cache-and-network' });
+
+  const [archive, { loading: archiveLoading }] = useArchiveCommunityMutation({
+    onCompleted: (data) => {
+      toast.success(data.archiveCommunity.message);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+  const getMenuActions = (data: Community) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+      {
+        icon: 'archive',
+        label: 'Archive',
+        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      },
     ];
   };
 
-  // - HELPERS - //
-  const getCompany = (companyId: string) => {
-    return storeData?.companies?.documents.find((company) => company.id === companyId)?.name || '-';
-  };
+  /******************************/
+  /* Render                     */
+  /******************************/
 
-  const tableColumns: DocumentTableColumns<'Community'> = [
+  const tableColumns: ColumnDef<Community>[] = [
     {
       id: 'menu',
       header: '',
@@ -48,7 +80,7 @@ export const CommunityList = () => {
     {
       id: 'companyId',
       header: 'Company',
-      accessorFn: (row) => getCompany(row.companyId),
+      accessorFn: (row) => row.company.name,
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },
     {
@@ -70,9 +102,8 @@ export const CommunityList = () => {
     },
   ];
 
-  // - JSX - //
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading}>
+    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">
@@ -84,9 +115,7 @@ export const CommunityList = () => {
       </div>
 
       {/* Company List */}
-      {storeData.communities && (
-        <Table title="Community List" data={storeData.communities?.documents ?? []} columns={tableColumns} />
-      )}
+      {data?.communities && <Table title="Community List" data={data.communities.data} columns={tableColumns} />}
     </Content>
   );
 };

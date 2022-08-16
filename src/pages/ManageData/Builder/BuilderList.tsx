@@ -1,41 +1,76 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, Table } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
-import { DocumentTableColumns } from 'src/utils/tableTypes';
+import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
+
+import { Builder, useArchiveBuilderMutation, useGetBuildersQuery } from 'src/api';
+
+import { Content } from 'src/components/Content';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from '../utils';
 
 export const BuilderList = () => {
-  // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument } = useFirebase();
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
 
-  // - ACTIONS - //
-  const handleArchiveClick = ({ name, id }: ResponseDocument<'Builder'>) => {
-    confirmArchive(name) &&
-      toast.promise(archiveStoreDocument('Builder', id), {
-        loading: `Archiving ${name}`,
-        success: `${name} - Removed from builders.`,
-        error: `Error removing ${name}`,
-      });
-  };
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  const getMenuActions = (data: ResponseDocument<'Builder'>) => {
+  /******************************/
+  /* State                      */
+  /******************************/
+
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const { data, loading, refetch } = useGetBuildersQuery({ fetchPolicy: 'cache-and-network' });
+
+  const [archive, { loading: archiveLoading }] = useArchiveBuilderMutation({
+    onCompleted: (data) => {
+      toast.success(data.archiveBuilder.message);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+  const getMenuActions = (data: Builder) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+      {
+        icon: 'archive',
+        label: 'Archive',
+        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      },
     ];
   };
 
-  const getCompany = (companyId: string) => {
-    return storeData?.companies?.documents.find((company) => company.id === companyId)?.name || '-';
-  };
+  /******************************/
+  /* Render                     */
+  /******************************/
 
-  const tableColumns: DocumentTableColumns<'Builder'> = [
+  const tableColumns: ColumnDef<Builder>[] = [
     {
       id: 'menu',
       header: '',
@@ -44,9 +79,9 @@ export const BuilderList = () => {
     },
     { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
-      id: 'companyId',
+      id: 'company',
       header: 'Company',
-      accessorFn: (row) => getCompany(row.companyId),
+      accessorFn: (row) => row.company.name,
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },
     {
@@ -79,7 +114,7 @@ export const BuilderList = () => {
   ];
 
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading}>
+    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">
@@ -90,10 +125,8 @@ export const BuilderList = () => {
         </IconButton>
       </div>
 
-      {/* Builder List */}
-      {storeData.builders && (
-        <Table title="Builder List" data={storeData.builders?.documents ?? []} columns={tableColumns} />
-      )}
+      {/* Builders List */}
+      {data?.builders && <Table title="Builders List" data={data.builders.data} columns={tableColumns} />}
     </Content>
   );
 };

@@ -806,6 +806,7 @@ export type GetBuildersQuery = {
       updatedTime: string;
       archived: boolean;
       legacy: boolean;
+      company: { __typename?: 'Company'; name: string };
     }>;
     pagination: {
       __typename?: 'PaginationResponse';
@@ -837,6 +838,7 @@ export type GetCommunitiesQuery = {
       updatedTime: string;
       archived: boolean;
       legacy: boolean;
+      company: { __typename?: 'Company'; name: string };
     }>;
     pagination: {
       __typename?: 'PaginationResponse';
@@ -1750,6 +1752,9 @@ export const GetBuildersDocument = gql`
         primaryPhone
         primaryEmail
         companyId
+        company {
+          name
+        }
         notes
         updatedBy
         createdBy
@@ -1809,6 +1814,9 @@ export const GetCommunitiesDocument = gql`
         id
         name
         companyId
+        company {
+          name
+        }
         notes
         updatedBy
         createdBy
