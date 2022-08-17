@@ -1009,6 +1009,26 @@ export type GetSuppliersQuery = {
   };
 };
 
+export type GetOptionsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetOptionsQuery = {
+  __typename?: 'Query';
+  areas: { __typename?: 'AreasResponse'; data: Array<{ __typename?: 'Area'; id: string; name: string }> };
+  builders: { __typename?: 'BuildersResponse'; data: Array<{ __typename?: 'Builder'; id: string; name: string }> };
+  communities: {
+    __typename?: 'CommunitiesResponse';
+    data: Array<{ __typename?: 'Community'; id: string; name: string }>;
+  };
+  companies: { __typename?: 'CompaniesResponse'; data: Array<{ __typename?: 'Company'; id: string; name: string }> };
+  contractors: {
+    __typename?: 'ContractorsResponse';
+    data: Array<{ __typename?: 'Contractor'; id: string; name: string }>;
+  };
+  reporters: { __typename?: 'ReportersResponse'; data: Array<{ __typename?: 'Reporter'; id: string; name: string }> };
+  scopes: { __typename?: 'ScopesResponse'; data: Array<{ __typename?: 'Scope'; id: string; name: string }> };
+  suppliers: { __typename?: 'SuppliersResponse'; data: Array<{ __typename?: 'Supplier'; id: string; name: string }> };
+};
+
 export const ArchiveAreaDocument = gql`
   mutation ArchiveArea($id: ID!) {
     archiveArea(id: $id) {
@@ -2166,6 +2186,87 @@ export function useGetSuppliersLazyQuery(
 export type GetSuppliersQueryHookResult = ReturnType<typeof useGetSuppliersQuery>;
 export type GetSuppliersLazyQueryHookResult = ReturnType<typeof useGetSuppliersLazyQuery>;
 export type GetSuppliersQueryResult = Apollo.QueryResult<GetSuppliersQuery, GetSuppliersQueryVariables>;
+export const GetOptionsDocument = gql`
+  query GetOptions {
+    areas {
+      data {
+        id
+        name
+      }
+    }
+    builders {
+      data {
+        id
+        name
+      }
+    }
+    communities {
+      data {
+        id
+        name
+      }
+    }
+    companies {
+      data {
+        id
+        name
+      }
+    }
+    contractors {
+      data {
+        id
+        name
+      }
+    }
+    reporters {
+      data {
+        id
+        name
+      }
+    }
+    scopes {
+      data {
+        id
+        name
+      }
+    }
+    suppliers {
+      data {
+        id
+        name
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetOptionsQuery__
+ *
+ * To run a query within a React component, call `useGetOptionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOptionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOptionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetOptionsQuery(baseOptions?: Apollo.QueryHookOptions<GetOptionsQuery, GetOptionsQueryVariables>) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetOptionsQuery, GetOptionsQueryVariables>(GetOptionsDocument, options);
+}
+export function useGetOptionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetOptionsQuery, GetOptionsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetOptionsQuery, GetOptionsQueryVariables>(GetOptionsDocument, options);
+}
+export type GetOptionsQueryHookResult = ReturnType<typeof useGetOptionsQuery>;
+export type GetOptionsLazyQueryHookResult = ReturnType<typeof useGetOptionsLazyQuery>;
+export type GetOptionsQueryResult = Apollo.QueryResult<GetOptionsQuery, GetOptionsQueryVariables>;
 
 export interface PossibleTypesResultData {
   possibleTypes: {

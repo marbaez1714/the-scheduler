@@ -217,3 +217,54 @@ query GetSuppliers($options: QueryOptions) {
     }
   }
 }
+
+query GetOptions {
+  areas {
+    data {
+      id
+      name
+    }
+  }
+  builders {
+    data {
+      id
+      name
+    }
+  }
+  communities {
+    data {
+      id
+      name
+    }
+  }
+  companies {
+    data {
+      id
+      name
+    }
+  }
+  contractors {
+    data {
+      id
+      name
+    }
+  }
+  reporters {
+    data {
+      id
+      name
+    }
+  }
+  scopes {
+    data {
+      id
+      name
+    }
+  }
+  suppliers {
+    data {
+      id
+      name
+    }
+  }
+}
