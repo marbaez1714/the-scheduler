@@ -1,5 +1,5 @@
-query GetAreas($options: QueryOptions) {
-  areas(options: $options) {
+query GetAreas($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -24,8 +24,8 @@ query GetAreas($options: QueryOptions) {
   }
 }
 
-query GetBuilders($options: QueryOptions) {
-  builders(options: $options) {
+query GetBuilders($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  builders(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -55,8 +55,8 @@ query GetBuilders($options: QueryOptions) {
   }
 }
 
-query GetCommunities($options: QueryOptions) {
-  communities(options: $options) {
+query GetCommunities($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  communities(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -84,8 +84,8 @@ query GetCommunities($options: QueryOptions) {
   }
 }
 
-query GetCompanies($options: QueryOptions) {
-  companies(options: $options) {
+query GetCompanies($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -112,8 +112,8 @@ query GetCompanies($options: QueryOptions) {
   }
 }
 
-query GetContractors($options: QueryOptions) {
-  contractors(options: $options) {
+query GetContractors($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  contractors(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -138,8 +138,8 @@ query GetContractors($options: QueryOptions) {
   }
 }
 
-query GetReporters($options: QueryOptions) {
-  reporters(options: $options) {
+query GetReporters($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  reporters(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -165,8 +165,8 @@ query GetReporters($options: QueryOptions) {
   }
 }
 
-query GetScopes($options: QueryOptions) {
-  scopes(options: $options) {
+query GetScopes($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -192,8 +192,8 @@ query GetScopes($options: QueryOptions) {
   }
 }
 
-query GetSuppliers($options: QueryOptions) {
-  suppliers(options: $options) {
+query GetSuppliers($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
       name
@@ -265,6 +265,90 @@ query GetOptions {
     data {
       id
       name
+    }
+  }
+}
+
+query GetAssignedContractors($pagination: PaginationOptions, $sorting: SortingOptions) {
+  assignedContractors(pagination: $pagination, sorting: $sorting) {
+    data {
+      id
+      name
+      primaryPhone
+      notes
+      jobsLegacy {
+        id
+        name
+        active
+        inProgress
+        isImportant
+        areaId
+        builderId
+        communityId
+        contractorId
+        reporterId
+        scopeId
+        completedDate
+        startDate
+        notes
+      }
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
+    }
+  }
+}
+
+query GetUnassignedJobs($pagination: PaginationOptions, $sorting: SortingOptions) {
+  unassignedJobs(pagination: $pagination, sorting: $sorting) {
+    data {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      area {
+        id
+        name
+      }
+      builder {
+        id
+        name
+      }
+      community {
+        id
+        name
+      }
+      contractor {
+        id
+        name
+      }
+      reporter {
+        id
+        name
+      }
+      scope {
+        id
+        name
+      }
+      completedDate
+      startDate
+      notes
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+    sorting {
+      field
+      order
     }
   }
 }
