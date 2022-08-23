@@ -15,6 +15,60 @@ export type Scalars = {
   Float: number;
 };
 
+export type ArchiveAreaResponse = {
+  __typename?: 'ArchiveAreaResponse';
+  data: Area;
+  message: Scalars['String'];
+};
+
+export type ArchiveBuilderResponse = {
+  __typename?: 'ArchiveBuilderResponse';
+  data: Builder;
+  message: Scalars['String'];
+};
+
+export type ArchiveCommunityResponse = {
+  __typename?: 'ArchiveCommunityResponse';
+  data: Community;
+  message: Scalars['String'];
+};
+
+export type ArchiveCompanyResponse = {
+  __typename?: 'ArchiveCompanyResponse';
+  data: Company;
+  message: Scalars['String'];
+};
+
+export type ArchiveContractorResponse = {
+  __typename?: 'ArchiveContractorResponse';
+  data: Contractor;
+  message: Scalars['String'];
+};
+
+export type ArchiveJobLegacyResponse = {
+  __typename?: 'ArchiveJobLegacyResponse';
+  data: JobLegacy;
+  message: Scalars['String'];
+};
+
+export type ArchiveReporterResponse = {
+  __typename?: 'ArchiveReporterResponse';
+  data: Reporter;
+  message: Scalars['String'];
+};
+
+export type ArchiveScopeResponse = {
+  __typename?: 'ArchiveScopeResponse';
+  data: Scope;
+  message: Scalars['String'];
+};
+
+export type ArchiveSupplierResponse = {
+  __typename?: 'ArchiveSupplierResponse';
+  data: Supplier;
+  message: Scalars['String'];
+};
+
 export type Area = {
   __typename?: 'Area';
   archived: Scalars['Boolean'];
@@ -32,15 +86,13 @@ export type Area = {
 export type AreasResponse = {
   __typename?: 'AreasResponse';
   data: Array<Area>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type AssignedContractorsResponse = {
   __typename?: 'AssignedContractorsResponse';
   data: Array<Contractor>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type Builder = {
@@ -63,15 +115,13 @@ export type Builder = {
 export type BuildersResponse = {
   __typename?: 'BuildersResponse';
   data: Array<Builder>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type CommunitiesResponse = {
   __typename?: 'CommunitiesResponse';
   data: Array<Community>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type Community = {
@@ -92,8 +142,7 @@ export type Community = {
 export type CompaniesResponse = {
   __typename?: 'CompaniesResponse';
   data: Array<Company>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type Company = {
@@ -130,14 +179,19 @@ export type Contractor = {
 export type ContractorsResponse = {
   __typename?: 'ContractorsResponse';
   data: Array<Contractor>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type CreateAreaInput = {
   name: Scalars['String'];
   nameSpanish: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateAreaResponse = {
+  __typename?: 'CreateAreaResponse';
+  data: Area;
+  message: Scalars['String'];
 };
 
 export type CreateBuilderInput = {
@@ -148,10 +202,22 @@ export type CreateBuilderInput = {
   primaryPhone: Scalars['String'];
 };
 
+export type CreateBuilderResponse = {
+  __typename?: 'CreateBuilderResponse';
+  data: Builder;
+  message: Scalars['String'];
+};
+
 export type CreateCommunityInput = {
   companyId: Scalars['String'];
   name: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateCommunityResponse = {
+  __typename?: 'CreateCommunityResponse';
+  data: Community;
+  message: Scalars['String'];
 };
 
 export type CreateCompanyInput = {
@@ -162,10 +228,22 @@ export type CreateCompanyInput = {
   primaryPhone?: InputMaybe<Scalars['String']>;
 };
 
+export type CreateCompanyResponse = {
+  __typename?: 'CreateCompanyResponse';
+  data: Company;
+  message: Scalars['String'];
+};
+
 export type CreateContractorInput = {
   name: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   primaryPhone: Scalars['String'];
+};
+
+export type CreateContractorResponse = {
+  __typename?: 'CreateContractorResponse';
+  data: Contractor;
+  message: Scalars['String'];
 };
 
 export type CreateJobLegacyInput = {
@@ -181,11 +259,23 @@ export type CreateJobLegacyInput = {
   startDate?: InputMaybe<Scalars['String']>;
 };
 
+export type CreateJobLegacyResponse = {
+  __typename?: 'CreateJobLegacyResponse';
+  data: JobLegacy;
+  message: Scalars['String'];
+};
+
 export type CreateReporterInput = {
   name: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   primaryEmail?: InputMaybe<Scalars['String']>;
   primaryPhone: Scalars['String'];
+};
+
+export type CreateReporterResponse = {
+  __typename?: 'CreateReporterResponse';
+  data: Reporter;
+  message: Scalars['String'];
 };
 
 export type CreateScopeInput = {
@@ -195,10 +285,27 @@ export type CreateScopeInput = {
   notes?: InputMaybe<Scalars['String']>;
 };
 
+export type CreateScopeResponse = {
+  __typename?: 'CreateScopeResponse';
+  data: Scope;
+  message: Scalars['String'];
+};
+
 export type CreateSupplierInput = {
   name: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   primaryPhone?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateSupplierResponse = {
+  __typename?: 'CreateSupplierResponse';
+  data: Supplier;
+  message: Scalars['String'];
+};
+
+export type DeleteResponse = {
+  __typename?: 'DeleteResponse';
+  message: Scalars['String'];
 };
 
 export type JobLegacy = {
@@ -234,7 +341,6 @@ export type JobLegacy = {
 
 export type LineItemLegacy = {
   __typename?: 'LineItemLegacy';
-  archived: Scalars['Boolean'];
   createdBy: Scalars['String'];
   createdTime: Scalars['String'];
   id: Scalars['ID'];
@@ -256,32 +362,36 @@ export type MessageResponse = {
   message: Scalars['String'];
 };
 
+export type MetaResponse = {
+  __typename?: 'MetaResponse';
+  page?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  sortField?: Maybe<Scalars['String']>;
+  sortOrder?: Maybe<SortOrder>;
+  totalCount: Scalars['Int'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  archiveArea: MessageResponse;
-  archiveBuilder: MessageResponse;
-  archiveCommunity: MessageResponse;
-  archiveCompany: MessageResponse;
-  archiveContractor: MessageResponse;
-  archiveJobLegacy: MessageResponse;
-  archiveReporter: MessageResponse;
-  archiveScope: MessageResponse;
-  archiveSupplier: MessageResponse;
-  createArea: MessageResponse;
-  createBuilder: MessageResponse;
-  createCommunity: MessageResponse;
-  createCompany: MessageResponse;
-  createContractor: MessageResponse;
-  createJobLegacy: MessageResponse;
-  createReporter: MessageResponse;
-  createScope: MessageResponse;
-  createSupplier: MessageResponse;
-  deleteLineItemLegacy: MessageResponse;
-  updateArea: MessageResponse;
-  updateBuilder: MessageResponse;
-  updateCommunity: MessageResponse;
-  updateCompany: MessageResponse;
-  updateContactor: MessageResponse;
+  archiveArea: ArchiveAreaResponse;
+  archiveBuilder: ArchiveBuilderResponse;
+  archiveCommunity: ArchiveCommunityResponse;
+  archiveCompany: ArchiveCompanyResponse;
+  archiveContractor: ArchiveContractorResponse;
+  archiveJobLegacy: ArchiveJobLegacyResponse;
+  archiveReporter: ArchiveReporterResponse;
+  archiveScope: ArchiveScopeResponse;
+  archiveSupplier: ArchiveSupplierResponse;
+  createArea: CreateAreaResponse;
+  createBuilder: CreateBuilderResponse;
+  createCommunity: CreateCommunityResponse;
+  createCompany: CreateCompanyResponse;
+  createContractor: CreateContractorResponse;
+  createJobLegacy: CreateJobLegacyResponse;
+  createReporter: CreateReporterResponse;
+  createScope: CreateScopeResponse;
+  createSupplier: CreateSupplierResponse;
+  deleteLineItemLegacy: DeleteResponse;
 };
 
 export type MutationArchiveAreaArgs = {
@@ -360,41 +470,9 @@ export type MutationDeleteLineItemLegacyArgs = {
   id: Scalars['ID'];
 };
 
-export type MutationUpdateAreaArgs = {
-  data: UpdateAreaInput;
-  id: Scalars['ID'];
-};
-
-export type MutationUpdateBuilderArgs = {
-  data: UpdateBuilderInput;
-  id: Scalars['ID'];
-};
-
-export type MutationUpdateCommunityArgs = {
-  data: UpdateCommunityInput;
-  id: Scalars['ID'];
-};
-
-export type MutationUpdateCompanyArgs = {
-  data: UpdateCompanyInput;
-  id: Scalars['ID'];
-};
-
-export type MutationUpdateContactorArgs = {
-  data: UpdateContractorInput;
-  id: Scalars['ID'];
-};
-
 export type PaginationOptions = {
   page: Scalars['Int'];
   pageSize: Scalars['Int'];
-};
-
-export type PaginationResponse = {
-  __typename?: 'PaginationResponse';
-  page?: Maybe<Scalars['Int']>;
-  pageSize?: Maybe<Scalars['Int']>;
-  totalCount: Scalars['Int'];
 };
 
 export type Query = {
@@ -532,8 +610,7 @@ export type Reporter = {
 export type ReportersResponse = {
   __typename?: 'ReportersResponse';
   data: Array<Reporter>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type Scope = {
@@ -554,8 +631,7 @@ export type Scope = {
 export type ScopesResponse = {
   __typename?: 'ScopesResponse';
   data: Array<Scope>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export enum SortOrder {
@@ -564,12 +640,6 @@ export enum SortOrder {
 }
 
 export type SortingOptions = {
-  field: Scalars['String'];
-  order: SortOrder;
-};
-
-export type SortingResponse = {
-  __typename?: 'SortingResponse';
   field: Scalars['String'];
   order: SortOrder;
 };
@@ -591,49 +661,13 @@ export type Supplier = {
 export type SuppliersResponse = {
   __typename?: 'SuppliersResponse';
   data: Array<Supplier>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
+  meta: MetaResponse;
 };
 
 export type UnassignedJobsResponse = {
   __typename?: 'UnassignedJobsResponse';
   data: Array<JobLegacy>;
-  pagination: PaginationResponse;
-  sorting?: Maybe<SortingResponse>;
-};
-
-export type UpdateAreaInput = {
-  name?: InputMaybe<Scalars['String']>;
-  nameSpanish?: InputMaybe<Scalars['String']>;
-  notes?: InputMaybe<Scalars['String']>;
-};
-
-export type UpdateBuilderInput = {
-  companyId?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  notes?: InputMaybe<Scalars['String']>;
-  primaryEmail?: InputMaybe<Scalars['String']>;
-  primaryPhone?: InputMaybe<Scalars['String']>;
-};
-
-export type UpdateCommunityInput = {
-  companyId?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  notes?: InputMaybe<Scalars['String']>;
-};
-
-export type UpdateCompanyInput = {
-  name?: InputMaybe<Scalars['String']>;
-  notes?: InputMaybe<Scalars['String']>;
-  primaryAddress?: InputMaybe<Scalars['String']>;
-  primaryEmail?: InputMaybe<Scalars['String']>;
-  primaryPhone?: InputMaybe<Scalars['String']>;
-};
-
-export type UpdateContractorInput = {
-  name?: InputMaybe<Scalars['String']>;
-  notes?: InputMaybe<Scalars['String']>;
-  primaryPhone?: InputMaybe<Scalars['String']>;
+  meta: MetaResponse;
 };
 
 export type ArchiveAreaMutationVariables = Exact<{
@@ -642,7 +676,7 @@ export type ArchiveAreaMutationVariables = Exact<{
 
 export type ArchiveAreaMutation = {
   __typename?: 'Mutation';
-  archiveArea: { __typename?: 'MessageResponse'; message: string };
+  archiveArea: { __typename?: 'ArchiveAreaResponse'; message: string };
 };
 
 export type ArchiveBuilderMutationVariables = Exact<{
@@ -651,7 +685,7 @@ export type ArchiveBuilderMutationVariables = Exact<{
 
 export type ArchiveBuilderMutation = {
   __typename?: 'Mutation';
-  archiveBuilder: { __typename?: 'MessageResponse'; message: string };
+  archiveBuilder: { __typename?: 'ArchiveBuilderResponse'; message: string };
 };
 
 export type ArchiveCommunityMutationVariables = Exact<{
@@ -660,7 +694,7 @@ export type ArchiveCommunityMutationVariables = Exact<{
 
 export type ArchiveCommunityMutation = {
   __typename?: 'Mutation';
-  archiveCommunity: { __typename?: 'MessageResponse'; message: string };
+  archiveCommunity: { __typename?: 'ArchiveCommunityResponse'; message: string };
 };
 
 export type ArchiveCompanyMutationVariables = Exact<{
@@ -669,7 +703,7 @@ export type ArchiveCompanyMutationVariables = Exact<{
 
 export type ArchiveCompanyMutation = {
   __typename?: 'Mutation';
-  archiveCompany: { __typename?: 'MessageResponse'; message: string };
+  archiveCompany: { __typename?: 'ArchiveCompanyResponse'; message: string };
 };
 
 export type ArchiveContractorMutationVariables = Exact<{
@@ -678,7 +712,7 @@ export type ArchiveContractorMutationVariables = Exact<{
 
 export type ArchiveContractorMutation = {
   __typename?: 'Mutation';
-  archiveContractor: { __typename?: 'MessageResponse'; message: string };
+  archiveContractor: { __typename?: 'ArchiveContractorResponse'; message: string };
 };
 
 export type ArchiveReporterMutationVariables = Exact<{
@@ -687,7 +721,7 @@ export type ArchiveReporterMutationVariables = Exact<{
 
 export type ArchiveReporterMutation = {
   __typename?: 'Mutation';
-  archiveReporter: { __typename?: 'MessageResponse'; message: string };
+  archiveReporter: { __typename?: 'ArchiveReporterResponse'; message: string };
 };
 
 export type ArchiveScopeMutationVariables = Exact<{
@@ -696,7 +730,7 @@ export type ArchiveScopeMutationVariables = Exact<{
 
 export type ArchiveScopeMutation = {
   __typename?: 'Mutation';
-  archiveScope: { __typename?: 'MessageResponse'; message: string };
+  archiveScope: { __typename?: 'ArchiveScopeResponse'; message: string };
 };
 
 export type ArchiveSupplierMutationVariables = Exact<{
@@ -705,7 +739,14 @@ export type ArchiveSupplierMutationVariables = Exact<{
 
 export type ArchiveSupplierMutation = {
   __typename?: 'Mutation';
-  archiveSupplier: { __typename?: 'MessageResponse'; message: string };
+  archiveSupplier: { __typename?: 'ArchiveSupplierResponse'; message: string };
+};
+
+export type GetLineItemTableSuppliersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLineItemTableSuppliersQuery = {
+  __typename?: 'Query';
+  suppliers: { __typename?: 'SuppliersResponse'; data: Array<{ __typename?: 'Supplier'; id: string; name: string }> };
 };
 
 export type CreateAreaMutationVariables = Exact<{
@@ -714,7 +755,7 @@ export type CreateAreaMutationVariables = Exact<{
 
 export type CreateAreaMutation = {
   __typename?: 'Mutation';
-  createArea: { __typename?: 'MessageResponse'; message: string };
+  createArea: { __typename?: 'CreateAreaResponse'; message: string };
 };
 
 export type CreateBuilderMutationVariables = Exact<{
@@ -723,7 +764,7 @@ export type CreateBuilderMutationVariables = Exact<{
 
 export type CreateBuilderMutation = {
   __typename?: 'Mutation';
-  createBuilder: { __typename?: 'MessageResponse'; message: string };
+  createBuilder: { __typename?: 'CreateBuilderResponse'; message: string };
 };
 
 export type CreateJobLegacyMutationVariables = Exact<{
@@ -732,7 +773,7 @@ export type CreateJobLegacyMutationVariables = Exact<{
 
 export type CreateJobLegacyMutation = {
   __typename?: 'Mutation';
-  createJobLegacy: { __typename?: 'MessageResponse'; message: string };
+  createJobLegacy: { __typename?: 'CreateJobLegacyResponse'; message: string };
 };
 
 export type CreateCommunityMutationVariables = Exact<{
@@ -741,7 +782,7 @@ export type CreateCommunityMutationVariables = Exact<{
 
 export type CreateCommunityMutation = {
   __typename?: 'Mutation';
-  createCommunity: { __typename?: 'MessageResponse'; message: string };
+  createCommunity: { __typename?: 'CreateCommunityResponse'; message: string };
 };
 
 export type CreateCompanyMutationVariables = Exact<{
@@ -750,7 +791,7 @@ export type CreateCompanyMutationVariables = Exact<{
 
 export type CreateCompanyMutation = {
   __typename?: 'Mutation';
-  createCompany: { __typename?: 'MessageResponse'; message: string };
+  createCompany: { __typename?: 'CreateCompanyResponse'; message: string };
 };
 
 export type CreateContractorMutationVariables = Exact<{
@@ -759,7 +800,7 @@ export type CreateContractorMutationVariables = Exact<{
 
 export type CreateContractorMutation = {
   __typename?: 'Mutation';
-  createContractor: { __typename?: 'MessageResponse'; message: string };
+  createContractor: { __typename?: 'CreateContractorResponse'; message: string };
 };
 
 export type CreateReporterMutationVariables = Exact<{
@@ -768,7 +809,7 @@ export type CreateReporterMutationVariables = Exact<{
 
 export type CreateReporterMutation = {
   __typename?: 'Mutation';
-  createReporter: { __typename?: 'MessageResponse'; message: string };
+  createReporter: { __typename?: 'CreateReporterResponse'; message: string };
 };
 
 export type CreateScopeMutationVariables = Exact<{
@@ -777,7 +818,7 @@ export type CreateScopeMutationVariables = Exact<{
 
 export type CreateScopeMutation = {
   __typename?: 'Mutation';
-  createScope: { __typename?: 'MessageResponse'; message: string };
+  createScope: { __typename?: 'CreateScopeResponse'; message: string };
 };
 
 export type CreateSupplierMutationVariables = Exact<{
@@ -786,7 +827,7 @@ export type CreateSupplierMutationVariables = Exact<{
 
 export type CreateSupplierMutation = {
   __typename?: 'Mutation';
-  createSupplier: { __typename?: 'MessageResponse'; message: string };
+  createSupplier: { __typename?: 'CreateSupplierResponse'; message: string };
 };
 
 export type GetAreasQueryVariables = Exact<{
@@ -812,13 +853,14 @@ export type GetAreasQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -848,13 +890,14 @@ export type GetBuildersQuery = {
       legacy: boolean;
       company: { __typename?: 'Company'; name: string };
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -882,13 +925,14 @@ export type GetCommunitiesQuery = {
       legacy: boolean;
       company: { __typename?: 'Company'; name: string };
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -917,13 +961,14 @@ export type GetCompaniesQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -950,13 +995,14 @@ export type GetContractorsQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -984,13 +1030,14 @@ export type GetReportersQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -1018,13 +1065,14 @@ export type GetScopesQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -1051,13 +1099,14 @@ export type GetSuppliersQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -1114,13 +1163,14 @@ export type GetAssignedContractorsQuery = {
         notes?: string | null;
       }>;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -1150,13 +1200,14 @@ export type GetUnassignedJobsQuery = {
       reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
       scope?: { __typename?: 'Scope'; id: string; name: string } | null;
     }>;
-    pagination: {
-      __typename?: 'PaginationResponse';
+    meta: {
+      __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
     };
-    sorting?: { __typename?: 'SortingResponse'; field: string; order: SortOrder } | null;
   };
 };
 
@@ -1484,6 +1535,56 @@ export type ArchiveSupplierMutationResult = Apollo.MutationResult<ArchiveSupplie
 export type ArchiveSupplierMutationOptions = Apollo.BaseMutationOptions<
   ArchiveSupplierMutation,
   ArchiveSupplierMutationVariables
+>;
+export const GetLineItemTableSuppliersDocument = gql`
+  query GetLineItemTableSuppliers {
+    suppliers {
+      data {
+        id
+        name
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetLineItemTableSuppliersQuery__
+ *
+ * To run a query within a React component, call `useGetLineItemTableSuppliersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLineItemTableSuppliersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLineItemTableSuppliersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLineItemTableSuppliersQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
+    GetLineItemTableSuppliersDocument,
+    options
+  );
+}
+export function useGetLineItemTableSuppliersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
+    GetLineItemTableSuppliersDocument,
+    options
+  );
+}
+export type GetLineItemTableSuppliersQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersQuery>;
+export type GetLineItemTableSuppliersLazyQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersLazyQuery>;
+export type GetLineItemTableSuppliersQueryResult = Apollo.QueryResult<
+  GetLineItemTableSuppliersQuery,
+  GetLineItemTableSuppliersQueryVariables
 >;
 export const CreateAreaDocument = gql`
   mutation CreateArea($data: CreateAreaInput!) {
@@ -1854,14 +1955,12 @@ export const GetAreasDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -1916,14 +2015,12 @@ export const GetBuildersDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -1980,14 +2077,12 @@ export const GetCommunitiesDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -2043,14 +2138,12 @@ export const GetCompaniesDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -2104,14 +2197,12 @@ export const GetContractorsDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -2166,14 +2257,12 @@ export const GetReportersDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -2228,14 +2317,12 @@ export const GetScopesDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -2287,14 +2374,12 @@ export const GetSuppliersDocument = gql`
         archived
         legacy
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -2439,14 +2524,12 @@ export const GetAssignedContractorsDocument = gql`
           notes
         }
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }
@@ -2530,14 +2613,12 @@ export const GetUnassignedJobsDocument = gql`
         startDate
         notes
       }
-      pagination {
+      meta {
         page
         pageSize
         totalCount
-      }
-      sorting {
-        field
-        order
+        sortField
+        sortOrder
       }
     }
   }

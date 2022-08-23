@@ -12,14 +12,12 @@ query GetAreas($pagination: PaginationOptions, $sorting: SortingOptions, $archiv
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -43,14 +41,12 @@ query GetBuilders($pagination: PaginationOptions, $sorting: SortingOptions, $arc
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -72,14 +68,12 @@ query GetCommunities($pagination: PaginationOptions, $sorting: SortingOptions, $
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -100,14 +94,12 @@ query GetCompanies($pagination: PaginationOptions, $sorting: SortingOptions, $ar
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -126,14 +118,12 @@ query GetContractors($pagination: PaginationOptions, $sorting: SortingOptions, $
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -153,14 +143,12 @@ query GetReporters($pagination: PaginationOptions, $sorting: SortingOptions, $ar
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -180,14 +168,12 @@ query GetScopes($pagination: PaginationOptions, $sorting: SortingOptions, $archi
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -206,14 +192,12 @@ query GetSuppliers($pagination: PaginationOptions, $sorting: SortingOptions, $ar
       archived
       legacy
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -293,14 +277,12 @@ query GetAssignedContractors($pagination: PaginationOptions, $sorting: SortingOp
         notes
       }
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }
@@ -341,14 +323,12 @@ query GetUnassignedJobs($pagination: PaginationOptions, $sorting: SortingOptions
       startDate
       notes
     }
-    pagination {
+    meta {
       page
       pageSize
       totalCount
-    }
-    sorting {
-      field
-      order
+      sortField
+      sortOrder
     }
   }
 }

@@ -1,37 +1,38 @@
 import { useMemo } from 'react';
 import { Delete } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { useFirebase } from 'src/hooks/useFirebase';
 import { LineItemTableProps } from './types';
+import { useGetLineItemTableSuppliersQuery } from 'src/api';
 
 const LineItemTable = ({ lineItems, onRemove }: LineItemTableProps) => {
-  // - HOOKS - //
-  const {
-    storeData: { suppliers },
-  } = useFirebase();
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const { data: suppliersData } = useGetLineItemTableSuppliersQuery({ fetchPolicy: 'cache-only' });
 
-  // - STATE - //
+  /******************************/
+  /* Memos                      */
+  /******************************/
+  const supplierNames = useMemo(() => {
+    const namesById: Record<string, string> = {};
 
-  // - EFFECTS - //
+    if (suppliersData?.suppliers) {
+      suppliersData?.suppliers.data.forEach((item) => (namesById[item.id] = item.name));
+    }
 
-  // - ACTIONS - //
+    return namesById;
+  }, [suppliersData]);
 
-  // - HELPERS - //
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
   const handleRemoveClick = (index: number) => () => {
     onRemove(index);
   };
 
-  const supplierNames = useMemo(() => {
-    const namesById: Record<string, string> = {};
-
-    if (suppliers) {
-      suppliers.documents.forEach((item) => (namesById[item.id] = item.name));
-    }
-
-    return namesById;
-  }, [suppliers]);
-
-  // - JSX - //
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
     <div className="bg-slate-200 rounded shadow-sm px-4 py-2">
       <table className="text-left w-full table-auto border-collapse">
