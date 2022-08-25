@@ -1,51 +1,93 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, Table } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
-import { DocumentTableColumns } from 'src/utils/tableTypes';
+import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
+
+import { Scope, useArchiveScopeMutation, useGetScopesQuery } from 'src/api';
+
+import { Content } from 'src/components/Content';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from '../utils';
 
 export const ScopeList = () => {
-  // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument } = useFirebase();
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
 
-  // - ACTIONS - //
-  const handleArchiveClick = ({ name, id }: ResponseDocument<'Scope'>) => {
-    confirmArchive(name) &&
-      toast.promise(archiveStoreDocument('Scope', id), {
-        loading: `Archiving ${name}`,
-        success: `${name} - Removed from scopes.`,
-        error: `Error removing ${name}`,
-      });
-  };
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  const getMenuActions = (data: ResponseDocument<'Scope'>) => {
+  /******************************/
+  /* State                      */
+  /******************************/
+
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const { data, loading, refetch } = useGetScopesQuery({ fetchPolicy: 'cache-and-network' });
+
+  const [archive, { loading: archiveLoading }] = useArchiveScopeMutation({
+    onCompleted: (data) => {
+      toast.success(data.archiveScope.message);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+  const getMenuActions = (data: Scope) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+      {
+        icon: 'archive',
+        label: 'Archive',
+        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      },
     ];
   };
 
-  // - HELPERS - //
-  const tableColumns: DocumentTableColumns<'Scope'> = [
+  /******************************/
+  /* Column Definitions         */
+  /******************************/
+  const tableColumns: ColumnDef<Scope>[] = [
     {
       id: 'menu',
       header: '',
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
+      id: 'name',
+      header: 'Name',
+      accessorKey: 'name',
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
+    },
+    {
+      id: 'nameSpanish',
+      header: 'Name Translation (Spanish)',
       accessorKey: 'nameSpanish',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-      header: 'Phone Number',
     },
-    { accessorKey: 'description', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Description' },
     {
       id: 'createdTime',
       header: 'Created',
@@ -59,15 +101,18 @@ export const ScopeList = () => {
       cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
     },
     {
+      id: 'id',
       header: 'ID',
       accessorKey: 'id',
       cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
     },
   ];
 
-  // - JSX - //
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading}>
+    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">
@@ -78,8 +123,8 @@ export const ScopeList = () => {
         </IconButton>
       </div>
 
-      {/* Scope List */}
-      {storeData.scopes && <Table title="Scope List" data={storeData.scopes?.documents ?? []} columns={tableColumns} />}
+      {/* Scopes List */}
+      {data?.scopes && <Table title="Scopes List" data={data.scopes.data} columns={tableColumns} />}
     </Content>
   );
 };

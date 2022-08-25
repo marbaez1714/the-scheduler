@@ -67,9 +67,8 @@ export const AreaList = () => {
   };
 
   /******************************/
-  /* Render                     */
+  /* Column Definitions         */
   /******************************/
-
   const tableColumns: ColumnDef<Area>[] = [
     {
       id: 'menu',
@@ -109,6 +108,9 @@ export const AreaList = () => {
     },
   ];
 
+  /******************************/
+  /* Render                    */
+  /******************************/
   return (
     <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">

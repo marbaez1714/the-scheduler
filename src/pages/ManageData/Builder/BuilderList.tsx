@@ -67,9 +67,8 @@ export const BuilderList = () => {
   };
 
   /******************************/
-  /* Render                     */
+  /* Column Definitions         */
   /******************************/
-
   const tableColumns: ColumnDef<Builder>[] = [
     {
       id: 'menu',
@@ -77,7 +76,12 @@ export const BuilderList = () => {
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
+    {
+      id: 'name',
+      header: 'Name',
+      accessorKey: 'name',
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
+    },
     {
       id: 'company',
       header: 'Company',
@@ -85,14 +89,16 @@ export const BuilderList = () => {
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },
     {
+      id: 'primaryPhone',
+      header: 'Primary Phone',
       accessorKey: 'primaryPhone',
       cell: ({ getValue }) => <Table.PhoneNumberCell value={getValue()} />,
-      header: 'Phone Number',
     },
     {
+      id: 'primaryEmail',
+      header: 'Primary Email',
       accessorKey: 'primaryEmail',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-      header: 'Email',
     },
     {
       id: 'createdTime',
@@ -107,12 +113,16 @@ export const BuilderList = () => {
       cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
     },
     {
+      id: 'id',
       header: 'ID',
       accessorKey: 'id',
       cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
     },
   ];
 
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
     <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">

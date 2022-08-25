@@ -670,6 +670,13 @@ export type UnassignedJobsResponse = {
   meta: MetaResponse;
 };
 
+export type GetLineItemTableSuppliersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLineItemTableSuppliersQuery = {
+  __typename?: 'Query';
+  suppliers: { __typename?: 'SuppliersResponse'; data: Array<{ __typename?: 'Supplier'; id: string; name: string }> };
+};
+
 export type ArchiveAreaMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -740,13 +747,6 @@ export type ArchiveSupplierMutationVariables = Exact<{
 export type ArchiveSupplierMutation = {
   __typename?: 'Mutation';
   archiveSupplier: { __typename?: 'ArchiveSupplierResponse'; message: string };
-};
-
-export type GetLineItemTableSuppliersQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetLineItemTableSuppliersQuery = {
-  __typename?: 'Query';
-  suppliers: { __typename?: 'SuppliersResponse'; data: Array<{ __typename?: 'Supplier'; id: string; name: string }> };
 };
 
 export type CreateAreaMutationVariables = Exact<{
@@ -1211,6 +1211,56 @@ export type GetUnassignedJobsQuery = {
   };
 };
 
+export const GetLineItemTableSuppliersDocument = gql`
+  query GetLineItemTableSuppliers {
+    suppliers {
+      data {
+        id
+        name
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetLineItemTableSuppliersQuery__
+ *
+ * To run a query within a React component, call `useGetLineItemTableSuppliersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLineItemTableSuppliersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLineItemTableSuppliersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLineItemTableSuppliersQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
+    GetLineItemTableSuppliersDocument,
+    options
+  );
+}
+export function useGetLineItemTableSuppliersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
+    GetLineItemTableSuppliersDocument,
+    options
+  );
+}
+export type GetLineItemTableSuppliersQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersQuery>;
+export type GetLineItemTableSuppliersLazyQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersLazyQuery>;
+export type GetLineItemTableSuppliersQueryResult = Apollo.QueryResult<
+  GetLineItemTableSuppliersQuery,
+  GetLineItemTableSuppliersQueryVariables
+>;
 export const ArchiveAreaDocument = gql`
   mutation ArchiveArea($id: ID!) {
     archiveArea(id: $id) {
@@ -1535,56 +1585,6 @@ export type ArchiveSupplierMutationResult = Apollo.MutationResult<ArchiveSupplie
 export type ArchiveSupplierMutationOptions = Apollo.BaseMutationOptions<
   ArchiveSupplierMutation,
   ArchiveSupplierMutationVariables
->;
-export const GetLineItemTableSuppliersDocument = gql`
-  query GetLineItemTableSuppliers {
-    suppliers {
-      data {
-        id
-        name
-      }
-    }
-  }
-`;
-
-/**
- * __useGetLineItemTableSuppliersQuery__
- *
- * To run a query within a React component, call `useGetLineItemTableSuppliersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetLineItemTableSuppliersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetLineItemTableSuppliersQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetLineItemTableSuppliersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
-    GetLineItemTableSuppliersDocument,
-    options
-  );
-}
-export function useGetLineItemTableSuppliersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
-    GetLineItemTableSuppliersDocument,
-    options
-  );
-}
-export type GetLineItemTableSuppliersQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersQuery>;
-export type GetLineItemTableSuppliersLazyQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersLazyQuery>;
-export type GetLineItemTableSuppliersQueryResult = Apollo.QueryResult<
-  GetLineItemTableSuppliersQuery,
-  GetLineItemTableSuppliersQueryVariables
 >;
 export const CreateAreaDocument = gql`
   mutation CreateArea($data: CreateAreaInput!) {

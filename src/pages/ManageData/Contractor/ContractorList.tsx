@@ -1,49 +1,92 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, Table } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
-import { DocumentTableColumns } from 'src/utils/tableTypes';
+import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
+
+import { Contractor, useArchiveContractorMutation, useGetContractorsQuery } from 'src/api';
+
+import { Content } from 'src/components/Content';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from '../utils';
 
 export const ContractorList = () => {
-  // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument } = useFirebase();
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
 
-  // - ACTIONS - //
-  const handleArchiveClick = ({ name, id }: ResponseDocument<'Contractor'>) => {
-    confirmArchive(name) &&
-      toast.promise(archiveStoreDocument('Contractor', id), {
-        loading: `Archiving ${name}`,
-        success: `${name} - Removed from contractors.`,
-        error: `Error removing ${name}`,
-      });
-  };
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  const getMenuActions = (data: ResponseDocument<'Contractor'>) => {
+  /******************************/
+  /* State                      */
+  /******************************/
+
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const { data, loading, refetch } = useGetContractorsQuery({ fetchPolicy: 'cache-and-network' });
+
+  const [archive, { loading: archiveLoading }] = useArchiveContractorMutation({
+    onCompleted: (data) => {
+      toast.success(data.archiveContractor.message);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+  const getMenuActions = (data: Contractor) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+      {
+        icon: 'archive',
+        label: 'Archive',
+        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      },
     ];
   };
 
-  // - HELPERS - //
-  const tableColumns: DocumentTableColumns<'Contractor'> = [
+  /******************************/
+  /* Column Definitions         */
+  /******************************/
+  const tableColumns: ColumnDef<Contractor>[] = [
     {
       id: 'menu',
       header: '',
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
-      accessorKey: 'primaryPhone',
+      id: 'name',
+      header: 'Name',
+      accessorKey: 'name',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-      header: 'Phone Number',
+    },
+    {
+      id: 'primaryPhone',
+      header: 'Primary Phone',
+      accessorKey: 'primaryPhone',
+      cell: ({ getValue }) => <Table.PhoneNumberCell value={getValue()} />,
     },
     {
       id: 'createdTime',
@@ -58,15 +101,18 @@ export const ContractorList = () => {
       cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
     },
     {
+      id: 'id',
       header: 'ID',
       accessorKey: 'id',
       cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
     },
   ];
 
-  // - JSX - //
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading}>
+    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">
@@ -77,10 +123,8 @@ export const ContractorList = () => {
         </IconButton>
       </div>
 
-      {/* Contractor List */}
-      {storeData.contractors && (
-        <Table title="Contractor List" data={storeData.contractors?.documents ?? []} columns={tableColumns} />
-      )}
+      {/* Contractors List */}
+      {data?.contractors && <Table title="Contractors List" data={data.contractors.data} columns={tableColumns} />}
     </Content>
   );
 };

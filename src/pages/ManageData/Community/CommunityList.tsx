@@ -66,9 +66,8 @@ export const CommunityList = () => {
   };
 
   /******************************/
-  /* Render                     */
+  /* Column Definitions         */
   /******************************/
-
   const tableColumns: ColumnDef<Community>[] = [
     {
       id: 'menu',
@@ -76,9 +75,14 @@ export const CommunityList = () => {
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
-      id: 'companyId',
+      id: 'name',
+      header: 'Name',
+      accessorKey: 'name',
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
+    },
+    {
+      id: 'company',
       header: 'Company',
       accessorFn: (row) => row.company.name,
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
@@ -96,12 +100,16 @@ export const CommunityList = () => {
       cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
     },
     {
+      id: 'id',
       header: 'ID',
       accessorKey: 'id',
       cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
     },
   ];
 
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
     <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">

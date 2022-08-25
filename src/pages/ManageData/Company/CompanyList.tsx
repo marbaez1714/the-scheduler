@@ -1,52 +1,98 @@
 import { AddBox, ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Content, Table } from 'src/components';
-import { useFirebase } from 'src/hooks/useFirebase';
-import { ResponseDocument } from 'src/utils/cloudFunctionTypes';
-import { DocumentTableColumns } from 'src/utils/tableTypes';
+import { ColumnDef } from '@tanstack/react-table';
+
+import { Company, useGetCompaniesQuery, useArchiveCompanyMutation } from 'src/api';
+
+import { Content } from 'src/components/Content';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from '../utils';
+import { format } from 'date-fns';
 
 export const CompanyList = () => {
-  // - HOOKS - //
-  const { storeData, loading, archiveStoreDocument } = useFirebase();
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
   const navigate = useNavigate();
 
-  // - ACTIONS - //
-  const handleArchiveClick = ({ name, id }: ResponseDocument<'Company'>) => {
-    confirmArchive(name) &&
-      toast.promise(archiveStoreDocument('Company', id), {
-        loading: `Archiving ${name}`,
-        success: `${name} - Removed from companies.`,
-        error: `Error removing ${name}`,
-      });
-  };
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  const getMenuActions = (data: ResponseDocument<'Company'>) => {
+  /******************************/
+  /* State                      */
+  /******************************/
+
+  /******************************/
+  /* Context                    */
+  /******************************/
+
+  /******************************/
+  /* Data                       */
+  /******************************/
+  const { data, loading, refetch } = useGetCompaniesQuery({ fetchPolicy: 'cache-and-network' });
+  const [archive, { loading: archiveLoading }] = useArchiveCompanyMutation({
+    onCompleted: (data) => {
+      toast.success(data.archiveCompany.message);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+  const getMenuActions = (data: Company) => {
     return [
       { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      { icon: 'archive', label: 'Archive', onClick: () => handleArchiveClick(data) },
+      {
+        icon: 'archive',
+        label: 'Archive',
+        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      },
     ];
   };
 
-  // - HELPERS - //
-  const tableColumns: DocumentTableColumns<'Company'> = [
+  /******************************/
+  /* Column Definitions         */
+  /******************************/
+  const tableColumns: ColumnDef<Company>[] = [
     {
       id: 'menu',
       header: '',
       enableSorting: false,
       cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
     },
-    { accessorKey: 'name', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Name' },
     {
-      accessorKey: 'primaryPhone',
+      id: 'name',
+      header: 'Name',
+      accessorKey: 'name',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-      header: 'Phone Number',
     },
-    { accessorKey: 'primaryEmail', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Email' },
-    { accessorKey: 'primaryAddress', cell: ({ getValue }) => <Table.TextCell value={getValue()} />, header: 'Address' },
+    {
+      id: 'primaryPhone',
+      header: 'Primary Phone',
+      accessorKey: 'primaryPhone',
+      cell: ({ getValue }) => <Table.PhoneNumberCell value={getValue()} />,
+    },
+    {
+      id: 'primaryAddress',
+      header: 'Primary Address',
+      accessorKey: 'primaryAddress',
+      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
+    },
     {
       id: 'createdTime',
       header: 'Created',
@@ -60,15 +106,18 @@ export const CompanyList = () => {
       cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
     },
     {
+      id: 'id',
       header: 'ID',
       accessorKey: 'id',
       cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
     },
   ];
 
-  // - JSX - //
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading}>
+    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
       <div className="flex flex-col space-y-2">
         {/* TODO: Add back action */}
         <IconButton title="back">
@@ -80,9 +129,7 @@ export const CompanyList = () => {
       </div>
 
       {/* Company List */}
-      {storeData.companies && (
-        <Table title="Company List" data={storeData.companies?.documents ?? []} columns={tableColumns} />
-      )}
+      {data?.companies && <Table title="Company List" data={data.companies.data} columns={tableColumns} />}
     </Content>
   );
 };

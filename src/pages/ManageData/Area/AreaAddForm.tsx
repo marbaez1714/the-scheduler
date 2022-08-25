@@ -7,6 +7,16 @@ import { ArrowBack } from '@mui/icons-material';
 import { Content, FormTextField } from 'src/components';
 import { AddFormDefaultData, formRules } from 'src/utils/forms';
 import { CreateAreaInput, useCreateAreaMutation } from 'src/api';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+const schema = yup
+  .object({
+    name: yup.string().required('Name is required'),
+    nameSpanish: yup.string().required('Name translation is required'),
+    notes: yup.string(),
+  })
+  .required();
 
 export const AreaAddForm = () => {
   /******************************/
@@ -20,6 +30,7 @@ export const AreaAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
+    resolver: yupResolver(schema),
     defaultValues: AddFormDefaultData.area,
   });
 
@@ -67,20 +78,15 @@ export const AreaAddForm = () => {
         {/* Title */}
         <h1 className="form-title">Add an Area</h1>
         {/* Name REQUIRED */}
-        <FormTextField label="Area Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
+        <FormTextField label="Area Name" name="name" control={control} />
         {/* Name in Spanish REQUIRED */}
-        <FormTextField
-          label="Translation"
-          name="nameSpanish"
-          control={control}
-          rules={formRules.requiredNonEmptyString}
-        />
+        <FormTextField label="Translation" name="nameSpanish" control={control} />
         {/* Notes */}
         <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
         {/* Actions */}
         <div className="col-span-2 space-x-2 text-right">
           <Button onClick={() => reset()}>Clear</Button>
-          <Button variant="contained" type="submit" disabled={!isValid}>
+          <Button variant="contained" type="submit">
             Submit
           </Button>
         </div>
