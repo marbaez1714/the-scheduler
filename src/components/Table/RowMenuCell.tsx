@@ -1,41 +1,72 @@
+import { useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { MoreVert } from '@mui/icons-material';
 import { Icon } from '@mui/material';
+
 import { RowMenuCellProps } from './types';
+import classNames from 'classnames';
 
 export const RowMenuCell = <TData extends Record<string, unknown>>({ menuActions, data }: RowMenuCellProps<TData>) => {
-  // - HOOKS - //
+  /******************************/
+  /* Custom Hooks               */
+  /******************************/
 
-  // - STATE - //
+  /******************************/
+  /* Refs                       */
+  /******************************/
 
-  // - EFFECTS - //
+  /******************************/
+  /* State                      */
+  /******************************/
 
-  // - ACTIONS - //
+  /******************************/
+  /* Context                    */
+  /******************************/
 
-  // - HELPERS - //
+  /******************************/
+  /* Data                       */
+  /******************************/
 
-  // - JSX - //
+  /******************************/
+  /* Memos                      */
+  /******************************/
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+
+  /******************************/
+  /* Render                     */
+  /******************************/
   return (
-    <Popover as="td" className="py-2 px-4 w-4">
-      <Popover.Button className="align-middle">
+    <Popover as="td" className="relative py-2 px-4 w-4">
+      {/* Button */}
+      <Popover.Button className="flex items-center">
         <MoreVert fontSize="inherit" />
       </Popover.Button>
+      {/* Panel */}
       <Transition
+        className="absolute top-0 left-0 h-full origin-left shadow"
         enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
+        enterFrom="transform scale-x-0 opacity-0"
+        enterTo="transform scale-x-100 opacity-100"
         leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
+        leaveFrom="transform scale-x-100 opacity-100"
+        leaveTo="transform scale-x-0 opacity-0"
       >
-        <Popover.Panel className="absolute top-2 flex flex-col py-2 rounded bg-slate-50 space-y-1 shadow-lg">
+        <Popover.Panel className="flex h-full rounded bg-slate-100">
           {menuActions.map(({ icon, label, onClick }, key) => (
             <button
-              className="transition-all flex items-center pl-2 mr-2 rounded-r-full hover:bg-slate-300 hover:shadow"
+              className="transition-all flex items-center p-4 text-white bg-slate-500 hover:bg-slate-600"
               onClick={() => onClick(data)}
               key={key}
             >
-              <Icon fontSize="inherit">{icon}</Icon> <span className="pl-2 pr-8">{label}</span>
+              <Icon fontSize="inherit">{icon}</Icon>
+              <span className="pl-2">{label}</span>
             </button>
           ))}
         </Popover.Panel>
