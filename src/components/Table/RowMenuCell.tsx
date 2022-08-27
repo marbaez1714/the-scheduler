@@ -1,9 +1,9 @@
 import { Popover, Transition } from '@headlessui/react';
 import { MoreVert } from '@mui/icons-material';
 import { Icon } from '@mui/material';
-import { MenuCellProps } from './types';
+import { RowMenuCellProps } from './types';
 
-export const MenuCell = ({ menuActions }: MenuCellProps) => {
+export const RowMenuCell = <TData extends Record<string, unknown>>({ menuActions, data }: RowMenuCellProps<TData>) => {
   // - HOOKS - //
 
   // - STATE - //
@@ -16,8 +16,8 @@ export const MenuCell = ({ menuActions }: MenuCellProps) => {
 
   // - JSX - //
   return (
-    <Popover>
-      <Popover.Button className="flex">
+    <Popover as="td" className="py-2 px-4 w-4">
+      <Popover.Button className="align-middle">
         <MoreVert fontSize="inherit" />
       </Popover.Button>
       <Transition
@@ -32,7 +32,7 @@ export const MenuCell = ({ menuActions }: MenuCellProps) => {
           {menuActions.map(({ icon, label, onClick }, key) => (
             <button
               className="transition-all flex items-center pl-2 mr-2 rounded-r-full hover:bg-slate-300 hover:shadow"
-              onClick={onClick}
+              onClick={() => onClick(data)}
               key={key}
             >
               <Icon fontSize="inherit">{icon}</Icon> <span className="pl-2 pr-8">{label}</span>

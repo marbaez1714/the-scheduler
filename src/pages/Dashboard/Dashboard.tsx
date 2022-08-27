@@ -135,7 +135,7 @@ const Dashboard = () => {
         {!!unassignedJobsData && (
           <Table
             title="Unassigned Jobs"
-            data={unassignedJobsData?.unassignedJobs.data}
+            data={unassignedJobsData.unassignedJobs.data as JobLegacy[]}
             columns={unassignedTableColumns}
           />
         )}

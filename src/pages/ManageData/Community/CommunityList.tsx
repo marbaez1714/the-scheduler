@@ -1,5 +1,5 @@
-import { AddBox, ArrowBack } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { AddBox } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Community, useArchiveCommunityMutation, useGetCommunitiesQuery } from 'src/api';
 
-import { Content, Table } from 'src/components';
+import { Content, Table, TableRowAction } from 'src/components';
 import { confirmArchive } from '../utils';
 
 export const CommunityList = () => {
@@ -54,27 +54,20 @@ export const CommunityList = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const getMenuActions = (data: Community) => {
-    return [
-      { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      {
-        icon: 'archive',
-        label: 'Archive',
-        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
-      },
-    ];
-  };
 
   /******************************/
-  /* Column Definitions         */
+  /* Table Definitions         */
   /******************************/
-  const tableColumns: ColumnDef<Community>[] = [
+  const rowActions: TableRowAction<Community>[] = [
+    { icon: 'edit', label: 'Edit', onClick: (data) => navigate(data.id) },
     {
-      id: 'menu',
-      header: '',
-      enableSorting: false,
-      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
+      icon: 'archive',
+      label: 'Archive',
+      onClick: (data) => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
+  ];
+
+  const tableColumns: ColumnDef<Community>[] = [
     {
       id: 'name',
       header: 'Name',
@@ -111,19 +104,20 @@ export const CommunityList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
-      <div className="flex flex-col space-y-2">
-        {/* TODO: Add back action */}
-        <IconButton title="back">
-          <ArrowBack />
-        </IconButton>
-        <IconButton onClick={() => navigate('add')}>
-          <AddBox />
-        </IconButton>
-      </div>
-
-      {/* Company List */}
-      {data?.communities && <Table title="Community List" data={data.communities.data} columns={tableColumns} />}
+    <Content className="flex flex-col w-full items-start space-y-4" loading={loading || archiveLoading}>
+      {/* Area List */}
+      {data?.communities && (
+        <Table
+          title="Communities List"
+          data={data.communities.data as Community[]}
+          columns={tableColumns}
+          total={data.communities.meta.totalCount}
+          rowActions={rowActions}
+        />
+      )}
+      <Button onClick={() => navigate('add')} startIcon={<AddBox />} color="inherit" variant="contained" fullWidth>
+        Add a Community
+      </Button>
     </Content>
   );
 };

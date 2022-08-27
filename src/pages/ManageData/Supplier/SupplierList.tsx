@@ -1,5 +1,5 @@
-import { AddBox, ArrowBack } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { AddBox } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import { Supplier, useArchiveSupplierMutation, useGetSuppliersQuery } from 'src/api';
 
 import { Content } from 'src/components/Content';
-import { Table } from 'src/components/Table';
+import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from '../utils';
 
 export const SupplierList = () => {
@@ -55,27 +55,20 @@ export const SupplierList = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const getMenuActions = (data: Supplier) => {
-    return [
-      { icon: 'edit', label: 'Edit', onClick: () => navigate(data.id) },
-      {
-        icon: 'archive',
-        label: 'Archive',
-        onClick: () => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
-      },
-    ];
-  };
 
   /******************************/
-  /* Column Definitions         */
+  /* Table Definitions         */
   /******************************/
-  const tableColumns: ColumnDef<Supplier>[] = [
+  const rowActions: TableRowAction<Supplier>[] = [
+    { icon: 'edit', label: 'Edit', onClick: (data) => navigate(data.id) },
     {
-      id: 'menu',
-      header: '',
-      enableSorting: false,
-      cell: (data) => <Table.MenuCell menuActions={getMenuActions(data.row.original)} />,
+      icon: 'archive',
+      label: 'Archive',
+      onClick: (data) => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
+  ];
+
+  const tableColumns: ColumnDef<Supplier>[] = [
     {
       id: 'name',
       header: 'Name',
@@ -112,19 +105,20 @@ export const SupplierList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex w-full items-start space-x-4" loading={loading || archiveLoading}>
-      <div className="flex flex-col space-y-2">
-        {/* TODO: Add back action */}
-        <IconButton title="back">
-          <ArrowBack />
-        </IconButton>
-        <IconButton onClick={() => navigate('add')}>
-          <AddBox />
-        </IconButton>
-      </div>
-
-      {/* Suppliers List */}
-      {data?.suppliers && <Table title="Suppliers List" data={data.suppliers.data} columns={tableColumns} />}
+    <Content className="flex flex-col w-full items-start space-y-4" loading={loading || archiveLoading}>
+      {/* Area List */}
+      {data?.suppliers && (
+        <Table
+          title="Suppliers List"
+          data={data.suppliers.data as Supplier[]}
+          columns={tableColumns}
+          total={data.suppliers.meta.totalCount}
+          rowActions={rowActions}
+        />
+      )}
+      <Button onClick={() => navigate('add')} startIcon={<AddBox />} color="inherit" variant="contained" fullWidth>
+        Add a Supplier
+      </Button>
     </Content>
   );
 };

@@ -8,7 +8,7 @@ export const DateCell = ({ timestamp }: DateCellProps) => {
   return (
     <div>
       <p className="text-sm">{format(timestampDate, 'P')}</p>
-      <p className="text-xs">{format(timestampDate, 'p')}</p>
+      <p className="text-xs text-slate-500">{format(timestampDate, 'p')}</p>
     </div>
   );
 };
