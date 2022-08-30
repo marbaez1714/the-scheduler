@@ -1,28 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-import { IconButton, Button } from '@mui/material';
-import toast from 'react-hot-toast';
+import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { ArrowBack } from '@mui/icons-material';
+import toast from 'react-hot-toast';
 
-import { Content, FormTextField } from 'src/components';
-import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { AddAreaForm } from 'src/utils/forms';
 import { CreateAreaInput, useCreateAreaMutation } from 'src/api';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-const schema = yup
-  .object({
-    name: yup.string().required('Name is required'),
-    nameSpanish: yup.string().required('Name translation is required'),
-    notes: yup.string(),
-  })
-  .required();
+import { Content } from 'src/components/Content';
+import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormContainer } from 'src/components/FormContainer';
+import { FormTextArea } from 'src/components/FormTextArea';
 
 export const AreaAddForm = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
-  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -30,8 +20,8 @@ export const AreaAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    resolver: yupResolver(schema),
-    defaultValues: AddFormDefaultData.area,
+    defaultValues: AddAreaForm.defaultValues,
+    resolver: AddAreaForm.resolver,
   });
 
   /******************************/
@@ -48,20 +38,8 @@ export const AreaAddForm = () => {
   });
 
   /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
-
-  /******************************/
   /* Callbacks                  */
   /******************************/
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   const submit = async (data: CreateAreaInput) => {
     create({ variables: { data } });
   };
@@ -70,27 +48,32 @@ export const AreaAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
-      <IconButton onClick={handleBack} title="back">
-        <ArrowBack />
-      </IconButton>
-      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
-        {/* Title */}
-        <h1 className="form-title">Add an Area</h1>
-        {/* Name REQUIRED */}
-        <FormTextField label="Area Name" name="name" control={control} />
-        {/* Name in Spanish REQUIRED */}
-        <FormTextField label="Translation" name="nameSpanish" control={control} />
+    <Content className="flex flex-col items-center" loading={loading}>
+      {/* Form */}
+      <FormContainer title="Add Area" onSubmit={handleSubmit(submit)}>
+        {/* Name */}
+        <FormTextInputs label="Name" className="w-96" control={control} name="name" required />
+
+        {/* Name Translation (Spanish) */}
+        <FormTextInputs
+          label="Name Translation (Spanish)"
+          className="w-96"
+          control={control}
+          name="nameSpanish"
+          required
+        />
+
         {/* Notes */}
-        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
-        {/* Actions */}
-        <div className="col-span-2 space-x-2 text-right">
+        <FormTextArea label="Notes" className="w-96" control={control} name="notes" />
+
+        {/* Form Actions */}
+        <div className="flex justify-end pt-6 space-x-4">
           <Button onClick={() => reset()}>Clear</Button>
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={!isValid}>
             Submit
           </Button>
         </div>
-      </form>
+      </FormContainer>
     </Content>
   );
 };

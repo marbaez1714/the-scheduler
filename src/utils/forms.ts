@@ -10,6 +10,9 @@ import {
   CreateSupplierInput,
 } from './../api/index';
 
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 // Types
 export interface AddFormData {
   area: CreateAreaInput;
@@ -85,4 +88,61 @@ export const AddFormDefaultData: Partial<AddFormData> = {
     primaryPhone: '',
     notes: '',
   },
+};
+
+const messages = {
+  nameRequired: 'Name is required',
+  nameTranslationRequired: 'Name translation (Spanish) is required',
+  phoneRequired: 'Phone number is required',
+  emailFormat: 'Must be valid email',
+  companyRequired: 'Company is required',
+};
+
+export const AddAreaForm = {
+  defaultValues: {
+    name: '',
+    nameSpanish: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      nameSpanish: yup.string().trim().required(messages.nameTranslationRequired),
+      notes: yup.string().trim(),
+    })
+  ),
+};
+
+export const AddBuilderForm = {
+  defaultValues: {
+    name: '',
+    primaryPhone: '',
+    primaryEmail: '',
+    companyId: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      primaryPhone: yup.string().trim().required(messages.phoneRequired),
+      primaryEmail: yup.string().trim().email(messages.emailFormat),
+      companyId: yup.string().trim().required(messages.companyRequired),
+      notes: yup.string().trim(),
+    })
+  ),
+};
+
+export const AddCommunityForm = {
+  defaultValues: {
+    name: '',
+    companyId: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      companyId: yup.string().trim().required(messages.companyRequired),
+      notes: yup.string().trim(),
+    })
+  ),
 };

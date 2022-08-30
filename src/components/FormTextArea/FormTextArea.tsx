@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { FieldValues, useController } from 'react-hook-form';
 
-import { FormTextInputsProps } from './types';
+import { FormTextAreaProps } from './types';
 
-const FormTextInputs = <T extends FieldValues>({ label, className, required, ...rest }: FormTextInputsProps<T>) => {
+const FormTextArea = <T extends FieldValues>({ label, className, required, ...rest }: FormTextAreaProps<T>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -22,7 +22,7 @@ const FormTextInputs = <T extends FieldValues>({ label, className, required, ...
           {label} {required && <span className="text-red-500 font-bold">*</span>}
         </label>
       )}
-      <input
+      <textarea
         className={classNames(
           'bg-slate-100',
           'text-slate-900',
@@ -43,4 +43,4 @@ const FormTextInputs = <T extends FieldValues>({ label, className, required, ...
   );
 };
 
-export default FormTextInputs;
+export default FormTextArea;
