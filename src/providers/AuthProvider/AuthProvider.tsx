@@ -14,7 +14,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState?: AppState) => {
-    console.log('here')
     navigate((appState && appState.returnTo) || window.location.pathname);
   };
 

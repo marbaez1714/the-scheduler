@@ -17,7 +17,7 @@ const FormAutocomplete = <T extends FieldValues>({
   /******************************/
   const {
     field: { onChange, onBlur, value, name, ref },
-    formState: { errors },
+    fieldState: { error },
   } = useController(rest);
 
   /******************************/
@@ -47,7 +47,7 @@ const FormAutocomplete = <T extends FieldValues>({
   /******************************/
   const filteredOptions = useMemo(() => {
     return query ? options.filter((option) => option.label.toLowerCase().includes(query.toLowerCase())) : options;
-  }, [query]);
+  }, [query, options]);
 
   /******************************/
   /* Effects                    */
@@ -64,7 +64,7 @@ const FormAutocomplete = <T extends FieldValues>({
   /* Render                     */
   /******************************/
   return (
-    <div className="text-slate-800 relative">
+    <div className="text-slate-700 relative">
       <Combobox value={value} onChange={handleChange} name={name}>
         <Combobox.Label className="font-medium mb-2 block">
           {label} {required && <span className="text-red-500 font-bold">*</span>}
@@ -83,30 +83,43 @@ const FormAutocomplete = <T extends FieldValues>({
               'px-4',
               'w-full',
               'rounded',
-              'border',
+              'border-2',
               'border-slate-400',
               'shadow',
               className
             )}
           />
         </Combobox.Button>
-        <Combobox.Options className="absolute bg-slate-50 w-full shadow-2xl z-10 rounded mt-2 border">
-          {filteredOptions.map((option) => (
-            <Combobox.Option
-              className={({ selected }) =>
-                classNames('px-4', 'py-3', 'border-b', 'last:border-b-0', 'hover:bg-slate-200', 'cursor-pointer', {
-                  'bg-slate-300': selected,
-                })
-              }
-              key={option.value}
-              value={option.value}
-            >
-              {option.label}
-            </Combobox.Option>
-          ))}
-        </Combobox.Options>
+        {filteredOptions.length > 0 && (
+          <Combobox.Options as="div" className="absolute w-full z-10 p-2">
+            <ul className="shadow-2xl border-2 border-slate-400 bg-slate-50 max-h-48 overflow-y-scroll divide-y rounded">
+              {filteredOptions.map((option) => (
+                <Combobox.Option
+                  className={({ selected }) =>
+                    classNames(
+                      'px-4',
+                      'py-3',
+                      'hover:bg-slate-200',
+                      'cursor-pointer',
+                      'overflow-hidden',
+                      'whitespace-nowrap',
+                      'text-ellipsis',
+                      {
+                        'bg-slate-300': selected,
+                      }
+                    )
+                  }
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </Combobox.Option>
+              ))}
+            </ul>
+          </Combobox.Options>
+        )}
       </Combobox>
-      {errors[name]?.message && <p className="text-red-500 text-xs mt-2">{errors[name].message}</p>}
+      {!!error && <p className="text-red-500 text-xs mt-2">{error.message}</p>}
     </div>
   );
 };

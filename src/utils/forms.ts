@@ -17,13 +17,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 export interface AddFormData {
   area: CreateAreaInput;
   builder: CreateBuilderInput;
-  company: CreateCompanyInput;
   community: CreateCommunityInput;
+  company: CreateCompanyInput;
   contractor: CreateContractorInput;
-  reporter: CreateReporterInput;
-  supplier: CreateSupplierInput;
-  scope: CreateScopeInput;
   jobLegacy: CreateJobLegacyInput;
+  reporter: CreateReporterInput;
+  scope: CreateScopeInput;
+  supplier: CreateSupplierInput;
 }
 
 // Utils
@@ -92,8 +92,8 @@ export const AddFormDefaultData: Partial<AddFormData> = {
 
 const messages = {
   nameRequired: 'Name is required',
-  nameTranslationRequired: 'Name translation (Spanish) is required',
-  phoneRequired: 'Phone number is required',
+  nameTranslationRequired: 'Name Translation (Spanish) is required',
+  phoneRequired: 'Phone Number is required',
   emailFormat: 'Must be valid email',
   companyRequired: 'Company is required',
 };
@@ -142,6 +142,89 @@ export const AddCommunityForm = {
     yup.object({
       name: yup.string().trim().required(messages.nameRequired),
       companyId: yup.string().trim().required(messages.companyRequired),
+      notes: yup.string().trim(),
+    })
+  ),
+};
+
+export const AddCompanyForm = {
+  defaultValues: {
+    name: '',
+    primaryPhone: '',
+    primaryEmail: '',
+    primaryAddress: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      primaryAddress: yup.string().trim(),
+      primaryEmail: yup.string().trim(),
+      primaryPhone: yup.string().trim(),
+      notes: yup.string().trim(),
+    })
+  ),
+};
+
+export const AddContractorForm = {
+  defaultValues: {
+    name: '',
+    primaryPhone: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      primaryPhone: yup.string().trim().required(messages.phoneRequired),
+      notes: yup.string().trim(),
+    })
+  ),
+};
+
+export const AddReporterForm = {
+  defaultValues: {
+    name: '',
+    primaryPhone: '',
+    primaryEmail: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      primaryPhone: yup.string().trim().required(messages.phoneRequired),
+      primaryEmail: yup.string().trim(),
+      notes: yup.string().trim(),
+    })
+  ),
+};
+
+export const AddScopeForm = {
+  defaultValues: {
+    name: '',
+    nameSpanish: '',
+    description: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      nameSpanish: yup.string().trim().required(messages.nameTranslationRequired),
+      description: yup.string().trim(),
+      notes: yup.string().trim(),
+    })
+  ),
+};
+
+export const AddSupplierForm = {
+  defaultValues: {
+    name: '',
+    primaryPhone: '',
+    notes: '',
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: yup.string().trim().required(messages.nameRequired),
+      primaryPhone: yup.string().trim(),
       notes: yup.string().trim(),
     })
   ),
