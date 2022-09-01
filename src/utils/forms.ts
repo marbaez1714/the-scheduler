@@ -14,7 +14,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // Types
-export interface AddFormData {
+export interface CreateInputs {
   area: CreateAreaInput;
   builder: CreateBuilderInput;
   community: CreateCommunityInput;
@@ -27,10 +27,6 @@ export interface AddFormData {
 }
 
 // Utils
-export const formatString = (value?: string) => {
-  return value?.trim() || '';
-};
-
 export const formRules = {
   requiredNonEmptyString: {
     required: true,
@@ -41,7 +37,7 @@ export const formRules = {
   },
 };
 
-export const AddFormDefaultData: Partial<AddFormData> = {
+export const AddFormDefaultData: Partial<CreateInputs> = {
   area: {
     name: '',
     nameSpanish: '',
@@ -90,6 +86,12 @@ export const AddFormDefaultData: Partial<AddFormData> = {
   },
 };
 
+interface FormObject<TInput extends keyof CreateInputs> {
+  labels: { [key in keyof CreateInputs[TInput]]: string };
+  defaultValues: CreateInputs[TInput];
+  resolver: ReturnType<typeof yupResolver>;
+}
+
 const messages = {
   nameRequired: 'Name is required',
   nameTranslationRequired: 'Name Translation (Spanish) is required',
@@ -98,7 +100,23 @@ const messages = {
   companyRequired: 'Company is required',
 };
 
-export const AddAreaForm = {
+const labels = {
+  name: 'Name',
+  nameSpanish: 'Name Translation (Spanish)',
+  description: 'Description',
+  company: 'Company',
+  primaryPhone: 'Primary Phone Number',
+  primaryEmail: 'Primary Email',
+  primaryAddress: 'Primary Address',
+  notes: 'Notes',
+};
+
+export const AddAreaForm: FormObject<'area'> = {
+  labels: {
+    name: labels.name,
+    nameSpanish: labels.nameSpanish,
+    notes: labels.notes,
+  },
   defaultValues: {
     name: '',
     nameSpanish: '',
@@ -113,7 +131,14 @@ export const AddAreaForm = {
   ),
 };
 
-export const AddBuilderForm = {
+export const AddBuilderForm: FormObject<'builder'> = {
+  labels: {
+    name: labels.name,
+    companyId: labels.company,
+    primaryPhone: labels.primaryPhone,
+    primaryEmail: labels.primaryEmail,
+    notes: labels.notes,
+  },
   defaultValues: {
     name: '',
     primaryPhone: '',
@@ -132,7 +157,12 @@ export const AddBuilderForm = {
   ),
 };
 
-export const AddCommunityForm = {
+export const AddCommunityForm: FormObject<'community'> = {
+  labels: {
+    name: labels.name,
+    companyId: labels.company,
+    notes: labels.notes,
+  },
   defaultValues: {
     name: '',
     companyId: '',
@@ -147,7 +177,14 @@ export const AddCommunityForm = {
   ),
 };
 
-export const AddCompanyForm = {
+export const AddCompanyForm: FormObject<'company'> = {
+  labels: {
+    name: labels.name,
+    primaryPhone: labels.primaryPhone,
+    primaryEmail: labels.primaryEmail,
+    primaryAddress: labels.primaryAddress,
+    notes: labels.notes,
+  },
   defaultValues: {
     name: '',
     primaryPhone: '',
@@ -166,7 +203,12 @@ export const AddCompanyForm = {
   ),
 };
 
-export const AddContractorForm = {
+export const AddContractorForm: FormObject<'contractor'> = {
+  labels: {
+    name: labels.name,
+    primaryPhone: labels.primaryPhone,
+    notes: labels.notes,
+  },
   defaultValues: {
     name: '',
     primaryPhone: '',
@@ -181,7 +223,13 @@ export const AddContractorForm = {
   ),
 };
 
-export const AddReporterForm = {
+export const AddReporterForm: FormObject<'reporter'> = {
+  labels: {
+    name: labels.name,
+    primaryPhone: labels.primaryPhone,
+    primaryEmail: labels.primaryEmail,
+    notes: labels.notes,
+  },
   defaultValues: {
     name: '',
     primaryPhone: '',
@@ -198,7 +246,13 @@ export const AddReporterForm = {
   ),
 };
 
-export const AddScopeForm = {
+export const AddScopeForm: FormObject<'scope'> = {
+  labels: {
+    name: labels.name,
+    nameSpanish: labels.nameSpanish,
+    description: labels.description,
+    notes: '',
+  },
   defaultValues: {
     name: '',
     nameSpanish: '',
@@ -215,7 +269,12 @@ export const AddScopeForm = {
   ),
 };
 
-export const AddSupplierForm = {
+export const AddSupplierForm: FormObject<'supplier'> = {
+  labels: {
+    name: labels.name,
+    primaryPhone: labels.primaryPhone,
+    notes: labels.notes,
+  },
   defaultValues: {
     name: '',
     primaryPhone: '',

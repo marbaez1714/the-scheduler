@@ -4,4 +4,6 @@ export interface FormTextInputsProps<T extends FieldValues> extends UseControlle
   label?: string;
   className?: string;
   required?: boolean;
+  placeholder?: string;
+  mask?: 'phone';
 }

@@ -1,17 +1,18 @@
-import { ArrowBack } from '@mui/icons-material';
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+
+import { AddContractorForm } from 'src/utils/forms';
 import { CreateContractorInput, useCreateContractorMutation } from 'src/api';
-import { Content, FormTextField } from 'src/components';
-import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { Content } from 'src/components/Content';
+import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormContainer } from 'src/components/FormContainer';
+import { FormTextArea } from 'src/components/FormTextArea';
 
 export const ContractorAddForm = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
-  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -19,7 +20,8 @@ export const ContractorAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddFormDefaultData.contractor,
+    defaultValues: AddContractorForm.defaultValues,
+    resolver: AddContractorForm.resolver,
   });
 
   /******************************/
@@ -58,10 +60,6 @@ export const ContractorAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   const submit = (data: CreateContractorInput) => {
     create({ variables: { data } });
   };
@@ -70,32 +68,30 @@ export const ContractorAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
-      <IconButton onClick={handleBack} title="back">
-        <ArrowBack />
-      </IconButton>
-      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
-        {/* Title */}
-        <h1 className="form-title">Add a Contractor</h1>
+    <Content className="flex flex-col items-center" loading={loading}>
+      {/* Form */}
+      <FormContainer title="Add Contractor" onSubmit={handleSubmit(submit)}>
         {/* Name */}
-        <FormTextField label="Full Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
-        {/* Phone Number */}
-        <FormTextField
-          label="Phone Number"
-          name="primaryPhone"
+        <FormTextInputs label={AddContractorForm.labels.name} className="w-96" control={control} name="name" required />
+        {/* Primary Phone */}
+        <FormTextInputs
+          label={AddContractorForm.labels.primaryPhone}
+          className="w-96"
           control={control}
-          rules={formRules.requiredNonEmptyString}
+          name="primaryPhone"
+          mask="phone"
+          required
         />
         {/* Notes */}
-        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
-        {/* Actions */}
-        <div className="col-span-2 space-x-2 text-right">
+        <FormTextArea label={AddContractorForm.labels.notes} className="w-96" control={control} name="notes" />
+        {/* Form Actions */}
+        <div className="flex justify-end pt-6 space-x-4">
           <Button onClick={() => reset()}>Clear</Button>
           <Button variant="contained" type="submit" disabled={!isValid}>
             Submit
           </Button>
         </div>
-      </form>
+      </FormContainer>
     </Content>
   );
 };

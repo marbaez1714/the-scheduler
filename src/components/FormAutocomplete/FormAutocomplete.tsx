@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
-import { Combobox } from '@headlessui/react';
+import { Combobox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 
 import { FormAutocompleteProps } from './types';
+import { Icon } from '@mui/material';
 
 const FormAutocomplete = <T extends FieldValues>({
   label,
@@ -16,7 +17,7 @@ const FormAutocomplete = <T extends FieldValues>({
   /* Custom Hooks               */
   /******************************/
   const {
-    field: { onChange, onBlur, value, name, ref },
+    field: { onChange, value, name, ref },
     fieldState: { error },
   } = useController(rest);
 
@@ -27,7 +28,7 @@ const FormAutocomplete = <T extends FieldValues>({
   /******************************/
   /* State                      */
   /******************************/
-  const [query, setQuery] = useState<string>();
+  const [query, setQuery] = useState('');
 
   /******************************/
   /* Context                    */
@@ -36,11 +37,6 @@ const FormAutocomplete = <T extends FieldValues>({
   /******************************/
   /* Data                       */
   /******************************/
-  const getDisplayedValue = () => {
-    const selectedOption = options.find((option) => option.value === value);
-
-    return selectedOption?.label ?? '';
-  };
 
   /******************************/
   /* Memos                      */
@@ -60,39 +56,69 @@ const FormAutocomplete = <T extends FieldValues>({
     onChange(value);
   };
 
+  const getDisplayedValue = () => {
+    const selectedOption = options.find((option) => option.value === value);
+    return selectedOption?.label ?? '';
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleInputBlur = () => {
+    setQuery('');
+  };
+
   /******************************/
   /* Render                     */
   /******************************/
   return (
     <div className="text-slate-700 relative">
       <Combobox value={value} onChange={handleChange} name={name}>
-        <Combobox.Label className="font-medium mb-2 block">
-          {label} {required && <span className="text-red-500 font-bold">*</span>}
-        </Combobox.Label>
-        <Combobox.Button className="w-full">
-          <Combobox.Input
-            value={value}
-            onBlur={onBlur}
-            onChange={(e) => setQuery(e.target.value)}
-            displayValue={() => getDisplayedValue()}
-            ref={ref}
-            className={classNames(
-              'bg-slate-100',
-              'text-slate-900',
-              'py-3',
-              'px-4',
-              'w-full',
-              'rounded',
-              'border-2',
-              'border-slate-400',
-              'shadow',
-              className
-            )}
-          />
-        </Combobox.Button>
-        {filteredOptions.length > 0 && (
-          <Combobox.Options as="div" className="absolute w-full z-10 p-2">
-            <ul className="shadow-2xl border-2 border-slate-400 bg-slate-50 max-h-48 overflow-y-scroll divide-y rounded">
+        {({ open }) => (
+          <>
+            {/* Label */}
+            <Combobox.Label className="font-medium mb-2 block">
+              {label} {required && <span className="text-red-500 font-bold">*</span>}
+            </Combobox.Label>
+            {/* Input */}
+            <Combobox.Button className="w-full relative">
+              <Combobox.Input
+                value={value}
+                onBlur={handleInputBlur}
+                onChange={handleInputChange}
+                displayValue={getDisplayedValue}
+                ref={ref}
+                className={classNames(
+                  'bg-slate-100',
+                  'text-slate-900',
+                  'py-3',
+                  'pl-4',
+                  'pr-12',
+                  'w-full',
+                  'rounded',
+                  'border-2',
+                  'border-slate-400',
+                  'shadow',
+                  'text-ellipsis',
+                  className
+                )}
+              />
+              <Icon className="absolute m-3 top-0.5 right-0.5">arrow_drop_down</Icon>
+            </Combobox.Button>
+            {/* Options */}
+            <Transition
+              as={Combobox.Options}
+              className="absolute w-full z-10 mt-2 shadow-2xl border-2 border-slate-400 bg-slate-50 max-h-48 overflow-y-scroll divide-y rounded"
+              show={open && filteredOptions.length > 0}
+              enter="transition duration-100 ease-out"
+              enterFrom="transform opacity-0"
+              enterTo="transform opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform opacity-100"
+              leaveTo="transform opacity-0"
+              static
+            >
               {filteredOptions.map((option) => (
                 <Combobox.Option
                   className={({ selected }) =>
@@ -115,8 +141,8 @@ const FormAutocomplete = <T extends FieldValues>({
                   {option.label}
                 </Combobox.Option>
               ))}
-            </ul>
-          </Combobox.Options>
+            </Transition>
+          </>
         )}
       </Combobox>
       {!!error && <p className="text-red-500 text-xs mt-2">{error.message}</p>}
