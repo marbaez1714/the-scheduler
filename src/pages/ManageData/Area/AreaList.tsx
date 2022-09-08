@@ -32,7 +32,9 @@ export const AreaList = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading, refetch } = useGetAreasQuery({ fetchPolicy: 'cache-and-network' });
+  const { data, loading, refetch } = useGetAreasQuery({
+    fetchPolicy: 'cache-and-network',
+  });
 
   const [archive, { loading: archiveLoading }] = useArchiveAreaMutation({
     onCompleted: (data) => {
@@ -64,7 +66,8 @@ export const AreaList = () => {
     {
       icon: 'archive',
       label: 'Archive',
-      onClick: (data) => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      onClick: (data) =>
+        confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
@@ -85,19 +88,30 @@ export const AreaList = () => {
       id: 'createdTime',
       header: 'Created',
       accessorFn: (row) => format(new Date(row.createdTime), 'P'),
-      cell: (data) => <Table.DateCell timestamp={data.row.original.createdTime} />,
+      cell: (data) => (
+        <Table.DateCell timestamp={data.row.original.createdTime} />
+      ),
     },
     {
       id: 'updatedTime',
       header: 'Updated',
       accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
-      cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
+      cell: (data) => (
+        <Table.DateCell timestamp={data.row.original.updatedTime} />
+      ),
     },
     {
       id: 'id',
       header: 'ID',
       accessorKey: 'id',
-      cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
+      cell: (data) => (
+        <Table.DataIdCell
+          data={{
+            id: data.getValue(),
+            legacy: data.row.original.legacy ?? false,
+          }}
+        />
+      ),
     },
   ];
 
@@ -105,7 +119,10 @@ export const AreaList = () => {
   /* Render                    */
   /******************************/
   return (
-    <Content className="flex flex-col w-full items-start space-y-4" loading={loading || archiveLoading}>
+    <Content
+      className="flex-col space-y-4"
+      loading={loading || archiveLoading}
+    >
       {/* Area List */}
       {data?.areas && (
         <Table
@@ -116,7 +133,13 @@ export const AreaList = () => {
           rowActions={rowActions}
         />
       )}
-      <Button onClick={() => navigate('add')} startIcon={<AddBox />} color="inherit" variant="contained" fullWidth>
+      <Button
+        onClick={() => navigate('add')}
+        startIcon={<AddBox />}
+        color="inherit"
+        variant="contained"
+        fullWidth
+      >
         Add an Area
       </Button>
     </Content>

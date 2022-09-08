@@ -72,25 +72,35 @@ export const CommunityAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col items-center" loading={loading}>
+    <Content centerHorizontal loading={loading}>
       {/* Form */}
-      <FormContainer title="Add Community" onSubmit={handleSubmit(submit)}>
+      <FormContainer
+        title="Add Community"
+        onSubmit={handleSubmit(submit)}
+        onClearClick={reset}
+        isValid={isValid}
+      >
         {/* Name */}
-        <FormTextInputs label="Name" className="w-96" control={control} name="name" required />
-
+        <FormTextInputs
+          label={AddCommunityForm.labels.name}
+          control={control}
+          name="name"
+          required
+        />
         {/* Company */}
-        <FormAutocomplete label="Company" control={control} options={companyOptions} name="companyId" required />
-
+        <FormAutocomplete
+          label={AddCommunityForm.labels.companyId}
+          control={control}
+          options={companyOptions}
+          name="companyId"
+          required
+        />
         {/* Notes */}
-        <FormTextArea label="Notes" className="w-96" control={control} name="notes" />
-
-        {/* Form Actions */}
-        <div className="flex justify-end pt-6 space-x-4">
-          <Button onClick={() => reset()}>Clear</Button>
-          <Button variant="contained" type="submit" disabled={!isValid}>
-            Submit
-          </Button>
-        </div>
+        <FormTextArea
+          label={AddCommunityForm.labels.notes}
+          control={control}
+          name="notes"
+        />
       </FormContainer>
     </Content>
   );

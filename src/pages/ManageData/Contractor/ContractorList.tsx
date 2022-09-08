@@ -105,7 +105,7 @@ export const ContractorList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col w-full items-start space-y-4" loading={loading || archiveLoading}>
+    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
       {/* Area List */}
       {data?.contractors && (
         <Table

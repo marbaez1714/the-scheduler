@@ -12,11 +12,16 @@ const Screen = ({ children }: ScreenProps) => {
         {/* Side Bar */}
         <SideBar />
         {/* Screen */}
-        <div className="flex flex-grow flex-col items-start bg-slate-300 overflow-hidden">{children}</div>
+        <div className="w-full h-full overflow-hidden">{children}</div>
       </div>
+      {/* Status Bar */}
       <div className="bg-slate-200 flex py-1 px-2 opacity-50 shadow-md z-10">
-        <p className="text-xs text-slate-800 px-4">Version: {process.env.REACT_APP_VERSION}</p>
-        <p className="text-xs text-slate-800 px-4">{isAuthenticated ? 'Status: Authorized' : 'Status: Unauthorized'}</p>
+        <p className="text-xs text-slate-800 px-4">
+          Version: {process.env.REACT_APP_VERSION}
+        </p>
+        <p className="text-xs text-slate-800 px-4">
+          {isAuthenticated ? 'Status: Authorized' : 'Status: Unauthorized'}
+        </p>
       </div>
     </div>
   );

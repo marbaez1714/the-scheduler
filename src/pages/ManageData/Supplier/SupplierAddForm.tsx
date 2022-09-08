@@ -1,17 +1,17 @@
-import { ArrowBack } from '@mui/icons-material';
-import { Button, IconButton } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+
+import { AddSupplierForm } from 'src/utils/forms';
 import { CreateSupplierInput, useCreateSupplierMutation } from 'src/api';
-import { Content, FormTextField } from 'src/components';
-import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { Content } from 'src/components/Content';
+import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormContainer } from 'src/components/FormContainer';
+import { FormTextArea } from 'src/components/FormTextArea';
 
 export const SupplierAddForm = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
-  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -19,20 +19,9 @@ export const SupplierAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddFormDefaultData.supplier,
+    defaultValues: AddSupplierForm.defaultValues,
+    resolver: AddSupplierForm.resolver,
   });
-
-  /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
-  /* State                      */
-  /******************************/
-
-  /******************************/
-  /* Context                    */
-  /******************************/
 
   /******************************/
   /* Data                       */
@@ -48,20 +37,8 @@ export const SupplierAddForm = () => {
   });
 
   /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
-
-  /******************************/
   /* Callbacks                  */
   /******************************/
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   const submit = (data: CreateSupplierInput) => {
     create({ variables: { data } });
   };
@@ -70,27 +47,37 @@ export const SupplierAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
-      <IconButton onClick={handleBack} title="back">
-        <ArrowBack />
-      </IconButton>
-      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
-        {/* Title */}
-        <h1 className="form-title">Add a Supplier</h1>
+    <Content className="flex flex-col items-center" loading={loading}>
+      {/* Form */}
+      <FormContainer
+        title="Add Supplier"
+        onSubmit={handleSubmit(submit)}
+        onClearClick={reset}
+        isValid={isValid}
+      >
         {/* Name */}
-        <FormTextField label="Supplier Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
-        {/* Phone Number */}
-        <FormTextField label="Phone Number" name="primaryPhone" control={control} />
+        <FormTextInputs
+          label={AddSupplierForm.labels.name}
+          control={control}
+          name="name"
+          required
+        />
+        {/* Primary Phone */}
+        <FormTextInputs
+          label={AddSupplierForm.labels.primaryPhone}
+          control={control}
+          name="primaryPhone"
+          mask="phone"
+          required
+        />
         {/* Notes */}
-        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
-        {/* Actions */}
-        <div className="col-span-2 space-x-2 text-right">
-          <Button onClick={() => reset()}>Clear</Button>
-          <Button variant="contained" type="submit" disabled={!isValid}>
-            Submit
-          </Button>
-        </div>
-      </form>
+        <FormTextArea
+          label={AddSupplierForm.labels.notes}
+          control={control}
+          name="notes"
+        />
+        {/* Form Actions */}
+      </FormContainer>
     </Content>
   );
 };

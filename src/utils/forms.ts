@@ -125,7 +125,10 @@ export const AddAreaForm: FormObject<'area'> = {
   resolver: yupResolver(
     yup.object({
       name: yup.string().trim().required(messages.nameRequired),
-      nameSpanish: yup.string().trim().required(messages.nameTranslationRequired),
+      nameSpanish: yup
+        .string()
+        .trim()
+        .required(messages.nameTranslationRequired),
       notes: yup.string().trim(),
     })
   ),
@@ -251,7 +254,7 @@ export const AddScopeForm: FormObject<'scope'> = {
     name: labels.name,
     nameSpanish: labels.nameSpanish,
     description: labels.description,
-    notes: '',
+    notes: labels.notes,
   },
   defaultValues: {
     name: '',
@@ -262,7 +265,10 @@ export const AddScopeForm: FormObject<'scope'> = {
   resolver: yupResolver(
     yup.object({
       name: yup.string().trim().required(messages.nameRequired),
-      nameSpanish: yup.string().trim().required(messages.nameTranslationRequired),
+      nameSpanish: yup
+        .string()
+        .trim()
+        .required(messages.nameTranslationRequired),
       description: yup.string().trim(),
       notes: yup.string().trim(),
     })

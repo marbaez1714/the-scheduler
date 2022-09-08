@@ -22,21 +22,9 @@ const FormAutocomplete = <T extends FieldValues>({
   } = useController(rest);
 
   /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
   /* State                      */
   /******************************/
   const [query, setQuery] = useState('');
-
-  /******************************/
-  /* Context                    */
-  /******************************/
-
-  /******************************/
-  /* Data                       */
-  /******************************/
 
   /******************************/
   /* Memos                      */
@@ -44,10 +32,6 @@ const FormAutocomplete = <T extends FieldValues>({
   const filteredOptions = useMemo(() => {
     return query ? options.filter((option) => option.label.toLowerCase().includes(query.toLowerCase())) : options;
   }, [query, options]);
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
 
   /******************************/
   /* Callbacks                  */
@@ -90,17 +74,7 @@ const FormAutocomplete = <T extends FieldValues>({
                 displayValue={getDisplayedValue}
                 ref={ref}
                 className={classNames(
-                  'bg-slate-100',
-                  'text-slate-900',
-                  'py-3',
-                  'pl-4',
-                  'pr-12',
-                  'w-full',
-                  'rounded',
-                  'border-2',
-                  'border-slate-400',
-                  'shadow',
-                  'text-ellipsis',
+                  'bg-slate-100 text-slate-900 py-3 pl-4 pr-12 w-full rounded border-2 border-slate-400 shadow text-ellipsis',
                   className
                 )}
               />
@@ -123,16 +97,8 @@ const FormAutocomplete = <T extends FieldValues>({
                 <Combobox.Option
                   className={({ selected }) =>
                     classNames(
-                      'px-4',
-                      'py-3',
-                      'hover:bg-slate-200',
-                      'cursor-pointer',
-                      'overflow-hidden',
-                      'whitespace-nowrap',
-                      'text-ellipsis',
-                      {
-                        'bg-slate-300': selected,
-                      }
+                      'px-4 py-3 hover:bg-slate-200 cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis',
+                      { 'bg-slate-300': selected }
                     )
                   }
                   key={option.value}

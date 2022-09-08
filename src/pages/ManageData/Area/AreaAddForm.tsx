@@ -48,31 +48,25 @@ export const AreaAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col items-center" loading={loading}>
+    <Content centerHorizontal loading={loading}>
       {/* Form */}
-      <FormContainer title="Add Area" onSubmit={handleSubmit(submit)}>
+      <FormContainer
+        title="Add Area"
+        onSubmit={handleSubmit(submit)}
+        isValid={isValid}
+        onClearClick={reset}
+      >
         {/* Name */}
-        <FormTextInputs label="Name" className="w-96" control={control} name="name" required />
-
+        <FormTextInputs label="Name" control={control} name="name" required />
         {/* Name Translation (Spanish) */}
         <FormTextInputs
           label="Name Translation (Spanish)"
-          className="w-96"
           control={control}
           name="nameSpanish"
           required
         />
-
         {/* Notes */}
-        <FormTextArea label="Notes" className="w-96" control={control} name="notes" />
-
-        {/* Form Actions */}
-        <div className="flex justify-end pt-6 space-x-4">
-          <Button onClick={() => reset()}>Clear</Button>
-          <Button variant="contained" type="submit" disabled={!isValid}>
-            Submit
-          </Button>
-        </div>
+        <FormTextArea label="Notes" control={control} name="notes" />
       </FormContainer>
     </Content>
   );

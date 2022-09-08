@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -25,18 +24,6 @@ export const ContractorAddForm = () => {
   });
 
   /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
-  /* State                      */
-  /******************************/
-
-  /******************************/
-  /* Context                    */
-  /******************************/
-
-  /******************************/
   /* Data                       */
   /******************************/
   const [create, { loading }] = useCreateContractorMutation({
@@ -48,14 +35,6 @@ export const ContractorAddForm = () => {
       toast.error(error.message);
     },
   });
-
-  /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
 
   /******************************/
   /* Callbacks                  */
@@ -70,27 +49,34 @@ export const ContractorAddForm = () => {
   return (
     <Content className="flex flex-col items-center" loading={loading}>
       {/* Form */}
-      <FormContainer title="Add Contractor" onSubmit={handleSubmit(submit)}>
+      <FormContainer
+        title="Add Contractor"
+        onSubmit={handleSubmit(submit)}
+        onClearClick={reset}
+        isValid={isValid}
+      >
         {/* Name */}
-        <FormTextInputs label={AddContractorForm.labels.name} className="w-96" control={control} name="name" required />
+        <FormTextInputs
+          label={AddContractorForm.labels.name}
+          control={control}
+          name="name"
+          required
+        />
         {/* Primary Phone */}
         <FormTextInputs
           label={AddContractorForm.labels.primaryPhone}
-          className="w-96"
           control={control}
           name="primaryPhone"
           mask="phone"
           required
         />
         {/* Notes */}
-        <FormTextArea label={AddContractorForm.labels.notes} className="w-96" control={control} name="notes" />
+        <FormTextArea
+          label={AddContractorForm.labels.notes}
+          control={control}
+          name="notes"
+        />
         {/* Form Actions */}
-        <div className="flex justify-end pt-6 space-x-4">
-          <Button onClick={() => reset()}>Clear</Button>
-          <Button variant="contained" type="submit" disabled={!isValid}>
-            Submit
-          </Button>
-        </div>
       </FormContainer>
     </Content>
   );

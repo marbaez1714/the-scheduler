@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 
-import { Supplier, useArchiveSupplierMutation, useGetSuppliersQuery } from 'src/api';
+import {
+  Supplier,
+  useArchiveSupplierMutation,
+  useGetSuppliersQuery,
+} from 'src/api';
 
 import { Content } from 'src/components/Content';
 import { Table, TableRowAction } from 'src/components/Table';
@@ -18,21 +22,11 @@ export const SupplierList = () => {
   const navigate = useNavigate();
 
   /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
-  /* State                      */
-  /******************************/
-
-  /******************************/
-  /* Context                    */
-  /******************************/
-
-  /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading, refetch } = useGetSuppliersQuery({ fetchPolicy: 'cache-and-network' });
+  const { data, loading, refetch } = useGetSuppliersQuery({
+    fetchPolicy: 'cache-and-network',
+  });
 
   const [archive, { loading: archiveLoading }] = useArchiveSupplierMutation({
     onCompleted: (data) => {
@@ -45,18 +39,6 @@ export const SupplierList = () => {
   });
 
   /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
-
-  /******************************/
-  /* Callbacks                  */
-  /******************************/
-
-  /******************************/
   /* Table Definitions         */
   /******************************/
   const rowActions: TableRowAction<Supplier>[] = [
@@ -64,7 +46,8 @@ export const SupplierList = () => {
     {
       icon: 'archive',
       label: 'Archive',
-      onClick: (data) => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      onClick: (data) =>
+        confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
@@ -85,19 +68,30 @@ export const SupplierList = () => {
       id: 'createdTime',
       header: 'Created',
       accessorFn: (row) => format(new Date(row.createdTime), 'P'),
-      cell: (data) => <Table.DateCell timestamp={data.row.original.createdTime} />,
+      cell: (data) => (
+        <Table.DateCell timestamp={data.row.original.createdTime} />
+      ),
     },
     {
       id: 'updatedTime',
       header: 'Updated',
       accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
-      cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
+      cell: (data) => (
+        <Table.DateCell timestamp={data.row.original.updatedTime} />
+      ),
     },
     {
       id: 'id',
       header: 'ID',
       accessorKey: 'id',
-      cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
+      cell: (data) => (
+        <Table.DataIdCell
+          data={{
+            id: data.getValue(),
+            legacy: data.row.original.legacy ?? false,
+          }}
+        />
+      ),
     },
   ];
 
@@ -105,7 +99,7 @@ export const SupplierList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col w-full items-start space-y-4" loading={loading || archiveLoading}>
+    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
       {/* Area List */}
       {data?.suppliers && (
         <Table
@@ -116,7 +110,13 @@ export const SupplierList = () => {
           rowActions={rowActions}
         />
       )}
-      <Button onClick={() => navigate('add')} startIcon={<AddBox />} color="inherit" variant="contained" fullWidth>
+      <Button
+        onClick={() => navigate('add')}
+        startIcon={<AddBox />}
+        color="inherit"
+        variant="contained"
+        fullWidth
+      >
         Add a Supplier
       </Button>
     </Content>

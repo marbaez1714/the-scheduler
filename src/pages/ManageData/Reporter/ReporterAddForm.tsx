@@ -1,17 +1,17 @@
-import { ArrowBack } from '@mui/icons-material';
-import { Button, IconButton } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+
+import { AddReporterForm } from 'src/utils/forms';
 import { CreateReporterInput, useCreateReporterMutation } from 'src/api';
-import { Content, FormTextField } from 'src/components';
-import { AddFormDefaultData, formRules } from 'src/utils/forms';
+import { Content } from 'src/components/Content';
+import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormContainer } from 'src/components/FormContainer';
+import { FormTextArea } from 'src/components/FormTextArea';
 
 export const ReporterAddForm = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
-  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -19,20 +19,9 @@ export const ReporterAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddFormDefaultData.reporter,
+    defaultValues: AddReporterForm.defaultValues,
+    resolver: AddReporterForm.resolver,
   });
-
-  /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
-  /* State                      */
-  /******************************/
-
-  /******************************/
-  /* Context                    */
-  /******************************/
 
   /******************************/
   /* Data                       */
@@ -48,20 +37,8 @@ export const ReporterAddForm = () => {
   });
 
   /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
-
-  /******************************/
   /* Callbacks                  */
   /******************************/
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   const submit = (data: CreateReporterInput) => {
     create({ variables: { data } });
   };
@@ -70,34 +47,43 @@ export const ReporterAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-grow items-start space-x-4" loading={loading}>
-      <IconButton onClick={handleBack} title="back">
-        <ArrowBack />
-      </IconButton>
-      <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
-        {/* Title */}
-        <h1 className="form-title">Add a Reporter</h1>
-        {/* Name REQUIRED */}
-        <FormTextField label="Reporter Name" name="name" control={control} rules={formRules.requiredNonEmptyString} />
-        {/* Email */}
-        <FormTextField label="Email" name="primaryEmail" control={control} />
-        {/* Phone number REQUIRED */}
-        <FormTextField
-          label="Phone Number"
-          name="primaryPhone"
+    <Content className="flex flex-col items-center" loading={loading}>
+      {/* Form */}
+      <FormContainer
+        title="Add Reporter"
+        onSubmit={handleSubmit(submit)}
+        onClearClick={reset}
+        isValid={isValid}
+      >
+        {/* Name */}
+        <FormTextInputs
+          label={AddReporterForm.labels.name}
           control={control}
-          rules={formRules.requiredNonEmptyString}
+          name="name"
+          required
+        />
+        {/* Primary Phone */}
+        <FormTextInputs
+          label={AddReporterForm.labels.primaryPhone}
+          control={control}
+          name="primaryPhone"
+          mask="phone"
+          required
+        />
+        {/* Primary Email */}
+        <FormTextInputs
+          label={AddReporterForm.labels.primaryEmail}
+          control={control}
+          name="primaryEmail"
         />
         {/* Notes */}
-        <FormTextField className="col-span-2" label="Notes" name="notes" control={control} multiline />
-        {/* Actions */}
-        <div className="col-span-2 space-x-2 text-right">
-          <Button onClick={() => reset()}>Clear</Button>
-          <Button variant="contained" type="submit" disabled={!isValid}>
-            Submit
-          </Button>
-        </div>
-      </form>
+        <FormTextArea
+          label={AddReporterForm.labels.notes}
+          control={control}
+          name="notes"
+        />
+        {/* Form Actions */}
+      </FormContainer>
     </Content>
   );
 };
