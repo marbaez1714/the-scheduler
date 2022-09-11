@@ -35,8 +35,8 @@ const FormTextInputs = <T extends FieldValues>({
   return (
     <div className="flex flex-col text-slate-700">
       {label && (
-        <label className="font-medium mb-2" htmlFor={field.name}>
-          {label} {required && <span className="text-red-500 font-bold">*</span>}
+        <label className="mb-2 font-medium" htmlFor={field.name}>
+          {label} {required && <span className="font-bold text-red-500">*</span>}
         </label>
       )}
 
@@ -59,7 +59,7 @@ const FormTextInputs = <T extends FieldValues>({
         mask={mask ? maskMap[mask] : ''}
         {...field}
       />
-      {!!error && <p className="text-red-500 text-xs mt-2">{error.message}</p>}
+      {!!error && <p className="mt-2 text-xs text-red-500">{error.message}</p>}
     </div>
   );
 };

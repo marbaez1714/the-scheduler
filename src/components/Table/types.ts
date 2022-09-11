@@ -30,7 +30,7 @@ export interface DataIdCellProps {
 
 export interface RowMenuCellProps<TData extends Record<string, unknown>> {
   data: TData;
-  menuActions: TableRowAction<TData>[];
+  menuActions?: TableRowAction<TData>[];
 }
 
 export interface HeaderCellProps {

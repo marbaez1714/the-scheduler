@@ -133,7 +133,7 @@ const CreateJob = () => {
       <Content loading={loading}>
         <form className="form-card grid-cols-2" onSubmit={handleSubmit(submit)}>
           {/* Location  */}
-          <h2 className="col-span-2 text-xl tracking-wide">Location</h2>
+          <h2 className="text-xl tracking-wide col-span-2">Location</h2>
           {/* Address */}
           <FormTextField
             className="col-span-1"
@@ -152,7 +152,7 @@ const CreateJob = () => {
           />
 
           {/* Job Information */}
-          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">Job Information</h2>
+          <h2 className="pt-4 text-xl tracking-wide border-t col-span-2">Job Information</h2>
 
           <FormDatePicker className="col-span-1" control={control} label="Start Date" name="startDate" />
 
@@ -193,8 +193,8 @@ const CreateJob = () => {
           <FormAutocomplete className="col-span-1" control={control} label="Area" options={areaOptions} name="areaId" />
 
           {/* Line Items */}
-          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">Order Information</h2>
-          <div className="col-span-2 space-x-6 flex items-center">
+          <h2 className="pt-4 text-xl tracking-wide border-t col-span-2">Order Information</h2>
+          <div className="flex items-center col-span-2 space-x-6">
             {/* Order Number Input */}
             <TextField className="w-1/2" label="Order Number" value={orderNumber} onChange={handleOrderNumberChange} />
             {/* Supplier Select */}
@@ -213,12 +213,12 @@ const CreateJob = () => {
           </div>
           {lineItems.length > 0 && <LineItemTable lineItems={lineItems} onRemove={removeLineItem} />}
 
-          <h2 className="col-span-2 text-xl tracking-wide pt-4 border-t">Detail</h2>
+          <h2 className="pt-4 text-xl tracking-wide border-t col-span-2">Detail</h2>
 
           <FormTextField multiline className="col-span-2" control={control} label="Notes" name="notes" />
 
           {/* Actions */}
-          <div className="col-span-2 space-x-2 text-right">
+          <div className="text-right col-span-2 space-x-2">
             <Button onClick={handleReset}>Clear</Button>
             <Button variant="contained" type="submit" disabled={!isValid}>
               Submit

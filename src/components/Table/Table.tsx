@@ -10,16 +10,17 @@ import {
   useReactTable,
   getFilteredRowModel,
   Header,
+  Cell,
 } from '@tanstack/react-table';
-import classNames from 'classnames';
+import cn from 'classnames';
 
 import { DataIdCell } from './DataIdCell';
 import { DateCell } from './DateCell';
 import { RowMenuCell } from './RowMenuCell';
-import { TableProps } from './types';
-import { HeaderCell } from './HeaderCell';
 import { TextCell } from './TextCell';
 import { PhoneNumberCell } from './PhoneNumberCell';
+import { TableProps } from './types';
+import { TableEmptyRow } from './TableEmptyRow';
 
 const Table = <TData extends Record<string, unknown>>({
   title,
@@ -29,34 +30,10 @@ const Table = <TData extends Record<string, unknown>>({
   rowActions,
 }: TableProps<TData>) => {
   /******************************/
-  /* Custom Hooks               */
-  /******************************/
-
-  /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
   /* State                      */
   /******************************/
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
-
-  /******************************/
-  /* Context                    */
-  /******************************/
-
-  /******************************/
-  /* Data                       */
-  /******************************/
-
-  /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
 
   /******************************/
   /* Callbacks                  */
@@ -79,7 +56,7 @@ const Table = <TData extends Record<string, unknown>>({
   /******************************/
   /* Table                      */
   /******************************/
-  const table = useReactTable({
+  const { getHeaderGroups, getRowModel } = useReactTable({
     state: { sorting, globalFilter },
     data,
     columns,
@@ -94,114 +71,126 @@ const Table = <TData extends Record<string, unknown>>({
   /******************************/
   /* Render                     */
   /******************************/
-  const sortIconRender = (direction: Header<TData, unknown>) => {
-    switch (direction.column.getIsSorted()) {
-      case 'asc':
-        return <ExpandMore />;
-      case 'desc':
-        return <ExpandLess />;
-      default:
-        return null;
+
+  const renderHeaderCell = (h: Header<TData, unknown>, hIndex: number) => {
+    const spanActions = rowActions && hIndex === 0;
+    const canSort = h.column.getCanSort();
+    const isSorted = h.column.getIsSorted();
+    const colSpan = spanActions ? h.colSpan + 1 : h.colSpan;
+    const sortDirection = h.column.getIsSorted();
+
+    return (
+      <th
+        className={cn(
+          'py-4 px-3 first:pl-4 last:pr-4 font-medium transition-all relative',
+          {
+            'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
+            'bg-app-dark': isSorted,
+            'first:pl-14': spanActions,
+          }
+        )}
+        onClick={h.column.getToggleSortingHandler()}
+        colSpan={colSpan}
+        key={h.id}
+      >
+        {!h.isPlaceholder && (
+          <>
+            {flexRender(h.column.columnDef.header, h.getContext())}
+            {!!sortDirection && (
+              <div className="absolute top-0 flex items-center h-full right-2 y-6">
+                {sortDirection === 'asc' && <ExpandMore />}
+                {sortDirection === 'desc' && <ExpandLess />}
+              </div>
+            )}
+          </>
+        )}
+      </th>
+    );
+  };
+
+  const renderHeaderGroups = () => {
+    return getHeaderGroups().map((hg) => (
+      <tr key={hg.id}>{hg.headers.map(renderHeaderCell)}</tr>
+    ));
+  };
+
+  const renderBodyCell = (getCells: () => Cell<TData, unknown>[]) => {
+    return getCells().map(({ id, column, getContext, getValue }) => (
+      <td className="px-3 py-2 first:pl-4 last:pr-4 " key={id}>
+        {getValue() ? (
+          flexRender(column.columnDef.cell, getContext())
+        ) : (
+          <span className="text-xs text-app-text/25">(empty)</span>
+        )}
+      </td>
+    ));
+  };
+
+  const renderBodyRows = () => {
+    const { rows } = getRowModel();
+
+    if (rows.length < 1) {
+      return <TableEmptyRow />;
     }
+
+    return rows.map(({ id, original, getVisibleCells }) => (
+      <tr
+        className="relative transition-all border-b last:border-b-0 last:rounded-b"
+        key={id}
+      >
+        <RowMenuCell menuActions={rowActions} data={original} />
+        {renderBodyCell(getVisibleCells)}
+      </tr>
+    ));
   };
 
   return (
-    <div className="flex flex-col w-full shadow">
-      {/* Table Header */}
-      <div className="flex items-center text-white pr-6 pl-10 py-4 border-b border-b-slate-500 bg-slate-600">
-        {/* Title */}
-        <div className="flex basis-2/3 items-end">
-          <h1 className="text-4xl tracking-wide font-semibold">{title}</h1>
-          <p className="text-white/50 ml-4">{total} items</p>
+    <div className="flex flex-col w-full shadow-lg">
+      {/******************************/}
+      {/* Table Header               */}
+      {/******************************/}
+      <div className="flex items-center py-4 pl-10 pr-6 border-b border-b-app-medium bg-app">
+        {/******************************/}
+        {/* Title                      */}
+        {/******************************/}
+        <div className="flex items-end basis-2/3">
+          <h1 className="text-4xl font-semibold tracking-wide text-app-altText">
+            {title}
+          </h1>
+          <p className="ml-4 opacity-50 text-app-altText">{total} items</p>
         </div>
-        {/* Search */}
-        <div className="basis-1/3">
-          <input
-            placeholder="Search"
-            onChange={handleSearchChange}
-            value={globalFilter}
-            className="bg-slate-100 text-slate-900 p-2 w-full rounded border border-slate-400 shadow"
-          />
-        </div>
+        {/******************************/}
+        {/* Search                     */}
+        {/******************************/}
+        <input
+          placeholder="Search"
+          onChange={handleSearchChange}
+          value={globalFilter}
+          className="p-2 rounded shadow basis-1/3 bg-app-light"
+        />
       </div>
-      {/* Table */}
+      {/******************************/}
+      {/* Table                      */}
+      {/******************************/}
       <div className="overflow-x-scroll whitespace-nowrap">
-        <table className="table-auto w-full border-collapse drop-shadow shadow-lg">
-          {/* Table Header */}
-          <thead className="text-left text-white">
-            {/* Column Headers */}
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr
-                className="border-t border-t-slate-500 bg-slate-600"
-                key={headerGroup.id}
-              >
-                {!!rowActions && <th></th>}
-                {headerGroup.headers.map((header) => (
-                  <th
-                    className={classNames(
-                      'py-4 px-3 first:pl-4 last:pr-4 font-medium transition-all relative',
-                      {
-                        'cursor-pointer select-none hover:bg-slate-700 pr-9':
-                          header.column.getCanSort(),
-                        'bg-slate-700': header.column.getIsSorted(),
-                      }
-                    )}
-                    onClick={header.column.getToggleSortingHandler()}
-                    colSpan={header.colSpan}
-                    key={header.id}
-                  >
-                    {!header.isPlaceholder && (
-                      <>
-                        <div>
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                        </div>
-                        {!!sortIconRender(header) && (
-                          <div className="absolute top-0 right-2 h-full y-6 flex items-center">
-                            {sortIconRender(header)}
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
+        <table className="w-full border-collapse shadow-lg table-auto">
+          {/******************************/}
+          {/* Table Header               */}
+          {/******************************/}
+          <thead className="text-left text-app-altText bg-app">
+            {/******************************/}
+            {/* Column Headers             */}
+            {/******************************/}
+            {renderHeaderGroups()}
           </thead>
-          {/* Table Body */}
-          <tbody className="bg-slate-100">
-            {/* Data / Empty Rows */}
-            {table.getRowModel().rows.length > 0 ? (
-              table.getRowModel().rows.map((row) => (
-                <tr
-                  className="border-b last:border-b-0 transition-all last:rounded-b relative"
-                  key={row.id}
-                >
-                  {!!rowActions && (
-                    <RowMenuCell menuActions={rowActions} data={row.original} />
-                  )}
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      className="py-2 px-3 first:pl-4 last:pr-4 "
-                      key={cell.id}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr className="border-b last:border-b-0 transition-all text-slate-500">
-                <td className="py-4 px-6 text-center text-lg" colSpan={100}>
-                  No results
-                </td>
-              </tr>
-            )}
+          {/******************************/}
+          {/* Table Body                 */}
+          {/******************************/}
+          <tbody className="bg-app-light">
+            {/******************************/}
+            {/* Data / Empty Rows          */}
+            {/******************************/}
+            {renderBodyRows()}
           </tbody>
         </table>
       </div>
@@ -209,7 +198,6 @@ const Table = <TData extends Record<string, unknown>>({
   );
 };
 
-Table.HeaderCell = HeaderCell;
 Table.DateCell = DateCell;
 Table.DataIdCell = DataIdCell;
 Table.TextCell = TextCell;

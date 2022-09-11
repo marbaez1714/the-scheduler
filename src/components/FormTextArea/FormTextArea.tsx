@@ -18,8 +18,8 @@ const FormTextArea = <T extends FieldValues>({ label, className, required, ...re
   return (
     <div className="flex flex-col text-slate-700">
       {label && (
-        <label className="font-medium mb-2" htmlFor={field.name}>
-          {label} {required && <span className="text-red-500 font-bold">*</span>}
+        <label className="mb-2 font-medium" htmlFor={field.name}>
+          {label} {required && <span className="font-bold text-red-500">*</span>}
         </label>
       )}
       <textarea
@@ -38,7 +38,7 @@ const FormTextArea = <T extends FieldValues>({ label, className, required, ...re
         id={field.name}
         {...field}
       />
-      {errors[field.name]?.message && <p className="text-red-500 text-xs mt-2">{errors[field.name].message}</p>}
+      {errors[field.name]?.message && <p className="mt-2 text-xs text-red-500">{errors[field.name].message}</p>}
     </div>
   );
 };

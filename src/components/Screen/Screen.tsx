@@ -6,7 +6,7 @@ const Screen = ({ children }: ScreenProps) => {
   const { isAuthenticated } = useAuth0();
 
   return (
-    <div className="flex flex-col h-screen w-screen font-roboto text-slate-900">
+    <div className="flex flex-col w-screen h-screen font-roboto text-slate-900">
       {/* Page */}
       <div className="flex flex-grow overflow-hidden">
         {/* Side Bar */}
@@ -15,11 +15,11 @@ const Screen = ({ children }: ScreenProps) => {
         <div className="w-full h-full overflow-hidden">{children}</div>
       </div>
       {/* Status Bar */}
-      <div className="bg-slate-200 flex py-1 px-2 opacity-50 shadow-md z-10">
-        <p className="text-xs text-slate-800 px-4">
+      <div className="z-10 flex px-2 py-1 shadow-md opacity-50 bg-slate-200">
+        <p className="px-4 text-xs text-slate-800">
           Version: {process.env.REACT_APP_VERSION}
         </p>
-        <p className="text-xs text-slate-800 px-4">
+        <p className="px-4 text-xs text-slate-800">
           {isAuthenticated ? 'Status: Authorized' : 'Status: Unauthorized'}
         </p>
       </div>

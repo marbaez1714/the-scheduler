@@ -7,7 +7,20 @@
 }
 
 @layer base {
-  * {
-    @apply font-roboto;
+  body {
+    @apply font-roboto text-app-text;
+  }
+  td {
+    @apply text-sm;
+  }
+
+  td p {
+    @apply max-w-cellText overflow-hidden text-ellipsis;
+  }
+}
+
+@layer components {
+  .cell-caption-text {
+    @apply text-xs opacity-25;
   }
 }

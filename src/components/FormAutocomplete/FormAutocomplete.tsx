@@ -57,16 +57,16 @@ const FormAutocomplete = <T extends FieldValues>({
   /* Render                     */
   /******************************/
   return (
-    <div className="text-slate-700 relative">
+    <div className="relative text-slate-700">
       <Combobox value={value} onChange={handleChange} name={name}>
         {({ open }) => (
           <>
             {/* Label */}
-            <Combobox.Label className="font-medium mb-2 block">
-              {label} {required && <span className="text-red-500 font-bold">*</span>}
+            <Combobox.Label className="block mb-2 font-medium">
+              {label} {required && <span className="font-bold text-red-500">*</span>}
             </Combobox.Label>
             {/* Input */}
-            <Combobox.Button className="w-full relative">
+            <Combobox.Button className="relative w-full">
               <Combobox.Input
                 value={value}
                 onBlur={handleInputBlur}
@@ -83,7 +83,7 @@ const FormAutocomplete = <T extends FieldValues>({
             {/* Options */}
             <Transition
               as={Combobox.Options}
-              className="absolute w-full z-10 mt-2 shadow-2xl border-2 border-slate-400 bg-slate-50 max-h-48 overflow-y-scroll divide-y rounded"
+              className="absolute z-10 w-full mt-2 overflow-y-scroll border-2 rounded shadow-2xl border-slate-400 bg-slate-50 max-h-48 divide-y"
               show={open && filteredOptions.length > 0}
               enter="transition duration-100 ease-out"
               enterFrom="transform opacity-0"
@@ -111,7 +111,7 @@ const FormAutocomplete = <T extends FieldValues>({
           </>
         )}
       </Combobox>
-      {!!error && <p className="text-red-500 text-xs mt-2">{error.message}</p>}
+      {!!error && <p className="mt-2 text-xs text-red-500">{error.message}</p>}
     </div>
   );
 };

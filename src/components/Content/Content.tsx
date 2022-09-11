@@ -12,7 +12,7 @@ const Content = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center w-full h-full bg-slate-700/50">
-        <h1 className="font-medium animate-pulse text-white">Loading</h1>
+        <h1 className="font-medium text-white animate-pulse">Loading</h1>
       </div>
     );
   }

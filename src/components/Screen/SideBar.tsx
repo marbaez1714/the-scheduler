@@ -31,15 +31,15 @@ export const SideBar = () => {
   };
 
   return (
-    <div className="flex flex-col bg-slate-900 text-white z-10 shadow-md">
+    <div className="z-10 flex flex-col text-white shadow-md bg-slate-900">
       {/* Title */}
-      <div className="flex items-center py-3 justify-center">
+      <div className="flex items-center justify-center py-3">
         {sideBarOpen && (
-          <Link to="/dashboard" className="text-2xl font-bold ml-6 mr-auto">
+          <Link to="/dashboard" className="ml-6 mr-auto text-2xl font-bold">
             the_scheduler
           </Link>
         )}
-        <button className="mx-4 h-8 text-white flex items-center" onClick={toggleSideBar}>
+        <button className="flex items-center h-8 mx-4 text-white" onClick={toggleSideBar}>
           <Icon>{sideBarOpen ? 'chevron_left' : 'menu'} </Icon>
         </button>
       </div>

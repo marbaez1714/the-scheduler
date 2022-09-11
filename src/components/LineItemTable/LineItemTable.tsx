@@ -34,24 +34,24 @@ const LineItemTable = ({ lineItems, onRemove }: LineItemTableProps) => {
   /* Render                     */
   /******************************/
   return (
-    <div className="bg-slate-200 rounded shadow-sm px-4 py-2">
-      <table className="text-left w-full table-auto border-collapse">
+    <div className="px-4 py-2 rounded bg-slate-200 shadow-sm">
+      <table className="w-full text-left border-collapse table-auto">
         <thead>
           <tr>
-            <th className="pl-6 pr-4 py-2">Order #</th>
+            <th className="py-2 pl-6 pr-4">Order #</th>
             <th className="px-4 py-2">Supplier</th>
-            <th className="pl-4 pr-6 py-2"></th>
+            <th className="py-2 pl-4 pr-6"></th>
           </tr>
         </thead>
         <tbody>
           {lineItems.map((item, index) => (
             <tr
-              className="hover:bg-slate-100 hover:shadow transition-all rounded"
+              className="rounded hover:bg-slate-100 hover:shadow transition-all"
               key={item.orderNumber + item.supplierId + index}
             >
-              <td className="pl-6 pr-4 py-2 rounded-l">{item.orderNumber}</td>
+              <td className="py-2 pl-6 pr-4 rounded-l">{item.orderNumber}</td>
               <td className="px-4 py-2">{supplierNames[item.supplierId]}</td>
-              <td className="pl-4 pr-6 py-2 text-right rounded-r">
+              <td className="py-2 pl-4 pr-6 text-right rounded-r">
                 <IconButton className="text-sm" size="small" onClick={handleRemoveClick(index)}>
                   <Delete fontSize="small" />
                 </IconButton>

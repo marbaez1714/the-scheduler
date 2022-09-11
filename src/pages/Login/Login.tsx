@@ -20,7 +20,7 @@ const Login = () => {
 
   // JSX
   return (
-    <div className="flex flex-grow h-screen w-screen items-center justify-center">
+    <div className="flex items-center justify-center flex-grow w-screen h-screen">
       <Button onClick={handleLoginClick} variant="contained" size="large">
         Auth0 Login
       </Button>
