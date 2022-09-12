@@ -2,7 +2,7 @@ import { Popover, Transition } from '@headlessui/react';
 import { Close, MoreVert } from '@mui/icons-material';
 import { Icon } from '@mui/material';
 
-import { RowMenuCellProps } from './types';
+import { RowMenuCellProps } from '../types';
 
 export const RowMenuCell = <TData extends Record<string, unknown>>({
   menuActions,

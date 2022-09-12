@@ -3,13 +3,13 @@ import { ColumnDef } from '@tanstack/react-table';
 /******************************/
 /* Main Table                 */
 /******************************/
-export type TableRowAction<TData extends Record<string, unknown>> = {
+export type TableRowAction<TData> = {
   icon: string;
   label: string;
   onClick: (data: TData) => void;
 };
 
-export interface TableProps<TData extends Record<string, unknown>> {
+export interface TableProps<TData> {
   title: string;
   total?: number;
   data: TData[];
@@ -28,14 +28,14 @@ export interface DataIdCellProps {
   data: { id: string; legacy: boolean };
 }
 
-export interface RowMenuCellProps<TData extends Record<string, unknown>> {
+export interface RowMenuCellProps<TData> {
   data: TData;
   menuActions?: TableRowAction<TData>[];
 }
 
 export interface HeaderCellProps {
   title: string;
-  subtitle?: string;
+  subtitle: string;
 }
 
 export interface TextCellProps {
@@ -44,4 +44,11 @@ export interface TextCellProps {
 
 export interface PhoneNumberCellProps {
   value?: string;
+}
+
+export interface TimestampCellProps {
+  data: {
+    createdTime: string;
+    updatedTime: string;
+  };
 }

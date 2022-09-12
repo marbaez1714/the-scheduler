@@ -65,24 +65,21 @@ export const SupplierList = () => {
       cell: ({ getValue }) => <Table.PhoneNumberCell value={getValue()} />,
     },
     {
-      id: 'createdTime',
-      header: 'Created',
-      accessorFn: (row) => format(new Date(row.createdTime), 'P'),
-      cell: (data) => (
-        <Table.DateCell timestamp={data.row.original.createdTime} />
+      id: 'timestamp',
+      header: () => (
+        <Table.HeaderCell
+          title="Timestamps"
+          subtitle="Last Updated / First Created"
+        />
       ),
-    },
-    {
-      id: 'updatedTime',
-      header: 'Updated',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
-      cell: (data) => (
-        <Table.DateCell timestamp={data.row.original.updatedTime} />
-      ),
+      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
+      cell: (data) => <Table.TimestampCell data={data.row.original} />,
     },
     {
       id: 'id',
-      header: 'ID',
+      header: () => (
+        <Table.HeaderCell title="ID" subtitle="Identifier / Origin" />
+      ),
       accessorKey: 'id',
       cell: (data) => (
         <Table.DataIdCell

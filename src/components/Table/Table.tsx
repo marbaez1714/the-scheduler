@@ -1,6 +1,7 @@
 import { ChangeEventHandler, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { rankItem } from '@tanstack/match-sorter-utils';
+import cn from 'classnames';
 import {
   FilterFn,
   flexRender,
@@ -12,13 +13,14 @@ import {
   Header,
   Cell,
 } from '@tanstack/react-table';
-import cn from 'classnames';
 
-import { DataIdCell } from './DataIdCell';
-import { DateCell } from './DateCell';
-import { RowMenuCell } from './RowMenuCell';
-import { TextCell } from './TextCell';
-import { PhoneNumberCell } from './PhoneNumberCell';
+import { DataIdCell } from './Cells/DataIdCell';
+import { DateCell } from './Cells/DateCell';
+import { RowMenuCell } from './Cells/RowMenuCell';
+import { TextCell } from './Cells/TextCell';
+import { PhoneNumberCell } from './Cells/PhoneNumberCell';
+import { TimestampCell } from './Cells/TimestampCell';
+import { HeaderCell } from './Cells/HeaderCell';
 import { TableProps } from './types';
 import { TableEmptyRow } from './TableEmptyRow';
 
@@ -71,7 +73,6 @@ const Table = <TData extends Record<string, unknown>>({
   /******************************/
   /* Render                     */
   /******************************/
-
   const renderHeaderCell = (h: Header<TData, unknown>, hIndex: number) => {
     const spanActions = rowActions && hIndex === 0;
     const canSort = h.column.getCanSort();
@@ -82,7 +83,7 @@ const Table = <TData extends Record<string, unknown>>({
     return (
       <th
         className={cn(
-          'py-4 px-3 first:pl-4 last:pr-4 font-medium transition-all relative',
+          'py-4 px-3 first:pl-4 last:pr-4 font-medium transition-all relative align-bottom',
           {
             'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
             'bg-app-dark': isSorted,
@@ -198,9 +199,11 @@ const Table = <TData extends Record<string, unknown>>({
   );
 };
 
+Table.HeaderCell = HeaderCell;
 Table.DateCell = DateCell;
 Table.DataIdCell = DataIdCell;
 Table.TextCell = TextCell;
 Table.PhoneNumberCell = PhoneNumberCell;
+Table.TimestampCell = TimestampCell;
 
 export default Table;

@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
-import cn from 'classnames';
 
-import { PhoneNumberCellProps } from './types';
+import { PhoneNumberCellProps } from '../types';
 
 export const PhoneNumberCell = ({ value }: PhoneNumberCellProps) => {
   /******************************/
@@ -26,8 +25,10 @@ export const PhoneNumberCell = ({ value }: PhoneNumberCellProps) => {
 
   return (
     <>
-      <p title={value}>{value}</p>
-      <p className="text-xs opacity-100 text-app-error">Invalid Format</p>
+      <p className="text-xs text-app-error" title={value}>
+        {value}
+      </p>
+      <p className="text-xs text-app-error">Invalid Format</p>
     </>
   );
 };

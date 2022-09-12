@@ -32,7 +32,9 @@ export const ScopeList = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading, refetch } = useGetScopesQuery({ fetchPolicy: 'cache-and-network' });
+  const { data, loading, refetch } = useGetScopesQuery({
+    fetchPolicy: 'cache-and-network',
+  });
 
   const [archive, { loading: archiveLoading }] = useArchiveScopeMutation({
     onCompleted: (data) => {
@@ -64,7 +66,8 @@ export const ScopeList = () => {
     {
       icon: 'archive',
       label: 'Archive',
-      onClick: (data) => confirmArchive(data.name) && archive({ variables: { id: data.id } }),
+      onClick: (data) =>
+        confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
@@ -82,22 +85,30 @@ export const ScopeList = () => {
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },
     {
-      id: 'createdTime',
-      header: 'Created',
-      accessorFn: (row) => format(new Date(row.createdTime), 'P'),
-      cell: (data) => <Table.DateCell timestamp={data.row.original.createdTime} />,
-    },
-    {
-      id: 'updatedTime',
-      header: 'Updated',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
-      cell: (data) => <Table.DateCell timestamp={data.row.original.updatedTime} />,
+      id: 'timestamp',
+      header: () => (
+        <Table.HeaderCell
+          title="Timestamps"
+          subtitle="Last Updated / First Created"
+        />
+      ),
+      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
+      cell: (data) => <Table.TimestampCell data={data.row.original} />,
     },
     {
       id: 'id',
-      header: 'ID',
+      header: () => (
+        <Table.HeaderCell title="ID" subtitle="Identifier / Origin" />
+      ),
       accessorKey: 'id',
-      cell: (data) => <Table.DataIdCell data={{ id: data.getValue(), legacy: data.row.original.legacy ?? false }} />,
+      cell: (data) => (
+        <Table.DataIdCell
+          data={{
+            id: data.getValue(),
+            legacy: data.row.original.legacy ?? false,
+          }}
+        />
+      ),
     },
   ];
 
@@ -116,7 +127,13 @@ export const ScopeList = () => {
           rowActions={rowActions}
         />
       )}
-      <Button onClick={() => navigate('add')} startIcon={<AddBox />} color="inherit" variant="contained" fullWidth>
+      <Button
+        onClick={() => navigate('add')}
+        startIcon={<AddBox />}
+        color="inherit"
+        variant="contained"
+        fullWidth
+      >
         Add a Scope
       </Button>
     </Content>

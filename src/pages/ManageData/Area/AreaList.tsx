@@ -85,24 +85,21 @@ export const AreaList = () => {
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },
     {
-      id: 'createdTime',
-      header: 'Created',
-      accessorFn: (row) => format(new Date(row.createdTime), 'P'),
-      cell: (data) => (
-        <Table.DateCell timestamp={data.row.original.createdTime} />
+      id: 'timestamp',
+      header: () => (
+        <Table.HeaderCell
+          title="Timestamps"
+          subtitle="Last Updated / First Created"
+        />
       ),
-    },
-    {
-      id: 'updatedTime',
-      header: 'Updated',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
-      cell: (data) => (
-        <Table.DateCell timestamp={data.row.original.updatedTime} />
-      ),
+      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
+      cell: (data) => <Table.TimestampCell data={data.row.original} />,
     },
     {
       id: 'id',
-      header: 'ID',
+      header: () => (
+        <Table.HeaderCell title="ID" subtitle="Identifier / Origin" />
+      ),
       accessorKey: 'id',
       cell: (data) => (
         <Table.DataIdCell
@@ -119,10 +116,7 @@ export const AreaList = () => {
   /* Render                    */
   /******************************/
   return (
-    <Content
-      className="flex-col space-y-4"
-      loading={loading || archiveLoading}
-    >
+    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
       {/* Area List */}
       {data?.areas && (
         <Table
