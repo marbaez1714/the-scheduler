@@ -1,11 +1,10 @@
-import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddCompanyForm } from 'src/utils/forms';
 import { CreateCompanyInput, useCreateCompanyMutation } from 'src/api';
 import { Content } from 'src/components/Content';
-import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 
@@ -69,39 +68,48 @@ export const CompanyAddForm = () => {
   /******************************/
   return (
     <Content className="flex flex-col items-center" loading={loading}>
-      {/* Form */}
       <FormContainer
         title="Add Company"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
         isValid={isValid}
       >
-        {/* Name */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Name                       */}
+        {/******************************/}
+        <FormTextInput
           label={AddCompanyForm.labels.name}
           control={control}
           name="name"
           required
         />
-        {/* Primary Phone */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Primary Phone              */}
+        {/******************************/}
+        <FormTextInput
           label={AddCompanyForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
         />
-        {/* Primary Email */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Primary Email              */}
+        {/******************************/}
+        <FormTextInput
           label={AddCompanyForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
         />
-        {/* Primary Address */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Primary Address            */}
+        {/******************************/}
+        <FormTextInput
           label={AddCompanyForm.labels.primaryAddress}
           control={control}
           name="primaryAddress"
         />
-        {/* Notes */}
+        {/******************************/}
+        {/* Notes                      */}
+        {/******************************/}
         <FormTextArea
           label={AddCompanyForm.labels.notes}
           control={control}

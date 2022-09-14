@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { AddReporterForm } from 'src/utils/forms';
 import { CreateReporterInput, useCreateReporterMutation } from 'src/api';
 import { Content } from 'src/components/Content';
-import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 
@@ -48,41 +48,47 @@ export const ReporterAddForm = () => {
   /******************************/
   return (
     <Content className="flex flex-col items-center" loading={loading}>
-      {/* Form */}
       <FormContainer
         title="Add Reporter"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
         isValid={isValid}
       >
-        {/* Name */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Name                       */}
+        {/******************************/}
+        <FormTextInput
           label={AddReporterForm.labels.name}
           control={control}
           name="name"
           required
         />
-        {/* Primary Phone */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Primary Phone              */}
+        {/******************************/}
+        <FormTextInput
           label={AddReporterForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
           mask="phone"
           required
         />
-        {/* Primary Email */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Primary Email              */}
+        {/******************************/}
+        <FormTextInput
           label={AddReporterForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
         />
-        {/* Notes */}
+        {/******************************/}
+        {/* Notes                      */}
+        {/******************************/}
         <FormTextArea
           label={AddReporterForm.labels.notes}
           control={control}
           name="notes"
         />
-        {/* Form Actions */}
       </FormContainer>
     </Content>
   );

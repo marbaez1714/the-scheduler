@@ -3,42 +3,50 @@ import { FieldValues, useController } from 'react-hook-form';
 
 import { FormTextAreaProps } from './types';
 
-const FormTextArea = <T extends FieldValues>({ label, className, required, ...rest }: FormTextAreaProps<T>) => {
+const FormTextArea = <T extends FieldValues>({
+  label,
+  className,
+  required,
+  ...rest
+}: FormTextAreaProps<T>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
   const {
     field,
-    formState: { errors },
+    fieldState: { error },
   } = useController(rest);
 
   /******************************/
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col text-slate-700">
+    <div className="flex flex-col">
       {label && (
-        <label className="mb-2 font-medium" htmlFor={field.name}>
-          {label} {required && <span className="font-bold text-red-500">*</span>}
+        <label className="mb-2 font-medium text-app-dark" htmlFor={field.name}>
+          {label}
+          {required && <span className="ml-1 font-bold text-app-error">*</span>}
         </label>
       )}
+
       <textarea
         className={classNames(
-          'bg-slate-100',
-          'text-slate-900',
+          'bg-app-light',
           'py-3',
           'px-4',
           'w-full',
           'rounded',
           'border-2',
-          'border-slate-400',
+          'border-app-medium',
           'shadow',
           className
         )}
         id={field.name}
         {...field}
       />
-      {errors[field.name]?.message && <p className="mt-2 text-xs text-red-500">{errors[field.name].message}</p>}
+      {!!error && (
+        <p className="mt-2 text-xs text-app-error">{error.message}</p>
+      )}
     </div>
   );
 };

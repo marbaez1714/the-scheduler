@@ -11,8 +11,9 @@ import {
   useGetCommunitiesQuery,
 } from 'src/api';
 
-import { Content, Table, TableRowAction } from 'src/components';
-import { confirmArchive } from '../utils';
+import { Table, TableRowAction } from 'src/components/Table';
+import { Content } from 'src/components/Content';
+import { confirmArchive } from 'src/utils/alerts';
 
 export const CommunityList = () => {
   /******************************/

@@ -8,7 +8,7 @@ import { Area, useArchiveAreaMutation, useGetAreasQuery } from 'src/api';
 
 import { Content } from 'src/components/Content';
 import { Table, TableRowAction } from 'src/components/Table';
-import { confirmArchive } from '../utils';
+import { confirmArchive } from 'src/utils/alerts';
 import { format } from 'date-fns';
 
 export const AreaList = () => {
@@ -80,7 +80,7 @@ export const AreaList = () => {
     },
     {
       id: 'nameSpanish',
-      header: 'Name Translation (Spanish)',
+      header: () => <Table.HeaderCell title="Translation" subtitle="Spanish" />,
       accessorKey: 'nameSpanish',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },

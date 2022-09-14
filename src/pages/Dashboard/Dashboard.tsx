@@ -1,9 +1,15 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 
-import { JobLegacy, useGetAssignedContractorsQuery, useGetUnassignedJobsQuery } from 'src/api';
+import {
+  JobLegacy,
+  useGetAssignedContractorsQuery,
+  useGetUnassignedJobsQuery,
+} from 'src/api';
 
-import { Content, Screen, Table } from 'src/components';
+import { Screen } from 'src/components/Screen';
+import { Table } from 'src/components/Table';
+import { Content } from 'src/components/Content';
 
 const Dashboard = () => {
   /******************************/
@@ -68,7 +74,8 @@ const Dashboard = () => {
     {
       id: 'job-start-date',
       header: 'Start Date',
-      accessorFn: (row) => (row.startDate ? format(new Date(row.startDate), 'P') : '-'),
+      accessorFn: (row) =>
+        row.startDate ? format(new Date(row.startDate), 'P') : '-',
       cell: (context) => context.getValue(),
     },
     {

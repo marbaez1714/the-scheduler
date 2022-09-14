@@ -22,7 +22,6 @@ import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
 import { HeaderCell } from './Cells/HeaderCell';
 import { TableProps } from './types';
-import { TableEmptyRow } from './TableEmptyRow';
 
 const Table = <TData extends Record<string, unknown>>({
   title,
@@ -83,7 +82,7 @@ const Table = <TData extends Record<string, unknown>>({
     return (
       <th
         className={cn(
-          'py-4 px-3 first:pl-4 last:pr-4 font-medium transition-all relative align-bottom',
+          'h-14 py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative',
           {
             'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
             'bg-app-dark': isSorted,
@@ -131,7 +130,13 @@ const Table = <TData extends Record<string, unknown>>({
     const { rows } = getRowModel();
 
     if (rows.length < 1) {
-      return <TableEmptyRow />;
+      return (
+        <tr className="transition-all border-b last:border-b-0 text-app-text/25">
+          <td className="px-6 py-4 text-lg text-center" colSpan={100}>
+            (No results)
+          </td>
+        </tr>
+      );
     }
 
     return rows.map(({ id, original, getVisibleCells }) => (
@@ -150,7 +155,7 @@ const Table = <TData extends Record<string, unknown>>({
       {/******************************/}
       {/* Table Header               */}
       {/******************************/}
-      <div className="flex items-center py-4 pl-10 pr-6 border-b border-b-app-medium bg-app">
+      <div className="flex items-center py-6 pl-10 pr-6 border-b border-b-app-medium bg-app">
         {/******************************/}
         {/* Title                      */}
         {/******************************/}

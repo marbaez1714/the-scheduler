@@ -1,3 +1,6 @@
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import {
   CreateAreaInput,
   CreateBuilderInput,
@@ -9,11 +12,11 @@ import {
   CreateScopeInput,
   CreateSupplierInput,
 } from './../api/index';
+import { messages } from './messages';
 
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-// Types
+/******************************/
+/* Types                      */
+/******************************/
 export interface CreateInputs {
   area: CreateAreaInput;
   builder: CreateBuilderInput;
@@ -26,81 +29,18 @@ export interface CreateInputs {
   supplier: CreateSupplierInput;
 }
 
-// Utils
-export const formRules = {
-  requiredNonEmptyString: {
-    required: true,
-    pattern: new RegExp('^(?!\\s*$).+'),
-  },
-  nonEmptyString: {
-    pattern: new RegExp('^(?!\\s*$).+'),
-  },
-};
-
-export const AddFormDefaultData: Partial<CreateInputs> = {
-  area: {
-    name: '',
-    nameSpanish: '',
-    notes: '',
-  },
-  builder: {
-    name: '',
-    primaryPhone: '',
-    primaryEmail: '',
-    companyId: '',
-    notes: '',
-  },
-  company: {
-    name: '',
-    primaryAddress: '',
-    primaryEmail: '',
-    primaryPhone: '',
-    notes: '',
-  },
-  community: {
-    name: '',
-    companyId: '',
-    notes: '',
-  },
-  reporter: {
-    name: '',
-    primaryPhone: '',
-    primaryEmail: '',
-    notes: '',
-  },
-  supplier: {
-    name: '',
-    primaryPhone: '',
-    notes: '',
-  },
-  scope: {
-    name: '',
-    nameSpanish: '',
-    description: '',
-    notes: '',
-  },
-  contractor: {
-    name: '',
-    primaryPhone: '',
-    notes: '',
-  },
-};
-
 interface FormObject<TInput extends keyof CreateInputs> {
   labels: { [key in keyof CreateInputs[TInput]]: string };
   defaultValues: CreateInputs[TInput];
   resolver: ReturnType<typeof yupResolver>;
 }
 
-const messages = {
-  nameRequired: 'Name is required',
-  nameTranslationRequired: 'Name Translation (Spanish) is required',
-  phoneRequired: 'Phone Number is required',
-  emailFormat: 'Must be valid email',
-  companyRequired: 'Company is required',
-};
-
+/******************************/
+/* Helpers                    */
+/******************************/
 const labels = {
+  address: 'Address',
+  community: 'Community',
   name: 'Name',
   nameSpanish: 'Name Translation (Spanish)',
   description: 'Description',
@@ -109,8 +49,31 @@ const labels = {
   primaryEmail: 'Primary Email',
   primaryAddress: 'Primary Address',
   notes: 'Notes',
+  startDate: 'Start Date',
+  builder: 'Builder',
+  contractor: 'Contractor',
+  reporter: 'Reporter',
+  scope: 'Scope of Work',
+  area: 'Area',
+  order: 'Order Information',
 };
 
+const validators = {
+  addressRequired: yup.string().trim().required(messages.addressRequired),
+  nameRequired: yup.string().trim().required(messages.nameRequired),
+  nameSpanishRequired: yup
+    .string()
+    .trim()
+    .required(messages.nameTranslationRequired),
+  primaryPhoneRequired: yup.string().trim().required(messages.phoneRequired),
+  primaryEmail: yup.string().trim().email(messages.emailFormat),
+  companyIdRequired: yup.string().trim().required(messages.companyRequired),
+  string: yup.string().trim(),
+};
+
+/******************************/
+/* Forms                      */
+/******************************/
 export const AddAreaForm: FormObject<'area'> = {
   labels: {
     name: labels.name,
@@ -124,12 +87,9 @@ export const AddAreaForm: FormObject<'area'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      nameSpanish: yup
-        .string()
-        .trim()
-        .required(messages.nameTranslationRequired),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      nameSpanish: validators.nameSpanishRequired,
+      notes: validators.string,
     })
   ),
 };
@@ -151,11 +111,11 @@ export const AddBuilderForm: FormObject<'builder'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      primaryPhone: yup.string().trim().required(messages.phoneRequired),
-      primaryEmail: yup.string().trim().email(messages.emailFormat),
-      companyId: yup.string().trim().required(messages.companyRequired),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      primaryPhone: validators.primaryPhoneRequired,
+      primaryEmail: validators.primaryEmail,
+      companyId: validators.companyIdRequired,
+      notes: validators.string,
     })
   ),
 };
@@ -173,9 +133,9 @@ export const AddCommunityForm: FormObject<'community'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      companyId: yup.string().trim().required(messages.companyRequired),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      companyId: validators.companyIdRequired,
+      notes: validators.string,
     })
   ),
 };
@@ -197,11 +157,11 @@ export const AddCompanyForm: FormObject<'company'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      primaryAddress: yup.string().trim(),
-      primaryEmail: yup.string().trim(),
-      primaryPhone: yup.string().trim(),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      primaryAddress: validators.string,
+      primaryEmail: validators.string,
+      primaryPhone: validators.string,
+      notes: validators.string,
     })
   ),
 };
@@ -219,9 +179,9 @@ export const AddContractorForm: FormObject<'contractor'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      primaryPhone: yup.string().trim().required(messages.phoneRequired),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      primaryPhone: validators.primaryPhoneRequired,
+      notes: validators.string,
     })
   ),
 };
@@ -241,10 +201,10 @@ export const AddReporterForm: FormObject<'reporter'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      primaryPhone: yup.string().trim().required(messages.phoneRequired),
-      primaryEmail: yup.string().trim(),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      primaryPhone: validators.primaryPhoneRequired,
+      primaryEmail: validators.primaryEmail,
+      notes: validators.string,
     })
   ),
 };
@@ -264,13 +224,10 @@ export const AddScopeForm: FormObject<'scope'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      nameSpanish: yup
-        .string()
-        .trim()
-        .required(messages.nameTranslationRequired),
-      description: yup.string().trim(),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      nameSpanish: validators.nameSpanishRequired,
+      description: validators.string,
+      notes: validators.string,
     })
   ),
 };
@@ -288,9 +245,49 @@ export const AddSupplierForm: FormObject<'supplier'> = {
   },
   resolver: yupResolver(
     yup.object({
-      name: yup.string().trim().required(messages.nameRequired),
-      primaryPhone: yup.string().trim(),
-      notes: yup.string().trim(),
+      name: validators.nameRequired,
+      primaryPhone: validators.string,
+      notes: validators.string,
+    })
+  ),
+};
+
+export const CreateJobForm: FormObject<'jobLegacy'> = {
+  labels: {
+    name: labels.address,
+    communityId: labels.community,
+    startDate: labels.startDate,
+    builderId: labels.builder,
+    contractorId: labels.contractor,
+    reporterId: labels.reporter,
+    scopeId: labels.scope,
+    areaId: labels.area,
+    notes: labels.notes,
+    lineItems: labels.order,
+  },
+  defaultValues: {
+    name: '',
+    communityId: '',
+    startDate: '',
+    builderId: '',
+    contractorId: '',
+    reporterId: '',
+    scopeId: '',
+    areaId: '',
+    notes: '',
+    lineItems: [],
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: validators.addressRequired,
+      areaId: validators.string,
+      builderId: validators.string,
+      communityId: validators.string,
+      contractorId: validators.string,
+      notes: validators.string,
+      reporterId: validators.string,
+      scopeId: validators.string,
+      startDate: validators.string,
     })
   ),
 };

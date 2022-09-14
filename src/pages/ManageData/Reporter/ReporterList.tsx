@@ -13,7 +13,7 @@ import {
 
 import { Content } from 'src/components/Content';
 import { Table, TableRowAction } from 'src/components/Table';
-import { confirmArchive } from '../utils';
+import { confirmArchive } from 'src/utils/alerts';
 
 export const ReporterList = () => {
   /******************************/

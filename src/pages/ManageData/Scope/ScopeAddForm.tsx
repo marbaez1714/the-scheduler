@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { AddScopeForm } from 'src/utils/forms';
 import { CreateScopeInput, useCreateScopeMutation } from 'src/api';
 import { Content } from 'src/components/Content';
-import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 
@@ -48,40 +48,46 @@ export const ScopeAddForm = () => {
   /******************************/
   return (
     <Content className="flex flex-col items-center" loading={loading}>
-      {/* Form */}
       <FormContainer
         title="Add Scope"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
         isValid={isValid}
       >
-        {/* Name */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Name                    */}
+        {/******************************/}
+        <FormTextInput
           label={AddScopeForm.labels.name}
           control={control}
           name="name"
           required
         />
-        {/* Primary Phone */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Name - Spanish             */}
+        {/******************************/}
+        <FormTextInput
           label={AddScopeForm.labels.nameSpanish}
           control={control}
           name="nameSpanish"
           required
         />
-        {/* Primary Email */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Description                */}
+        {/******************************/}
+        <FormTextInput
           label={AddScopeForm.labels.description}
           control={control}
           name="description"
         />
-        {/* Notes */}
+        {/******************************/}
+        {/* Notes                      */}
+        {/******************************/}
         <FormTextArea
           label={AddScopeForm.labels.notes}
           control={control}
           name="notes"
         />
-        {/* Form Actions */}
       </FormContainer>
     </Content>
   );

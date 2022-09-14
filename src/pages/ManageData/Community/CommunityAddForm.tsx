@@ -1,11 +1,10 @@
-import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddCommunityForm } from 'src/utils/forms';
 import { CreateCommunityInput, useCreateCommunityMutation } from 'src/api';
 import { Content } from 'src/components/Content';
-import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 import { FormAutocomplete } from 'src/components/FormAutocomplete';
@@ -73,21 +72,24 @@ export const CommunityAddForm = () => {
   /******************************/
   return (
     <Content centerHorizontal loading={loading}>
-      {/* Form */}
       <FormContainer
         title="Add Community"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
         isValid={isValid}
       >
-        {/* Name */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Name                       */}
+        {/******************************/}
+        <FormTextInput
           label={AddCommunityForm.labels.name}
           control={control}
           name="name"
           required
         />
-        {/* Company */}
+        {/******************************/}
+        {/* Company                    */}
+        {/******************************/}
         <FormAutocomplete
           label={AddCommunityForm.labels.companyId}
           control={control}
@@ -95,7 +97,9 @@ export const CommunityAddForm = () => {
           name="companyId"
           required
         />
-        {/* Notes */}
+        {/******************************/}
+        {/* Notes                      */}
+        {/******************************/}
         <FormTextArea
           label={AddCommunityForm.labels.notes}
           control={control}

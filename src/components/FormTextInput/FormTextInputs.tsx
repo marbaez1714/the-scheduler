@@ -4,16 +4,16 @@ import { FieldValues, useController } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 
 import { maskMap, placeholderMap } from './utils';
-import { FormTextInputsProps } from './types';
+import { FormTextInputsProp } from './types';
 
-const FormTextInputs = <T extends FieldValues>({
+const FormTextInput = <T extends FieldValues>({
   label,
   className,
   required,
   mask,
   placeholder,
   ...rest
-}: FormTextInputsProps<T>) => {
+}: FormTextInputsProp<T>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -33,23 +33,24 @@ const FormTextInputs = <T extends FieldValues>({
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col text-slate-700">
+    <div className="flex flex-col">
       {label && (
-        <label className="mb-2 font-medium" htmlFor={field.name}>
-          {label} {required && <span className="font-bold text-red-500">*</span>}
+        <label className="mb-2 font-medium text-app-dark" htmlFor={field.name}>
+          {label}
+          {required && <span className="ml-1 font-bold text-app-error">*</span>}
         </label>
       )}
 
       <InputComponent
         className={cn(
-          'bg-slate-100',
-          'text-slate-900',
+          'bg-app-light',
+          'text-app-text',
+          'border-app-medium',
           'py-3',
           'px-4',
           'w-full',
           'rounded',
           'border-2',
-          'border-slate-400',
           'shadow',
           'text-ellipsis',
           className
@@ -59,9 +60,11 @@ const FormTextInputs = <T extends FieldValues>({
         mask={mask ? maskMap[mask] : ''}
         {...field}
       />
-      {!!error && <p className="mt-2 text-xs text-red-500">{error.message}</p>}
+      {!!error && (
+        <p className="mt-2 text-xs text-app-error">{error.message}</p>
+      )}
     </div>
   );
 };
 
-export default FormTextInputs;
+export default FormTextInput;

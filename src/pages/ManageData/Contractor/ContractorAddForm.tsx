@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { AddContractorForm } from 'src/utils/forms';
 import { CreateContractorInput, useCreateContractorMutation } from 'src/api';
 import { Content } from 'src/components/Content';
-import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 
@@ -48,35 +48,39 @@ export const ContractorAddForm = () => {
   /******************************/
   return (
     <Content className="flex flex-col items-center" loading={loading}>
-      {/* Form */}
       <FormContainer
         title="Add Contractor"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
         isValid={isValid}
       >
-        {/* Name */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Name                       */}
+        {/******************************/}
+        <FormTextInput
           label={AddContractorForm.labels.name}
           control={control}
           name="name"
           required
         />
-        {/* Primary Phone */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Primary Phone              */}
+        {/******************************/}
+        <FormTextInput
           label={AddContractorForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
           mask="phone"
           required
         />
-        {/* Notes */}
+        {/******************************/}
+        {/* Notes                      */}
+        {/******************************/}
         <FormTextArea
           label={AddContractorForm.labels.notes}
           control={control}
           name="notes"
         />
-        {/* Form Actions */}
       </FormContainer>
     </Content>
   );

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { AddSupplierForm } from 'src/utils/forms';
 import { CreateSupplierInput, useCreateSupplierMutation } from 'src/api';
 import { Content } from 'src/components/Content';
-import { FormTextInputs } from 'src/components/FormTextInput';
+import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 
@@ -48,35 +48,38 @@ export const SupplierAddForm = () => {
   /******************************/
   return (
     <Content className="flex flex-col items-center" loading={loading}>
-      {/* Form */}
       <FormContainer
         title="Add Supplier"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
         isValid={isValid}
       >
-        {/* Name */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Name                       */}
+        {/******************************/}
+        <FormTextInput
           label={AddSupplierForm.labels.name}
           control={control}
           name="name"
           required
         />
-        {/* Primary Phone */}
-        <FormTextInputs
+        {/******************************/}
+        {/* Primary Phone              */}
+        {/******************************/}
+        <FormTextInput
           label={AddSupplierForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
           mask="phone"
-          required
         />
-        {/* Notes */}
+        {/******************************/}
+        {/* Notes                      */}
+        {/******************************/}
         <FormTextArea
           label={AddSupplierForm.labels.notes}
           control={control}
           name="notes"
         />
-        {/* Form Actions */}
       </FormContainer>
     </Content>
   );

@@ -8,8 +8,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Toaster } from 'react-hot-toast';
 
-import { FirebaseProvider } from './providers/FirebaseProvider';
-
 import Navigation from './navigation/Navigation';
 
 import { ApolloAuthProvider } from './providers/ApolloAuthProvider';
@@ -20,12 +18,10 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <ApolloAuthProvider>
-          <FirebaseProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Navigation />
-              <Toaster />
-            </LocalizationProvider>
-          </FirebaseProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Navigation />
+            <Toaster />
+          </LocalizationProvider>
         </ApolloAuthProvider>
       </AuthProvider>
     </BrowserRouter>

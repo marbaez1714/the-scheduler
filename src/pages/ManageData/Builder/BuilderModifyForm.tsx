@@ -1,4 +1,4 @@
-import { Content } from 'src/components';
+import { Content } from 'src/components/Content';
 
 export const BuilderModifyForm = () => {
   // - HOOKS - //

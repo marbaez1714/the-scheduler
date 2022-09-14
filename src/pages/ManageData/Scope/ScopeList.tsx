@@ -9,7 +9,7 @@ import { Scope, useArchiveScopeMutation, useGetScopesQuery } from 'src/api';
 
 import { Content } from 'src/components/Content';
 import { Table, TableRowAction } from 'src/components/Table';
-import { confirmArchive } from '../utils';
+import { confirmArchive } from 'src/utils/alerts';
 
 export const ScopeList = () => {
   /******************************/
@@ -80,7 +80,7 @@ export const ScopeList = () => {
     },
     {
       id: 'nameSpanish',
-      header: 'Name Translation (Spanish)',
+      header: () => <Table.HeaderCell title="Translation" subtitle="Spanish" />,
       accessorKey: 'nameSpanish',
       cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
     },
