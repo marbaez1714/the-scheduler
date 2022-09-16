@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddSupplierForm } from 'src/utils/forms';
-import { CreateSupplierInput, useCreateSupplierMutation } from 'src/api';
+import { WriteSupplierInput, useCreateSupplierMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -39,7 +39,7 @@ export const SupplierAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: CreateSupplierInput) => {
+  const submit = (data: WriteSupplierInput) => {
     create({ variables: { data } });
   };
 

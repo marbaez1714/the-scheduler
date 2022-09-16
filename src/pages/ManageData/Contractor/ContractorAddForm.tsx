@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddContractorForm } from 'src/utils/forms';
-import { CreateContractorInput, useCreateContractorMutation } from 'src/api';
+import { WriteContractorInput, useCreateContractorMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -39,7 +39,7 @@ export const ContractorAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: CreateContractorInput) => {
+  const submit = (data: WriteContractorInput) => {
     create({ variables: { data } });
   };
 

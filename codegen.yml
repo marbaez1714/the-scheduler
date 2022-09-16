@@ -13,3 +13,5 @@ generates:
       - "fragment-matcher"
     config:
       inputMaybeValue: undefined | T
+      scalars:
+        PhoneNumber: string

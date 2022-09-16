@@ -2,9 +2,15 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = undefined | T;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -13,6 +19,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  PhoneNumber: string;
 };
 
 export type ArchiveAreaResponse = {
@@ -107,7 +114,7 @@ export type Builder = {
   name: Scalars['String'];
   notes?: Maybe<Scalars['String']>;
   primaryEmail?: Maybe<Scalars['String']>;
-  primaryPhone?: Maybe<Scalars['String']>;
+  primaryPhone?: Maybe<Scalars['PhoneNumber']>;
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
 };
@@ -156,7 +163,7 @@ export type Company = {
   notes?: Maybe<Scalars['String']>;
   primaryAddress?: Maybe<Scalars['String']>;
   primaryEmail?: Maybe<Scalars['String']>;
-  primaryPhone?: Maybe<Scalars['String']>;
+  primaryPhone?: Maybe<Scalars['PhoneNumber']>;
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
 };
@@ -171,7 +178,7 @@ export type Contractor = {
   legacy: Scalars['Boolean'];
   name: Scalars['String'];
   notes?: Maybe<Scalars['String']>;
-  primaryPhone: Scalars['String'];
+  primaryPhone: Scalars['PhoneNumber'];
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
 };
@@ -180,70 +187,6 @@ export type ContractorsResponse = {
   __typename?: 'ContractorsResponse';
   data: Array<Contractor>;
   meta: MetaResponse;
-};
-
-export type CreateAreaInput = {
-  name: Scalars['String'];
-  nameSpanish: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateAreaResponse = {
-  __typename?: 'CreateAreaResponse';
-  data: Area;
-  message: Scalars['String'];
-};
-
-export type CreateBuilderInput = {
-  companyId: Scalars['String'];
-  name: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-  primaryEmail?: InputMaybe<Scalars['String']>;
-  primaryPhone: Scalars['String'];
-};
-
-export type CreateBuilderResponse = {
-  __typename?: 'CreateBuilderResponse';
-  data: Builder;
-  message: Scalars['String'];
-};
-
-export type CreateCommunityInput = {
-  companyId: Scalars['String'];
-  name: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateCommunityResponse = {
-  __typename?: 'CreateCommunityResponse';
-  data: Community;
-  message: Scalars['String'];
-};
-
-export type CreateCompanyInput = {
-  name: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-  primaryAddress?: InputMaybe<Scalars['String']>;
-  primaryEmail?: InputMaybe<Scalars['String']>;
-  primaryPhone?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateCompanyResponse = {
-  __typename?: 'CreateCompanyResponse';
-  data: Company;
-  message: Scalars['String'];
-};
-
-export type CreateContractorInput = {
-  name: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-  primaryPhone: Scalars['String'];
-};
-
-export type CreateContractorResponse = {
-  __typename?: 'CreateContractorResponse';
-  data: Contractor;
-  message: Scalars['String'];
 };
 
 export type CreateJobLegacyInput = {
@@ -262,44 +205,6 @@ export type CreateJobLegacyInput = {
 export type CreateJobLegacyResponse = {
   __typename?: 'CreateJobLegacyResponse';
   data: JobLegacy;
-  message: Scalars['String'];
-};
-
-export type CreateReporterInput = {
-  name: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-  primaryEmail?: InputMaybe<Scalars['String']>;
-  primaryPhone: Scalars['String'];
-};
-
-export type CreateReporterResponse = {
-  __typename?: 'CreateReporterResponse';
-  data: Reporter;
-  message: Scalars['String'];
-};
-
-export type CreateScopeInput = {
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  nameSpanish: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateScopeResponse = {
-  __typename?: 'CreateScopeResponse';
-  data: Scope;
-  message: Scalars['String'];
-};
-
-export type CreateSupplierInput = {
-  name: Scalars['String'];
-  notes?: InputMaybe<Scalars['String']>;
-  primaryPhone?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateSupplierResponse = {
-  __typename?: 'CreateSupplierResponse';
-  data: Supplier;
   message: Scalars['String'];
 };
 
@@ -382,16 +287,24 @@ export type Mutation = {
   archiveReporter: ArchiveReporterResponse;
   archiveScope: ArchiveScopeResponse;
   archiveSupplier: ArchiveSupplierResponse;
-  createArea: CreateAreaResponse;
-  createBuilder: CreateBuilderResponse;
-  createCommunity: CreateCommunityResponse;
-  createCompany: CreateCompanyResponse;
-  createContractor: CreateContractorResponse;
+  createArea: WriteAreaResponse;
+  createBuilder: WriteBuilderResponse;
+  createCommunity: WriteCommunityResponse;
+  createCompany: WriteCompanyResponse;
+  createContractor: WriteContractorResponse;
   createJobLegacy: CreateJobLegacyResponse;
-  createReporter: CreateReporterResponse;
-  createScope: CreateScopeResponse;
-  createSupplier: CreateSupplierResponse;
+  createReporter: WriteReporterResponse;
+  createScope: WriteScopeResponse;
+  createSupplier: WriteSupplierResponse;
   deleteLineItemLegacy: DeleteResponse;
+  modifyArea: WriteAreaResponse;
+  modifyBuilder: WriteBuilderResponse;
+  modifyCommunity: WriteCommunityResponse;
+  modifyCompany: WriteCompanyResponse;
+  modifyContractor: WriteContractorResponse;
+  modifyReporter: WriteReporterResponse;
+  modifyScope: WriteScopeResponse;
+  modifySupplier: WriteSupplierResponse;
 };
 
 export type MutationArchiveAreaArgs = {
@@ -431,23 +344,23 @@ export type MutationArchiveSupplierArgs = {
 };
 
 export type MutationCreateAreaArgs = {
-  data: CreateAreaInput;
+  data: WriteAreaInput;
 };
 
 export type MutationCreateBuilderArgs = {
-  data: CreateBuilderInput;
+  data: WriteBuilderInput;
 };
 
 export type MutationCreateCommunityArgs = {
-  data: CreateCommunityInput;
+  data: WriteCommunityInput;
 };
 
 export type MutationCreateCompanyArgs = {
-  data: CreateCompanyInput;
+  data: WriteCompanyInput;
 };
 
 export type MutationCreateContractorArgs = {
-  data: CreateContractorInput;
+  data: WriteContractorInput;
 };
 
 export type MutationCreateJobLegacyArgs = {
@@ -455,18 +368,58 @@ export type MutationCreateJobLegacyArgs = {
 };
 
 export type MutationCreateReporterArgs = {
-  data: CreateReporterInput;
+  data: WriteReporterInput;
 };
 
 export type MutationCreateScopeArgs = {
-  data: CreateScopeInput;
+  data: WriteScopeInput;
 };
 
 export type MutationCreateSupplierArgs = {
-  data: CreateSupplierInput;
+  data: WriteSupplierInput;
 };
 
 export type MutationDeleteLineItemLegacyArgs = {
+  id: Scalars['ID'];
+};
+
+export type MutationModifyAreaArgs = {
+  data: WriteAreaInput;
+  id: Scalars['ID'];
+};
+
+export type MutationModifyBuilderArgs = {
+  data: WriteBuilderInput;
+  id: Scalars['ID'];
+};
+
+export type MutationModifyCommunityArgs = {
+  data: WriteCommunityInput;
+  id: Scalars['ID'];
+};
+
+export type MutationModifyCompanyArgs = {
+  data: WriteCompanyInput;
+  id: Scalars['ID'];
+};
+
+export type MutationModifyContractorArgs = {
+  data: WriteContractorInput;
+  id: Scalars['ID'];
+};
+
+export type MutationModifyReporterArgs = {
+  data: WriteReporterInput;
+  id: Scalars['ID'];
+};
+
+export type MutationModifyScopeArgs = {
+  data: WriteScopeInput;
+  id: Scalars['ID'];
+};
+
+export type MutationModifySupplierArgs = {
+  data: WriteSupplierInput;
   id: Scalars['ID'];
 };
 
@@ -602,7 +555,7 @@ export type Reporter = {
   name: Scalars['String'];
   notes?: Maybe<Scalars['String']>;
   primaryEmail?: Maybe<Scalars['String']>;
-  primaryPhone: Scalars['String'];
+  primaryPhone: Scalars['PhoneNumber'];
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
 };
@@ -653,7 +606,7 @@ export type Supplier = {
   legacy: Scalars['Boolean'];
   name: Scalars['String'];
   notes?: Maybe<Scalars['String']>;
-  primaryPhone?: Maybe<Scalars['String']>;
+  primaryPhone?: Maybe<Scalars['PhoneNumber']>;
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
 };
@@ -670,11 +623,118 @@ export type UnassignedJobsResponse = {
   meta: MetaResponse;
 };
 
-export type GetLineItemTableSuppliersQueryVariables = Exact<{ [key: string]: never }>;
+export type WriteAreaInput = {
+  name: Scalars['String'];
+  nameSpanish: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+};
+
+export type WriteAreaResponse = {
+  __typename?: 'WriteAreaResponse';
+  data: Area;
+  message: Scalars['String'];
+};
+
+export type WriteBuilderInput = {
+  companyId: Scalars['String'];
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  primaryEmail?: InputMaybe<Scalars['String']>;
+  primaryPhone: Scalars['PhoneNumber'];
+};
+
+export type WriteBuilderResponse = {
+  __typename?: 'WriteBuilderResponse';
+  data: Builder;
+  message: Scalars['String'];
+};
+
+export type WriteCommunityInput = {
+  companyId: Scalars['String'];
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+};
+
+export type WriteCommunityResponse = {
+  __typename?: 'WriteCommunityResponse';
+  data: Community;
+  message: Scalars['String'];
+};
+
+export type WriteCompanyInput = {
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  primaryAddress?: InputMaybe<Scalars['String']>;
+  primaryEmail?: InputMaybe<Scalars['String']>;
+  primaryPhone?: InputMaybe<Scalars['PhoneNumber']>;
+};
+
+export type WriteCompanyResponse = {
+  __typename?: 'WriteCompanyResponse';
+  data: Company;
+  message: Scalars['String'];
+};
+
+export type WriteContractorInput = {
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  primaryPhone: Scalars['PhoneNumber'];
+};
+
+export type WriteContractorResponse = {
+  __typename?: 'WriteContractorResponse';
+  data: Contractor;
+  message: Scalars['String'];
+};
+
+export type WriteReporterInput = {
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  primaryEmail?: InputMaybe<Scalars['String']>;
+  primaryPhone: Scalars['PhoneNumber'];
+};
+
+export type WriteReporterResponse = {
+  __typename?: 'WriteReporterResponse';
+  data: Reporter;
+  message: Scalars['String'];
+};
+
+export type WriteScopeInput = {
+  description?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nameSpanish: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+};
+
+export type WriteScopeResponse = {
+  __typename?: 'WriteScopeResponse';
+  data: Scope;
+  message: Scalars['String'];
+};
+
+export type WriteSupplierInput = {
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  primaryPhone?: InputMaybe<Scalars['PhoneNumber']>;
+};
+
+export type WriteSupplierResponse = {
+  __typename?: 'WriteSupplierResponse';
+  data: Supplier;
+  message: Scalars['String'];
+};
+
+export type GetLineItemTableSuppliersQueryVariables = Exact<{
+  [key: string]: never;
+}>;
 
 export type GetLineItemTableSuppliersQuery = {
   __typename?: 'Query';
-  suppliers: { __typename?: 'SuppliersResponse'; data: Array<{ __typename?: 'Supplier'; id: string; name: string }> };
+  suppliers: {
+    __typename?: 'SuppliersResponse';
+    data: Array<{ __typename?: 'Supplier'; id: string; name: string }>;
+  };
 };
 
 export type ArchiveAreaMutationVariables = Exact<{
@@ -701,7 +761,10 @@ export type ArchiveCommunityMutationVariables = Exact<{
 
 export type ArchiveCommunityMutation = {
   __typename?: 'Mutation';
-  archiveCommunity: { __typename?: 'ArchiveCommunityResponse'; message: string };
+  archiveCommunity: {
+    __typename?: 'ArchiveCommunityResponse';
+    message: string;
+  };
 };
 
 export type ArchiveCompanyMutationVariables = Exact<{
@@ -719,7 +782,10 @@ export type ArchiveContractorMutationVariables = Exact<{
 
 export type ArchiveContractorMutation = {
   __typename?: 'Mutation';
-  archiveContractor: { __typename?: 'ArchiveContractorResponse'; message: string };
+  archiveContractor: {
+    __typename?: 'ArchiveContractorResponse';
+    message: string;
+  };
 };
 
 export type ArchiveReporterMutationVariables = Exact<{
@@ -750,21 +816,21 @@ export type ArchiveSupplierMutation = {
 };
 
 export type CreateAreaMutationVariables = Exact<{
-  data: CreateAreaInput;
+  data: WriteAreaInput;
 }>;
 
 export type CreateAreaMutation = {
   __typename?: 'Mutation';
-  createArea: { __typename?: 'CreateAreaResponse'; message: string };
+  createArea: { __typename?: 'WriteAreaResponse'; message: string };
 };
 
 export type CreateBuilderMutationVariables = Exact<{
-  data: CreateBuilderInput;
+  data: WriteBuilderInput;
 }>;
 
 export type CreateBuilderMutation = {
   __typename?: 'Mutation';
-  createBuilder: { __typename?: 'CreateBuilderResponse'; message: string };
+  createBuilder: { __typename?: 'WriteBuilderResponse'; message: string };
 };
 
 export type CreateJobLegacyMutationVariables = Exact<{
@@ -777,57 +843,191 @@ export type CreateJobLegacyMutation = {
 };
 
 export type CreateCommunityMutationVariables = Exact<{
-  data: CreateCommunityInput;
+  data: WriteCommunityInput;
 }>;
 
 export type CreateCommunityMutation = {
   __typename?: 'Mutation';
-  createCommunity: { __typename?: 'CreateCommunityResponse'; message: string };
+  createCommunity: { __typename?: 'WriteCommunityResponse'; message: string };
 };
 
 export type CreateCompanyMutationVariables = Exact<{
-  data: CreateCompanyInput;
+  data: WriteCompanyInput;
 }>;
 
 export type CreateCompanyMutation = {
   __typename?: 'Mutation';
-  createCompany: { __typename?: 'CreateCompanyResponse'; message: string };
+  createCompany: { __typename?: 'WriteCompanyResponse'; message: string };
 };
 
 export type CreateContractorMutationVariables = Exact<{
-  data: CreateContractorInput;
+  data: WriteContractorInput;
 }>;
 
 export type CreateContractorMutation = {
   __typename?: 'Mutation';
-  createContractor: { __typename?: 'CreateContractorResponse'; message: string };
+  createContractor: { __typename?: 'WriteContractorResponse'; message: string };
 };
 
 export type CreateReporterMutationVariables = Exact<{
-  data: CreateReporterInput;
+  data: WriteReporterInput;
 }>;
 
 export type CreateReporterMutation = {
   __typename?: 'Mutation';
-  createReporter: { __typename?: 'CreateReporterResponse'; message: string };
+  createReporter: { __typename?: 'WriteReporterResponse'; message: string };
 };
 
 export type CreateScopeMutationVariables = Exact<{
-  data: CreateScopeInput;
+  data: WriteScopeInput;
 }>;
 
 export type CreateScopeMutation = {
   __typename?: 'Mutation';
-  createScope: { __typename?: 'CreateScopeResponse'; message: string };
+  createScope: { __typename?: 'WriteScopeResponse'; message: string };
 };
 
 export type CreateSupplierMutationVariables = Exact<{
-  data: CreateSupplierInput;
+  data: WriteSupplierInput;
 }>;
 
 export type CreateSupplierMutation = {
   __typename?: 'Mutation';
-  createSupplier: { __typename?: 'CreateSupplierResponse'; message: string };
+  createSupplier: { __typename?: 'WriteSupplierResponse'; message: string };
+};
+
+export type GetAreaQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAreaQuery = {
+  __typename?: 'Query';
+  areaById?: {
+    __typename?: 'Area';
+    id: string;
+    name: string;
+    nameSpanish: string;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
+};
+
+export type GetCompanyQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCompanyQuery = {
+  __typename?: 'Query';
+  companyById?: {
+    __typename?: 'Company';
+    id: string;
+    name: string;
+    primaryAddress?: string | null;
+    primaryEmail?: string | null;
+    primaryPhone?: string | null;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
+};
+
+export type GetCommunityQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetCommunityQuery = {
+  __typename?: 'Query';
+  communityById?: {
+    __typename?: 'Community';
+    id: string;
+    name: string;
+    companyId: string;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
+};
+
+export type GetBuilderQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetBuilderQuery = {
+  __typename?: 'Query';
+  builderById?: {
+    __typename?: 'Builder';
+    id: string;
+    name: string;
+    primaryPhone?: string | null;
+    primaryEmail?: string | null;
+    companyId: string;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
+};
+
+export type GetContractorQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetContractorQuery = {
+  __typename?: 'Query';
+  contractorById?: {
+    __typename?: 'Contractor';
+    id: string;
+    name: string;
+    primaryPhone: string;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
+};
+
+export type GetReporterQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetReporterQuery = {
+  __typename?: 'Query';
+  reporterById?: {
+    __typename?: 'Reporter';
+    id: string;
+    name: string;
+    primaryPhone: string;
+    primaryEmail?: string | null;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
+};
+
+export type GetScopeQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetScopeQuery = {
+  __typename?: 'Query';
+  scopeById?: {
+    __typename?: 'Scope';
+    id: string;
+    name: string;
+    nameSpanish: string;
+    description?: string | null;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
+};
+
+export type GetSupplierQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSupplierQuery = {
+  __typename?: 'Query';
+  supplierById?: {
+    __typename?: 'Supplier';
+    id: string;
+    name: string;
+    primaryPhone?: string | null;
+    notes?: string | null;
+    legacy: boolean;
+  } | null;
 };
 
 export type GetAreasQueryVariables = Exact<{
@@ -1114,20 +1314,38 @@ export type GetOptionsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetOptionsQuery = {
   __typename?: 'Query';
-  areas: { __typename?: 'AreasResponse'; data: Array<{ __typename?: 'Area'; id: string; name: string }> };
-  builders: { __typename?: 'BuildersResponse'; data: Array<{ __typename?: 'Builder'; id: string; name: string }> };
+  areas: {
+    __typename?: 'AreasResponse';
+    data: Array<{ __typename?: 'Area'; id: string; name: string }>;
+  };
+  builders: {
+    __typename?: 'BuildersResponse';
+    data: Array<{ __typename?: 'Builder'; id: string; name: string }>;
+  };
   communities: {
     __typename?: 'CommunitiesResponse';
     data: Array<{ __typename?: 'Community'; id: string; name: string }>;
   };
-  companies: { __typename?: 'CompaniesResponse'; data: Array<{ __typename?: 'Company'; id: string; name: string }> };
+  companies: {
+    __typename?: 'CompaniesResponse';
+    data: Array<{ __typename?: 'Company'; id: string; name: string }>;
+  };
   contractors: {
     __typename?: 'ContractorsResponse';
     data: Array<{ __typename?: 'Contractor'; id: string; name: string }>;
   };
-  reporters: { __typename?: 'ReportersResponse'; data: Array<{ __typename?: 'Reporter'; id: string; name: string }> };
-  scopes: { __typename?: 'ScopesResponse'; data: Array<{ __typename?: 'Scope'; id: string; name: string }> };
-  suppliers: { __typename?: 'SuppliersResponse'; data: Array<{ __typename?: 'Supplier'; id: string; name: string }> };
+  reporters: {
+    __typename?: 'ReportersResponse';
+    data: Array<{ __typename?: 'Reporter'; id: string; name: string }>;
+  };
+  scopes: {
+    __typename?: 'ScopesResponse';
+    data: Array<{ __typename?: 'Scope'; id: string; name: string }>;
+  };
+  suppliers: {
+    __typename?: 'SuppliersResponse';
+    data: Array<{ __typename?: 'Supplier'; id: string; name: string }>;
+  };
 };
 
 export type GetAssignedContractorsQueryVariables = Exact<{
@@ -1196,7 +1414,11 @@ export type GetUnassignedJobsQuery = {
       area?: { __typename?: 'Area'; id: string; name: string } | null;
       builder?: { __typename?: 'Builder'; id: string; name: string } | null;
       community?: { __typename?: 'Community'; id: string; name: string } | null;
-      contractor?: { __typename?: 'Contractor'; id: string; name: string } | null;
+      contractor?: {
+        __typename?: 'Contractor';
+        id: string;
+        name: string;
+      } | null;
       reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
       scope?: { __typename?: 'Scope'; id: string; name: string } | null;
     }>;
@@ -1238,25 +1460,35 @@ export const GetLineItemTableSuppliersDocument = gql`
  * });
  */
 export function useGetLineItemTableSuppliersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetLineItemTableSuppliersQuery,
+    GetLineItemTableSuppliersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
-    GetLineItemTableSuppliersDocument,
-    options
-  );
+  return Apollo.useQuery<
+    GetLineItemTableSuppliersQuery,
+    GetLineItemTableSuppliersQueryVariables
+  >(GetLineItemTableSuppliersDocument, options);
 }
 export function useGetLineItemTableSuppliersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetLineItemTableSuppliersQuery,
+    GetLineItemTableSuppliersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetLineItemTableSuppliersQuery, GetLineItemTableSuppliersQueryVariables>(
-    GetLineItemTableSuppliersDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    GetLineItemTableSuppliersQuery,
+    GetLineItemTableSuppliersQueryVariables
+  >(GetLineItemTableSuppliersDocument, options);
 }
-export type GetLineItemTableSuppliersQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersQuery>;
-export type GetLineItemTableSuppliersLazyQueryHookResult = ReturnType<typeof useGetLineItemTableSuppliersLazyQuery>;
+export type GetLineItemTableSuppliersQueryHookResult = ReturnType<
+  typeof useGetLineItemTableSuppliersQuery
+>;
+export type GetLineItemTableSuppliersLazyQueryHookResult = ReturnType<
+  typeof useGetLineItemTableSuppliersLazyQuery
+>;
 export type GetLineItemTableSuppliersQueryResult = Apollo.QueryResult<
   GetLineItemTableSuppliersQuery,
   GetLineItemTableSuppliersQueryVariables
@@ -1268,7 +1500,10 @@ export const ArchiveAreaDocument = gql`
     }
   }
 `;
-export type ArchiveAreaMutationFn = Apollo.MutationFunction<ArchiveAreaMutation, ArchiveAreaMutationVariables>;
+export type ArchiveAreaMutationFn = Apollo.MutationFunction<
+  ArchiveAreaMutation,
+  ArchiveAreaMutationVariables
+>;
 
 /**
  * __useArchiveAreaMutation__
@@ -1288,14 +1523,26 @@ export type ArchiveAreaMutationFn = Apollo.MutationFunction<ArchiveAreaMutation,
  * });
  */
 export function useArchiveAreaMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveAreaMutation, ArchiveAreaMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveAreaMutation,
+    ArchiveAreaMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveAreaMutation, ArchiveAreaMutationVariables>(ArchiveAreaDocument, options);
+  return Apollo.useMutation<ArchiveAreaMutation, ArchiveAreaMutationVariables>(
+    ArchiveAreaDocument,
+    options
+  );
 }
-export type ArchiveAreaMutationHookResult = ReturnType<typeof useArchiveAreaMutation>;
-export type ArchiveAreaMutationResult = Apollo.MutationResult<ArchiveAreaMutation>;
-export type ArchiveAreaMutationOptions = Apollo.BaseMutationOptions<ArchiveAreaMutation, ArchiveAreaMutationVariables>;
+export type ArchiveAreaMutationHookResult = ReturnType<
+  typeof useArchiveAreaMutation
+>;
+export type ArchiveAreaMutationResult =
+  Apollo.MutationResult<ArchiveAreaMutation>;
+export type ArchiveAreaMutationOptions = Apollo.BaseMutationOptions<
+  ArchiveAreaMutation,
+  ArchiveAreaMutationVariables
+>;
 export const ArchiveBuilderDocument = gql`
   mutation ArchiveBuilder($id: ID!) {
     archiveBuilder(id: $id) {
@@ -1303,7 +1550,10 @@ export const ArchiveBuilderDocument = gql`
     }
   }
 `;
-export type ArchiveBuilderMutationFn = Apollo.MutationFunction<ArchiveBuilderMutation, ArchiveBuilderMutationVariables>;
+export type ArchiveBuilderMutationFn = Apollo.MutationFunction<
+  ArchiveBuilderMutation,
+  ArchiveBuilderMutationVariables
+>;
 
 /**
  * __useArchiveBuilderMutation__
@@ -1323,13 +1573,22 @@ export type ArchiveBuilderMutationFn = Apollo.MutationFunction<ArchiveBuilderMut
  * });
  */
 export function useArchiveBuilderMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveBuilderMutation, ArchiveBuilderMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveBuilderMutation,
+    ArchiveBuilderMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveBuilderMutation, ArchiveBuilderMutationVariables>(ArchiveBuilderDocument, options);
+  return Apollo.useMutation<
+    ArchiveBuilderMutation,
+    ArchiveBuilderMutationVariables
+  >(ArchiveBuilderDocument, options);
 }
-export type ArchiveBuilderMutationHookResult = ReturnType<typeof useArchiveBuilderMutation>;
-export type ArchiveBuilderMutationResult = Apollo.MutationResult<ArchiveBuilderMutation>;
+export type ArchiveBuilderMutationHookResult = ReturnType<
+  typeof useArchiveBuilderMutation
+>;
+export type ArchiveBuilderMutationResult =
+  Apollo.MutationResult<ArchiveBuilderMutation>;
 export type ArchiveBuilderMutationOptions = Apollo.BaseMutationOptions<
   ArchiveBuilderMutation,
   ArchiveBuilderMutationVariables
@@ -1364,16 +1623,22 @@ export type ArchiveCommunityMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useArchiveCommunityMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveCommunityMutation, ArchiveCommunityMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveCommunityMutation,
+    ArchiveCommunityMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveCommunityMutation, ArchiveCommunityMutationVariables>(
-    ArchiveCommunityDocument,
-    options
-  );
+  return Apollo.useMutation<
+    ArchiveCommunityMutation,
+    ArchiveCommunityMutationVariables
+  >(ArchiveCommunityDocument, options);
 }
-export type ArchiveCommunityMutationHookResult = ReturnType<typeof useArchiveCommunityMutation>;
-export type ArchiveCommunityMutationResult = Apollo.MutationResult<ArchiveCommunityMutation>;
+export type ArchiveCommunityMutationHookResult = ReturnType<
+  typeof useArchiveCommunityMutation
+>;
+export type ArchiveCommunityMutationResult =
+  Apollo.MutationResult<ArchiveCommunityMutation>;
 export type ArchiveCommunityMutationOptions = Apollo.BaseMutationOptions<
   ArchiveCommunityMutation,
   ArchiveCommunityMutationVariables
@@ -1385,7 +1650,10 @@ export const ArchiveCompanyDocument = gql`
     }
   }
 `;
-export type ArchiveCompanyMutationFn = Apollo.MutationFunction<ArchiveCompanyMutation, ArchiveCompanyMutationVariables>;
+export type ArchiveCompanyMutationFn = Apollo.MutationFunction<
+  ArchiveCompanyMutation,
+  ArchiveCompanyMutationVariables
+>;
 
 /**
  * __useArchiveCompanyMutation__
@@ -1405,13 +1673,22 @@ export type ArchiveCompanyMutationFn = Apollo.MutationFunction<ArchiveCompanyMut
  * });
  */
 export function useArchiveCompanyMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveCompanyMutation, ArchiveCompanyMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveCompanyMutation,
+    ArchiveCompanyMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveCompanyMutation, ArchiveCompanyMutationVariables>(ArchiveCompanyDocument, options);
+  return Apollo.useMutation<
+    ArchiveCompanyMutation,
+    ArchiveCompanyMutationVariables
+  >(ArchiveCompanyDocument, options);
 }
-export type ArchiveCompanyMutationHookResult = ReturnType<typeof useArchiveCompanyMutation>;
-export type ArchiveCompanyMutationResult = Apollo.MutationResult<ArchiveCompanyMutation>;
+export type ArchiveCompanyMutationHookResult = ReturnType<
+  typeof useArchiveCompanyMutation
+>;
+export type ArchiveCompanyMutationResult =
+  Apollo.MutationResult<ArchiveCompanyMutation>;
 export type ArchiveCompanyMutationOptions = Apollo.BaseMutationOptions<
   ArchiveCompanyMutation,
   ArchiveCompanyMutationVariables
@@ -1446,16 +1723,22 @@ export type ArchiveContractorMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useArchiveContractorMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveContractorMutation, ArchiveContractorMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveContractorMutation,
+    ArchiveContractorMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveContractorMutation, ArchiveContractorMutationVariables>(
-    ArchiveContractorDocument,
-    options
-  );
+  return Apollo.useMutation<
+    ArchiveContractorMutation,
+    ArchiveContractorMutationVariables
+  >(ArchiveContractorDocument, options);
 }
-export type ArchiveContractorMutationHookResult = ReturnType<typeof useArchiveContractorMutation>;
-export type ArchiveContractorMutationResult = Apollo.MutationResult<ArchiveContractorMutation>;
+export type ArchiveContractorMutationHookResult = ReturnType<
+  typeof useArchiveContractorMutation
+>;
+export type ArchiveContractorMutationResult =
+  Apollo.MutationResult<ArchiveContractorMutation>;
 export type ArchiveContractorMutationOptions = Apollo.BaseMutationOptions<
   ArchiveContractorMutation,
   ArchiveContractorMutationVariables
@@ -1490,16 +1773,22 @@ export type ArchiveReporterMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useArchiveReporterMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveReporterMutation, ArchiveReporterMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveReporterMutation,
+    ArchiveReporterMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveReporterMutation, ArchiveReporterMutationVariables>(
-    ArchiveReporterDocument,
-    options
-  );
+  return Apollo.useMutation<
+    ArchiveReporterMutation,
+    ArchiveReporterMutationVariables
+  >(ArchiveReporterDocument, options);
 }
-export type ArchiveReporterMutationHookResult = ReturnType<typeof useArchiveReporterMutation>;
-export type ArchiveReporterMutationResult = Apollo.MutationResult<ArchiveReporterMutation>;
+export type ArchiveReporterMutationHookResult = ReturnType<
+  typeof useArchiveReporterMutation
+>;
+export type ArchiveReporterMutationResult =
+  Apollo.MutationResult<ArchiveReporterMutation>;
 export type ArchiveReporterMutationOptions = Apollo.BaseMutationOptions<
   ArchiveReporterMutation,
   ArchiveReporterMutationVariables
@@ -1511,7 +1800,10 @@ export const ArchiveScopeDocument = gql`
     }
   }
 `;
-export type ArchiveScopeMutationFn = Apollo.MutationFunction<ArchiveScopeMutation, ArchiveScopeMutationVariables>;
+export type ArchiveScopeMutationFn = Apollo.MutationFunction<
+  ArchiveScopeMutation,
+  ArchiveScopeMutationVariables
+>;
 
 /**
  * __useArchiveScopeMutation__
@@ -1531,13 +1823,22 @@ export type ArchiveScopeMutationFn = Apollo.MutationFunction<ArchiveScopeMutatio
  * });
  */
 export function useArchiveScopeMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveScopeMutation, ArchiveScopeMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveScopeMutation,
+    ArchiveScopeMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveScopeMutation, ArchiveScopeMutationVariables>(ArchiveScopeDocument, options);
+  return Apollo.useMutation<
+    ArchiveScopeMutation,
+    ArchiveScopeMutationVariables
+  >(ArchiveScopeDocument, options);
 }
-export type ArchiveScopeMutationHookResult = ReturnType<typeof useArchiveScopeMutation>;
-export type ArchiveScopeMutationResult = Apollo.MutationResult<ArchiveScopeMutation>;
+export type ArchiveScopeMutationHookResult = ReturnType<
+  typeof useArchiveScopeMutation
+>;
+export type ArchiveScopeMutationResult =
+  Apollo.MutationResult<ArchiveScopeMutation>;
 export type ArchiveScopeMutationOptions = Apollo.BaseMutationOptions<
   ArchiveScopeMutation,
   ArchiveScopeMutationVariables
@@ -1572,28 +1873,37 @@ export type ArchiveSupplierMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useArchiveSupplierMutation(
-  baseOptions?: Apollo.MutationHookOptions<ArchiveSupplierMutation, ArchiveSupplierMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    ArchiveSupplierMutation,
+    ArchiveSupplierMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ArchiveSupplierMutation, ArchiveSupplierMutationVariables>(
-    ArchiveSupplierDocument,
-    options
-  );
+  return Apollo.useMutation<
+    ArchiveSupplierMutation,
+    ArchiveSupplierMutationVariables
+  >(ArchiveSupplierDocument, options);
 }
-export type ArchiveSupplierMutationHookResult = ReturnType<typeof useArchiveSupplierMutation>;
-export type ArchiveSupplierMutationResult = Apollo.MutationResult<ArchiveSupplierMutation>;
+export type ArchiveSupplierMutationHookResult = ReturnType<
+  typeof useArchiveSupplierMutation
+>;
+export type ArchiveSupplierMutationResult =
+  Apollo.MutationResult<ArchiveSupplierMutation>;
 export type ArchiveSupplierMutationOptions = Apollo.BaseMutationOptions<
   ArchiveSupplierMutation,
   ArchiveSupplierMutationVariables
 >;
 export const CreateAreaDocument = gql`
-  mutation CreateArea($data: CreateAreaInput!) {
+  mutation CreateArea($data: WriteAreaInput!) {
     createArea(data: $data) {
       message
     }
   }
 `;
-export type CreateAreaMutationFn = Apollo.MutationFunction<CreateAreaMutation, CreateAreaMutationVariables>;
+export type CreateAreaMutationFn = Apollo.MutationFunction<
+  CreateAreaMutation,
+  CreateAreaMutationVariables
+>;
 
 /**
  * __useCreateAreaMutation__
@@ -1613,22 +1923,37 @@ export type CreateAreaMutationFn = Apollo.MutationFunction<CreateAreaMutation, C
  * });
  */
 export function useCreateAreaMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateAreaMutation, CreateAreaMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateAreaMutation,
+    CreateAreaMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateAreaMutation, CreateAreaMutationVariables>(CreateAreaDocument, options);
+  return Apollo.useMutation<CreateAreaMutation, CreateAreaMutationVariables>(
+    CreateAreaDocument,
+    options
+  );
 }
-export type CreateAreaMutationHookResult = ReturnType<typeof useCreateAreaMutation>;
-export type CreateAreaMutationResult = Apollo.MutationResult<CreateAreaMutation>;
-export type CreateAreaMutationOptions = Apollo.BaseMutationOptions<CreateAreaMutation, CreateAreaMutationVariables>;
+export type CreateAreaMutationHookResult = ReturnType<
+  typeof useCreateAreaMutation
+>;
+export type CreateAreaMutationResult =
+  Apollo.MutationResult<CreateAreaMutation>;
+export type CreateAreaMutationOptions = Apollo.BaseMutationOptions<
+  CreateAreaMutation,
+  CreateAreaMutationVariables
+>;
 export const CreateBuilderDocument = gql`
-  mutation CreateBuilder($data: CreateBuilderInput!) {
+  mutation CreateBuilder($data: WriteBuilderInput!) {
     createBuilder(data: $data) {
       message
     }
   }
 `;
-export type CreateBuilderMutationFn = Apollo.MutationFunction<CreateBuilderMutation, CreateBuilderMutationVariables>;
+export type CreateBuilderMutationFn = Apollo.MutationFunction<
+  CreateBuilderMutation,
+  CreateBuilderMutationVariables
+>;
 
 /**
  * __useCreateBuilderMutation__
@@ -1648,13 +1973,22 @@ export type CreateBuilderMutationFn = Apollo.MutationFunction<CreateBuilderMutat
  * });
  */
 export function useCreateBuilderMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateBuilderMutation, CreateBuilderMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateBuilderMutation,
+    CreateBuilderMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateBuilderMutation, CreateBuilderMutationVariables>(CreateBuilderDocument, options);
+  return Apollo.useMutation<
+    CreateBuilderMutation,
+    CreateBuilderMutationVariables
+  >(CreateBuilderDocument, options);
 }
-export type CreateBuilderMutationHookResult = ReturnType<typeof useCreateBuilderMutation>;
-export type CreateBuilderMutationResult = Apollo.MutationResult<CreateBuilderMutation>;
+export type CreateBuilderMutationHookResult = ReturnType<
+  typeof useCreateBuilderMutation
+>;
+export type CreateBuilderMutationResult =
+  Apollo.MutationResult<CreateBuilderMutation>;
 export type CreateBuilderMutationOptions = Apollo.BaseMutationOptions<
   CreateBuilderMutation,
   CreateBuilderMutationVariables
@@ -1689,22 +2023,28 @@ export type CreateJobLegacyMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreateJobLegacyMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateJobLegacyMutation, CreateJobLegacyMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateJobLegacyMutation,
+    CreateJobLegacyMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateJobLegacyMutation, CreateJobLegacyMutationVariables>(
-    CreateJobLegacyDocument,
-    options
-  );
+  return Apollo.useMutation<
+    CreateJobLegacyMutation,
+    CreateJobLegacyMutationVariables
+  >(CreateJobLegacyDocument, options);
 }
-export type CreateJobLegacyMutationHookResult = ReturnType<typeof useCreateJobLegacyMutation>;
-export type CreateJobLegacyMutationResult = Apollo.MutationResult<CreateJobLegacyMutation>;
+export type CreateJobLegacyMutationHookResult = ReturnType<
+  typeof useCreateJobLegacyMutation
+>;
+export type CreateJobLegacyMutationResult =
+  Apollo.MutationResult<CreateJobLegacyMutation>;
 export type CreateJobLegacyMutationOptions = Apollo.BaseMutationOptions<
   CreateJobLegacyMutation,
   CreateJobLegacyMutationVariables
 >;
 export const CreateCommunityDocument = gql`
-  mutation CreateCommunity($data: CreateCommunityInput!) {
+  mutation CreateCommunity($data: WriteCommunityInput!) {
     createCommunity(data: $data) {
       message
     }
@@ -1733,28 +2073,37 @@ export type CreateCommunityMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreateCommunityMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateCommunityMutation, CreateCommunityMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCommunityMutation,
+    CreateCommunityMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateCommunityMutation, CreateCommunityMutationVariables>(
-    CreateCommunityDocument,
-    options
-  );
+  return Apollo.useMutation<
+    CreateCommunityMutation,
+    CreateCommunityMutationVariables
+  >(CreateCommunityDocument, options);
 }
-export type CreateCommunityMutationHookResult = ReturnType<typeof useCreateCommunityMutation>;
-export type CreateCommunityMutationResult = Apollo.MutationResult<CreateCommunityMutation>;
+export type CreateCommunityMutationHookResult = ReturnType<
+  typeof useCreateCommunityMutation
+>;
+export type CreateCommunityMutationResult =
+  Apollo.MutationResult<CreateCommunityMutation>;
 export type CreateCommunityMutationOptions = Apollo.BaseMutationOptions<
   CreateCommunityMutation,
   CreateCommunityMutationVariables
 >;
 export const CreateCompanyDocument = gql`
-  mutation CreateCompany($data: CreateCompanyInput!) {
+  mutation CreateCompany($data: WriteCompanyInput!) {
     createCompany(data: $data) {
       message
     }
   }
 `;
-export type CreateCompanyMutationFn = Apollo.MutationFunction<CreateCompanyMutation, CreateCompanyMutationVariables>;
+export type CreateCompanyMutationFn = Apollo.MutationFunction<
+  CreateCompanyMutation,
+  CreateCompanyMutationVariables
+>;
 
 /**
  * __useCreateCompanyMutation__
@@ -1774,19 +2123,28 @@ export type CreateCompanyMutationFn = Apollo.MutationFunction<CreateCompanyMutat
  * });
  */
 export function useCreateCompanyMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateCompanyMutation, CreateCompanyMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCompanyMutation,
+    CreateCompanyMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateCompanyMutation, CreateCompanyMutationVariables>(CreateCompanyDocument, options);
+  return Apollo.useMutation<
+    CreateCompanyMutation,
+    CreateCompanyMutationVariables
+  >(CreateCompanyDocument, options);
 }
-export type CreateCompanyMutationHookResult = ReturnType<typeof useCreateCompanyMutation>;
-export type CreateCompanyMutationResult = Apollo.MutationResult<CreateCompanyMutation>;
+export type CreateCompanyMutationHookResult = ReturnType<
+  typeof useCreateCompanyMutation
+>;
+export type CreateCompanyMutationResult =
+  Apollo.MutationResult<CreateCompanyMutation>;
 export type CreateCompanyMutationOptions = Apollo.BaseMutationOptions<
   CreateCompanyMutation,
   CreateCompanyMutationVariables
 >;
 export const CreateContractorDocument = gql`
-  mutation CreateContractor($data: CreateContractorInput!) {
+  mutation CreateContractor($data: WriteContractorInput!) {
     createContractor(data: $data) {
       message
     }
@@ -1815,28 +2173,37 @@ export type CreateContractorMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreateContractorMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateContractorMutation, CreateContractorMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateContractorMutation,
+    CreateContractorMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateContractorMutation, CreateContractorMutationVariables>(
-    CreateContractorDocument,
-    options
-  );
+  return Apollo.useMutation<
+    CreateContractorMutation,
+    CreateContractorMutationVariables
+  >(CreateContractorDocument, options);
 }
-export type CreateContractorMutationHookResult = ReturnType<typeof useCreateContractorMutation>;
-export type CreateContractorMutationResult = Apollo.MutationResult<CreateContractorMutation>;
+export type CreateContractorMutationHookResult = ReturnType<
+  typeof useCreateContractorMutation
+>;
+export type CreateContractorMutationResult =
+  Apollo.MutationResult<CreateContractorMutation>;
 export type CreateContractorMutationOptions = Apollo.BaseMutationOptions<
   CreateContractorMutation,
   CreateContractorMutationVariables
 >;
 export const CreateReporterDocument = gql`
-  mutation CreateReporter($data: CreateReporterInput!) {
+  mutation CreateReporter($data: WriteReporterInput!) {
     createReporter(data: $data) {
       message
     }
   }
 `;
-export type CreateReporterMutationFn = Apollo.MutationFunction<CreateReporterMutation, CreateReporterMutationVariables>;
+export type CreateReporterMutationFn = Apollo.MutationFunction<
+  CreateReporterMutation,
+  CreateReporterMutationVariables
+>;
 
 /**
  * __useCreateReporterMutation__
@@ -1856,25 +2223,37 @@ export type CreateReporterMutationFn = Apollo.MutationFunction<CreateReporterMut
  * });
  */
 export function useCreateReporterMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateReporterMutation, CreateReporterMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateReporterMutation,
+    CreateReporterMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateReporterMutation, CreateReporterMutationVariables>(CreateReporterDocument, options);
+  return Apollo.useMutation<
+    CreateReporterMutation,
+    CreateReporterMutationVariables
+  >(CreateReporterDocument, options);
 }
-export type CreateReporterMutationHookResult = ReturnType<typeof useCreateReporterMutation>;
-export type CreateReporterMutationResult = Apollo.MutationResult<CreateReporterMutation>;
+export type CreateReporterMutationHookResult = ReturnType<
+  typeof useCreateReporterMutation
+>;
+export type CreateReporterMutationResult =
+  Apollo.MutationResult<CreateReporterMutation>;
 export type CreateReporterMutationOptions = Apollo.BaseMutationOptions<
   CreateReporterMutation,
   CreateReporterMutationVariables
 >;
 export const CreateScopeDocument = gql`
-  mutation CreateScope($data: CreateScopeInput!) {
+  mutation CreateScope($data: WriteScopeInput!) {
     createScope(data: $data) {
       message
     }
   }
 `;
-export type CreateScopeMutationFn = Apollo.MutationFunction<CreateScopeMutation, CreateScopeMutationVariables>;
+export type CreateScopeMutationFn = Apollo.MutationFunction<
+  CreateScopeMutation,
+  CreateScopeMutationVariables
+>;
 
 /**
  * __useCreateScopeMutation__
@@ -1894,22 +2273,37 @@ export type CreateScopeMutationFn = Apollo.MutationFunction<CreateScopeMutation,
  * });
  */
 export function useCreateScopeMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateScopeMutation, CreateScopeMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateScopeMutation,
+    CreateScopeMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateScopeMutation, CreateScopeMutationVariables>(CreateScopeDocument, options);
+  return Apollo.useMutation<CreateScopeMutation, CreateScopeMutationVariables>(
+    CreateScopeDocument,
+    options
+  );
 }
-export type CreateScopeMutationHookResult = ReturnType<typeof useCreateScopeMutation>;
-export type CreateScopeMutationResult = Apollo.MutationResult<CreateScopeMutation>;
-export type CreateScopeMutationOptions = Apollo.BaseMutationOptions<CreateScopeMutation, CreateScopeMutationVariables>;
+export type CreateScopeMutationHookResult = ReturnType<
+  typeof useCreateScopeMutation
+>;
+export type CreateScopeMutationResult =
+  Apollo.MutationResult<CreateScopeMutation>;
+export type CreateScopeMutationOptions = Apollo.BaseMutationOptions<
+  CreateScopeMutation,
+  CreateScopeMutationVariables
+>;
 export const CreateSupplierDocument = gql`
-  mutation CreateSupplier($data: CreateSupplierInput!) {
+  mutation CreateSupplier($data: WriteSupplierInput!) {
     createSupplier(data: $data) {
       message
     }
   }
 `;
-export type CreateSupplierMutationFn = Apollo.MutationFunction<CreateSupplierMutation, CreateSupplierMutationVariables>;
+export type CreateSupplierMutationFn = Apollo.MutationFunction<
+  CreateSupplierMutation,
+  CreateSupplierMutationVariables
+>;
 
 /**
  * __useCreateSupplierMutation__
@@ -1929,19 +2323,511 @@ export type CreateSupplierMutationFn = Apollo.MutationFunction<CreateSupplierMut
  * });
  */
 export function useCreateSupplierMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateSupplierMutation, CreateSupplierMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSupplierMutation,
+    CreateSupplierMutationVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateSupplierMutation, CreateSupplierMutationVariables>(CreateSupplierDocument, options);
+  return Apollo.useMutation<
+    CreateSupplierMutation,
+    CreateSupplierMutationVariables
+  >(CreateSupplierDocument, options);
 }
-export type CreateSupplierMutationHookResult = ReturnType<typeof useCreateSupplierMutation>;
-export type CreateSupplierMutationResult = Apollo.MutationResult<CreateSupplierMutation>;
+export type CreateSupplierMutationHookResult = ReturnType<
+  typeof useCreateSupplierMutation
+>;
+export type CreateSupplierMutationResult =
+  Apollo.MutationResult<CreateSupplierMutation>;
 export type CreateSupplierMutationOptions = Apollo.BaseMutationOptions<
   CreateSupplierMutation,
   CreateSupplierMutationVariables
 >;
+export const GetAreaDocument = gql`
+  query GetArea($id: ID!) {
+    areaById(id: $id) {
+      id
+      name
+      nameSpanish
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetAreaQuery__
+ *
+ * To run a query within a React component, call `useGetAreaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAreaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAreaQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAreaQuery(
+  baseOptions: Apollo.QueryHookOptions<GetAreaQuery, GetAreaQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAreaQuery, GetAreaQueryVariables>(
+    GetAreaDocument,
+    options
+  );
+}
+export function useGetAreaLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetAreaQuery, GetAreaQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAreaQuery, GetAreaQueryVariables>(
+    GetAreaDocument,
+    options
+  );
+}
+export type GetAreaQueryHookResult = ReturnType<typeof useGetAreaQuery>;
+export type GetAreaLazyQueryHookResult = ReturnType<typeof useGetAreaLazyQuery>;
+export type GetAreaQueryResult = Apollo.QueryResult<
+  GetAreaQuery,
+  GetAreaQueryVariables
+>;
+export const GetCompanyDocument = gql`
+  query GetCompany($id: ID!) {
+    companyById(id: $id) {
+      id
+      name
+      primaryAddress
+      primaryEmail
+      primaryPhone
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetCompanyQuery__
+ *
+ * To run a query within a React component, call `useGetCompanyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCompanyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCompanyQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCompanyQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetCompanyQuery,
+    GetCompanyQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetCompanyQuery, GetCompanyQueryVariables>(
+    GetCompanyDocument,
+    options
+  );
+}
+export function useGetCompanyLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCompanyQuery,
+    GetCompanyQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetCompanyQuery, GetCompanyQueryVariables>(
+    GetCompanyDocument,
+    options
+  );
+}
+export type GetCompanyQueryHookResult = ReturnType<typeof useGetCompanyQuery>;
+export type GetCompanyLazyQueryHookResult = ReturnType<
+  typeof useGetCompanyLazyQuery
+>;
+export type GetCompanyQueryResult = Apollo.QueryResult<
+  GetCompanyQuery,
+  GetCompanyQueryVariables
+>;
+export const GetCommunityDocument = gql`
+  query GetCommunity($id: ID!) {
+    communityById(id: $id) {
+      id
+      name
+      companyId
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetCommunityQuery__
+ *
+ * To run a query within a React component, call `useGetCommunityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommunityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommunityQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCommunityQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetCommunityQuery,
+    GetCommunityQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetCommunityQuery, GetCommunityQueryVariables>(
+    GetCommunityDocument,
+    options
+  );
+}
+export function useGetCommunityLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCommunityQuery,
+    GetCommunityQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetCommunityQuery, GetCommunityQueryVariables>(
+    GetCommunityDocument,
+    options
+  );
+}
+export type GetCommunityQueryHookResult = ReturnType<
+  typeof useGetCommunityQuery
+>;
+export type GetCommunityLazyQueryHookResult = ReturnType<
+  typeof useGetCommunityLazyQuery
+>;
+export type GetCommunityQueryResult = Apollo.QueryResult<
+  GetCommunityQuery,
+  GetCommunityQueryVariables
+>;
+export const GetBuilderDocument = gql`
+  query GetBuilder($id: ID!) {
+    builderById(id: $id) {
+      id
+      name
+      primaryPhone
+      primaryEmail
+      companyId
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetBuilderQuery__
+ *
+ * To run a query within a React component, call `useGetBuilderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBuilderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBuilderQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetBuilderQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetBuilderQuery,
+    GetBuilderQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetBuilderQuery, GetBuilderQueryVariables>(
+    GetBuilderDocument,
+    options
+  );
+}
+export function useGetBuilderLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBuilderQuery,
+    GetBuilderQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetBuilderQuery, GetBuilderQueryVariables>(
+    GetBuilderDocument,
+    options
+  );
+}
+export type GetBuilderQueryHookResult = ReturnType<typeof useGetBuilderQuery>;
+export type GetBuilderLazyQueryHookResult = ReturnType<
+  typeof useGetBuilderLazyQuery
+>;
+export type GetBuilderQueryResult = Apollo.QueryResult<
+  GetBuilderQuery,
+  GetBuilderQueryVariables
+>;
+export const GetContractorDocument = gql`
+  query GetContractor($id: ID!) {
+    contractorById(id: $id) {
+      id
+      name
+      primaryPhone
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetContractorQuery__
+ *
+ * To run a query within a React component, call `useGetContractorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetContractorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetContractorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetContractorQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetContractorQuery,
+    GetContractorQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetContractorQuery, GetContractorQueryVariables>(
+    GetContractorDocument,
+    options
+  );
+}
+export function useGetContractorLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetContractorQuery,
+    GetContractorQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetContractorQuery, GetContractorQueryVariables>(
+    GetContractorDocument,
+    options
+  );
+}
+export type GetContractorQueryHookResult = ReturnType<
+  typeof useGetContractorQuery
+>;
+export type GetContractorLazyQueryHookResult = ReturnType<
+  typeof useGetContractorLazyQuery
+>;
+export type GetContractorQueryResult = Apollo.QueryResult<
+  GetContractorQuery,
+  GetContractorQueryVariables
+>;
+export const GetReporterDocument = gql`
+  query GetReporter($id: ID!) {
+    reporterById(id: $id) {
+      id
+      name
+      primaryPhone
+      primaryEmail
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetReporterQuery__
+ *
+ * To run a query within a React component, call `useGetReporterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReporterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReporterQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetReporterQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetReporterQuery,
+    GetReporterQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetReporterQuery, GetReporterQueryVariables>(
+    GetReporterDocument,
+    options
+  );
+}
+export function useGetReporterLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetReporterQuery,
+    GetReporterQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetReporterQuery, GetReporterQueryVariables>(
+    GetReporterDocument,
+    options
+  );
+}
+export type GetReporterQueryHookResult = ReturnType<typeof useGetReporterQuery>;
+export type GetReporterLazyQueryHookResult = ReturnType<
+  typeof useGetReporterLazyQuery
+>;
+export type GetReporterQueryResult = Apollo.QueryResult<
+  GetReporterQuery,
+  GetReporterQueryVariables
+>;
+export const GetScopeDocument = gql`
+  query GetScope($id: ID!) {
+    scopeById(id: $id) {
+      id
+      name
+      nameSpanish
+      description
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetScopeQuery__
+ *
+ * To run a query within a React component, call `useGetScopeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetScopeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetScopeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetScopeQuery(
+  baseOptions: Apollo.QueryHookOptions<GetScopeQuery, GetScopeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetScopeQuery, GetScopeQueryVariables>(
+    GetScopeDocument,
+    options
+  );
+}
+export function useGetScopeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetScopeQuery,
+    GetScopeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetScopeQuery, GetScopeQueryVariables>(
+    GetScopeDocument,
+    options
+  );
+}
+export type GetScopeQueryHookResult = ReturnType<typeof useGetScopeQuery>;
+export type GetScopeLazyQueryHookResult = ReturnType<
+  typeof useGetScopeLazyQuery
+>;
+export type GetScopeQueryResult = Apollo.QueryResult<
+  GetScopeQuery,
+  GetScopeQueryVariables
+>;
+export const GetSupplierDocument = gql`
+  query GetSupplier($id: ID!) {
+    supplierById(id: $id) {
+      id
+      name
+      primaryPhone
+      notes
+      legacy
+    }
+  }
+`;
+
+/**
+ * __useGetSupplierQuery__
+ *
+ * To run a query within a React component, call `useGetSupplierQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSupplierQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSupplierQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetSupplierQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSupplierQuery,
+    GetSupplierQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSupplierQuery, GetSupplierQueryVariables>(
+    GetSupplierDocument,
+    options
+  );
+}
+export function useGetSupplierLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSupplierQuery,
+    GetSupplierQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetSupplierQuery, GetSupplierQueryVariables>(
+    GetSupplierDocument,
+    options
+  );
+}
+export type GetSupplierQueryHookResult = ReturnType<typeof useGetSupplierQuery>;
+export type GetSupplierLazyQueryHookResult = ReturnType<
+  typeof useGetSupplierLazyQuery
+>;
+export type GetSupplierQueryResult = Apollo.QueryResult<
+  GetSupplierQuery,
+  GetSupplierQueryVariables
+>;
 export const GetAreasDocument = gql`
-  query GetAreas($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  query GetAreas(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
     areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
       data {
         id
@@ -1984,19 +2870,41 @@ export const GetAreasDocument = gql`
  *   },
  * });
  */
-export function useGetAreasQuery(baseOptions?: Apollo.QueryHookOptions<GetAreasQuery, GetAreasQueryVariables>) {
+export function useGetAreasQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetAreasQuery, GetAreasQueryVariables>
+) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetAreasQuery, GetAreasQueryVariables>(GetAreasDocument, options);
+  return Apollo.useQuery<GetAreasQuery, GetAreasQueryVariables>(
+    GetAreasDocument,
+    options
+  );
 }
-export function useGetAreasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAreasQuery, GetAreasQueryVariables>) {
+export function useGetAreasLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAreasQuery,
+    GetAreasQueryVariables
+  >
+) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetAreasQuery, GetAreasQueryVariables>(GetAreasDocument, options);
+  return Apollo.useLazyQuery<GetAreasQuery, GetAreasQueryVariables>(
+    GetAreasDocument,
+    options
+  );
 }
 export type GetAreasQueryHookResult = ReturnType<typeof useGetAreasQuery>;
-export type GetAreasLazyQueryHookResult = ReturnType<typeof useGetAreasLazyQuery>;
-export type GetAreasQueryResult = Apollo.QueryResult<GetAreasQuery, GetAreasQueryVariables>;
+export type GetAreasLazyQueryHookResult = ReturnType<
+  typeof useGetAreasLazyQuery
+>;
+export type GetAreasQueryResult = Apollo.QueryResult<
+  GetAreasQuery,
+  GetAreasQueryVariables
+>;
 export const GetBuildersDocument = gql`
-  query GetBuilders($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  query GetBuilders(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
     builders(pagination: $pagination, sorting: $sorting, archived: $archived) {
       data {
         id
@@ -2045,23 +2953,48 @@ export const GetBuildersDocument = gql`
  * });
  */
 export function useGetBuildersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetBuildersQuery, GetBuildersQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetBuildersQuery,
+    GetBuildersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetBuildersQuery, GetBuildersQueryVariables>(GetBuildersDocument, options);
+  return Apollo.useQuery<GetBuildersQuery, GetBuildersQueryVariables>(
+    GetBuildersDocument,
+    options
+  );
 }
 export function useGetBuildersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetBuildersQuery, GetBuildersQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBuildersQuery,
+    GetBuildersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetBuildersQuery, GetBuildersQueryVariables>(GetBuildersDocument, options);
+  return Apollo.useLazyQuery<GetBuildersQuery, GetBuildersQueryVariables>(
+    GetBuildersDocument,
+    options
+  );
 }
 export type GetBuildersQueryHookResult = ReturnType<typeof useGetBuildersQuery>;
-export type GetBuildersLazyQueryHookResult = ReturnType<typeof useGetBuildersLazyQuery>;
-export type GetBuildersQueryResult = Apollo.QueryResult<GetBuildersQuery, GetBuildersQueryVariables>;
+export type GetBuildersLazyQueryHookResult = ReturnType<
+  typeof useGetBuildersLazyQuery
+>;
+export type GetBuildersQueryResult = Apollo.QueryResult<
+  GetBuildersQuery,
+  GetBuildersQueryVariables
+>;
 export const GetCommunitiesDocument = gql`
-  query GetCommunities($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
-    communities(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetCommunities(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
+    communities(
+      pagination: $pagination
+      sorting: $sorting
+      archived: $archived
+    ) {
       data {
         id
         name
@@ -2107,22 +3040,45 @@ export const GetCommunitiesDocument = gql`
  * });
  */
 export function useGetCommunitiesQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetCommunitiesQuery, GetCommunitiesQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetCommunitiesQuery,
+    GetCommunitiesQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(GetCommunitiesDocument, options);
+  return Apollo.useQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(
+    GetCommunitiesDocument,
+    options
+  );
 }
 export function useGetCommunitiesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetCommunitiesQuery, GetCommunitiesQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCommunitiesQuery,
+    GetCommunitiesQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(GetCommunitiesDocument, options);
+  return Apollo.useLazyQuery<GetCommunitiesQuery, GetCommunitiesQueryVariables>(
+    GetCommunitiesDocument,
+    options
+  );
 }
-export type GetCommunitiesQueryHookResult = ReturnType<typeof useGetCommunitiesQuery>;
-export type GetCommunitiesLazyQueryHookResult = ReturnType<typeof useGetCommunitiesLazyQuery>;
-export type GetCommunitiesQueryResult = Apollo.QueryResult<GetCommunitiesQuery, GetCommunitiesQueryVariables>;
+export type GetCommunitiesQueryHookResult = ReturnType<
+  typeof useGetCommunitiesQuery
+>;
+export type GetCommunitiesLazyQueryHookResult = ReturnType<
+  typeof useGetCommunitiesLazyQuery
+>;
+export type GetCommunitiesQueryResult = Apollo.QueryResult<
+  GetCommunitiesQuery,
+  GetCommunitiesQueryVariables
+>;
 export const GetCompaniesDocument = gql`
-  query GetCompanies($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  query GetCompanies(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
     companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
       data {
         id
@@ -2168,23 +3124,50 @@ export const GetCompaniesDocument = gql`
  * });
  */
 export function useGetCompaniesQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetCompaniesQuery, GetCompaniesQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetCompaniesQuery,
+    GetCompaniesQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetCompaniesQuery, GetCompaniesQueryVariables>(GetCompaniesDocument, options);
+  return Apollo.useQuery<GetCompaniesQuery, GetCompaniesQueryVariables>(
+    GetCompaniesDocument,
+    options
+  );
 }
 export function useGetCompaniesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetCompaniesQuery, GetCompaniesQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCompaniesQuery,
+    GetCompaniesQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetCompaniesQuery, GetCompaniesQueryVariables>(GetCompaniesDocument, options);
+  return Apollo.useLazyQuery<GetCompaniesQuery, GetCompaniesQueryVariables>(
+    GetCompaniesDocument,
+    options
+  );
 }
-export type GetCompaniesQueryHookResult = ReturnType<typeof useGetCompaniesQuery>;
-export type GetCompaniesLazyQueryHookResult = ReturnType<typeof useGetCompaniesLazyQuery>;
-export type GetCompaniesQueryResult = Apollo.QueryResult<GetCompaniesQuery, GetCompaniesQueryVariables>;
+export type GetCompaniesQueryHookResult = ReturnType<
+  typeof useGetCompaniesQuery
+>;
+export type GetCompaniesLazyQueryHookResult = ReturnType<
+  typeof useGetCompaniesLazyQuery
+>;
+export type GetCompaniesQueryResult = Apollo.QueryResult<
+  GetCompaniesQuery,
+  GetCompaniesQueryVariables
+>;
 export const GetContractorsDocument = gql`
-  query GetContractors($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
-    contractors(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetContractors(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
+    contractors(
+      pagination: $pagination
+      sorting: $sorting
+      archived: $archived
+    ) {
       data {
         id
         name
@@ -2227,22 +3210,45 @@ export const GetContractorsDocument = gql`
  * });
  */
 export function useGetContractorsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetContractorsQuery, GetContractorsQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetContractorsQuery,
+    GetContractorsQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetContractorsQuery, GetContractorsQueryVariables>(GetContractorsDocument, options);
+  return Apollo.useQuery<GetContractorsQuery, GetContractorsQueryVariables>(
+    GetContractorsDocument,
+    options
+  );
 }
 export function useGetContractorsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetContractorsQuery, GetContractorsQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetContractorsQuery,
+    GetContractorsQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetContractorsQuery, GetContractorsQueryVariables>(GetContractorsDocument, options);
+  return Apollo.useLazyQuery<GetContractorsQuery, GetContractorsQueryVariables>(
+    GetContractorsDocument,
+    options
+  );
 }
-export type GetContractorsQueryHookResult = ReturnType<typeof useGetContractorsQuery>;
-export type GetContractorsLazyQueryHookResult = ReturnType<typeof useGetContractorsLazyQuery>;
-export type GetContractorsQueryResult = Apollo.QueryResult<GetContractorsQuery, GetContractorsQueryVariables>;
+export type GetContractorsQueryHookResult = ReturnType<
+  typeof useGetContractorsQuery
+>;
+export type GetContractorsLazyQueryHookResult = ReturnType<
+  typeof useGetContractorsLazyQuery
+>;
+export type GetContractorsQueryResult = Apollo.QueryResult<
+  GetContractorsQuery,
+  GetContractorsQueryVariables
+>;
 export const GetReportersDocument = gql`
-  query GetReporters($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  query GetReporters(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
     reporters(pagination: $pagination, sorting: $sorting, archived: $archived) {
       data {
         id
@@ -2287,22 +3293,45 @@ export const GetReportersDocument = gql`
  * });
  */
 export function useGetReportersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetReportersQuery, GetReportersQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetReportersQuery,
+    GetReportersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetReportersQuery, GetReportersQueryVariables>(GetReportersDocument, options);
+  return Apollo.useQuery<GetReportersQuery, GetReportersQueryVariables>(
+    GetReportersDocument,
+    options
+  );
 }
 export function useGetReportersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetReportersQuery, GetReportersQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetReportersQuery,
+    GetReportersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetReportersQuery, GetReportersQueryVariables>(GetReportersDocument, options);
+  return Apollo.useLazyQuery<GetReportersQuery, GetReportersQueryVariables>(
+    GetReportersDocument,
+    options
+  );
 }
-export type GetReportersQueryHookResult = ReturnType<typeof useGetReportersQuery>;
-export type GetReportersLazyQueryHookResult = ReturnType<typeof useGetReportersLazyQuery>;
-export type GetReportersQueryResult = Apollo.QueryResult<GetReportersQuery, GetReportersQueryVariables>;
+export type GetReportersQueryHookResult = ReturnType<
+  typeof useGetReportersQuery
+>;
+export type GetReportersLazyQueryHookResult = ReturnType<
+  typeof useGetReportersLazyQuery
+>;
+export type GetReportersQueryResult = Apollo.QueryResult<
+  GetReportersQuery,
+  GetReportersQueryVariables
+>;
 export const GetScopesDocument = gql`
-  query GetScopes($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  query GetScopes(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
     scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
       data {
         id
@@ -2346,21 +3375,41 @@ export const GetScopesDocument = gql`
  *   },
  * });
  */
-export function useGetScopesQuery(baseOptions?: Apollo.QueryHookOptions<GetScopesQuery, GetScopesQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetScopesQuery, GetScopesQueryVariables>(GetScopesDocument, options);
-}
-export function useGetScopesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetScopesQuery, GetScopesQueryVariables>
+export function useGetScopesQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetScopesQuery, GetScopesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetScopesQuery, GetScopesQueryVariables>(GetScopesDocument, options);
+  return Apollo.useQuery<GetScopesQuery, GetScopesQueryVariables>(
+    GetScopesDocument,
+    options
+  );
+}
+export function useGetScopesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetScopesQuery,
+    GetScopesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetScopesQuery, GetScopesQueryVariables>(
+    GetScopesDocument,
+    options
+  );
 }
 export type GetScopesQueryHookResult = ReturnType<typeof useGetScopesQuery>;
-export type GetScopesLazyQueryHookResult = ReturnType<typeof useGetScopesLazyQuery>;
-export type GetScopesQueryResult = Apollo.QueryResult<GetScopesQuery, GetScopesQueryVariables>;
+export type GetScopesLazyQueryHookResult = ReturnType<
+  typeof useGetScopesLazyQuery
+>;
+export type GetScopesQueryResult = Apollo.QueryResult<
+  GetScopesQuery,
+  GetScopesQueryVariables
+>;
 export const GetSuppliersDocument = gql`
-  query GetSuppliers($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+  query GetSuppliers(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+    $archived: Boolean
+  ) {
     suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
       data {
         id
@@ -2404,20 +3453,39 @@ export const GetSuppliersDocument = gql`
  * });
  */
 export function useGetSuppliersQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetSuppliersQuery, GetSuppliersQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetSuppliersQuery,
+    GetSuppliersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetSuppliersQuery, GetSuppliersQueryVariables>(GetSuppliersDocument, options);
+  return Apollo.useQuery<GetSuppliersQuery, GetSuppliersQueryVariables>(
+    GetSuppliersDocument,
+    options
+  );
 }
 export function useGetSuppliersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetSuppliersQuery, GetSuppliersQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSuppliersQuery,
+    GetSuppliersQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetSuppliersQuery, GetSuppliersQueryVariables>(GetSuppliersDocument, options);
+  return Apollo.useLazyQuery<GetSuppliersQuery, GetSuppliersQueryVariables>(
+    GetSuppliersDocument,
+    options
+  );
 }
-export type GetSuppliersQueryHookResult = ReturnType<typeof useGetSuppliersQuery>;
-export type GetSuppliersLazyQueryHookResult = ReturnType<typeof useGetSuppliersLazyQuery>;
-export type GetSuppliersQueryResult = Apollo.QueryResult<GetSuppliersQuery, GetSuppliersQueryVariables>;
+export type GetSuppliersQueryHookResult = ReturnType<
+  typeof useGetSuppliersQuery
+>;
+export type GetSuppliersLazyQueryHookResult = ReturnType<
+  typeof useGetSuppliersLazyQuery
+>;
+export type GetSuppliersQueryResult = Apollo.QueryResult<
+  GetSuppliersQuery,
+  GetSuppliersQueryVariables
+>;
 export const GetOptionsDocument = gql`
   query GetOptions {
     areas {
@@ -2486,21 +3554,43 @@ export const GetOptionsDocument = gql`
  *   },
  * });
  */
-export function useGetOptionsQuery(baseOptions?: Apollo.QueryHookOptions<GetOptionsQuery, GetOptionsQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetOptionsQuery, GetOptionsQueryVariables>(GetOptionsDocument, options);
-}
-export function useGetOptionsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetOptionsQuery, GetOptionsQueryVariables>
+export function useGetOptionsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetOptionsQuery,
+    GetOptionsQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetOptionsQuery, GetOptionsQueryVariables>(GetOptionsDocument, options);
+  return Apollo.useQuery<GetOptionsQuery, GetOptionsQueryVariables>(
+    GetOptionsDocument,
+    options
+  );
+}
+export function useGetOptionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetOptionsQuery,
+    GetOptionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetOptionsQuery, GetOptionsQueryVariables>(
+    GetOptionsDocument,
+    options
+  );
 }
 export type GetOptionsQueryHookResult = ReturnType<typeof useGetOptionsQuery>;
-export type GetOptionsLazyQueryHookResult = ReturnType<typeof useGetOptionsLazyQuery>;
-export type GetOptionsQueryResult = Apollo.QueryResult<GetOptionsQuery, GetOptionsQueryVariables>;
+export type GetOptionsLazyQueryHookResult = ReturnType<
+  typeof useGetOptionsLazyQuery
+>;
+export type GetOptionsQueryResult = Apollo.QueryResult<
+  GetOptionsQuery,
+  GetOptionsQueryVariables
+>;
 export const GetAssignedContractorsDocument = gql`
-  query GetAssignedContractors($pagination: PaginationOptions, $sorting: SortingOptions) {
+  query GetAssignedContractors(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+  ) {
     assignedContractors(pagination: $pagination, sorting: $sorting) {
       data {
         id
@@ -2553,31 +3643,44 @@ export const GetAssignedContractorsDocument = gql`
  * });
  */
 export function useGetAssignedContractorsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetAssignedContractorsQuery, GetAssignedContractorsQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAssignedContractorsQuery,
+    GetAssignedContractorsQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetAssignedContractorsQuery, GetAssignedContractorsQueryVariables>(
-    GetAssignedContractorsDocument,
-    options
-  );
+  return Apollo.useQuery<
+    GetAssignedContractorsQuery,
+    GetAssignedContractorsQueryVariables
+  >(GetAssignedContractorsDocument, options);
 }
 export function useGetAssignedContractorsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetAssignedContractorsQuery, GetAssignedContractorsQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAssignedContractorsQuery,
+    GetAssignedContractorsQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetAssignedContractorsQuery, GetAssignedContractorsQueryVariables>(
-    GetAssignedContractorsDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    GetAssignedContractorsQuery,
+    GetAssignedContractorsQueryVariables
+  >(GetAssignedContractorsDocument, options);
 }
-export type GetAssignedContractorsQueryHookResult = ReturnType<typeof useGetAssignedContractorsQuery>;
-export type GetAssignedContractorsLazyQueryHookResult = ReturnType<typeof useGetAssignedContractorsLazyQuery>;
+export type GetAssignedContractorsQueryHookResult = ReturnType<
+  typeof useGetAssignedContractorsQuery
+>;
+export type GetAssignedContractorsLazyQueryHookResult = ReturnType<
+  typeof useGetAssignedContractorsLazyQuery
+>;
 export type GetAssignedContractorsQueryResult = Apollo.QueryResult<
   GetAssignedContractorsQuery,
   GetAssignedContractorsQueryVariables
 >;
 export const GetUnassignedJobsDocument = gql`
-  query GetUnassignedJobs($pagination: PaginationOptions, $sorting: SortingOptions) {
+  query GetUnassignedJobs(
+    $pagination: PaginationOptions
+    $sorting: SortingOptions
+  ) {
     unassignedJobs(pagination: $pagination, sorting: $sorting) {
       data {
         id
@@ -2642,23 +3745,39 @@ export const GetUnassignedJobsDocument = gql`
  * });
  */
 export function useGetUnassignedJobsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetUnassignedJobsQuery, GetUnassignedJobsQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetUnassignedJobsQuery,
+    GetUnassignedJobsQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetUnassignedJobsQuery, GetUnassignedJobsQueryVariables>(GetUnassignedJobsDocument, options);
+  return Apollo.useQuery<
+    GetUnassignedJobsQuery,
+    GetUnassignedJobsQueryVariables
+  >(GetUnassignedJobsDocument, options);
 }
 export function useGetUnassignedJobsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetUnassignedJobsQuery, GetUnassignedJobsQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUnassignedJobsQuery,
+    GetUnassignedJobsQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetUnassignedJobsQuery, GetUnassignedJobsQueryVariables>(
-    GetUnassignedJobsDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    GetUnassignedJobsQuery,
+    GetUnassignedJobsQueryVariables
+  >(GetUnassignedJobsDocument, options);
 }
-export type GetUnassignedJobsQueryHookResult = ReturnType<typeof useGetUnassignedJobsQuery>;
-export type GetUnassignedJobsLazyQueryHookResult = ReturnType<typeof useGetUnassignedJobsLazyQuery>;
-export type GetUnassignedJobsQueryResult = Apollo.QueryResult<GetUnassignedJobsQuery, GetUnassignedJobsQueryVariables>;
+export type GetUnassignedJobsQueryHookResult = ReturnType<
+  typeof useGetUnassignedJobsQuery
+>;
+export type GetUnassignedJobsLazyQueryHookResult = ReturnType<
+  typeof useGetUnassignedJobsLazyQuery
+>;
+export type GetUnassignedJobsQueryResult = Apollo.QueryResult<
+  GetUnassignedJobsQuery,
+  GetUnassignedJobsQueryVariables
+>;
 
 export interface PossibleTypesResultData {
   possibleTypes: {

@@ -2,15 +2,15 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
-  CreateAreaInput,
-  CreateBuilderInput,
-  CreateCommunityInput,
-  CreateCompanyInput,
-  CreateContractorInput,
+  WriteAreaInput,
+  WriteBuilderInput,
+  WriteCommunityInput,
+  WriteCompanyInput,
+  WriteContractorInput,
   CreateJobLegacyInput,
-  CreateReporterInput,
-  CreateScopeInput,
-  CreateSupplierInput,
+  WriteReporterInput,
+  WriteScopeInput,
+  WriteSupplierInput,
 } from './../api/index';
 import { messages } from './messages';
 
@@ -18,15 +18,15 @@ import { messages } from './messages';
 /* Types                      */
 /******************************/
 export interface CreateInputs {
-  area: CreateAreaInput;
-  builder: CreateBuilderInput;
-  community: CreateCommunityInput;
-  company: CreateCompanyInput;
-  contractor: CreateContractorInput;
+  area: WriteAreaInput;
+  builder: WriteBuilderInput;
+  community: WriteCommunityInput;
+  company: WriteCompanyInput;
+  contractor: WriteContractorInput;
   jobLegacy: CreateJobLegacyInput;
-  reporter: CreateReporterInput;
-  scope: CreateScopeInput;
-  supplier: CreateSupplierInput;
+  reporter: WriteReporterInput;
+  scope: WriteScopeInput;
+  supplier: WriteSupplierInput;
 }
 
 interface FormObject<TInput extends keyof CreateInputs> {

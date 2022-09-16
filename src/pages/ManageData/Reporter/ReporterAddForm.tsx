@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddReporterForm } from 'src/utils/forms';
-import { CreateReporterInput, useCreateReporterMutation } from 'src/api';
+import { WriteReporterInput, useCreateReporterMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -39,7 +39,7 @@ export const ReporterAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: CreateReporterInput) => {
+  const submit = (data: WriteReporterInput) => {
     create({ variables: { data } });
   };
 

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddScopeForm } from 'src/utils/forms';
-import { CreateScopeInput, useCreateScopeMutation } from 'src/api';
+import { WriteScopeInput, useCreateScopeMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -39,7 +39,7 @@ export const ScopeAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: CreateScopeInput) => {
+  const submit = (data: WriteScopeInput) => {
     create({ variables: { data } });
   };
 

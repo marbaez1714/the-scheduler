@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddCompanyForm } from 'src/utils/forms';
-import { CreateCompanyInput, useCreateCompanyMutation } from 'src/api';
+import { WriteCompanyInput, useCreateCompanyMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -59,7 +59,7 @@ export const CompanyAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: CreateCompanyInput) => {
+  const submit = (data: WriteCompanyInput) => {
     create({ variables: { data } });
   };
 

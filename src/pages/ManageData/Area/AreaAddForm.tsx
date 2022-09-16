@@ -1,9 +1,8 @@
-import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddAreaForm } from 'src/utils/forms';
-import { CreateAreaInput, useCreateAreaMutation } from 'src/api';
+import { WriteAreaInput, useCreateAreaMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -40,7 +39,7 @@ export const AreaAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = async (data: CreateAreaInput) => {
+  const submit = async (data: WriteAreaInput) => {
     create({ variables: { data } });
   };
 

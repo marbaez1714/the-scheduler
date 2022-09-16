@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddBuilderForm } from 'src/utils/forms';
-import { CreateBuilderInput, useCreateBuilderMutation } from 'src/api';
+import { WriteBuilderInput, useCreateBuilderMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -43,7 +43,7 @@ export const BuilderAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = async (data: CreateBuilderInput) => {
+  const submit = async (data: WriteBuilderInput) => {
     create({ variables: { data } });
   };
 

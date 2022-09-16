@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { AddCommunityForm } from 'src/utils/forms';
-import { CreateCommunityInput, useCreateCommunityMutation } from 'src/api';
+import { WriteCommunityInput, useCreateCommunityMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
@@ -63,7 +63,7 @@ export const CommunityAddForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: CreateCommunityInput) => {
+  const submit = (data: WriteCommunityInput) => {
     create({ variables: { data } });
   };
 

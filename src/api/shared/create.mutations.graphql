@@ -1,10 +1,10 @@
-mutation CreateArea($data: CreateAreaInput!) {
+mutation CreateArea($data: WriteAreaInput!) {
   createArea(data: $data) {
     message
   }
 }
 
-mutation CreateBuilder($data: CreateBuilderInput!) {
+mutation CreateBuilder($data: WriteBuilderInput!) {
   createBuilder(data: $data) {
     message
   }
@@ -16,37 +16,37 @@ mutation CreateJobLegacy($data: CreateJobLegacyInput!) {
   }
 }
 
-mutation CreateCommunity($data: CreateCommunityInput!) {
+mutation CreateCommunity($data: WriteCommunityInput!) {
   createCommunity(data: $data) {
     message
   }
 }
 
-mutation CreateCompany($data: CreateCompanyInput!) {
+mutation CreateCompany($data: WriteCompanyInput!) {
   createCompany(data: $data) {
     message
   }
 }
 
-mutation CreateContractor($data: CreateContractorInput!) {
+mutation CreateContractor($data: WriteContractorInput!) {
   createContractor(data: $data) {
     message
   }
 }
 
-mutation CreateReporter($data: CreateReporterInput!) {
+mutation CreateReporter($data: WriteReporterInput!) {
   createReporter(data: $data) {
     message
   }
 }
 
-mutation CreateScope($data: CreateScopeInput!) {
+mutation CreateScope($data: WriteScopeInput!) {
   createScope(data: $data) {
     message
   }
 }
 
-mutation CreateSupplier($data: CreateSupplierInput!) {
+mutation CreateSupplier($data: WriteSupplierInput!) {
   createSupplier(data: $data) {
     message
   }

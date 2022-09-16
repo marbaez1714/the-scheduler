@@ -1,0 +1,85 @@
+query GetArea($id: ID!) {
+  areaById(id: $id) {
+    id
+    name
+    nameSpanish
+    notes
+    legacy
+  }
+}
+
+query GetCompany($id: ID!) {
+  companyById(id: $id) {
+    id
+    name
+    primaryAddress
+    primaryEmail
+    primaryPhone
+    notes
+    legacy
+  }
+}
+
+query GetCommunity($id: ID!) {
+  communityById(id: $id) {
+    id
+    name
+    companyId
+    notes
+    legacy
+  }
+}
+
+query GetBuilder($id: ID!) {
+  builderById(id: $id) {
+    id
+    name
+    primaryPhone
+    primaryEmail
+    companyId
+    notes
+    legacy
+  }
+}
+
+query GetContractor($id: ID!) {
+  contractorById(id: $id) {
+    id
+    name
+    primaryPhone
+    notes
+    legacy
+  }
+}
+
+query GetReporter($id: ID!) {
+  reporterById(id: $id) {
+    id
+    name
+    primaryPhone
+    primaryEmail
+    notes
+    legacy
+  }
+}
+
+query GetScope($id: ID!) {
+  scopeById(id: $id) {
+    id
+    name
+    nameSpanish
+    description
+    notes
+    legacy
+  }
+}
+
+query GetSupplier($id: ID!) {
+  supplierById(id: $id) {
+    id
+    name
+    primaryPhone
+    notes
+    legacy
+  }
+}
