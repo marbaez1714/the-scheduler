@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddCompanyForm } from 'src/utils/forms';
+import { WriteCompanyForm } from 'src/utils/forms';
 import { WriteCompanyInput, useCreateCompanyMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -19,8 +19,8 @@ export const CompanyAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddCompanyForm.defaultValues,
-    resolver: AddCompanyForm.resolver,
+    defaultValues: WriteCompanyForm.defaultValues,
+    resolver: WriteCompanyForm.resolver,
   });
 
   /******************************/
@@ -78,7 +78,7 @@ export const CompanyAddForm = () => {
         {/* Name                       */}
         {/******************************/}
         <FormTextInput
-          label={AddCompanyForm.labels.name}
+          label={WriteCompanyForm.labels.name}
           control={control}
           name="name"
           required
@@ -87,15 +87,16 @@ export const CompanyAddForm = () => {
         {/* Primary Phone              */}
         {/******************************/}
         <FormTextInput
-          label={AddCompanyForm.labels.primaryPhone}
+          label={WriteCompanyForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
+          mask="phone"
         />
         {/******************************/}
         {/* Primary Email              */}
         {/******************************/}
         <FormTextInput
-          label={AddCompanyForm.labels.primaryEmail}
+          label={WriteCompanyForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
         />
@@ -103,7 +104,7 @@ export const CompanyAddForm = () => {
         {/* Primary Address            */}
         {/******************************/}
         <FormTextInput
-          label={AddCompanyForm.labels.primaryAddress}
+          label={WriteCompanyForm.labels.primaryAddress}
           control={control}
           name="primaryAddress"
         />
@@ -111,7 +112,7 @@ export const CompanyAddForm = () => {
         {/* Notes                      */}
         {/******************************/}
         <FormTextArea
-          label={AddCompanyForm.labels.notes}
+          label={WriteCompanyForm.labels.notes}
           control={control}
           name="notes"
         />

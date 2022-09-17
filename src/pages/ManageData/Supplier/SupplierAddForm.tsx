@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddSupplierForm } from 'src/utils/forms';
+import { WriteSupplierForm } from 'src/utils/forms';
 import { WriteSupplierInput, useCreateSupplierMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -19,8 +19,8 @@ export const SupplierAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddSupplierForm.defaultValues,
-    resolver: AddSupplierForm.resolver,
+    defaultValues: WriteSupplierForm.defaultValues,
+    resolver: WriteSupplierForm.resolver,
   });
 
   /******************************/
@@ -58,7 +58,7 @@ export const SupplierAddForm = () => {
         {/* Name                       */}
         {/******************************/}
         <FormTextInput
-          label={AddSupplierForm.labels.name}
+          label={WriteSupplierForm.labels.name}
           control={control}
           name="name"
           required
@@ -67,7 +67,7 @@ export const SupplierAddForm = () => {
         {/* Primary Phone              */}
         {/******************************/}
         <FormTextInput
-          label={AddSupplierForm.labels.primaryPhone}
+          label={WriteSupplierForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
           mask="phone"
@@ -76,7 +76,7 @@ export const SupplierAddForm = () => {
         {/* Notes                      */}
         {/******************************/}
         <FormTextArea
-          label={AddSupplierForm.labels.notes}
+          label={WriteSupplierForm.labels.notes}
           control={control}
           name="notes"
         />

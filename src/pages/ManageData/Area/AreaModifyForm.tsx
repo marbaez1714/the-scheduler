@@ -1,18 +1,24 @@
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { useGetAreaQuery } from 'src/api';
+import {
+  useGetAreaQuery,
+  useModifyAreaMutation,
+  WriteAreaInput,
+} from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 import { FormTextInput } from 'src/components/FormTextInput';
+import { WriteAreaForm } from 'src/utils/forms';
 
 export const AreaModifyForm = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
   const { areaId } = useParams();
-
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -20,6 +26,8 @@ export const AreaModifyForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
+    defaultValues: WriteAreaForm.defaultValues,
+    resolver: WriteAreaForm.resolver,
   });
 
   /******************************/
@@ -37,19 +45,30 @@ export const AreaModifyForm = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data: getAreaData, loading: getAreaLoading } = useGetAreaQuery({
+  const { loading: getLoading } = useGetAreaQuery({
     skip: !areaId,
     variables: { id: areaId ?? '' },
     onCompleted: ({ areaById }) => {
-      if (!areaById) {
-        throw new Error();
+      if (areaById) {
+        reset({
+          name: areaById.name,
+          nameSpanish: areaById.nameSpanish,
+          notes: areaById.notes ?? '',
+        });
       }
+    },
+    onError: () => {
+      toast.error('Something went wrong');
+    },
+  });
 
-      reset({
-        name: areaById.name,
-        nameSpanish: areaById.nameSpanish,
-        notes: areaById.notes ?? '',
-      });
+  const [modify, { loading: modifyLoading }] = useModifyAreaMutation({
+    onCompleted: (data) => {
+      toast.success(data.modifyArea.message);
+      navigate(-1);
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 
@@ -64,12 +83,16 @@ export const AreaModifyForm = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = () => {};
+  const submit = (data: WriteAreaInput) => {
+    if (areaId) {
+      modify({ variables: { id: areaId, data: data } });
+    }
+  };
   /******************************/
   /* Render                     */
   /******************************/
   return (
-    <Content centerHorizontal loading={getAreaLoading}>
+    <Content centerHorizontal loading={getLoading || modifyLoading}>
       <FormContainer
         title="Modify Area"
         onSubmit={handleSubmit(submit)}

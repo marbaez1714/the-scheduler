@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddContractorForm } from 'src/utils/forms';
+import { WriteContractorForm } from 'src/utils/forms';
 import { WriteContractorInput, useCreateContractorMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -19,8 +19,8 @@ export const ContractorAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddContractorForm.defaultValues,
-    resolver: AddContractorForm.resolver,
+    defaultValues: WriteContractorForm.defaultValues,
+    resolver: WriteContractorForm.resolver,
   });
 
   /******************************/
@@ -58,7 +58,7 @@ export const ContractorAddForm = () => {
         {/* Name                       */}
         {/******************************/}
         <FormTextInput
-          label={AddContractorForm.labels.name}
+          label={WriteContractorForm.labels.name}
           control={control}
           name="name"
           required
@@ -67,7 +67,7 @@ export const ContractorAddForm = () => {
         {/* Primary Phone              */}
         {/******************************/}
         <FormTextInput
-          label={AddContractorForm.labels.primaryPhone}
+          label={WriteContractorForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
           mask="phone"
@@ -77,7 +77,7 @@ export const ContractorAddForm = () => {
         {/* Notes                      */}
         {/******************************/}
         <FormTextArea
-          label={AddContractorForm.labels.notes}
+          label={WriteContractorForm.labels.notes}
           control={control}
           name="notes"
         />

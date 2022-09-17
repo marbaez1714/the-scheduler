@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddScopeForm } from 'src/utils/forms';
+import { WriteScopeForm } from 'src/utils/forms';
 import { WriteScopeInput, useCreateScopeMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -19,8 +19,8 @@ export const ScopeAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddScopeForm.defaultValues,
-    resolver: AddScopeForm.resolver,
+    defaultValues: WriteScopeForm.defaultValues,
+    resolver: WriteScopeForm.resolver,
   });
 
   /******************************/
@@ -58,7 +58,7 @@ export const ScopeAddForm = () => {
         {/* Name                    */}
         {/******************************/}
         <FormTextInput
-          label={AddScopeForm.labels.name}
+          label={WriteScopeForm.labels.name}
           control={control}
           name="name"
           required
@@ -67,7 +67,7 @@ export const ScopeAddForm = () => {
         {/* Name - Spanish             */}
         {/******************************/}
         <FormTextInput
-          label={AddScopeForm.labels.nameSpanish}
+          label={WriteScopeForm.labels.nameSpanish}
           control={control}
           name="nameSpanish"
           required
@@ -76,7 +76,7 @@ export const ScopeAddForm = () => {
         {/* Description                */}
         {/******************************/}
         <FormTextInput
-          label={AddScopeForm.labels.description}
+          label={WriteScopeForm.labels.description}
           control={control}
           name="description"
         />
@@ -84,7 +84,7 @@ export const ScopeAddForm = () => {
         {/* Notes                      */}
         {/******************************/}
         <FormTextArea
-          label={AddScopeForm.labels.notes}
+          label={WriteScopeForm.labels.notes}
           control={control}
           name="notes"
         />

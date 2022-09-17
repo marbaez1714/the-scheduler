@@ -1,0 +1,47 @@
+mutation ModifyArea($id: ID!, $data: WriteAreaInput!) {
+  modifyArea(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ModifyBuilder($id: ID!, $data: WriteBuilderInput!) {
+  modifyBuilder(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ModifyCommunity($id: ID!, $data: WriteCommunityInput!) {
+  modifyCommunity(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ModifyCompany($id: ID!, $data: WriteCompanyInput!) {
+  modifyCompany(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ModifyContractor($id: ID!, $data: WriteContractorInput!) {
+  modifyContractor(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ModifyReporter($id: ID!, $data: WriteReporterInput!) {
+  modifyReporter(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ModifyScope($id: ID!, $data: WriteScopeInput!) {
+  modifyScope(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ModifySupplier($id: ID!, $data: WriteSupplierInput!) {
+  modifySupplier(id: $id, data: $data) {
+    message
+  }
+}

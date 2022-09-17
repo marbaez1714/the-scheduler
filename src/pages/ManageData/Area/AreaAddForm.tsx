@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddAreaForm } from 'src/utils/forms';
+import { WriteAreaForm } from 'src/utils/forms';
 import { WriteAreaInput, useCreateAreaMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -19,8 +19,8 @@ export const AreaAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddAreaForm.defaultValues,
-    resolver: AddAreaForm.resolver,
+    defaultValues: WriteAreaForm.defaultValues,
+    resolver: WriteAreaForm.resolver,
   });
 
   /******************************/

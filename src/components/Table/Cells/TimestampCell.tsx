@@ -14,8 +14,8 @@ export const TimestampCell = ({ data }: TimestampCellProps) => {
   /******************************/
   return (
     <>
-      <p className="w-auto text-xs">{format(createdDate, 'P - p')}</p>
-      <p className="w-auto cell-caption-text">{format(updatedDate, 'P - p')}</p>
+      <p className="w-auto text-xs">{format(updatedDate, 'P - p')}</p>
+      <p className="w-auto cell-caption-text">{format(createdDate, 'P - p')}</p>
     </>
   );
 };

@@ -74,7 +74,7 @@ const validators = {
 /******************************/
 /* Forms                      */
 /******************************/
-export const AddAreaForm: FormObject<'area'> = {
+export const WriteAreaForm: FormObject<'area'> = {
   labels: {
     name: labels.name,
     nameSpanish: labels.nameSpanish,
@@ -94,7 +94,7 @@ export const AddAreaForm: FormObject<'area'> = {
   ),
 };
 
-export const AddBuilderForm: FormObject<'builder'> = {
+export const WriteBuilderForm: FormObject<'builder'> = {
   labels: {
     name: labels.name,
     companyId: labels.company,
@@ -120,7 +120,7 @@ export const AddBuilderForm: FormObject<'builder'> = {
   ),
 };
 
-export const AddCommunityForm: FormObject<'community'> = {
+export const WriteCommunityForm: FormObject<'community'> = {
   labels: {
     name: labels.name,
     companyId: labels.company,
@@ -140,7 +140,7 @@ export const AddCommunityForm: FormObject<'community'> = {
   ),
 };
 
-export const AddCompanyForm: FormObject<'company'> = {
+export const WriteCompanyForm: FormObject<'company'> = {
   labels: {
     name: labels.name,
     primaryPhone: labels.primaryPhone,
@@ -166,7 +166,7 @@ export const AddCompanyForm: FormObject<'company'> = {
   ),
 };
 
-export const AddContractorForm: FormObject<'contractor'> = {
+export const WriteContractorForm: FormObject<'contractor'> = {
   labels: {
     name: labels.name,
     primaryPhone: labels.primaryPhone,
@@ -186,7 +186,7 @@ export const AddContractorForm: FormObject<'contractor'> = {
   ),
 };
 
-export const AddReporterForm: FormObject<'reporter'> = {
+export const WriteReporterForm: FormObject<'reporter'> = {
   labels: {
     name: labels.name,
     primaryPhone: labels.primaryPhone,
@@ -209,7 +209,7 @@ export const AddReporterForm: FormObject<'reporter'> = {
   ),
 };
 
-export const AddScopeForm: FormObject<'scope'> = {
+export const WriteScopeForm: FormObject<'scope'> = {
   labels: {
     name: labels.name,
     nameSpanish: labels.nameSpanish,
@@ -232,7 +232,7 @@ export const AddScopeForm: FormObject<'scope'> = {
   ),
 };
 
-export const AddSupplierForm: FormObject<'supplier'> = {
+export const WriteSupplierForm: FormObject<'supplier'> = {
   labels: {
     name: labels.name,
     primaryPhone: labels.primaryPhone,

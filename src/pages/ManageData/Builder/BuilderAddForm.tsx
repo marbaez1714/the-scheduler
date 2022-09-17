@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddBuilderForm } from 'src/utils/forms';
+import { WriteBuilderForm } from 'src/utils/forms';
 import { WriteBuilderInput, useCreateBuilderMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -23,8 +23,8 @@ export const BuilderAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddBuilderForm.defaultValues,
-    resolver: AddBuilderForm.resolver,
+    defaultValues: WriteBuilderForm.defaultValues,
+    resolver: WriteBuilderForm.resolver,
   });
 
   /******************************/
@@ -62,7 +62,7 @@ export const BuilderAddForm = () => {
         {/* Name                       */}
         {/******************************/}
         <FormTextInput
-          label={AddBuilderForm.labels.name}
+          label={WriteBuilderForm.labels.name}
           control={control}
           name="name"
           required
@@ -71,16 +71,17 @@ export const BuilderAddForm = () => {
         {/* Primary Phone              */}
         {/******************************/}
         <FormTextInput
-          label={AddBuilderForm.labels.primaryPhone}
+          label={WriteBuilderForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
+          mask="phone"
           required
         />
         {/******************************/}
         {/* Primary Email              */}
         {/******************************/}
         <FormTextInput
-          label={AddBuilderForm.labels.primaryEmail}
+          label={WriteBuilderForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
         />
@@ -88,7 +89,7 @@ export const BuilderAddForm = () => {
         {/* Company                    */}
         {/******************************/}
         <FormAutocomplete
-          label={AddBuilderForm.labels.companyId}
+          label={WriteBuilderForm.labels.companyId}
           control={control}
           options={companyOptions}
           name="companyId"
@@ -98,7 +99,7 @@ export const BuilderAddForm = () => {
         {/* Notes                      */}
         {/******************************/}
         <FormTextArea
-          label={AddBuilderForm.labels.notes}
+          label={WriteBuilderForm.labels.notes}
           control={control}
           name="notes"
         />

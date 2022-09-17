@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddCommunityForm } from 'src/utils/forms';
+import { WriteCommunityForm } from 'src/utils/forms';
 import { WriteCommunityInput, useCreateCommunityMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -23,8 +23,8 @@ export const CommunityAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddCommunityForm.defaultValues,
-    resolver: AddCommunityForm.resolver,
+    defaultValues: WriteCommunityForm.defaultValues,
+    resolver: WriteCommunityForm.resolver,
   });
 
   /******************************/
@@ -82,7 +82,7 @@ export const CommunityAddForm = () => {
         {/* Name                       */}
         {/******************************/}
         <FormTextInput
-          label={AddCommunityForm.labels.name}
+          label={WriteCommunityForm.labels.name}
           control={control}
           name="name"
           required
@@ -91,7 +91,7 @@ export const CommunityAddForm = () => {
         {/* Company                    */}
         {/******************************/}
         <FormAutocomplete
-          label={AddCommunityForm.labels.companyId}
+          label={WriteCommunityForm.labels.companyId}
           control={control}
           options={companyOptions}
           name="companyId"
@@ -101,7 +101,7 @@ export const CommunityAddForm = () => {
         {/* Notes                      */}
         {/******************************/}
         <FormTextArea
-          label={AddCommunityForm.labels.notes}
+          label={WriteCommunityForm.labels.notes}
           control={control}
           name="notes"
         />

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-import { AddReporterForm } from 'src/utils/forms';
+import { WriteReporterForm } from 'src/utils/forms';
 import { WriteReporterInput, useCreateReporterMutation } from 'src/api';
 import { Content } from 'src/components/Content';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -19,8 +19,8 @@ export const ReporterAddForm = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: AddReporterForm.defaultValues,
-    resolver: AddReporterForm.resolver,
+    defaultValues: WriteReporterForm.defaultValues,
+    resolver: WriteReporterForm.resolver,
   });
 
   /******************************/
@@ -58,7 +58,7 @@ export const ReporterAddForm = () => {
         {/* Name                       */}
         {/******************************/}
         <FormTextInput
-          label={AddReporterForm.labels.name}
+          label={WriteReporterForm.labels.name}
           control={control}
           name="name"
           required
@@ -67,7 +67,7 @@ export const ReporterAddForm = () => {
         {/* Primary Phone              */}
         {/******************************/}
         <FormTextInput
-          label={AddReporterForm.labels.primaryPhone}
+          label={WriteReporterForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
           mask="phone"
@@ -77,7 +77,7 @@ export const ReporterAddForm = () => {
         {/* Primary Email              */}
         {/******************************/}
         <FormTextInput
-          label={AddReporterForm.labels.primaryEmail}
+          label={WriteReporterForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
         />
@@ -85,7 +85,7 @@ export const ReporterAddForm = () => {
         {/* Notes                      */}
         {/******************************/}
         <FormTextArea
-          label={AddReporterForm.labels.notes}
+          label={WriteReporterForm.labels.notes}
           control={control}
           name="notes"
         />

@@ -1433,6 +1433,86 @@ export type GetUnassignedJobsQuery = {
   };
 };
 
+export type ModifyAreaMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteAreaInput;
+}>;
+
+export type ModifyAreaMutation = {
+  __typename?: 'Mutation';
+  modifyArea: { __typename?: 'WriteAreaResponse'; message: string };
+};
+
+export type ModifyBuilderMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteBuilderInput;
+}>;
+
+export type ModifyBuilderMutation = {
+  __typename?: 'Mutation';
+  modifyBuilder: { __typename?: 'WriteBuilderResponse'; message: string };
+};
+
+export type ModifyCommunityMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteCommunityInput;
+}>;
+
+export type ModifyCommunityMutation = {
+  __typename?: 'Mutation';
+  modifyCommunity: { __typename?: 'WriteCommunityResponse'; message: string };
+};
+
+export type ModifyCompanyMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteCompanyInput;
+}>;
+
+export type ModifyCompanyMutation = {
+  __typename?: 'Mutation';
+  modifyCompany: { __typename?: 'WriteCompanyResponse'; message: string };
+};
+
+export type ModifyContractorMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteContractorInput;
+}>;
+
+export type ModifyContractorMutation = {
+  __typename?: 'Mutation';
+  modifyContractor: { __typename?: 'WriteContractorResponse'; message: string };
+};
+
+export type ModifyReporterMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteReporterInput;
+}>;
+
+export type ModifyReporterMutation = {
+  __typename?: 'Mutation';
+  modifyReporter: { __typename?: 'WriteReporterResponse'; message: string };
+};
+
+export type ModifyScopeMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteScopeInput;
+}>;
+
+export type ModifyScopeMutation = {
+  __typename?: 'Mutation';
+  modifyScope: { __typename?: 'WriteScopeResponse'; message: string };
+};
+
+export type ModifySupplierMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: WriteSupplierInput;
+}>;
+
+export type ModifySupplierMutation = {
+  __typename?: 'Mutation';
+  modifySupplier: { __typename?: 'WriteSupplierResponse'; message: string };
+};
+
 export const GetLineItemTableSuppliersDocument = gql`
   query GetLineItemTableSuppliers {
     suppliers {
@@ -3777,6 +3857,414 @@ export type GetUnassignedJobsLazyQueryHookResult = ReturnType<
 export type GetUnassignedJobsQueryResult = Apollo.QueryResult<
   GetUnassignedJobsQuery,
   GetUnassignedJobsQueryVariables
+>;
+export const ModifyAreaDocument = gql`
+  mutation ModifyArea($id: ID!, $data: WriteAreaInput!) {
+    modifyArea(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyAreaMutationFn = Apollo.MutationFunction<
+  ModifyAreaMutation,
+  ModifyAreaMutationVariables
+>;
+
+/**
+ * __useModifyAreaMutation__
+ *
+ * To run a mutation, you first call `useModifyAreaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyAreaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyAreaMutation, { data, loading, error }] = useModifyAreaMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyAreaMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyAreaMutation,
+    ModifyAreaMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<ModifyAreaMutation, ModifyAreaMutationVariables>(
+    ModifyAreaDocument,
+    options
+  );
+}
+export type ModifyAreaMutationHookResult = ReturnType<
+  typeof useModifyAreaMutation
+>;
+export type ModifyAreaMutationResult =
+  Apollo.MutationResult<ModifyAreaMutation>;
+export type ModifyAreaMutationOptions = Apollo.BaseMutationOptions<
+  ModifyAreaMutation,
+  ModifyAreaMutationVariables
+>;
+export const ModifyBuilderDocument = gql`
+  mutation ModifyBuilder($id: ID!, $data: WriteBuilderInput!) {
+    modifyBuilder(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyBuilderMutationFn = Apollo.MutationFunction<
+  ModifyBuilderMutation,
+  ModifyBuilderMutationVariables
+>;
+
+/**
+ * __useModifyBuilderMutation__
+ *
+ * To run a mutation, you first call `useModifyBuilderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyBuilderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyBuilderMutation, { data, loading, error }] = useModifyBuilderMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyBuilderMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyBuilderMutation,
+    ModifyBuilderMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ModifyBuilderMutation,
+    ModifyBuilderMutationVariables
+  >(ModifyBuilderDocument, options);
+}
+export type ModifyBuilderMutationHookResult = ReturnType<
+  typeof useModifyBuilderMutation
+>;
+export type ModifyBuilderMutationResult =
+  Apollo.MutationResult<ModifyBuilderMutation>;
+export type ModifyBuilderMutationOptions = Apollo.BaseMutationOptions<
+  ModifyBuilderMutation,
+  ModifyBuilderMutationVariables
+>;
+export const ModifyCommunityDocument = gql`
+  mutation ModifyCommunity($id: ID!, $data: WriteCommunityInput!) {
+    modifyCommunity(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyCommunityMutationFn = Apollo.MutationFunction<
+  ModifyCommunityMutation,
+  ModifyCommunityMutationVariables
+>;
+
+/**
+ * __useModifyCommunityMutation__
+ *
+ * To run a mutation, you first call `useModifyCommunityMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyCommunityMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyCommunityMutation, { data, loading, error }] = useModifyCommunityMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyCommunityMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyCommunityMutation,
+    ModifyCommunityMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ModifyCommunityMutation,
+    ModifyCommunityMutationVariables
+  >(ModifyCommunityDocument, options);
+}
+export type ModifyCommunityMutationHookResult = ReturnType<
+  typeof useModifyCommunityMutation
+>;
+export type ModifyCommunityMutationResult =
+  Apollo.MutationResult<ModifyCommunityMutation>;
+export type ModifyCommunityMutationOptions = Apollo.BaseMutationOptions<
+  ModifyCommunityMutation,
+  ModifyCommunityMutationVariables
+>;
+export const ModifyCompanyDocument = gql`
+  mutation ModifyCompany($id: ID!, $data: WriteCompanyInput!) {
+    modifyCompany(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyCompanyMutationFn = Apollo.MutationFunction<
+  ModifyCompanyMutation,
+  ModifyCompanyMutationVariables
+>;
+
+/**
+ * __useModifyCompanyMutation__
+ *
+ * To run a mutation, you first call `useModifyCompanyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyCompanyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyCompanyMutation, { data, loading, error }] = useModifyCompanyMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyCompanyMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyCompanyMutation,
+    ModifyCompanyMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ModifyCompanyMutation,
+    ModifyCompanyMutationVariables
+  >(ModifyCompanyDocument, options);
+}
+export type ModifyCompanyMutationHookResult = ReturnType<
+  typeof useModifyCompanyMutation
+>;
+export type ModifyCompanyMutationResult =
+  Apollo.MutationResult<ModifyCompanyMutation>;
+export type ModifyCompanyMutationOptions = Apollo.BaseMutationOptions<
+  ModifyCompanyMutation,
+  ModifyCompanyMutationVariables
+>;
+export const ModifyContractorDocument = gql`
+  mutation ModifyContractor($id: ID!, $data: WriteContractorInput!) {
+    modifyContractor(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyContractorMutationFn = Apollo.MutationFunction<
+  ModifyContractorMutation,
+  ModifyContractorMutationVariables
+>;
+
+/**
+ * __useModifyContractorMutation__
+ *
+ * To run a mutation, you first call `useModifyContractorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyContractorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyContractorMutation, { data, loading, error }] = useModifyContractorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyContractorMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyContractorMutation,
+    ModifyContractorMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ModifyContractorMutation,
+    ModifyContractorMutationVariables
+  >(ModifyContractorDocument, options);
+}
+export type ModifyContractorMutationHookResult = ReturnType<
+  typeof useModifyContractorMutation
+>;
+export type ModifyContractorMutationResult =
+  Apollo.MutationResult<ModifyContractorMutation>;
+export type ModifyContractorMutationOptions = Apollo.BaseMutationOptions<
+  ModifyContractorMutation,
+  ModifyContractorMutationVariables
+>;
+export const ModifyReporterDocument = gql`
+  mutation ModifyReporter($id: ID!, $data: WriteReporterInput!) {
+    modifyReporter(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyReporterMutationFn = Apollo.MutationFunction<
+  ModifyReporterMutation,
+  ModifyReporterMutationVariables
+>;
+
+/**
+ * __useModifyReporterMutation__
+ *
+ * To run a mutation, you first call `useModifyReporterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyReporterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyReporterMutation, { data, loading, error }] = useModifyReporterMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyReporterMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyReporterMutation,
+    ModifyReporterMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ModifyReporterMutation,
+    ModifyReporterMutationVariables
+  >(ModifyReporterDocument, options);
+}
+export type ModifyReporterMutationHookResult = ReturnType<
+  typeof useModifyReporterMutation
+>;
+export type ModifyReporterMutationResult =
+  Apollo.MutationResult<ModifyReporterMutation>;
+export type ModifyReporterMutationOptions = Apollo.BaseMutationOptions<
+  ModifyReporterMutation,
+  ModifyReporterMutationVariables
+>;
+export const ModifyScopeDocument = gql`
+  mutation ModifyScope($id: ID!, $data: WriteScopeInput!) {
+    modifyScope(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyScopeMutationFn = Apollo.MutationFunction<
+  ModifyScopeMutation,
+  ModifyScopeMutationVariables
+>;
+
+/**
+ * __useModifyScopeMutation__
+ *
+ * To run a mutation, you first call `useModifyScopeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyScopeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyScopeMutation, { data, loading, error }] = useModifyScopeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyScopeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyScopeMutation,
+    ModifyScopeMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<ModifyScopeMutation, ModifyScopeMutationVariables>(
+    ModifyScopeDocument,
+    options
+  );
+}
+export type ModifyScopeMutationHookResult = ReturnType<
+  typeof useModifyScopeMutation
+>;
+export type ModifyScopeMutationResult =
+  Apollo.MutationResult<ModifyScopeMutation>;
+export type ModifyScopeMutationOptions = Apollo.BaseMutationOptions<
+  ModifyScopeMutation,
+  ModifyScopeMutationVariables
+>;
+export const ModifySupplierDocument = gql`
+  mutation ModifySupplier($id: ID!, $data: WriteSupplierInput!) {
+    modifySupplier(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifySupplierMutationFn = Apollo.MutationFunction<
+  ModifySupplierMutation,
+  ModifySupplierMutationVariables
+>;
+
+/**
+ * __useModifySupplierMutation__
+ *
+ * To run a mutation, you first call `useModifySupplierMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifySupplierMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifySupplierMutation, { data, loading, error }] = useModifySupplierMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifySupplierMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifySupplierMutation,
+    ModifySupplierMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ModifySupplierMutation,
+    ModifySupplierMutationVariables
+  >(ModifySupplierDocument, options);
+}
+export type ModifySupplierMutationHookResult = ReturnType<
+  typeof useModifySupplierMutation
+>;
+export type ModifySupplierMutationResult =
+  Apollo.MutationResult<ModifySupplierMutation>;
+export type ModifySupplierMutationOptions = Apollo.BaseMutationOptions<
+  ModifySupplierMutation,
+  ModifySupplierMutationVariables
 >;
 
 export interface PossibleTypesResultData {
