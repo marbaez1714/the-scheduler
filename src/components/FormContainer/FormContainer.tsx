@@ -55,11 +55,11 @@ const FormContainer = ({
         </p>
       </div>
 
-      <form className="p-6 bg-slate-100 space-y-4 w-96" onSubmit={onSubmit}>
+      <form className="p-6 space-y-4 bg-slate-100 w-96" onSubmit={onSubmit}>
         {children}
 
         <div className="flex justify-end pt-6 space-x-4">
-          <Button onClick={onClearClick}>Clear</Button>
+          {!!onClearClick && <Button onClick={onClearClick}>Clear</Button>}
           <Button variant="contained" type="submit" disabled={!isValid}>
             Submit
           </Button>

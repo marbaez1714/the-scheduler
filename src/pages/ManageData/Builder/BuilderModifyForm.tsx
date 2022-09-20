@@ -14,6 +14,7 @@ import { FormTextArea } from 'src/components/FormTextArea';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { useOptions } from 'src/hooks/useOptions';
 import { WriteBuilderForm } from 'src/utils/forms';
+import { ToastMessages } from 'src/utils/toastMessages';
 
 export const BuilderModifyForm = () => {
   /******************************/
@@ -52,18 +53,20 @@ export const BuilderModifyForm = () => {
     skip: !builderId,
     variables: { id: builderId ?? '' },
     onCompleted: ({ builderById }) => {
-      if (builderById) {
-        reset({
-          name: builderById.name,
-          companyId: builderById.companyId,
-          primaryPhone: builderById.primaryPhone ?? '',
-          primaryEmail: builderById.primaryEmail ?? '',
-          notes: builderById.notes ?? '',
-        });
+      if (!builderById) {
+        throw new Error();
       }
+
+      reset({
+        name: builderById.name,
+        companyId: builderById.companyId,
+        primaryPhone: builderById.primaryPhone ?? '',
+        primaryEmail: builderById.primaryEmail ?? '',
+        notes: builderById.notes ?? '',
+      });
     },
     onError: () => {
-      toast.error('Something went wrong');
+      ToastMessages.somethingWrong();
     },
   });
 
@@ -90,7 +93,6 @@ export const BuilderModifyForm = () => {
   /******************************/
   const submit = (data: WriteBuilderInput) => {
     if (builderId) {
-      console.log(data.primaryPhone);
       modify({ variables: { id: builderId, data: data } });
     }
   };
@@ -100,9 +102,8 @@ export const BuilderModifyForm = () => {
   return (
     <Content centerHorizontal loading={getLoading || modifyLoading}>
       <FormContainer
-        title="Add Builder"
+        title="Modify Builder"
         onSubmit={handleSubmit(submit)}
-        onClearClick={reset}
         isValid={isValid}
       >
         {/******************************/}

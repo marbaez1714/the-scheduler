@@ -76,7 +76,7 @@ const Navigation = () => {
         <Route path="community" element={<ProtectedRoute component={Outlet} />}>
           <Route index element={<ProtectedRoute component={CommunityList} />} />
           <Route path="add" element={<ProtectedRoute component={CommunityAddForm} />} />
-          <Route path=":companyId" element={<ProtectedRoute component={CommunityModifyForm} />} />
+          <Route path=":communityId" element={<ProtectedRoute component={CommunityModifyForm} />} />
         </Route>
         {/* Contractor */}
         <Route path="contractor" element={<ProtectedRoute component={Outlet} />}>

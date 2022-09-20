@@ -12,7 +12,7 @@ import {
   WriteScopeInput,
   WriteSupplierInput,
 } from './../api/index';
-import { messages } from './messages';
+import { inputMessages } from './messages';
 
 /******************************/
 /* Types                      */
@@ -59,15 +59,15 @@ const labels = {
 };
 
 const validators = {
-  addressRequired: yup.string().trim().required(messages.addressRequired),
-  nameRequired: yup.string().trim().required(messages.nameRequired),
+  addressRequired: yup.string().trim().required(inputMessages.addressRequired),
+  nameRequired: yup.string().trim().required(inputMessages.nameRequired),
   nameSpanishRequired: yup
     .string()
     .trim()
-    .required(messages.nameTranslationRequired),
-  primaryPhoneRequired: yup.string().trim().required(messages.phoneRequired),
-  primaryEmail: yup.string().trim().email(messages.emailFormat),
-  companyIdRequired: yup.string().trim().required(messages.companyRequired),
+    .required(inputMessages.nameTranslationRequired),
+  primaryPhoneRequired: yup.string().trim().required(inputMessages.phoneRequired),
+  primaryEmail: yup.string().trim().email(inputMessages.emailFormat),
+  companyIdRequired: yup.string().trim().required(inputMessages.companyRequired),
   string: yup.string().trim(),
 };
 
@@ -159,7 +159,7 @@ export const WriteCompanyForm: FormObject<'company'> = {
     yup.object({
       name: validators.nameRequired,
       primaryAddress: validators.string,
-      primaryEmail: validators.string,
+      primaryEmail: validators.primaryEmail,
       primaryPhone: validators.string,
       notes: validators.string,
     })

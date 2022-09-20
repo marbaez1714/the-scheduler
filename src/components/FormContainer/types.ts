@@ -3,5 +3,5 @@ export interface FormContainerProps {
   children: React.ReactNode;
   isValid: boolean;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
-  onClearClick: () => void;
+  onClearClick?: () => void;
 }

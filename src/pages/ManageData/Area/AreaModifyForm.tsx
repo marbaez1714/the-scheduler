@@ -12,6 +12,7 @@ import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { WriteAreaForm } from 'src/utils/forms';
+import { ToastMessages } from 'src/utils/toastMessages';
 
 export const AreaModifyForm = () => {
   /******************************/
@@ -49,16 +50,18 @@ export const AreaModifyForm = () => {
     skip: !areaId,
     variables: { id: areaId ?? '' },
     onCompleted: ({ areaById }) => {
-      if (areaById) {
-        reset({
-          name: areaById.name,
-          nameSpanish: areaById.nameSpanish,
-          notes: areaById.notes ?? '',
-        });
+      if (!areaById) {
+        throw new Error();
       }
+
+      reset({
+        name: areaById.name,
+        nameSpanish: areaById.nameSpanish,
+        notes: areaById.notes ?? '',
+      });
     },
     onError: () => {
-      toast.error('Something went wrong');
+      ToastMessages.somethingWrong();
     },
   });
 
@@ -97,7 +100,6 @@ export const AreaModifyForm = () => {
         title="Modify Area"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
-        onClearClick={reset}
       >
         {/******************************/}
         {/* Name                       */}

@@ -1,6 +1,5 @@
-export const messages = {
+export const inputMessages = {
   addressRequired: 'Address is required',
-  confirmRest: 'Are you sure you want to clear the form?',
   nameRequired: 'Name is required',
   nameTranslationRequired: 'Name Translation (Spanish) is required',
   phoneRequired: 'Phone Number is required',
