@@ -9,7 +9,13 @@ export interface ContentProps {
   centerHorizontal?: boolean;
   centerVertical?: boolean;
   center?: boolean;
+  primaryAction?: ContentAction;
 }
+
+type ContentAction = {
+  onClick: () => void;
+  title: string;
+};
 
 export interface SideBarLinkProps {
   title: string;

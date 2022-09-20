@@ -4,10 +4,7 @@ import toast from 'react-hot-toast';
 import { WriteCommunityForm } from 'src/utils/forms';
 import { WriteCommunityInput, useCreateCommunityMutation } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormTextInput } from 'src/components/FormTextInput';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
-import { FormAutocomplete } from 'src/components/FormAutocomplete';
+import { Form } from 'src/components/Form';
 import { useOptions } from 'src/hooks/useOptions';
 
 export const CommunityAddForm = () => {
@@ -72,7 +69,7 @@ export const CommunityAddForm = () => {
   /******************************/
   return (
     <Screen.Content centerHorizontal loading={loading}>
-      <FormContainer
+      <Form
         title="Add Community"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
@@ -81,7 +78,7 @@ export const CommunityAddForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteCommunityForm.labels.name}
           control={control}
           name="name"
@@ -90,7 +87,7 @@ export const CommunityAddForm = () => {
         {/******************************/}
         {/* Company                    */}
         {/******************************/}
-        <FormAutocomplete
+        <Form.Autocomplete
           label={WriteCommunityForm.labels.companyId}
           control={control}
           options={companyOptions}
@@ -100,12 +97,12 @@ export const CommunityAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteCommunityForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

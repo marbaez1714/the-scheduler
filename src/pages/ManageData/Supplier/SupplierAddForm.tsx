@@ -4,9 +4,7 @@ import toast from 'react-hot-toast';
 import { WriteSupplierForm } from 'src/utils/forms';
 import { WriteSupplierInput, useCreateSupplierMutation } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormTextInput } from 'src/components/FormTextInput';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
+import { Form } from 'src/components/Form';
 
 export const SupplierAddForm = () => {
   /******************************/
@@ -47,8 +45,8 @@ export const SupplierAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content className="flex flex-col items-center" loading={loading}>
-      <FormContainer
+    <Screen.Content centerHorizontal loading={loading}>
+      <Form
         title="Add Supplier"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
@@ -57,7 +55,7 @@ export const SupplierAddForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteSupplierForm.labels.name}
           control={control}
           name="name"
@@ -66,7 +64,7 @@ export const SupplierAddForm = () => {
         {/******************************/}
         {/* Primary Phone              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteSupplierForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
@@ -75,12 +73,12 @@ export const SupplierAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteSupplierForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

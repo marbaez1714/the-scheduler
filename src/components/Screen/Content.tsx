@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import cn from 'classnames';
 import { ContentProps } from './types';
 
@@ -8,6 +9,7 @@ export const Content = ({
   centerHorizontal,
   centerVertical,
   center,
+  primaryAction,
 }: ContentProps) => {
   if (loading) {
     return (
@@ -18,17 +20,35 @@ export const Content = ({
   }
 
   return (
-    <div
-      className={cn(
-        'flex w-full h-full p-8 overflow-auto transition-all bg-slate-300 justify-start items-start',
-        {
-          'justify-center': center || centerHorizontal,
-          'items-center': center || centerVertical,
-        },
-        className
+    <div className="flex flex-col w-full h-full bg-app-medium">
+      {/******************************/}
+      {/* Content                    */}
+      {/******************************/}
+      <div
+        className={cn(
+          'flex flex-grow m-4 overflow-auto transition-all justify-start items-start',
+          {
+            'justify-center': center || centerHorizontal,
+            'items-center': center || centerVertical,
+          },
+          className
+        )}
+      >
+        {children}
+      </div>
+
+      {/******************************/}
+      {/* Actions                    */}
+      {/******************************/}
+      {!!primaryAction && (
+        <div className="p-2 text-right shadow bg-app">
+          {!!primaryAction && (
+            <Button variant="contained" onClick={primaryAction.onClick}>
+              {primaryAction.title}
+            </Button>
+          )}
+        </div>
       )}
-    >
-      {children}
     </div>
   );
 };

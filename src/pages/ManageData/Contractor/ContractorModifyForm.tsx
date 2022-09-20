@@ -8,9 +8,7 @@ import {
   WriteContractorInput,
 } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
-import { FormTextInput } from 'src/components/FormTextInput';
+import { Form } from 'src/components/Form';
 import { WriteContractorForm } from 'src/utils/forms';
 import { ToastMessages } from 'src/utils/toastMessages';
 
@@ -96,11 +94,8 @@ export const ContractorModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content
-      className="flex flex-col items-center"
-      loading={getLoading || modifyLoading}
-    >
-      <FormContainer
+    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+      <Form
         title="Modify Contractor"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
@@ -108,7 +103,7 @@ export const ContractorModifyForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteContractorForm.labels.name}
           control={control}
           name="name"
@@ -117,7 +112,7 @@ export const ContractorModifyForm = () => {
         {/******************************/}
         {/* Primary Phone              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteContractorForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
@@ -127,12 +122,12 @@ export const ContractorModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteContractorForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

@@ -1,13 +1,17 @@
 import { Button } from '@mui/material';
-import { FormContainerProps } from './types';
 
-const FormContainer = ({
+import { Autocomplete } from './Inputs/Autocomplete';
+import { TextArea } from './Inputs/TextArea';
+import { TextInput } from './Inputs/TextInput';
+import { FormProps } from './types';
+
+const Form = ({
   title,
   isValid,
   onSubmit,
   onClearClick,
   children,
-}: FormContainerProps) => {
+}: FormProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -45,17 +49,15 @@ const FormContainer = ({
   /******************************/
   return (
     <div className="shadow">
-      <div className="px-6 py-4 border-b border-b-slate-500 bg-slate-600">
-        <h1 className="text-4xl font-semibold tracking-wide text-white">
-          {title}
-        </h1>
-        <p className="text-white opacity-70">
-          Fields marked with <span className="font-bold text-red-500">*</span>{' '}
+      <div className="px-6 py-4 border-b border-app-dark bg-app text-app-altText">
+        <h1 className="text-4xl font-semibold tracking-wide ">{title}</h1>
+        <p className="text-app-altText/50">
+          Fields marked with <span className="font-bold text-app-error">*</span>{' '}
           are required.
         </p>
       </div>
 
-      <form className="p-6 space-y-4 bg-slate-100 w-96" onSubmit={onSubmit}>
+      <form className="p-6 space-y-4 bg-app-light" onSubmit={onSubmit}>
         {children}
 
         <div className="flex justify-end pt-6 space-x-4">
@@ -69,4 +71,8 @@ const FormContainer = ({
   );
 };
 
-export default FormContainer;
+Form.TextInput = TextInput;
+Form.TextArea = TextArea;
+Form.Autocomplete = Autocomplete;
+
+export default Form;

@@ -1,5 +1,3 @@
-import { AddBox } from '@mui/icons-material';
-import { Button } from '@mui/material';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
@@ -61,6 +59,10 @@ export const CommunityList = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const primaryAction = {
+    title: 'Add Community',
+    onClick: () => navigate('add'),
+  };
 
   /******************************/
   /* Table Definitions         */
@@ -120,7 +122,10 @@ export const CommunityList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content className="flex-col space-y-4" loading={loading || archiveLoading}>
+    <Screen.Content
+      loading={loading || archiveLoading}
+      primaryAction={primaryAction}
+    >
       {/* Area List */}
       {data?.communities && (
         <Table
@@ -131,15 +136,6 @@ export const CommunityList = () => {
           rowActions={rowActions}
         />
       )}
-      <Button
-        onClick={() => navigate('add')}
-        startIcon={<AddBox />}
-        color="inherit"
-        variant="contained"
-        fullWidth
-      >
-        Add a Community
-      </Button>
     </Screen.Content>
   );
 };

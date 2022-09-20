@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import { FieldValues, useController } from 'react-hook-form';
 
-import { FormTextAreaProps } from './types';
+import { TextAreaProps } from './types';
 
-const FormTextArea = <T extends FieldValues>({
+export const TextArea = <TFields extends FieldValues>({
   label,
   className,
   required,
   ...rest
-}: FormTextAreaProps<T>) => {
+}: TextAreaProps<TFields>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -50,5 +50,3 @@ const FormTextArea = <T extends FieldValues>({
     </div>
   );
 };
-
-export default FormTextArea;

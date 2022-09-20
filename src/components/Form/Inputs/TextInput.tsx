@@ -4,16 +4,16 @@ import { FieldValues, useController } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 
 import { maskMap, placeholderMap } from './utils';
-import { FormTextInputsProp } from './types';
+import { TextInputProps } from './types';
 
-const FormTextInput = <T extends FieldValues>({
+export const TextInput = <TFields extends FieldValues>({
   label,
   className,
   required,
   mask,
   placeholder,
   ...rest
-}: FormTextInputsProp<T>) => {
+}: TextInputProps<TFields>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -66,5 +66,3 @@ const FormTextInput = <T extends FieldValues>({
     </div>
   );
 };
-
-export default FormTextInput;

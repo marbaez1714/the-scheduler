@@ -4,9 +4,7 @@ import toast from 'react-hot-toast';
 import { WriteAreaForm } from 'src/utils/forms';
 import { WriteAreaInput, useCreateAreaMutation } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormTextInput } from 'src/components/FormTextInput';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
+import { Form } from 'src/components/Form';
 
 export const AreaAddForm = () => {
   /******************************/
@@ -48,7 +46,7 @@ export const AreaAddForm = () => {
   /******************************/
   return (
     <Screen.Content centerHorizontal loading={loading}>
-      <FormContainer
+      <Form
         title="Add Area"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
@@ -57,11 +55,11 @@ export const AreaAddForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput label="Name" control={control} name="name" required />
+        <Form.TextInput label="Name" control={control} name="name" required />
         {/******************************/}
         {/* Name - Spanish             */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label="Name Translation (Spanish)"
           control={control}
           name="nameSpanish"
@@ -70,8 +68,8 @@ export const AreaAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea label="Notes" control={control} name="notes" />
-      </FormContainer>
+        <Form.TextArea label="Notes" control={control} name="notes" />
+      </Form>
     </Screen.Content>
   );
 };

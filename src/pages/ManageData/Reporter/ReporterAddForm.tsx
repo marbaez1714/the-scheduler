@@ -4,9 +4,7 @@ import toast from 'react-hot-toast';
 import { WriteReporterForm } from 'src/utils/forms';
 import { WriteReporterInput, useCreateReporterMutation } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormTextInput } from 'src/components/FormTextInput';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
+import { Form } from 'src/components/Form';
 
 export const ReporterAddForm = () => {
   /******************************/
@@ -47,8 +45,8 @@ export const ReporterAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content className="flex flex-col items-center" loading={loading}>
-      <FormContainer
+    <Screen.Content centerHorizontal loading={loading}>
+      <Form
         title="Add Reporter"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
@@ -57,7 +55,7 @@ export const ReporterAddForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteReporterForm.labels.name}
           control={control}
           name="name"
@@ -66,7 +64,7 @@ export const ReporterAddForm = () => {
         {/******************************/}
         {/* Primary Phone              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteReporterForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
@@ -76,7 +74,7 @@ export const ReporterAddForm = () => {
         {/******************************/}
         {/* Primary Email              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteReporterForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
@@ -84,12 +82,12 @@ export const ReporterAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteReporterForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

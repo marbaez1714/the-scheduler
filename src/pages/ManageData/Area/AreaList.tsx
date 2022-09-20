@@ -1,5 +1,3 @@
-import { AddBox } from '@mui/icons-material';
-import { Button } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
@@ -57,6 +55,10 @@ export const AreaList = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const primaryAction = {
+    title: 'Add Area',
+    onClick: () => navigate('add'),
+  };
 
   /******************************/
   /* Table Definitions         */
@@ -117,8 +119,8 @@ export const AreaList = () => {
   /******************************/
   return (
     <Screen.Content
-      className="flex-col space-y-4"
       loading={loading || archiveLoading}
+      primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.areas && (
@@ -130,15 +132,6 @@ export const AreaList = () => {
           rowActions={rowActions}
         />
       )}
-      <Button
-        onClick={() => navigate('add')}
-        startIcon={<AddBox />}
-        color="inherit"
-        variant="contained"
-        fullWidth
-      >
-        Add an Area
-      </Button>
     </Screen.Content>
   );
 };

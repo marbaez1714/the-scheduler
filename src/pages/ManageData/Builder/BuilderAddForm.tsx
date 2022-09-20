@@ -4,10 +4,7 @@ import toast from 'react-hot-toast';
 import { WriteBuilderForm } from 'src/utils/forms';
 import { WriteBuilderInput, useCreateBuilderMutation } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormTextInput } from 'src/components/FormTextInput';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
-import { FormAutocomplete } from 'src/components/FormAutocomplete';
+import { Form } from 'src/components/Form';
 import { useOptions } from 'src/hooks/useOptions';
 
 export const BuilderAddForm = () => {
@@ -52,7 +49,7 @@ export const BuilderAddForm = () => {
   /******************************/
   return (
     <Screen.Content centerHorizontal loading={loading}>
-      <FormContainer
+      <Form
         title="Add Builder"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
@@ -61,7 +58,7 @@ export const BuilderAddForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteBuilderForm.labels.name}
           control={control}
           name="name"
@@ -70,7 +67,7 @@ export const BuilderAddForm = () => {
         {/******************************/}
         {/* Primary Phone              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteBuilderForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
@@ -80,7 +77,7 @@ export const BuilderAddForm = () => {
         {/******************************/}
         {/* Primary Email              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteBuilderForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
@@ -88,7 +85,7 @@ export const BuilderAddForm = () => {
         {/******************************/}
         {/* Company                    */}
         {/******************************/}
-        <FormAutocomplete
+        <Form.Autocomplete
           label={WriteBuilderForm.labels.companyId}
           control={control}
           options={companyOptions}
@@ -98,12 +95,12 @@ export const BuilderAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteBuilderForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

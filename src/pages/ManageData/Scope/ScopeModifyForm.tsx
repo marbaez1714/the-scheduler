@@ -8,9 +8,7 @@ import {
   WriteScopeInput,
 } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
-import { FormTextInput } from 'src/components/FormTextInput';
+import { Form } from 'src/components/Form';
 import { WriteScopeForm } from 'src/utils/forms';
 import { ToastMessages } from 'src/utils/toastMessages';
 
@@ -97,11 +95,8 @@ export const ScopeModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content
-      className="flex flex-col items-center"
-      loading={getLoading || modifyLoading}
-    >
-      <FormContainer
+    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+      <Form
         title="Modify Scope"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
@@ -109,7 +104,7 @@ export const ScopeModifyForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteScopeForm.labels.name}
           control={control}
           name="name"
@@ -118,7 +113,7 @@ export const ScopeModifyForm = () => {
         {/******************************/}
         {/* Name - Spanish             */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteScopeForm.labels.nameSpanish}
           control={control}
           name="nameSpanish"
@@ -127,7 +122,7 @@ export const ScopeModifyForm = () => {
         {/******************************/}
         {/* Description                */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteScopeForm.labels.description}
           control={control}
           name="description"
@@ -135,12 +130,12 @@ export const ScopeModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteScopeForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

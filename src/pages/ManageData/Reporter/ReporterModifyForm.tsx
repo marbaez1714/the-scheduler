@@ -8,9 +8,7 @@ import {
   WriteReporterInput,
 } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
-import { FormTextInput } from 'src/components/FormTextInput';
+import { Form } from 'src/components/Form';
 import { WriteReporterForm } from 'src/utils/forms';
 import { ToastMessages } from 'src/utils/toastMessages';
 
@@ -96,11 +94,8 @@ export const ReporterModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content
-      className="flex flex-col items-center"
-      loading={getLoading || modifyLoading}
-    >
-      <FormContainer
+    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+      <Form
         title="Modify Reporter"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
@@ -108,7 +103,7 @@ export const ReporterModifyForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteReporterForm.labels.name}
           control={control}
           name="name"
@@ -117,7 +112,7 @@ export const ReporterModifyForm = () => {
         {/******************************/}
         {/* Primary Phone              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteReporterForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
@@ -127,7 +122,7 @@ export const ReporterModifyForm = () => {
         {/******************************/}
         {/* Primary Email              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteReporterForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
@@ -135,12 +130,12 @@ export const ReporterModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteReporterForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

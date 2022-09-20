@@ -1,5 +1,3 @@
-import { AddBox } from '@mui/icons-material';
-import { Button } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
@@ -61,6 +59,10 @@ export const BuilderList = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const primaryAction = {
+    title: 'Add Builder',
+    onClick: () => navigate('add'),
+  };
 
   /******************************/
   /* Table Definitions         */
@@ -132,7 +134,10 @@ export const BuilderList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content className="flex-col space-y-4" loading={loading || archiveLoading}>
+    <Screen.Content
+      loading={loading || archiveLoading}
+      primaryAction={primaryAction}
+    >
       {/* Area List */}
       {data?.builders && (
         <Table
@@ -143,15 +148,6 @@ export const BuilderList = () => {
           rowActions={rowActions}
         />
       )}
-      <Button
-        onClick={() => navigate('add')}
-        startIcon={<AddBox />}
-        color="inherit"
-        variant="contained"
-        fullWidth
-      >
-        Add a Builder
-      </Button>
     </Screen.Content>
   );
 };

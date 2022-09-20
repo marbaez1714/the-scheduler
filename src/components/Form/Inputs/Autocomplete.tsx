@@ -3,16 +3,16 @@ import { FieldValues, useController } from 'react-hook-form';
 import { Combobox, Transition } from '@headlessui/react';
 import cn from 'classnames';
 
-import { FormAutocompleteProps } from './types';
+import { AutocompleteProps } from './types';
 import { Icon } from '@mui/material';
 
-const FormAutocomplete = <T extends FieldValues>({
+export const Autocomplete = <T extends FieldValues>({
   label,
   className,
   required,
   options,
   ...rest
-}: FormAutocompleteProps<T>) => {
+}: AutocompleteProps<T>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -129,5 +129,3 @@ const FormAutocomplete = <T extends FieldValues>({
     </div>
   );
 };
-
-export default FormAutocomplete;

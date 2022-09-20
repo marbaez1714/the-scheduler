@@ -4,9 +4,8 @@ import toast from 'react-hot-toast';
 import { WriteCompanyForm } from 'src/utils/forms';
 import { WriteCompanyInput, useCreateCompanyMutation } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormTextInput } from 'src/components/FormTextInput';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
+import { Form } from 'src/components/Form';
+
 
 export const CompanyAddForm = () => {
   /******************************/
@@ -67,8 +66,8 @@ export const CompanyAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content className="flex flex-col items-center" loading={loading}>
-      <FormContainer
+    <Screen.Content centerHorizontal loading={loading}>
+      <Form
         title="Add Company"
         onSubmit={handleSubmit(submit)}
         onClearClick={reset}
@@ -77,7 +76,7 @@ export const CompanyAddForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteCompanyForm.labels.name}
           control={control}
           name="name"
@@ -86,7 +85,7 @@ export const CompanyAddForm = () => {
         {/******************************/}
         {/* Primary Phone              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteCompanyForm.labels.primaryPhone}
           control={control}
           name="primaryPhone"
@@ -95,7 +94,7 @@ export const CompanyAddForm = () => {
         {/******************************/}
         {/* Primary Email              */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteCompanyForm.labels.primaryEmail}
           control={control}
           name="primaryEmail"
@@ -103,7 +102,7 @@ export const CompanyAddForm = () => {
         {/******************************/}
         {/* Primary Address            */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteCompanyForm.labels.primaryAddress}
           control={control}
           name="primaryAddress"
@@ -111,12 +110,12 @@ export const CompanyAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteCompanyForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

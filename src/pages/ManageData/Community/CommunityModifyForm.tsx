@@ -8,10 +8,7 @@ import {
   WriteCommunityInput,
 } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormAutocomplete } from 'src/components/FormAutocomplete';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
-import { FormTextInput } from 'src/components/FormTextInput';
+import { Form } from 'src/components/Form';
 import { useOptions } from 'src/hooks/useOptions';
 import { WriteCommunityForm } from 'src/utils/forms';
 import { ToastMessages } from 'src/utils/toastMessages';
@@ -100,7 +97,7 @@ export const CommunityModifyForm = () => {
   /******************************/
   return (
     <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
-      <FormContainer
+      <Form
         title="Modify Community"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
@@ -108,7 +105,7 @@ export const CommunityModifyForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label={WriteCommunityForm.labels.name}
           control={control}
           name="name"
@@ -117,7 +114,7 @@ export const CommunityModifyForm = () => {
         {/******************************/}
         {/* Company                    */}
         {/******************************/}
-        <FormAutocomplete
+        <Form.Autocomplete
           label={WriteCommunityForm.labels.companyId}
           control={control}
           options={companyOptions}
@@ -127,12 +124,12 @@ export const CommunityModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea
+        <Form.TextArea
           label={WriteCommunityForm.labels.notes}
           control={control}
           name="notes"
         />
-      </FormContainer>
+      </Form>
     </Screen.Content>
   );
 };

@@ -8,9 +8,7 @@ import {
   WriteAreaInput,
 } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { FormContainer } from 'src/components/FormContainer';
-import { FormTextArea } from 'src/components/FormTextArea';
-import { FormTextInput } from 'src/components/FormTextInput';
+import { Form } from 'src/components/Form';
 import { WriteAreaForm } from 'src/utils/forms';
 import { ToastMessages } from 'src/utils/toastMessages';
 
@@ -96,7 +94,7 @@ export const AreaModifyForm = () => {
   /******************************/
   return (
     <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
-      <FormContainer
+      <Form
         title="Modify Area"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
@@ -104,11 +102,11 @@ export const AreaModifyForm = () => {
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <FormTextInput label="Name" control={control} name="name" required />
+        <Form.TextInput label="Name" control={control} name="name" required />
         {/******************************/}
         {/* Name - Spanish             */}
         {/******************************/}
-        <FormTextInput
+        <Form.TextInput
           label="Name Translation (Spanish)"
           control={control}
           name="nameSpanish"
@@ -117,8 +115,8 @@ export const AreaModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormTextArea label="Notes" control={control} name="notes" />
-      </FormContainer>
+        <Form.TextArea label="Notes" control={control} name="notes" />
+      </Form>
     </Screen.Content>
   );
 };

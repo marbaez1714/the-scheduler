@@ -1,4 +1,4 @@
-export interface FormContainerProps {
+export interface FormProps {
   title: string;
   children: React.ReactNode;
   isValid: boolean;

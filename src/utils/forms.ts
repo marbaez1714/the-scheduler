@@ -12,7 +12,7 @@ import {
   WriteScopeInput,
   WriteSupplierInput,
 } from './../api/index';
-import { inputMessages } from './messages';
+import { inputMessages } from './inputMessages';
 
 /******************************/
 /* Types                      */
@@ -65,9 +65,15 @@ const validators = {
     .string()
     .trim()
     .required(inputMessages.nameTranslationRequired),
-  primaryPhoneRequired: yup.string().trim().required(inputMessages.phoneRequired),
+  primaryPhoneRequired: yup
+    .string()
+    .trim()
+    .required(inputMessages.phoneRequired),
   primaryEmail: yup.string().trim().email(inputMessages.emailFormat),
-  companyIdRequired: yup.string().trim().required(inputMessages.companyRequired),
+  companyIdRequired: yup
+    .string()
+    .trim()
+    .required(inputMessages.companyRequired),
   string: yup.string().trim(),
 };
 
