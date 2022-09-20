@@ -7,7 +7,7 @@ import {
   useModifySupplierMutation,
   WriteSupplierInput,
 } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -96,7 +96,7 @@ export const SupplierModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content
+    <Screen.Content
       className="flex flex-col items-center"
       loading={getLoading || modifyLoading}
     >
@@ -132,6 +132,6 @@ export const SupplierModifyForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

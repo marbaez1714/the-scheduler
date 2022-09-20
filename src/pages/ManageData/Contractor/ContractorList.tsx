@@ -11,7 +11,7 @@ import {
   useGetContractorsQuery,
 } from 'src/api';
 
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 
@@ -120,7 +120,7 @@ export const ContractorList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
+    <Screen.Content className="flex-col space-y-4" loading={loading || archiveLoading}>
       {/* Area List */}
       {data?.contractors && (
         <Table
@@ -140,6 +140,6 @@ export const ContractorList = () => {
       >
         Add a Contractor
       </Button>
-    </Content>
+    </Screen.Content>
   );
 };

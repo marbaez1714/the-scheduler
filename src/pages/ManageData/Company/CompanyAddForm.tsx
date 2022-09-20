@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteCompanyForm } from 'src/utils/forms';
 import { WriteCompanyInput, useCreateCompanyMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -67,7 +67,7 @@ export const CompanyAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col items-center" loading={loading}>
+    <Screen.Content className="flex flex-col items-center" loading={loading}>
       <FormContainer
         title="Add Company"
         onSubmit={handleSubmit(submit)}
@@ -117,6 +117,6 @@ export const CompanyAddForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

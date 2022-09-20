@@ -12,7 +12,7 @@ import {
 } from 'src/api';
 
 import { Table, TableRowAction } from 'src/components/Table';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { confirmArchive } from 'src/utils/alerts';
 
 export const CommunityList = () => {
@@ -120,7 +120,7 @@ export const CommunityList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
+    <Screen.Content className="flex-col space-y-4" loading={loading || archiveLoading}>
       {/* Area List */}
       {data?.communities && (
         <Table
@@ -140,6 +140,6 @@ export const CommunityList = () => {
       >
         Add a Community
       </Button>
-    </Content>
+    </Screen.Content>
   );
 };

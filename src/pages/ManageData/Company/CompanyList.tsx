@@ -10,7 +10,7 @@ import {
   useArchiveCompanyMutation,
 } from 'src/api';
 
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { format } from 'date-fns';
@@ -125,7 +125,7 @@ export const CompanyList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
+    <Screen.Content className="flex-col space-y-4" loading={loading || archiveLoading}>
       {/* Area List */}
       {data?.companies && (
         <Table
@@ -145,6 +145,6 @@ export const CompanyList = () => {
       >
         Add a Company
       </Button>
-    </Content>
+    </Screen.Content>
   );
 };

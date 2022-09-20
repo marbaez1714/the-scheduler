@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { ContentProps } from './types';
 
-const Content = ({
+export const Content = ({
   className,
   children,
   loading,
@@ -32,5 +32,3 @@ const Content = ({
     </div>
   );
 };
-
-export default Content;

@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteBuilderForm } from 'src/utils/forms';
 import { WriteBuilderInput, useCreateBuilderMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -51,7 +51,7 @@ export const BuilderAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content centerHorizontal loading={loading}>
+    <Screen.Content centerHorizontal loading={loading}>
       <FormContainer
         title="Add Builder"
         onSubmit={handleSubmit(submit)}
@@ -104,6 +104,6 @@ export const BuilderAddForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

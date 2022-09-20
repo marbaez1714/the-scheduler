@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteReporterForm } from 'src/utils/forms';
 import { WriteReporterInput, useCreateReporterMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -47,7 +47,7 @@ export const ReporterAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col items-center" loading={loading}>
+    <Screen.Content className="flex flex-col items-center" loading={loading}>
       <FormContainer
         title="Add Reporter"
         onSubmit={handleSubmit(submit)}
@@ -90,6 +90,6 @@ export const ReporterAddForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

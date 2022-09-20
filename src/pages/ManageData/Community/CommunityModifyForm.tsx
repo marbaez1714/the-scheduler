@@ -7,7 +7,7 @@ import {
   useModifyCommunityMutation,
   WriteCommunityInput,
 } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormAutocomplete } from 'src/components/FormAutocomplete';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -99,7 +99,7 @@ export const CommunityModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
       <FormContainer
         title="Modify Community"
         onSubmit={handleSubmit(submit)}
@@ -133,6 +133,6 @@ export const CommunityModifyForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

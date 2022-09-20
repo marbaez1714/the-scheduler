@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteAreaForm } from 'src/utils/forms';
 import { WriteAreaInput, useCreateAreaMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -47,7 +47,7 @@ export const AreaAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content centerHorizontal loading={loading}>
+    <Screen.Content centerHorizontal loading={loading}>
       <FormContainer
         title="Add Area"
         onSubmit={handleSubmit(submit)}
@@ -72,6 +72,6 @@ export const AreaAddForm = () => {
         {/******************************/}
         <FormTextArea label="Notes" control={control} name="notes" />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

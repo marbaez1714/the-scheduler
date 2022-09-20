@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 
 import { Scope, useArchiveScopeMutation, useGetScopesQuery } from 'src/api';
 
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 
@@ -116,7 +116,7 @@ export const ScopeList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
+    <Screen.Content className="flex-col space-y-4" loading={loading || archiveLoading}>
       {/* Area List */}
       {data?.scopes && (
         <Table
@@ -136,6 +136,6 @@ export const ScopeList = () => {
       >
         Add a Scope
       </Button>
-    </Content>
+    </Screen.Content>
   );
 };

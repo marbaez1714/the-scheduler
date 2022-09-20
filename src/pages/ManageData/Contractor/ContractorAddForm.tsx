@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteContractorForm } from 'src/utils/forms';
 import { WriteContractorInput, useCreateContractorMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -47,7 +47,7 @@ export const ContractorAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col items-center" loading={loading}>
+    <Screen.Content className="flex flex-col items-center" loading={loading}>
       <FormContainer
         title="Add Contractor"
         onSubmit={handleSubmit(submit)}
@@ -82,6 +82,6 @@ export const ContractorAddForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

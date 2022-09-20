@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteSupplierForm } from 'src/utils/forms';
 import { WriteSupplierInput, useCreateSupplierMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -47,7 +47,7 @@ export const SupplierAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col items-center" loading={loading}>
+    <Screen.Content className="flex flex-col items-center" loading={loading}>
       <FormContainer
         title="Add Supplier"
         onSubmit={handleSubmit(submit)}
@@ -81,6 +81,6 @@ export const SupplierAddForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

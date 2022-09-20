@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteScopeForm } from 'src/utils/forms';
 import { WriteScopeInput, useCreateScopeMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -47,7 +47,7 @@ export const ScopeAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content className="flex flex-col items-center" loading={loading}>
+    <Screen.Content className="flex flex-col items-center" loading={loading}>
       <FormContainer
         title="Add Scope"
         onSubmit={handleSubmit(submit)}
@@ -89,6 +89,6 @@ export const ScopeAddForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

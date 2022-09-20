@@ -9,7 +9,6 @@ import {
 
 import { Screen } from 'src/components/Screen';
 import { Table } from 'src/components/Table';
-import { Content } from 'src/components/Content';
 
 const Dashboard = () => {
   /******************************/
@@ -108,11 +107,6 @@ const Dashboard = () => {
       accessorFn: (row) => row.area?.name || '-',
       cell: (context) => context.getValue(),
     },
-    // { TODO
-    //   id: 'job-company',
-    //   header: 'Company',
-    //   accessorKey: ''
-    // }
     {
       id: 'job-builder',
       header: 'Builder',
@@ -121,24 +115,12 @@ const Dashboard = () => {
     },
   ];
 
-  // <!-- community -->
-  // <td>{{ item.communityName }}</td>
-  // <!-- reporter -->
-  // <td>{{ item.reporterName }}</td>
-  // <!-- scope -->
-  // <td>{{ item.sowName }}</td>
-  // <!-- area -->
-  // <td>{{ item.areaName }}</td>
-  // <!-- company -->
-  // <td>{{ item.companyName }}</td>
-  // <!-- builder -->
-  // <td>{{ item.builderName }}</td>
   /******************************/
   /* Render                     */
   /******************************/
   return (
     <Screen>
-      <Content>
+      <Screen.Content>
         {!!unassignedJobsData && (
           <Table
             title="Unassigned Jobs"
@@ -146,7 +128,7 @@ const Dashboard = () => {
             columns={unassignedTableColumns}
           />
         )}
-      </Content>
+      </Screen.Content>
     </Screen>
   );
 };

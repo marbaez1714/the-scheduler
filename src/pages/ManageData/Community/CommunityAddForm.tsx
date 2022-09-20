@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { WriteCommunityForm } from 'src/utils/forms';
 import { WriteCommunityInput, useCreateCommunityMutation } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormTextInput } from 'src/components/FormTextInput';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -71,7 +71,7 @@ export const CommunityAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content centerHorizontal loading={loading}>
+    <Screen.Content centerHorizontal loading={loading}>
       <FormContainer
         title="Add Community"
         onSubmit={handleSubmit(submit)}
@@ -106,6 +106,6 @@ export const CommunityAddForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

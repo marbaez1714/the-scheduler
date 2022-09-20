@@ -2,6 +2,15 @@ export interface ScreenProps {
   children: React.ReactNode;
 }
 
+export interface ContentProps {
+  children: React.ReactNode;
+  className?: string;
+  loading?: boolean;
+  centerHorizontal?: boolean;
+  centerVertical?: boolean;
+  center?: boolean;
+}
+
 export interface SideBarLinkProps {
   title: string;
   to: string;

@@ -6,7 +6,7 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import { Area, useArchiveAreaMutation, useGetAreasQuery } from 'src/api';
 
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { format } from 'date-fns';
@@ -116,7 +116,10 @@ export const AreaList = () => {
   /* Render                    */
   /******************************/
   return (
-    <Content className="flex-col space-y-4" loading={loading || archiveLoading}>
+    <Screen.Content
+      className="flex-col space-y-4"
+      loading={loading || archiveLoading}
+    >
       {/* Area List */}
       {data?.areas && (
         <Table
@@ -136,6 +139,6 @@ export const AreaList = () => {
       >
         Add an Area
       </Button>
-    </Content>
+    </Screen.Content>
   );
 };

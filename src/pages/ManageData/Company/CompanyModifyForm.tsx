@@ -7,7 +7,7 @@ import {
   useModifyCompanyMutation,
   WriteCompanyInput,
 } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -98,7 +98,7 @@ export const CompanyModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content
+    <Screen.Content
       className="flex flex-col items-center"
       loading={getLoading || modifyLoading}
     >
@@ -151,6 +151,6 @@ export const CompanyModifyForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

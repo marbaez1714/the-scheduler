@@ -7,7 +7,7 @@ import {
   useModifyBuilderMutation,
   WriteBuilderInput,
 } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormAutocomplete } from 'src/components/FormAutocomplete';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
@@ -100,7 +100,7 @@ export const BuilderModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
       <FormContainer
         title="Modify Builder"
         onSubmit={handleSubmit(submit)}
@@ -152,6 +152,6 @@ export const BuilderModifyForm = () => {
           name="notes"
         />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };

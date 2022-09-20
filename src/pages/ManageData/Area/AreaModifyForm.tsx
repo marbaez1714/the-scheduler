@@ -7,7 +7,7 @@ import {
   useModifyAreaMutation,
   WriteAreaInput,
 } from 'src/api';
-import { Content } from 'src/components/Content';
+import { Screen } from 'src/components/Screen';
 import { FormContainer } from 'src/components/FormContainer';
 import { FormTextArea } from 'src/components/FormTextArea';
 import { FormTextInput } from 'src/components/FormTextInput';
@@ -95,7 +95,7 @@ export const AreaModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
       <FormContainer
         title="Modify Area"
         onSubmit={handleSubmit(submit)}
@@ -119,6 +119,6 @@ export const AreaModifyForm = () => {
         {/******************************/}
         <FormTextArea label="Notes" control={control} name="notes" />
       </FormContainer>
-    </Content>
+    </Screen.Content>
   );
 };
