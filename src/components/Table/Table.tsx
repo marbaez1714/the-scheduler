@@ -1,5 +1,4 @@
 import { ChangeEventHandler, useState } from 'react';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -13,6 +12,7 @@ import {
   Header,
   Cell,
 } from '@tanstack/react-table';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
 import { DataIdCell } from './Cells/DataIdCell';
 import { DateCell } from './Cells/DateCell';
@@ -97,9 +97,9 @@ const Table = <TData extends Record<string, unknown>>({
           <>
             {flexRender(h.column.columnDef.header, h.getContext())}
             {!!sortDirection && (
-              <div className="absolute top-0 flex items-center h-full right-2 y-6">
-                {sortDirection === 'asc' && <ExpandMore />}
-                {sortDirection === 'desc' && <ExpandLess />}
+              <div className="absolute top-0 flex items-center w-4 h-full right-2 y-6">
+                {sortDirection === 'asc' && <ChevronDownIcon />}
+                {sortDirection === 'desc' && <ChevronUpIcon />}
               </div>
             )}
           </>

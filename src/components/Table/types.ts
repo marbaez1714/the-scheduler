@@ -4,7 +4,7 @@ import { ColumnDef } from '@tanstack/react-table';
 /* Main Table                 */
 /******************************/
 export type TableRowAction<TData> = {
-  icon: string;
+  icon: React.ReactNode;
   label: string;
   onClick: (data: TData) => void;
 };

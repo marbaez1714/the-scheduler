@@ -1,6 +1,5 @@
 import { Popover, Transition } from '@headlessui/react';
-import { Close, MoreVert } from '@mui/icons-material';
-import { Icon } from '@mui/material';
+import { XMarkIcon, EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 
 import { RowMenuCellProps } from '../types';
 
@@ -21,8 +20,8 @@ export const RowMenuCell = <TData extends Record<string, unknown>>({
 
       {({ open }) => (
         <>
-          <Popover.Button className="flex items-center">
-            <MoreVert fontSize="inherit" />
+          <Popover.Button className="flex items-center w-4 h-4">
+            <EllipsisVerticalIcon />
           </Popover.Button>
           <Transition
             as={Popover.Overlay}
@@ -53,7 +52,7 @@ export const RowMenuCell = <TData extends Record<string, unknown>>({
                     className="flex items-center p-4 text-white transition-all border-r bg-slate-500 hover:bg-slate-600 border-r-slate-400"
                     onClick={() => close()}
                   >
-                    <Close />
+                    <XMarkIcon className="w-4 h-4" />
                   </button>
 
                   {menuActions.map(({ icon, label, onClick }, key) => (
@@ -65,7 +64,7 @@ export const RowMenuCell = <TData extends Record<string, unknown>>({
                       }}
                       key={key}
                     >
-                      <Icon fontSize="inherit">{icon}</Icon>
+                      <div className="w-4 h-4">{icon}</div>
                       <span className="pl-2">{label}</span>
                     </button>
                   ))}

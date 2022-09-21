@@ -2,6 +2,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
+import { ArchiveBoxIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 
 import { Scope, useArchiveScopeMutation, useGetScopesQuery } from 'src/api';
 
@@ -64,9 +65,13 @@ export const ScopeList = () => {
   /* Table Definitions         */
   /******************************/
   const rowActions: TableRowAction<Scope>[] = [
-    { icon: 'edit', label: 'Edit', onClick: (data) => navigate(data.id) },
     {
-      icon: 'archive',
+      icon: <PencilSquareIcon />,
+      label: 'Edit',
+      onClick: (data) => navigate(data.id),
+    },
+    {
+      icon: <ArchiveBoxIcon />,
       label: 'Archive',
       onClick: (data) =>
         confirmArchive(data.name) && archive({ variables: { id: data.id } }),
