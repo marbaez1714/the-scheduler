@@ -1,5 +1,6 @@
 import { Button } from 'src/components/Button';
 import { Autocomplete } from './Inputs/Autocomplete';
+import { DateInput } from './Inputs/DateInput';
 import { TextArea } from './Inputs/TextArea';
 import { TextInput } from './Inputs/TextInput';
 import { FormProps } from './types';
@@ -74,5 +75,6 @@ const Form = ({
 Form.TextInput = TextInput;
 Form.TextArea = TextArea;
 Form.Autocomplete = Autocomplete;
+Form.DateInput = DateInput;
 
 export default Form;

@@ -10,7 +10,14 @@ const CreateJob = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
-  const { builderOptions, communityOptions } = useOptions();
+  const {
+    builderOptions,
+    communityOptions,
+    contractorsOptions,
+    reporterOptions,
+    areaOptions,
+    scopeOptions,
+  } = useOptions();
 
   const {
     handleSubmit,
@@ -87,6 +94,11 @@ const CreateJob = () => {
           {/******************************/}
           {/* Start Date                 */}
           {/******************************/}
+          <Form.DateInput
+            label={CreateJobForm.labels.startDate}
+            control={control}
+            name="startDate"
+          />
 
           {/******************************/}
           {/* Builder                    */}
@@ -96,6 +108,59 @@ const CreateJob = () => {
             control={control}
             name="builderId"
             options={builderOptions}
+          />
+
+          {/******************************/}
+          {/* Contractor                 */}
+          {/******************************/}
+          <Form.Autocomplete
+            label={CreateJobForm.labels.contractorId}
+            control={control}
+            name="contractorId"
+            options={contractorsOptions}
+          />
+
+          {/******************************/}
+          {/* Reporter                   */}
+          {/******************************/}
+          <Form.Autocomplete
+            label={CreateJobForm.labels.reporterId}
+            control={control}
+            name="reporterId"
+            options={reporterOptions}
+          />
+
+          {/******************************/}
+          {/* Area                       */}
+          {/******************************/}
+          <Form.Autocomplete
+            label={CreateJobForm.labels.areaId}
+            control={control}
+            name="areaId"
+            options={areaOptions}
+          />
+
+          {/******************************/}
+          {/* Scope                      */}
+          {/******************************/}
+          <Form.Autocomplete
+            label={CreateJobForm.labels.scopeId}
+            control={control}
+            name="scopeId"
+            options={scopeOptions}
+          />
+
+          {/******************************/}
+          {/* LINE ITEMS GO HERE         */}
+          {/******************************/}
+
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <Form.TextArea
+            label={CreateJobForm.labels.notes}
+            control={control}
+            name="notes"
           />
         </Form>
       </Screen.Content>

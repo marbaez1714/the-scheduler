@@ -34,3 +34,13 @@ export interface AutocompleteProps<T extends FieldValues>
   required?: boolean;
   options: AutocompleteOption[];
 }
+
+/******************************/
+/* DateInput                  */
+/******************************/
+export interface DateInputProps<TFields extends FieldValues>
+  extends UseControllerProps<TFields> {
+  label?: string;
+  className?: string;
+  required?: boolean;
+}

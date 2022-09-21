@@ -2,10 +2,9 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { BrowserRouter } from 'react-router-dom';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Toaster } from 'react-hot-toast';
 
 import Navigation from './navigation/Navigation';
@@ -18,10 +17,8 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <ApolloAuthProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Navigation />
-            <Toaster />
-          </LocalizationProvider>
+          <Navigation />
+          <Toaster />
         </ApolloAuthProvider>
       </AuthProvider>
     </BrowserRouter>
