@@ -52,7 +52,7 @@ export const BuilderAddForm = () => {
       <Form
         title="Add Builder"
         onSubmit={handleSubmit(submit)}
-        onClearClick={reset}
+        onClearClick={() => reset()}
         isValid={isValid}
       >
         {/******************************/}

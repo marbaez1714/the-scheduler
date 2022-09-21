@@ -1,5 +1,5 @@
-import { Button } from '@mui/material';
 import cn from 'classnames';
+import { Button } from '../Button';
 import { ContentProps } from './types';
 
 export const Content = ({
@@ -26,7 +26,7 @@ export const Content = ({
       {/******************************/}
       <div
         className={cn(
-          'flex flex-grow m-4 overflow-auto transition-all justify-start items-start',
+          'flex flex-grow py-4 mx-4 overflow-auto transition-all justify-start items-start',
           {
             'justify-center': center || centerHorizontal,
             'items-center': center || centerVertical,
@@ -41,9 +41,9 @@ export const Content = ({
       {/* Actions                    */}
       {/******************************/}
       {!!primaryAction && (
-        <div className="p-2 text-right shadow bg-app">
+        <div className="p-4 text-right border-t shadow bg-app-medium border-app-light">
           {!!primaryAction && (
-            <Button variant="contained" onClick={primaryAction.onClick}>
+            <Button className="w-full" onClick={primaryAction.onClick}>
               {primaryAction.title}
             </Button>
           )}

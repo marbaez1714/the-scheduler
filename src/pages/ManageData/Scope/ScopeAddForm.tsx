@@ -49,7 +49,7 @@ export const ScopeAddForm = () => {
       <Form
         title="Add Scope"
         onSubmit={handleSubmit(submit)}
-        onClearClick={reset}
+        onClearClick={() => reset()}
         isValid={isValid}
       >
         {/******************************/}

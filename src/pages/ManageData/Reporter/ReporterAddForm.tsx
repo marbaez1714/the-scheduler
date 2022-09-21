@@ -49,7 +49,7 @@ export const ReporterAddForm = () => {
       <Form
         title="Add Reporter"
         onSubmit={handleSubmit(submit)}
-        onClearClick={reset}
+        onClearClick={() => reset()}
         isValid={isValid}
       >
         {/******************************/}

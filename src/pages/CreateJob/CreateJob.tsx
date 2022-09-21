@@ -62,7 +62,7 @@ const CreateJob = () => {
         <Form
           title="Create New Job"
           onSubmit={handleSubmit(submit)}
-          onClearClick={reset}
+          onClearClick={() => reset()}
           isValid={isValid}
         >
           {/******************************/}

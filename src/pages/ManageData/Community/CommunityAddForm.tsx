@@ -72,7 +72,7 @@ export const CommunityAddForm = () => {
       <Form
         title="Add Community"
         onSubmit={handleSubmit(submit)}
-        onClearClick={reset}
+        onClearClick={() => reset()}
         isValid={isValid}
       >
         {/******************************/}

@@ -70,7 +70,7 @@ export const CompanyAddForm = () => {
       <Form
         title="Add Company"
         onSubmit={handleSubmit(submit)}
-        onClearClick={reset}
+        onClearClick={() => reset()}
         isValid={isValid}
       >
         {/******************************/}

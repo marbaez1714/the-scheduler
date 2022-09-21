@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { WriteAreaForm } from 'src/utils/forms';
 import { WriteAreaInput, useCreateAreaMutation } from 'src/api';
 import { Screen } from 'src/components/Screen';
-import { Form } from 'src/components/Form';
+import { Form as FormComponent } from 'src/components/Form';
 
 export const AreaAddForm = () => {
   /******************************/
@@ -15,7 +15,7 @@ export const AreaAddForm = () => {
     control,
     reset,
     formState: { isValid },
-  } = useForm({
+  } = useForm<WriteAreaInput>({
     mode: 'all',
     defaultValues: WriteAreaForm.defaultValues,
     resolver: WriteAreaForm.resolver,
@@ -46,20 +46,25 @@ export const AreaAddForm = () => {
   /******************************/
   return (
     <Screen.Content centerHorizontal loading={loading}>
-      <Form
+      <FormComponent
         title="Add Area"
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
-        onClearClick={reset}
+        onClearClick={() => reset()}
       >
         {/******************************/}
         {/* Name                       */}
         {/******************************/}
-        <Form.TextInput label="Name" control={control} name="name" required />
+        <FormComponent.TextInput
+          label="Name"
+          control={control}
+          name="name"
+          required
+        />
         {/******************************/}
         {/* Name - Spanish             */}
         {/******************************/}
-        <Form.TextInput
+        <FormComponent.TextInput
           label="Name Translation (Spanish)"
           control={control}
           name="nameSpanish"
@@ -68,8 +73,8 @@ export const AreaAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea label="Notes" control={control} name="notes" />
-      </Form>
+        <FormComponent.TextArea label="Notes" control={control} name="notes" />
+      </FormComponent>
     </Screen.Content>
   );
 };

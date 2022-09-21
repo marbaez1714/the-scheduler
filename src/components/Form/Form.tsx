@@ -1,5 +1,4 @@
-import { Button } from '@mui/material';
-
+import { Button } from 'src/components/Button';
 import { Autocomplete } from './Inputs/Autocomplete';
 import { TextArea } from './Inputs/TextArea';
 import { TextInput } from './Inputs/TextInput';
@@ -57,14 +56,15 @@ const Form = ({
         </p>
       </div>
 
-      <form className="p-6 space-y-4 bg-app-light" onSubmit={onSubmit}>
+      <form className="p-6 space-y-4 bg-app-light w-96" onSubmit={onSubmit}>
         {children}
 
         <div className="flex justify-end pt-6 space-x-4">
-          {!!onClearClick && <Button onClick={onClearClick}>Clear</Button>}
-          <Button variant="contained" type="submit" disabled={!isValid}>
-            Submit
-          </Button>
+          {!!onClearClick && (
+            <Button variant="text" onClick={onClearClick} title="Clear" />
+          )}
+
+          <Button type="submit" disabled={!isValid} title="Submit" />
         </div>
       </form>
     </div>

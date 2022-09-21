@@ -49,7 +49,7 @@ export const SupplierAddForm = () => {
       <Form
         title="Add Supplier"
         onSubmit={handleSubmit(submit)}
-        onClearClick={reset}
+        onClearClick={() => reset()}
         isValid={isValid}
       >
         {/******************************/}
