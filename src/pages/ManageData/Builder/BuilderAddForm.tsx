@@ -85,7 +85,7 @@ export const BuilderAddForm = () => {
         {/******************************/}
         {/* Company                    */}
         {/******************************/}
-        <Form.Autocomplete
+        <Form.AutocompleteInput
           label={WriteBuilderForm.labels.companyId}
           control={control}
           options={companyOptions}
@@ -95,7 +95,7 @@ export const BuilderAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea
+        <Form.TextAreaInput
           label={WriteBuilderForm.labels.notes}
           control={control}
           name="notes"

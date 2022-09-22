@@ -82,7 +82,7 @@ export const ReporterAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea
+        <Form.TextAreaInput
           label={WriteReporterForm.labels.notes}
           control={control}
           name="notes"

@@ -3,9 +3,9 @@ import { Combobox, Transition } from '@headlessui/react';
 import cn from 'classnames';
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
-import { AutocompleteProps } from './types';
+import { AutocompleteInputProps } from './types';
 
-const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
+const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
   (
     {
       label,
@@ -161,4 +161,4 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
   }
 );
 
-export default Autocomplete;
+export default AutocompleteInput;

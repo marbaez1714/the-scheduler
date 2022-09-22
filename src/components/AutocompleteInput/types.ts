@@ -1,6 +1,6 @@
 export type AutocompleteOption = { label: string; value: string };
 
-export interface AutocompleteProps<TValue = string | number> {
+export interface AutocompleteInputProps<TValue = string | number> {
   label?: string;
   className?: string;
   required?: boolean;

@@ -84,7 +84,7 @@ const CreateJob = () => {
           {/******************************/}
           {/* Community                    */}
           {/******************************/}
-          <Form.Autocomplete
+          <Form.AutocompleteInput
             label={CreateJobForm.labels.communityId}
             control={control}
             name="communityId"
@@ -103,7 +103,7 @@ const CreateJob = () => {
           {/******************************/}
           {/* Builder                    */}
           {/******************************/}
-          <Form.Autocomplete
+          <Form.AutocompleteInput
             label={CreateJobForm.labels.builderId}
             control={control}
             name="builderId"
@@ -113,7 +113,7 @@ const CreateJob = () => {
           {/******************************/}
           {/* Contractor                 */}
           {/******************************/}
-          <Form.Autocomplete
+          <Form.AutocompleteInput
             label={CreateJobForm.labels.contractorId}
             control={control}
             name="contractorId"
@@ -123,7 +123,7 @@ const CreateJob = () => {
           {/******************************/}
           {/* Reporter                   */}
           {/******************************/}
-          <Form.Autocomplete
+          <Form.AutocompleteInput
             label={CreateJobForm.labels.reporterId}
             control={control}
             name="reporterId"
@@ -133,7 +133,7 @@ const CreateJob = () => {
           {/******************************/}
           {/* Area                       */}
           {/******************************/}
-          <Form.Autocomplete
+          <Form.AutocompleteInput
             label={CreateJobForm.labels.areaId}
             control={control}
             name="areaId"
@@ -143,7 +143,7 @@ const CreateJob = () => {
           {/******************************/}
           {/* Scope                      */}
           {/******************************/}
-          <Form.Autocomplete
+          <Form.AutocompleteInput
             label={CreateJobForm.labels.scopeId}
             control={control}
             name="scopeId"
@@ -157,7 +157,7 @@ const CreateJob = () => {
           {/******************************/}
           {/* Notes                      */}
           {/******************************/}
-          <Form.TextArea
+          <Form.TextAreaInput
             label={CreateJobForm.labels.notes}
             control={control}
             name="notes"

@@ -130,7 +130,7 @@ export const ScopeModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea
+        <Form.TextAreaInput
           label={WriteScopeForm.labels.notes}
           control={control}
           name="notes"

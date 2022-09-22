@@ -1,10 +1,11 @@
 import { forwardRef } from 'react';
+import DatePicker, { ReactDatePicker } from 'react-datepicker';
 import cn from 'classnames';
 
-import { TextAreaProps } from './types';
+import { DateInputProps } from './types';
 
-const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ label, required, name, className, errorMessage, ...rest }, ref) => {
+const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
+  ({ label, className, required, errorMessage, name, ...rest }, ref) => {
     /******************************/
     /* Render                     */
     /******************************/
@@ -19,16 +20,18 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           </label>
         )}
 
-        <textarea
+        <DatePicker
           className={cn(
             'bg-app-light',
+            'text-app-text',
+            'border-app-medium',
             'py-3',
             'px-4',
             'w-full',
             'rounded',
             'border-2',
-            'border-app-medium',
             'shadow',
+            'text-ellipsis',
             className
           )}
           name={name}
@@ -43,4 +46,4 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   }
 );
 
-export default TextArea;
+export default DateInput;

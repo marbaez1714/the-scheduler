@@ -115,7 +115,7 @@ export const AreaModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea label="Notes" control={control} name="notes" />
+        <Form.TextAreaInput label="Notes" control={control} name="notes" />
       </Form>
     </Screen.Content>
   );

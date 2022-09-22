@@ -114,7 +114,7 @@ export const CommunityModifyForm = () => {
         {/******************************/}
         {/* Company                    */}
         {/******************************/}
-        <Form.Autocomplete
+        <Form.AutocompleteInput
           label={WriteCommunityForm.labels.companyId}
           control={control}
           options={companyOptions}
@@ -124,7 +124,7 @@ export const CommunityModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea
+        <Form.TextAreaInput
           label={WriteCommunityForm.labels.notes}
           control={control}
           name="notes"

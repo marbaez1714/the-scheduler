@@ -1,18 +1,18 @@
 import { FieldValues, useController } from 'react-hook-form';
 
-import { TextArea } from '../TextArea';
-import { FormTextAreaProps } from './types';
+import { DateInput } from '../DateInput';
+import { FormDateInputProps } from './types';
 
-export const FormTextArea = <TFields extends FieldValues>({
+export const FormDateInput = <TFields extends FieldValues>({
   label,
   required,
   ...rest
-}: FormTextAreaProps<TFields>) => {
+}: FormDateInputProps<TFields>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
   const {
-    field,
+    field: { value, ...restField },
     fieldState: { error },
   } = useController(rest);
 
@@ -20,11 +20,13 @@ export const FormTextArea = <TFields extends FieldValues>({
   /* Render                     */
   /******************************/
   return (
-    <TextArea
+    <DateInput
       label={label}
       required={required}
       errorMessage={error?.message}
-      {...field}
+      selected={value}
+      value={value}
+      {...restField}
     />
   );
 };

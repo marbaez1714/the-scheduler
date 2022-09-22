@@ -1,15 +1,15 @@
 import { FieldValues, useController } from 'react-hook-form';
 
-import { Autocomplete } from '../Autocomplete';
+import { AutocompleteInput } from '../AutocompleteInput';
 
-import { FormAutoCompleteProps } from './types';
+import { FormAutoCompleteInputProps } from './types';
 
-export const FormAutoComplete = <TFields extends FieldValues>({
+export const FormAutoCompleteInput = <TFields extends FieldValues>({
   label,
   required,
   options,
   ...rest
-}: FormAutoCompleteProps<TFields>) => {
+}: FormAutoCompleteInputProps<TFields>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -22,7 +22,7 @@ export const FormAutoComplete = <TFields extends FieldValues>({
   /* Render                     */
   /******************************/
   return (
-    <Autocomplete
+    <AutocompleteInput
       label={label}
       required={required}
       options={options}

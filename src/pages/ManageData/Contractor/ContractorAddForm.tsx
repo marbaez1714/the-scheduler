@@ -74,7 +74,7 @@ export const ContractorAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea
+        <Form.TextAreaInput
           label={WriteContractorForm.labels.notes}
           control={control}
           name="notes"

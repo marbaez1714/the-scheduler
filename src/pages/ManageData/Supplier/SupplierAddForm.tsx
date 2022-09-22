@@ -73,7 +73,7 @@ export const SupplierAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea
+        <Form.TextAreaInput
           label={WriteSupplierForm.labels.notes}
           control={control}
           name="notes"

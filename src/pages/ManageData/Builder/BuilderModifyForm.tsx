@@ -133,7 +133,7 @@ export const BuilderModifyForm = () => {
         {/******************************/}
         {/* Company                    */}
         {/******************************/}
-        <Form.Autocomplete
+        <Form.AutocompleteInput
           label={WriteBuilderForm.labels.companyId}
           control={control}
           options={companyOptions}
@@ -143,7 +143,7 @@ export const BuilderModifyForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <Form.TextArea
+        <Form.TextAreaInput
           label={WriteBuilderForm.labels.notes}
           control={control}
           name="notes"

@@ -1,5 +1,5 @@
 import { FieldValues, UseControllerProps } from 'react-hook-form';
-import { AutocompleteProps } from 'src/components/Autocomplete';
+import { AutocompleteProps } from 'src/components/AutocompleteInput';
 
 export interface FormProps {
   title: string;
@@ -12,22 +12,24 @@ export interface FormProps {
 /******************************/
 /* Inputs                     */
 /******************************/
-export interface FormTextInputProps<TFields extends FieldValues>
+interface FormInput<TFields extends FieldValues>
   extends UseControllerProps<TFields> {
   label?: string;
   required?: boolean;
+}
+
+export interface FormTextInputProps<TFields extends FieldValues>
+  extends FormInput<TFields> {
   mask?: 'phone';
 }
 
-export interface FormTextAreaProps<TFields extends FieldValues>
-  extends UseControllerProps<TFields> {
-  label?: string;
-  required?: boolean;
-}
+export type FormTextAreaInputProps<TFields extends FieldValues> =
+  FormInput<TFields>;
 
-export interface FormAutoCompleteProps<TFields extends FieldValues>
-  extends UseControllerProps<TFields> {
-  label?: string;
-  required?: boolean;
+export interface FormAutoCompleteInputProps<TFields extends FieldValues>
+  extends FormInput<TFields> {
   options: AutocompleteProps['options'];
 }
+
+export type FormDateInputProps<TFields extends FieldValues> =
+  FormInput<TFields>;

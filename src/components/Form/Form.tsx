@@ -1,8 +1,8 @@
 import { Button } from 'src/components/Button';
-import { DateInput } from './Inputs/DateInput';
 import { FormTextInput } from './FormTextInput';
-import { FormTextArea } from './FormTextArea';
-import { FormAutoComplete } from './FormAutoComplete';
+import { FormTextAreaInput } from './FormTextAreaInput';
+import { FormAutoCompleteInput } from './FormAutoCompleteInput';
+import { FormDateInput } from './FormDateInput';
 import { FormProps } from './types';
 
 const Form = ({
@@ -41,8 +41,8 @@ const Form = ({
 };
 
 Form.TextInput = FormTextInput;
-Form.TextArea = FormTextArea;
-Form.Autocomplete = FormAutoComplete;
-Form.DateInput = DateInput;
+Form.TextAreaInput = FormTextAreaInput;
+Form.AutocompleteInput = FormAutoCompleteInput;
+Form.DateInput = FormDateInput;
 
 export default Form;
