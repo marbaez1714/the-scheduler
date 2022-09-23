@@ -1,8 +1,9 @@
 import { HTMLProps } from 'react';
 
-export interface TextInputProps extends HTMLProps<HTMLInputElement> {
-  label?: string;
-  required?: boolean;
+import { InputProps } from '../types';
+
+export interface TextInputProps
+  extends HTMLProps<HTMLInputElement>,
+    InputProps {
   mask?: 'phone';
-  errorMessage?: string;
 }

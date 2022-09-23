@@ -1,13 +1,13 @@
+import { InputProps } from '../types';
+
 export type AutocompleteOption = { label: string; value: string };
 
-export interface AutocompleteInputProps<TValue = string | number> {
-  label?: string;
+export interface AutocompleteInputProps<TValue = string | number>
+  extends InputProps {
   className?: string;
-  required?: boolean;
   options: AutocompleteOption[];
   value: TValue;
-  onChange: (value: TValue) => void;
-  errorMessage?: string;
   name?: string;
   onBlur: () => void;
+  onChange: (value: TValue) => void;
 }
