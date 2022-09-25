@@ -17,13 +17,10 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
       errorMessage,
       name,
       onBlur,
+      placeholder,
     },
     ref
   ) => {
-    /******************************/
-    /* Custom Hooks               */
-    /******************************/
-
     /******************************/
     /* State                      */
     /******************************/
@@ -33,11 +30,11 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
     /* Memos                      */
     /******************************/
     const filteredOptions = useMemo(() => {
-      return query
-        ? options.filter((option) =>
-            option.label.toLowerCase().includes(query.toLowerCase())
-          )
-        : options;
+      const displayOptions = options.filter((option) =>
+        option.label.toLowerCase().includes(query.toLowerCase())
+      );
+
+      return query ? displayOptions : options;
     }, [query, options]);
 
     const displayedValue = useMemo(() => {
@@ -48,10 +45,6 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
     /******************************/
     /* Callbacks                  */
     /******************************/
-    const handleChange = (value: string) => {
-      onChange(value);
-    };
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(e.target.value);
     };
@@ -60,7 +53,11 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
       setQuery('');
     };
 
-    const handleClearClick = () => {
+    const handleClearClick = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      e.stopPropagation();
+
       if (value) {
         onChange('');
         setQuery('');
@@ -71,17 +68,19 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
     /* Render                     */
     /******************************/
     return (
-      <div className="flex flex-col">
-        <Combobox value={value} onChange={handleChange} name={name}>
+      <div className="flex flex-col flex-grow">
+        <Combobox value={value} onChange={onChange} name={name}>
           {/******************************/}
           {/* Label                      */}
           {/******************************/}
-          <Combobox.Label className="block mb-2 font-medium text-app-dark">
-            {label}
-            {required && (
-              <span className="ml-1 font-bold text-app-error">*</span>
-            )}
-          </Combobox.Label>
+          {label && (
+            <Combobox.Label className="block mb-2 font-medium text-app-dark">
+              {label}
+              {required && (
+                <span className="ml-1 font-bold text-app-error">*</span>
+              )}
+            </Combobox.Label>
+          )}
 
           {/******************************/}
           {/* Input                      */}
@@ -90,13 +89,14 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
             <Combobox.Button className="w-full">
               <Combobox.Input
                 className={cn(
-                  'bg-app-light py-3 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow text-ellipsis',
+                  'bg-app-light py-3 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow-inner text-ellipsis',
                   className
                 )}
                 value={value}
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
                 displayValue={() => displayedValue}
+                placeholder={placeholder}
                 ref={ref}
               />
             </Combobox.Button>
@@ -105,7 +105,8 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
             {/******************************/}
             <button
               className="absolute w-4 h-4 right-4 text-app-dark"
-              onClick={handleClearClick}
+              onClick={(e) => handleClearClick(e)}
+              type="button"
             >
               {value ? <XMarkIcon /> : <ChevronDownIcon />}
             </button>

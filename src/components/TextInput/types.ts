@@ -1,9 +1,9 @@
-import { HTMLProps } from 'react';
+import { InputHTMLAttributes } from 'react';
 
 import { InputProps } from '../types';
 
 export interface TextInputProps
-  extends HTMLProps<HTMLInputElement>,
+  extends InputHTMLAttributes<HTMLInputElement>,
     InputProps {
   mask?: 'phone';
 }

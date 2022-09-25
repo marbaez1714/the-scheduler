@@ -26,6 +26,7 @@ export const FormDateInput = <TFields extends FieldValues>({
       errorMessage={error?.message}
       selected={value}
       value={value}
+      placeholderText="MM/DD/YYYY"
       {...restField}
     />
   );

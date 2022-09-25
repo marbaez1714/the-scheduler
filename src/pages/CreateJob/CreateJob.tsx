@@ -17,6 +17,7 @@ const CreateJob = () => {
     reporterOptions,
     areaOptions,
     scopeOptions,
+    supplierOptions,
   } = useOptions();
 
   const {
@@ -68,100 +69,129 @@ const CreateJob = () => {
       <Screen.Content centerHorizontal loading={false}>
         <Form
           title="Create New Job"
+          className="w-1/2"
           onSubmit={handleSubmit(submit)}
           onClearClick={() => reset()}
           isValid={isValid}
         >
-          {/******************************/}
-          {/* Address / Name             */}
-          {/******************************/}
-          <Form.TextInput
-            label={CreateJobForm.labels.name}
-            control={control}
-            name="name"
-            required
-          />
-          {/******************************/}
-          {/* Community                    */}
-          {/******************************/}
-          <Form.AutocompleteInput
-            label={CreateJobForm.labels.communityId}
-            control={control}
-            name="communityId"
-            options={communityOptions}
-          />
+          <div className="grid grid-cols-8 gap-4">
+            {/******************************/}
+            {/* Address / Name             */}
+            {/******************************/}
+            <div className="col-span-5">
+              <Form.TextInput
+                label={CreateJobForm.labels.name}
+                control={control}
+                name="name"
+                required
+              />
+            </div>
 
-          {/******************************/}
-          {/* Start Date                 */}
-          {/******************************/}
-          <Form.DateInput
-            label={CreateJobForm.labels.startDate}
-            control={control}
-            name="startDate"
-          />
+            {/******************************/}
+            {/* Start Date                 */}
+            {/******************************/}
+            <div className="col-span-3">
+              <Form.DateInput
+                label={CreateJobForm.labels.startDate}
+                control={control}
+                name="startDate"
+              />
+            </div>
 
-          {/******************************/}
-          {/* Builder                    */}
-          {/******************************/}
-          <Form.AutocompleteInput
-            label={CreateJobForm.labels.builderId}
-            control={control}
-            name="builderId"
-            options={builderOptions}
-          />
+            {/******************************/}
+            {/* Community                  */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.AutocompleteInput
+                label={CreateJobForm.labels.communityId}
+                control={control}
+                name="communityId"
+                options={communityOptions}
+              />
+            </div>
 
-          {/******************************/}
-          {/* Contractor                 */}
-          {/******************************/}
-          <Form.AutocompleteInput
-            label={CreateJobForm.labels.contractorId}
-            control={control}
-            name="contractorId"
-            options={contractorsOptions}
-          />
+            {/******************************/}
+            {/* Builder                    */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.AutocompleteInput
+                label={CreateJobForm.labels.builderId}
+                control={control}
+                name="builderId"
+                options={builderOptions}
+              />
+            </div>
 
-          {/******************************/}
-          {/* Reporter                   */}
-          {/******************************/}
-          <Form.AutocompleteInput
-            label={CreateJobForm.labels.reporterId}
-            control={control}
-            name="reporterId"
-            options={reporterOptions}
-          />
+            {/******************************/}
+            {/* Contractor                 */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.AutocompleteInput
+                label={CreateJobForm.labels.contractorId}
+                control={control}
+                name="contractorId"
+                options={contractorsOptions}
+              />
+            </div>
 
-          {/******************************/}
-          {/* Area                       */}
-          {/******************************/}
-          <Form.AutocompleteInput
-            label={CreateJobForm.labels.areaId}
-            control={control}
-            name="areaId"
-            options={areaOptions}
-          />
+            {/******************************/}
+            {/* Reporter                   */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.AutocompleteInput
+                label={CreateJobForm.labels.reporterId}
+                control={control}
+                name="reporterId"
+                options={reporterOptions}
+              />
+            </div>
 
-          {/******************************/}
-          {/* Scope                      */}
-          {/******************************/}
-          <Form.AutocompleteInput
-            label={CreateJobForm.labels.scopeId}
-            control={control}
-            name="scopeId"
-            options={scopeOptions}
-          />
+            {/******************************/}
+            {/* Area                       */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.AutocompleteInput
+                label={CreateJobForm.labels.areaId}
+                control={control}
+                name="areaId"
+                options={areaOptions}
+              />
+            </div>
+            {/******************************/}
+            {/* Scope                      */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.AutocompleteInput
+                label={CreateJobForm.labels.scopeId}
+                control={control}
+                name="scopeId"
+                options={scopeOptions}
+              />
+            </div>
 
-          {/******************************/}
-          {/* LINE ITEMS GO HERE         */}
-          {/******************************/}
+            {/******************************/}
+            {/* Line Items                 */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.LintItemInput
+                control={control}
+                name="lineItems"
+                label={CreateJobForm.labels.lineItems}
+                suppliers={supplierOptions}
+              />
+            </div>
 
-          {/******************************/}
-          {/* Notes                      */}
-          {/******************************/}
-          <Form.TextAreaInput
-            label={CreateJobForm.labels.notes}
-            control={control}
-            name="notes"
-          />
+            {/******************************/}
+            {/* Notes                      */}
+            {/******************************/}
+            <div className="col-span-8">
+              <Form.TextAreaInput
+                label={CreateJobForm.labels.notes}
+                control={control}
+                name="notes"
+              />
+            </div>
+          </div>
         </Form>
       </Screen.Content>
     </Screen>
@@ -169,132 +199,3 @@ const CreateJob = () => {
 };
 
 export default CreateJob;
-
-{
-  /* <Screen>
-      <Content loading={createLoading}>
-        <form className="grid-cols-2 form-card" onSubmit={handleSubmit(submit)}>
-          {/* Location  */
-}
-// <h2 className="col-span-2 text-xl tracking-wide">Location</h2>
-{
-  /* Address */
-}
-// <FormTextField
-//   className="col-span-1"
-//   control={control}
-//   rules={formRules.requiredNonEmptyString}
-//   label="Address"
-//   name="name"
-// />
-{
-  /* Community */
-}
-// <FormAutocomplete
-// className="col-span-1"
-// control={control}
-//   label="Community"
-//   options={communityOptions}
-//   name="communityId"
-// />
-
-{
-  /* Job Information */
-}
-// <h2 className="col-span-2 pt-4 text-xl tracking-wide border-t">Job Information</h2>
-
-// <FormDatePicker className="col-span-1" control={control} label="Start Date" name="startDate" />
-
-{
-  /* Builder */
-}
-// <FormAutocomplete
-//   className="col-span-1"
-//   control={control}
-//   label="Builder"
-//   options={builderOptions}
-//   name="builderId"
-// />
-
-{
-  /* Contractor */
-}
-// <FormAutocomplete
-//   className="col-span-1"
-//   control={control}
-//   label="Contractor"
-//   options={contractorsOptions}
-//   name="contractorId"
-// />
-{
-  /* Reporter */
-}
-// <FormAutocomplete
-//   className="col-span-1"
-//   control={control}
-//   label="Reporter"
-//   options={reporterOptions}
-//   name="reporterId"
-// />
-{
-  /* Scope */
-}
-// <FormAutocomplete
-//   className="col-span-1"
-//   control={control}
-//   label="Scope of Work"
-//   options={scopeOptions}
-//   name="scopeId"
-// />
-{
-  /* Area */
-}
-// <FormAutocomplete className="col-span-1" control={control} label="Area" options={areaOptions} name="areaId" />
-
-{
-  /* Line Items */
-}
-// <h2 className="col-span-2 pt-4 text-xl tracking-wide border-t">Order Information</h2>
-// <div className="flex items-center col-span-2 space-x-6">
-{
-  /* Order Number Input */
-}
-{
-  /* <TextField className="w-1/2" label="Order Number" value={orderNumber} onChange={handleOrderNumberChange} /> */
-}
-{
-  /* Supplier Select */
-}
-{
-  /* <Autocomplete
-              className="w-1/2"
-              isOptionEqualToValue={(option, value) => option.value === value.value}
-              options={supplierOptions}
-              value={getOrderSupplierValue()}
-              getOptionLabel={(option) => option.label}
-              renderInput={(params) => <TextField {...params} label="Supplier" variant="outlined" />}
-              onChange={(_, data) => handleOrderSupplierChange(data?.value || '')}
-            />
-            <IconButton onClick={handleAddLineItemClick} disabled={!orderNumber || !orderSupplierId}>
-              <AddCircle />
-            </IconButton>
-          </div>
-          {lineItems.length > 0 && <LineItemTable lineItems={lineItems} onRemove={removeLineItem} />}
-
-          <h2 className="col-span-2 pt-4 text-xl tracking-wide border-t">Detail</h2>
-
-          <FormTextField multiline className="col-span-2" control={control} label="Notes" name="notes" /> */
-}
-
-{
-  /* Actions */
-}
-// <div className="col-span-2 space-x-2 text-right">
-//   <Button onClick={handleReset}>Clear</Button>
-//   <Button variant="contained" type="submit" disabled={!isValid}>
-//     Submit
-//   </Button>
-// </div>
-// </form>
-// </Content>
-// </Screen> */}

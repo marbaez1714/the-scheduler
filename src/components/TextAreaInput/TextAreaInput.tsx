@@ -9,7 +9,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
     /* Render                     */
     /******************************/
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col flex-grow">
         {label && (
           <label className="mb-2 font-medium text-app-dark" htmlFor={name}>
             {label}
@@ -21,14 +21,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
 
         <textarea
           className={cn(
-            'bg-app-light',
-            'py-3',
-            'px-4',
-            'w-full',
-            'rounded',
-            'border-2',
-            'border-app-medium',
-            'shadow',
+            'bg-app-light py-3 px-4 w-full rounded border-2 border-app-medium shadow-inner',
             className
           )}
           name={name}

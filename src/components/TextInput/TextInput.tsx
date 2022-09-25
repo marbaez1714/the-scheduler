@@ -20,38 +20,6 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     ref
   ) => {
     /******************************/
-    /* Custom Hooks               */
-    /******************************/
-
-    /******************************/
-    /* Refs                       */
-    /******************************/
-
-    /******************************/
-    /* State                      */
-    /******************************/
-
-    /******************************/
-    /* Context                    */
-    /******************************/
-
-    /******************************/
-    /* Data                       */
-    /******************************/
-
-    /******************************/
-    /* Memos                      */
-    /******************************/
-
-    /******************************/
-    /* Effects                    */
-    /******************************/
-
-    /******************************/
-    /* Callbacks                  */
-    /******************************/
-
-    /******************************/
     /* Render                     */
     /******************************/
     const InputComponent = useMemo(() => {
@@ -59,7 +27,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     }, [mask]);
 
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col flex-grow">
         {label && (
           <label className="mb-2 font-medium text-app-dark" htmlFor={name}>
             {label}
@@ -71,16 +39,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
 
         <InputComponent
           className={cn(
-            'bg-app-light',
-            'text-app-text',
-            'border-app-medium',
-            'py-3',
-            'px-4',
-            'w-full',
-            'rounded',
-            'border-2',
-            'shadow',
-            'text-ellipsis',
+            'bg-app-light text-app-text border-app-medium py-3 px-4 w-full rounded border-2 shadow-inner text-ellipsis',
             className
           )}
           name={name}

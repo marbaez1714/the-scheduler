@@ -11,6 +11,7 @@ import {
   WriteReporterInput,
   WriteScopeInput,
   WriteSupplierInput,
+  LineItemLegacyInput,
 } from './../api/index';
 import { inputMessages } from './inputMessages';
 
@@ -289,7 +290,7 @@ export const CreateJobForm: FormObject<'jobLegacy'> = {
     scopeId: '',
     areaId: '',
     notes: '',
-    lineItems: [],
+    lineItems: [] as LineItemLegacyInput[],
   },
   resolver: yupResolver(
     yup.object({

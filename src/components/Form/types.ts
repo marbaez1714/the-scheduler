@@ -1,10 +1,12 @@
 import { FieldValues, UseControllerProps } from 'react-hook-form';
-import { AutocompleteProps } from 'src/components/AutocompleteInput';
+import { LineItemLegacyInput } from 'src/api';
+import { AutocompleteInputProps } from 'src/components/AutocompleteInput';
 
 export interface FormProps {
   title: string;
   children: React.ReactNode;
   isValid: boolean;
+  className?: string;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   onClearClick?: () => void;
 }
@@ -28,8 +30,14 @@ export type FormTextAreaInputProps<TFields extends FieldValues> =
 
 export interface FormAutoCompleteInputProps<TFields extends FieldValues>
   extends FormInput<TFields> {
-  options: AutocompleteProps['options'];
+  options: AutocompleteInputProps['options'];
 }
 
 export type FormDateInputProps<TFields extends FieldValues> =
   FormInput<TFields>;
+
+export interface FormLineItemInputProps<
+  TFields extends { [x: string]: LineItemLegacyInput[] }
+> extends FormInput<TFields> {
+  suppliers: AutocompleteInputProps['options'];
+}

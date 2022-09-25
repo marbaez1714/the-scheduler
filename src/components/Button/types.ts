@@ -7,4 +7,5 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   rightRender?: React.ReactNode;
   variant?: 'text' | 'filled' | 'outline';
   size?: 'small' | 'medium' | 'large';
+  rounded?: boolean;
 }

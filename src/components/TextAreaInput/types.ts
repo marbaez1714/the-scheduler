@@ -1,5 +1,6 @@
-import { HTMLProps } from 'react';
+import { InputHTMLAttributes } from 'react';
 
 import { InputProps } from '../types';
 
-export type TextAreaInputProps = HTMLProps<HTMLTextAreaElement> & InputProps;
+export type TextAreaInputProps = InputHTMLAttributes<HTMLTextAreaElement> &
+  InputProps;
