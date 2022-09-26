@@ -1411,6 +1411,10 @@ export type GetUnassignedJobsQuery = {
       completedDate?: string | null;
       startDate?: string | null;
       notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
       area?: { __typename?: 'Area'; id: string; name: string } | null;
       builder?: { __typename?: 'Builder'; id: string; name: string } | null;
       community?: { __typename?: 'Community'; id: string; name: string } | null;
@@ -3795,6 +3799,10 @@ export const GetUnassignedJobsDocument = gql`
         completedDate
         startDate
         notes
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
       }
       meta {
         page

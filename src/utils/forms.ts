@@ -98,7 +98,7 @@ export const WriteAreaForm: FormObject<'area'> = {
   defaultValues: {
     name: '',
     nameSpanish: '',
-    notes: '',
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -120,9 +120,9 @@ export const WriteBuilderForm: FormObject<'builder'> = {
   defaultValues: {
     name: '',
     primaryPhone: '',
-    primaryEmail: '',
+    primaryEmail: undefined,
     companyId: '',
-    notes: '',
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -144,7 +144,7 @@ export const WriteCommunityForm: FormObject<'community'> = {
   defaultValues: {
     name: '',
     companyId: '',
-    notes: '',
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -165,10 +165,10 @@ export const WriteCompanyForm: FormObject<'company'> = {
   },
   defaultValues: {
     name: '',
-    primaryPhone: '',
-    primaryEmail: '',
-    primaryAddress: '',
-    notes: '',
+    primaryPhone: undefined,
+    primaryEmail: undefined,
+    primaryAddress: undefined,
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -190,7 +190,7 @@ export const WriteContractorForm: FormObject<'contractor'> = {
   defaultValues: {
     name: '',
     primaryPhone: '',
-    notes: '',
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -211,8 +211,8 @@ export const WriteReporterForm: FormObject<'reporter'> = {
   defaultValues: {
     name: '',
     primaryPhone: '',
-    primaryEmail: '',
-    notes: '',
+    primaryEmail: undefined,
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -234,8 +234,8 @@ export const WriteScopeForm: FormObject<'scope'> = {
   defaultValues: {
     name: '',
     nameSpanish: '',
-    description: '',
-    notes: '',
+    description: undefined,
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -255,8 +255,8 @@ export const WriteSupplierForm: FormObject<'supplier'> = {
   },
   defaultValues: {
     name: '',
-    primaryPhone: '',
-    notes: '',
+    primaryPhone: undefined,
+    notes: undefined,
   },
   resolver: yupResolver(
     yup.object({
@@ -282,14 +282,14 @@ export const CreateJobForm: FormObject<'jobLegacy'> = {
   },
   defaultValues: {
     name: '',
-    communityId: '',
-    startDate: '',
-    builderId: '',
-    contractorId: '',
-    reporterId: '',
-    scopeId: '',
-    areaId: '',
-    notes: '',
+    communityId: undefined,
+    startDate: undefined,
+    builderId: undefined,
+    contractorId: undefined,
+    reporterId: undefined,
+    scopeId: undefined,
+    areaId: undefined,
+    notes: undefined,
     lineItems: [] as LineItemLegacyInput[],
   },
   resolver: yupResolver(

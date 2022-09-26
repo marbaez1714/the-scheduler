@@ -5,6 +5,7 @@ import { Screen } from 'src/components/Screen';
 import { Form } from 'src/components/Form';
 import { useOptions } from 'src/hooks/useOptions';
 import { CreateJobForm } from 'src/utils/forms';
+import { CreateJobLegacyInput, useCreateJobLegacyMutation } from 'src/api';
 
 const CreateJob = () => {
   /******************************/
@@ -46,6 +47,15 @@ const CreateJob = () => {
   /******************************/
   /* Data                       */
   /******************************/
+  const [createJobLegacy] = useCreateJobLegacyMutation({
+    onCompleted: (data) => {
+      toast.success(data.createJobLegacy.message);
+      reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   /******************************/
   /* Memos                      */
@@ -58,9 +68,10 @@ const CreateJob = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: any) => {
-    console.log(data);
+  const submit = (data: CreateJobLegacyInput) => {
+    createJobLegacy({ variables: { data } });
   };
+
   /******************************/
   /* Render                     */
   /******************************/

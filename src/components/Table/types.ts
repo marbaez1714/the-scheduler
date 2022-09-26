@@ -48,7 +48,7 @@ export interface PhoneNumberCellProps {
 
 export interface TimestampCellProps {
   data: {
-    createdTime: string;
-    updatedTime: string;
+    createdTime?: string;
+    updatedTime?: string;
   };
 }

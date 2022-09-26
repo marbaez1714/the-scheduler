@@ -6,16 +6,21 @@ export const TimestampCell = ({ data }: TimestampCellProps) => {
   /******************************/
   /* Data                       */
   /******************************/
-  const createdDate = new Date(data.createdTime);
-  const updatedDate = new Date(data.updatedTime);
+  const createdDate = data.createdTime
+    ? format(new Date(data.createdTime), 'P - p')
+    : null;
+  const updatedDate = data.updatedTime
+    ? format(new Date(data.updatedTime), 'P - p')
+    : null;
 
   /******************************/
   /* Render                     */
   /******************************/
+  console.log(data);
   return (
     <>
-      <p className="w-auto text-xs">{format(updatedDate, 'P - p')}</p>
-      <p className="w-auto cell-caption-text">{format(createdDate, 'P - p')}</p>
+      <p className="w-auto text-xs">{updatedDate}</p>
+      <p className="w-auto cell-caption-text">{createdDate}</p>
     </>
   );
 };

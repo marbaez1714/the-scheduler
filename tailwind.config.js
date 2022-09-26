@@ -2,8 +2,6 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require('tailwindcss/colors');
 
-console.log(colors.slate);
-
 module.exports = {
   content: ['./src/**/*.tsx'],
   theme: {

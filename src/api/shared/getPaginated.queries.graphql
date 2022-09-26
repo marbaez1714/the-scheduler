@@ -1,4 +1,8 @@
-query GetAreas($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetAreas(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -22,7 +26,11 @@ query GetAreas($pagination: PaginationOptions, $sorting: SortingOptions, $archiv
   }
 }
 
-query GetBuilders($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetBuilders(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   builders(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -51,7 +59,11 @@ query GetBuilders($pagination: PaginationOptions, $sorting: SortingOptions, $arc
   }
 }
 
-query GetCommunities($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetCommunities(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   communities(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -78,7 +90,11 @@ query GetCommunities($pagination: PaginationOptions, $sorting: SortingOptions, $
   }
 }
 
-query GetCompanies($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetCompanies(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -104,7 +120,11 @@ query GetCompanies($pagination: PaginationOptions, $sorting: SortingOptions, $ar
   }
 }
 
-query GetContractors($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetContractors(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   contractors(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -128,7 +148,11 @@ query GetContractors($pagination: PaginationOptions, $sorting: SortingOptions, $
   }
 }
 
-query GetReporters($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetReporters(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   reporters(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -153,7 +177,11 @@ query GetReporters($pagination: PaginationOptions, $sorting: SortingOptions, $ar
   }
 }
 
-query GetScopes($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetScopes(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -178,7 +206,11 @@ query GetScopes($pagination: PaginationOptions, $sorting: SortingOptions, $archi
   }
 }
 
-query GetSuppliers($pagination: PaginationOptions, $sorting: SortingOptions, $archived: Boolean) {
+query GetSuppliers(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+  $archived: Boolean
+) {
   suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -253,7 +285,10 @@ query GetOptions {
   }
 }
 
-query GetAssignedContractors($pagination: PaginationOptions, $sorting: SortingOptions) {
+query GetAssignedContractors(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+) {
   assignedContractors(pagination: $pagination, sorting: $sorting) {
     data {
       id
@@ -287,7 +322,10 @@ query GetAssignedContractors($pagination: PaginationOptions, $sorting: SortingOp
   }
 }
 
-query GetUnassignedJobs($pagination: PaginationOptions, $sorting: SortingOptions) {
+query GetUnassignedJobs(
+  $pagination: PaginationOptions
+  $sorting: SortingOptions
+) {
   unassignedJobs(pagination: $pagination, sorting: $sorting) {
     data {
       id
@@ -322,6 +360,10 @@ query GetUnassignedJobs($pagination: PaginationOptions, $sorting: SortingOptions
       completedDate
       startDate
       notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
     }
     meta {
       page

@@ -36,8 +36,7 @@ export interface FormAutoCompleteInputProps<TFields extends FieldValues>
 export type FormDateInputProps<TFields extends FieldValues> =
   FormInput<TFields>;
 
-export interface FormLineItemInputProps<
-  TFields extends { [x: string]: LineItemLegacyInput[] }
-> extends FormInput<TFields> {
+export interface FormLineItemInputProps<TFields extends FieldValues>
+  extends FormInput<TFields> {
   suppliers: AutocompleteInputProps['options'];
 }
