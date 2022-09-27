@@ -11,8 +11,10 @@ import {
 import { PaginationFooterProps } from './types';
 
 export const PaginationFooter = ({
+  tableState,
+  totalPages,
+  onPageChange,
   onPageSizeChange,
-  pageSize,
 }: PaginationFooterProps) => {
   /******************************/
   /* Custom Hooks               */
@@ -34,6 +36,9 @@ export const PaginationFooter = ({
   /* Data                       */
   /******************************/
   const pageSizeOptions = [16, 32, 64];
+  const currentPage = tableState.pagination.pageIndex + 1;
+  const disablePrevious = tableState.pagination.pageIndex === 0;
+  const disableNext = tableState.pagination.pageIndex === totalPages - 1;
 
   /******************************/
   /* Memos                      */
@@ -46,6 +51,25 @@ export const PaginationFooter = ({
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const handlePageChange =
+    (direction: 'prev' | 'next' | 'first' | 'last') => () => {
+      const currentIndex = tableState.pagination.pageIndex;
+
+      switch (direction) {
+        case 'first':
+          onPageChange(0);
+          break;
+        case 'last':
+          onPageChange(totalPages - 1);
+          break;
+        case 'next':
+          onPageChange(currentIndex + 1);
+          break;
+        case 'prev':
+          onPageChange(currentIndex - 1);
+          break;
+      }
+    };
 
   /******************************/
   /* Render                     */
@@ -58,7 +82,7 @@ export const PaginationFooter = ({
       {/******************************/}
       <RadioGroup
         className="flex items-center text-sm leading-6 text-app-altText"
-        value={pageSize}
+        value={tableState.pagination.pageSize}
         onChange={onPageSizeChange}
       >
         <RadioGroup.Label className="mr-2">Items shown:</RadioGroup.Label>
@@ -83,21 +107,40 @@ export const PaginationFooter = ({
       {/* Page Buttons               */}
       {/******************************/}
       <div className="flex items-center text-sm shadow text-app-altText">
-        <button className="w-6 h-6 p-1 border-r rounded-l bg-app-dark hover:bg-app-darkest text-app-altText border-r-app-light">
+        {/* Page Back Buttons */}
+        <button
+          className="w-6 h-6 p-1 border-r rounded-l bg-app-dark hover:bg-app-darkest text-app-altText border-r-app-light disabled:opacity-50 disabled:pointer-events-none"
+          onClick={handlePageChange('first')}
+          disabled={disablePrevious}
+        >
           <ChevronDoubleLeftIcon />
         </button>
-        <button className="w-6 h-6 p-1 border-r bg-app-dark hover:bg-app-darkest text-app-altText border-r-app-light">
+        <button
+          className="w-6 h-6 p-1 border-r bg-app-dark hover:bg-app-darkest text-app-altText border-r-app-light disabled:opacity-50 disabled:pointer-events-none"
+          onClick={handlePageChange('prev')}
+          disabled={disablePrevious}
+        >
           <ChevronLeftIcon />
         </button>
-        <button className="w-6 h-6 bg-app-dark hover:bg-app-darkest">2</button>
-        <div className="flex items-center justify-center w-6 h-6 transition-all pointer-events-none bg-app-medium text-app-text">
-          3
+
+        {/* Current Page */}
+        <div className="flex items-center justify-center h-6 px-2 transition-all pointer-events-none bg-app-medium text-app-text">
+          {currentPage} / {totalPages}
         </div>
-        <button className="w-6 h-6 bg-app-dark hover:bg-app-darkest">4</button>
-        <button className="w-6 h-6 p-1 border-l border-l-app-light bg-app-dark hover:bg-app-darkest text-app-altText">
+
+        {/* Page Next Buttons */}
+        <button
+          className="w-6 h-6 p-1 border-l border-l-app-light bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+          onClick={handlePageChange('next')}
+          disabled={disableNext}
+        >
           <ChevronRightIcon />
         </button>
-        <button className="w-6 h-6 p-1 border-l rounded-r border-l-app-light bg-app-dark hover:bg-app-darkest text-app-altText">
+        <button
+          className="w-6 h-6 p-1 border-l rounded-r border-l-app-light bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+          onClick={handlePageChange('last')}
+          disabled={disableNext}
+        >
           <ChevronDoubleRightIcon />
         </button>
       </div>

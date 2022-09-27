@@ -64,21 +64,26 @@ const Table = <TData extends Record<string, unknown>>({
   /******************************/
   /* Table                      */
   /******************************/
-  const { getHeaderGroups, getRowModel, setPageSize, getState } = useReactTable(
-    {
-      state: { sorting, globalFilter },
-      initialState: { pagination: { pageSize: 16 } },
-      data,
-      columns,
-      globalFilterFn,
-      onGlobalFilterChange: setGlobalFilter,
-      onSortingChange: setSorting,
-      getSortedRowModel: getSortedRowModel(),
-      getFilteredRowModel: getFilteredRowModel(),
-      getCoreRowModel: getCoreRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-    }
-  );
+  const {
+    getHeaderGroups,
+    getRowModel,
+    setPageSize,
+    getState,
+    setPageIndex,
+    getPageCount,
+  } = useReactTable({
+    state: { sorting, globalFilter },
+    initialState: { pagination: { pageSize: 16 } },
+    data,
+    columns,
+    globalFilterFn,
+    onGlobalFilterChange: setGlobalFilter,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
 
   /******************************/
   /* Render                     */
@@ -164,7 +169,7 @@ const Table = <TData extends Record<string, unknown>>({
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
-        <div className="flex flex-col w-full shadow-lg">
+        <div className="flex flex-col w-full overflow-hidden rounded shadow-lg">
           {/******************************/}
           {/* Table Header               */}
           {/******************************/}
@@ -246,8 +251,10 @@ const Table = <TData extends Record<string, unknown>>({
                 </table>
               </div>
               <PaginationFooter
-                pageSize={getState().pagination.pageSize}
+                tableState={getState()}
+                totalPages={getPageCount()}
                 onPageSizeChange={setPageSize}
+                onPageChange={setPageIndex}
               />
             </Disclosure.Panel>
           </Transition>

@@ -16,7 +16,6 @@ export const TimestampCell = ({ data }: TimestampCellProps) => {
   /******************************/
   /* Render                     */
   /******************************/
-  console.log(data);
   return (
     <>
       <p className="w-auto text-xs">{updatedDate}</p>

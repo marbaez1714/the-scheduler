@@ -1,4 +1,4 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, TableState } from '@tanstack/react-table';
 
 /******************************/
 /* Main Table                 */
@@ -18,8 +18,10 @@ export interface TableProps<TData> {
 }
 
 export interface PaginationFooterProps {
+  tableState: TableState;
+  totalPages: number;
+  onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
-  pageSize: number;
 }
 
 /******************************/
