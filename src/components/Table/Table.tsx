@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, Fragment, useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -12,7 +12,12 @@ import {
   Header,
   Cell,
 } from '@tanstack/react-table';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+} from '@heroicons/react/24/solid';
+import { Disclosure, Transition } from '@headlessui/react';
 
 import { DataIdCell } from './Cells/DataIdCell';
 import { DateCell } from './Cells/DateCell';
@@ -22,6 +27,7 @@ import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
 import { HeaderCell } from './Cells/HeaderCell';
 import { TableProps } from './types';
+import { IconButton } from '../IconButton';
 
 const Table = <TData extends Record<string, unknown>>({
   title,
@@ -151,56 +157,93 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div className="flex flex-col w-full shadow-lg">
-      {/******************************/}
-      {/* Table Header               */}
-      {/******************************/}
-      <div className="flex items-center py-6 pl-10 pr-6 border-b border-b-app-medium bg-app">
-        {/******************************/}
-        {/* Title                      */}
-        {/******************************/}
-        <div className="flex items-end basis-2/3">
-          <h1 className="text-4xl font-semibold tracking-wide text-app-altText">
-            {title}
-          </h1>
-          <p className="ml-4 opacity-50 text-app-altText">{total} items</p>
-        </div>
-        {/******************************/}
-        {/* Search                     */}
-        {/******************************/}
-        <input
-          placeholder="Search"
-          onChange={handleSearchChange}
-          value={globalFilter}
-          className="p-2 rounded shadow basis-1/3 bg-app-light"
-        />
-      </div>
-      {/******************************/}
-      {/* Table                      */}
-      {/******************************/}
-      <div className="overflow-x-scroll whitespace-nowrap">
-        <table className="w-full border-collapse shadow-lg table-auto">
+    <Disclosure>
+      {({ open }) => (
+        <div className="flex flex-col w-full shadow-lg">
           {/******************************/}
           {/* Table Header               */}
           {/******************************/}
-          <thead className="text-left text-app-altText bg-app">
+          <div className="flex items-center py-6 pl-4 pr-6 bg-app">
+            <Disclosure.Button
+              as={IconButton}
+              className={cn('mr-4 shadow-none', {
+                'rotate-90 transform': open,
+              })}
+            >
+              <ChevronRightIcon />
+            </Disclosure.Button>
+
             {/******************************/}
-            {/* Column Headers             */}
+            {/* Title                      */}
             {/******************************/}
-            {renderHeaderGroups()}
-          </thead>
+            <div className="flex items-end basis-2/3">
+              <h1 className="text-4xl font-semibold tracking-wide text-app-altText">
+                {title}
+              </h1>
+              {total && (
+                <p className="ml-4 opacity-50 text-app-altText">
+                  {total} items
+                </p>
+              )}
+            </div>
+            {/******************************/}
+            {/* Search                     */}
+            {/******************************/}
+            <Transition
+              as={Fragment}
+              show={open}
+              enter="transition origin-left duration-100 ease-out"
+              enterFrom="transform opacity-0"
+              enterTo="transform opacity-100"
+              leave="transition origin-top duration-100 ease-out"
+              leaveFrom="transform opacity-100"
+              leaveTo="transform opacity-0"
+            >
+              <input
+                placeholder="Search"
+                onChange={handleSearchChange}
+                value={globalFilter}
+                className="p-2 rounded shadow basis-1/3 bg-app-light"
+              />
+            </Transition>
+          </div>
           {/******************************/}
-          {/* Table Body                 */}
+          {/* Table                      */}
           {/******************************/}
-          <tbody className="bg-app-light">
-            {/******************************/}
-            {/* Data / Empty Rows          */}
-            {/******************************/}
-            {renderBodyRows()}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          <Transition
+            enter="transition origin-top duration-100 ease-out"
+            enterFrom="transform scale-y-95 opacity-0"
+            enterTo="transform scale-y-100 opacity-100"
+            leave="transition origin-top duration-100 ease-out"
+            leaveFrom="transform scale-y-100 opacity-100"
+            leaveTo="transform scale-y-95 opacity-0"
+          >
+            <Disclosure.Panel className="overflow-x-scroll border-t whitespace-nowrap border-t-app-medium">
+              <table className="w-full border-collapse shadow-lg table-auto">
+                {/******************************/}
+                {/* Table Header               */}
+                {/******************************/}
+                <thead className="text-left text-app-altText bg-app">
+                  {/******************************/}
+                  {/* Column Headers             */}
+                  {/******************************/}
+                  {renderHeaderGroups()}
+                </thead>
+                {/******************************/}
+                {/* Table Body                 */}
+                {/******************************/}
+                <tbody className="bg-app-light">
+                  {/******************************/}
+                  {/* Data / Empty Rows          */}
+                  {/******************************/}
+                  {renderBodyRows()}
+                </tbody>
+              </table>
+            </Disclosure.Panel>
+          </Transition>
+        </div>
+      )}
+    </Disclosure>
   );
 };
 

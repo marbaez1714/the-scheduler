@@ -68,7 +68,7 @@ const Dashboard = () => {
       id: 'job-status',
       header: 'Status',
       enableSorting: false,
-      cell: (context) => 'status icons',
+      cell: ({ row }) => 'status icons',
     },
     {
       id: 'job-start-date',
@@ -151,6 +151,7 @@ const Dashboard = () => {
             title="Unassigned Jobs"
             data={unassignedJobsData.unassignedJobs.data as JobLegacy[]}
             columns={unassignedTableColumns}
+            total={unassignedJobsData.unassignedJobs.meta.totalCount}
           />
         )}
       </Screen.Content>

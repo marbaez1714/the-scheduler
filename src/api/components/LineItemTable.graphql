@@ -1,8 +1,0 @@
-query GetLineItemTableSuppliers {
-  suppliers {
-    data {
-      id
-      name
-    }
-  }
-}
