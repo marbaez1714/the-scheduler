@@ -26,7 +26,7 @@ export const Content = ({
       {/******************************/}
       <div
         className={cn(
-          'flex flex-grow py-4 mx-4 overflow-auto transition-all justify-start items-start',
+          'flex flex-grow p-4 overflow-auto transition-all justify-start items-start',
           {
             'justify-center': center || centerHorizontal,
             'items-center': center || centerVertical,

@@ -1,11 +1,9 @@
-import { InputProps } from '../types';
-
-export type AutocompleteOption = { label: string; value: string };
+import { InputOption, InputProps } from '../types';
 
 export interface AutocompleteInputProps extends InputProps {
   className?: string;
   placeholder?: string;
-  options: AutocompleteOption[];
+  options: InputOption[];
   value: string;
   name?: string;
   onBlur?: () => void;

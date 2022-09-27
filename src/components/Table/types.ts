@@ -17,6 +17,11 @@ export interface TableProps<TData> {
   rowActions?: TableRowAction<TData>[];
 }
 
+export interface PaginationFooterProps {
+  onPageSizeChange: (size: number) => void;
+  pageSize: number;
+}
+
 /******************************/
 /* Cells                      */
 /******************************/

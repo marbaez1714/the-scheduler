@@ -11,6 +11,7 @@ import {
   getFilteredRowModel,
   Header,
   Cell,
+  getPaginationRowModel,
 } from '@tanstack/react-table';
 import {
   ChevronDownIcon,
@@ -26,8 +27,8 @@ import { TextCell } from './Cells/TextCell';
 import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
 import { HeaderCell } from './Cells/HeaderCell';
+import { PaginationFooter } from './PaginationFooter';
 import { TableProps } from './types';
-import { IconButton } from '../IconButton';
 
 const Table = <TData extends Record<string, unknown>>({
   title,
@@ -63,17 +64,21 @@ const Table = <TData extends Record<string, unknown>>({
   /******************************/
   /* Table                      */
   /******************************/
-  const { getHeaderGroups, getRowModel } = useReactTable({
-    state: { sorting, globalFilter },
-    data,
-    columns,
-    globalFilterFn,
-    onGlobalFilterChange: setGlobalFilter,
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const { getHeaderGroups, getRowModel, setPageSize, getState } = useReactTable(
+    {
+      state: { sorting, globalFilter },
+      initialState: { pagination: { pageSize: 16 } },
+      data,
+      columns,
+      globalFilterFn,
+      onGlobalFilterChange: setGlobalFilter,
+      onSortingChange: setSorting,
+      getSortedRowModel: getSortedRowModel(),
+      getFilteredRowModel: getFilteredRowModel(),
+      getCoreRowModel: getCoreRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+    }
+  );
 
   /******************************/
   /* Render                     */
@@ -157,20 +162,19 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <Disclosure>
+    <Disclosure defaultOpen>
       {({ open }) => (
         <div className="flex flex-col w-full shadow-lg">
           {/******************************/}
           {/* Table Header               */}
           {/******************************/}
           <div className="flex items-center py-6 pl-4 pr-6 bg-app">
-            <Disclosure.Button
-              as={IconButton}
-              className={cn('mr-4 shadow-none', {
-                'rotate-90 transform': open,
-              })}
-            >
-              <ChevronRightIcon />
+            <Disclosure.Button className="p-2 mr-4 shadow-none text-app-altText">
+              {open ? (
+                <ChevronDownIcon className="w-6" />
+              ) : (
+                <ChevronRightIcon className="w-6" />
+              )}
             </Disclosure.Button>
 
             {/******************************/}
@@ -192,18 +196,18 @@ const Table = <TData extends Record<string, unknown>>({
             <Transition
               as={Fragment}
               show={open}
-              enter="transition origin-left duration-100 ease-out"
-              enterFrom="transform opacity-0"
-              enterTo="transform opacity-100"
-              leave="transition origin-top duration-100 ease-out"
-              leaveFrom="transform opacity-100"
-              leaveTo="transform opacity-0"
+              enter="transition origin-right duration-100 ease-out"
+              enterFrom="transform scale-x-95 opacity-0"
+              enterTo="transform scale-x-100 opacity-100"
+              leave="transition origin-left duration-100 ease-out"
+              leaveFrom="transform scale-x-100 opacity-100"
+              leaveTo="transform scale-x-95 opacity-0"
             >
               <input
                 placeholder="Search"
                 onChange={handleSearchChange}
                 value={globalFilter}
-                className="p-2 rounded shadow basis-1/3 bg-app-light"
+                className="p-2 rounded shadow-inner basis-1/3 bg-app-light"
               />
             </Transition>
           </div>
@@ -218,27 +222,33 @@ const Table = <TData extends Record<string, unknown>>({
             leaveFrom="transform scale-y-100 opacity-100"
             leaveTo="transform scale-y-95 opacity-0"
           >
-            <Disclosure.Panel className="overflow-x-scroll border-t whitespace-nowrap border-t-app-medium">
-              <table className="w-full border-collapse shadow-lg table-auto">
-                {/******************************/}
-                {/* Table Header               */}
-                {/******************************/}
-                <thead className="text-left text-app-altText bg-app">
+            <Disclosure.Panel>
+              <div className="overflow-x-scroll border-t shadow-inner whitespace-nowrap border-t-app-medium">
+                <table className="w-full border-collapse table-auto">
                   {/******************************/}
-                  {/* Column Headers             */}
+                  {/* Table Header               */}
                   {/******************************/}
-                  {renderHeaderGroups()}
-                </thead>
-                {/******************************/}
-                {/* Table Body                 */}
-                {/******************************/}
-                <tbody className="bg-app-light">
+                  <thead className="text-left text-app-altText bg-app">
+                    {/******************************/}
+                    {/* Column Headers             */}
+                    {/******************************/}
+                    {renderHeaderGroups()}
+                  </thead>
                   {/******************************/}
-                  {/* Data / Empty Rows          */}
+                  {/* Table Body                 */}
                   {/******************************/}
-                  {renderBodyRows()}
-                </tbody>
-              </table>
+                  <tbody className="bg-app-light">
+                    {/******************************/}
+                    {/* Data / Empty Rows          */}
+                    {/******************************/}
+                    {renderBodyRows()}
+                  </tbody>
+                </table>
+              </div>
+              <PaginationFooter
+                pageSize={getState().pagination.pageSize}
+                onPageSizeChange={setPageSize}
+              />
             </Disclosure.Panel>
           </Transition>
         </div>
