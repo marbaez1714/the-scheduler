@@ -18,6 +18,9 @@ module.exports = {
           altText: colors.white,
           text: colors.slate['900'],
           // Util colors
+          info: colors.blue['500'],
+          success: colors.green['500'],
+          warn: colors.amber['500'],
           error: colors.red['500'],
         },
       },

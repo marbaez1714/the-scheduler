@@ -1,5 +1,7 @@
 import { ColumnDef, TableState } from '@tanstack/react-table';
 
+import { JobLegacyStatus } from 'src/api';
+
 /******************************/
 /* Main Table                 */
 /******************************/
@@ -58,4 +60,8 @@ export interface TimestampCellProps {
     createdTime?: string;
     updatedTime?: string;
   };
+}
+
+export interface JobLegacyStatusProps {
+  value: JobLegacyStatus;
 }

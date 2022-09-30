@@ -10,7 +10,6 @@ import {
   useReactTable,
   getFilteredRowModel,
   Header,
-  Cell,
   getPaginationRowModel,
 } from '@tanstack/react-table';
 import {
@@ -27,6 +26,7 @@ import { TextCell } from './Cells/TextCell';
 import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
 import { HeaderCell } from './Cells/HeaderCell';
+import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
 import { PaginationFooter } from './PaginationFooter';
 import { TableProps } from './types';
 
@@ -130,18 +130,6 @@ const Table = <TData extends Record<string, unknown>>({
     ));
   };
 
-  const renderBodyCell = (getCells: () => Cell<TData, unknown>[]) => {
-    return getCells().map(({ id, column, getContext, getValue }) => (
-      <td className="px-3 py-2 first:pl-4 last:pr-4 " key={id}>
-        {getValue() ? (
-          flexRender(column.columnDef.cell, getContext())
-        ) : (
-          <span className="text-xs text-app-text/25">(empty)</span>
-        )}
-      </td>
-    ));
-  };
-
   const renderBodyRows = () => {
     const { rows } = getRowModel();
 
@@ -155,13 +143,23 @@ const Table = <TData extends Record<string, unknown>>({
       );
     }
 
-    return rows.map(({ id, original, getVisibleCells }) => (
+    return rows.map(({ id: rowId, original, getVisibleCells }) => (
       <tr
         className="relative transition-all border-b last:border-b-0 last:rounded-b"
-        key={id}
+        key={rowId}
       >
         <RowMenuCell menuActions={rowActions} data={original} />
-        {renderBodyCell(getVisibleCells)}
+        {getVisibleCells().map(
+          ({ id: cellId, column, getContext, getValue }) => (
+            <td className="px-3 py-2 first:pl-4 last:pr-4 " key={cellId}>
+              {getValue() ? (
+                flexRender(column.columnDef.cell, getContext())
+              ) : (
+                <span className="text-xs text-app-text/25">(empty)</span>
+              )}
+            </td>
+          )
+        )}
       </tr>
     ));
   };
@@ -270,5 +268,6 @@ Table.DataIdCell = DataIdCell;
 Table.TextCell = TextCell;
 Table.PhoneNumberCell = PhoneNumberCell;
 Table.TimestampCell = TimestampCell;
+Table.JobLegacyStatusCell = JobLegacyStatusCell;
 
 export default Table;

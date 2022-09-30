@@ -333,6 +333,10 @@ query GetUnassignedJobs(
       active
       inProgress
       isImportant
+      completedDate
+      startDate
+      status
+      notes
       area {
         id
         name
@@ -357,9 +361,7 @@ query GetUnassignedJobs(
         id
         name
       }
-      completedDate
-      startDate
-      notes
+
       updatedBy
       createdBy
       createdTime

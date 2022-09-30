@@ -96,6 +96,7 @@ export const PaginationFooter = ({
                 )
               }
               value={value}
+              key={value}
             >
               {value}
             </RadioGroup.Option>

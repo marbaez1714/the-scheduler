@@ -240,9 +240,18 @@ export type JobLegacy = {
   scope?: Maybe<Scope>;
   scopeId?: Maybe<Scalars['String']>;
   startDate?: Maybe<Scalars['String']>;
+  status: JobLegacyStatus;
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
 };
+
+export enum JobLegacyStatus {
+  InProgress = 'inProgress',
+  PastDue = 'pastDue',
+  Planned = 'planned',
+  Today = 'today',
+  WillCall = 'willCall',
+}
 
 export type LineItemLegacy = {
   __typename?: 'LineItemLegacy';
@@ -723,18 +732,6 @@ export type WriteSupplierResponse = {
   __typename?: 'WriteSupplierResponse';
   data: Supplier;
   message: Scalars['String'];
-};
-
-export type GetLineItemTableSuppliersQueryVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type GetLineItemTableSuppliersQuery = {
-  __typename?: 'Query';
-  suppliers: {
-    __typename?: 'SuppliersResponse';
-    data: Array<{ __typename?: 'Supplier'; id: string; name: string }>;
-  };
 };
 
 export type ArchiveAreaMutationVariables = Exact<{
@@ -1410,6 +1407,7 @@ export type GetUnassignedJobsQuery = {
       isImportant: boolean;
       completedDate?: string | null;
       startDate?: string | null;
+      status: JobLegacyStatus;
       notes?: string | null;
       updatedBy: string;
       createdBy: string;
@@ -1517,66 +1515,6 @@ export type ModifySupplierMutation = {
   modifySupplier: { __typename?: 'WriteSupplierResponse'; message: string };
 };
 
-export const GetLineItemTableSuppliersDocument = gql`
-  query GetLineItemTableSuppliers {
-    suppliers {
-      data {
-        id
-        name
-      }
-    }
-  }
-`;
-
-/**
- * __useGetLineItemTableSuppliersQuery__
- *
- * To run a query within a React component, call `useGetLineItemTableSuppliersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetLineItemTableSuppliersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetLineItemTableSuppliersQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetLineItemTableSuppliersQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetLineItemTableSuppliersQuery,
-    GetLineItemTableSuppliersQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetLineItemTableSuppliersQuery,
-    GetLineItemTableSuppliersQueryVariables
-  >(GetLineItemTableSuppliersDocument, options);
-}
-export function useGetLineItemTableSuppliersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetLineItemTableSuppliersQuery,
-    GetLineItemTableSuppliersQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetLineItemTableSuppliersQuery,
-    GetLineItemTableSuppliersQueryVariables
-  >(GetLineItemTableSuppliersDocument, options);
-}
-export type GetLineItemTableSuppliersQueryHookResult = ReturnType<
-  typeof useGetLineItemTableSuppliersQuery
->;
-export type GetLineItemTableSuppliersLazyQueryHookResult = ReturnType<
-  typeof useGetLineItemTableSuppliersLazyQuery
->;
-export type GetLineItemTableSuppliersQueryResult = Apollo.QueryResult<
-  GetLineItemTableSuppliersQuery,
-  GetLineItemTableSuppliersQueryVariables
->;
 export const ArchiveAreaDocument = gql`
   mutation ArchiveArea($id: ID!) {
     archiveArea(id: $id) {
@@ -3772,6 +3710,10 @@ export const GetUnassignedJobsDocument = gql`
         active
         inProgress
         isImportant
+        completedDate
+        startDate
+        status
+        notes
         area {
           id
           name
@@ -3796,9 +3738,6 @@ export const GetUnassignedJobsDocument = gql`
           id
           name
         }
-        completedDate
-        startDate
-        notes
         updatedBy
         createdBy
         createdTime
