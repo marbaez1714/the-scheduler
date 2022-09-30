@@ -1,4 +1,4 @@
-import { ColumnDef, TableState } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 
 import { JobLegacyStatus } from 'src/api';
 
@@ -13,15 +13,17 @@ export type TableRowAction<TData> = {
 
 export interface TableProps<TData> {
   title: string;
-  total?: number;
+  total: number;
   data: TData[];
   columns: ColumnDef<TData>[];
   rowActions?: TableRowAction<TData>[];
 }
 
 export interface PaginationFooterProps {
-  tableState: TableState;
+  pageIndex: number;
+  pageSize: number;
   totalPages: number;
+  totalRows: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
 }

@@ -1,5 +1,5 @@
 import { FieldValues, UseControllerProps } from 'react-hook-form';
-import { LineItemLegacyInput } from 'src/api';
+
 import { AutocompleteInputProps } from 'src/components/AutocompleteInput';
 
 export interface FormProps {

@@ -249,10 +249,11 @@ const Table = <TData extends Record<string, unknown>>({
                 </table>
               </div>
               <PaginationFooter
-                tableState={getState()}
+                totalRows={total}
                 totalPages={getPageCount()}
                 onPageSizeChange={setPageSize}
                 onPageChange={setPageIndex}
+                {...getState().pagination}
               />
             </Disclosure.Panel>
           </Transition>
