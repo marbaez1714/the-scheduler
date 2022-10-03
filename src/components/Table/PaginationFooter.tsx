@@ -39,7 +39,7 @@ export const PaginationFooter = ({
   const currentPage = pageIndex + 1;
   const disablePrevious = pageIndex === 0;
   const disableNext = pageIndex === totalPages - 1;
-  const pageSizeOptions = [...new Set([16, 32, 64, totalRows])].filter(
+  const pageSizeOptions = [...new Set([10, 25, 50, totalRows])].filter(
     (opt) => opt <= totalRows
   );
 

@@ -51,7 +51,7 @@ const Screen = ({ children }: ScreenProps) => {
         {/******************************/}
         {/* Screen Content             */}
         {/******************************/}
-        <div className="w-full h-full overflow-hidden">{children}</div>
+        {children}
       </div>
       {/******************************/}
       {/* Status Bar                 */}

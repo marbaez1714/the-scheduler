@@ -10,6 +10,7 @@ export interface ContentProps {
   centerVertical?: boolean;
   center?: boolean;
   primaryAction?: ContentAction;
+  column?: boolean;
 }
 
 type ContentAction = {
