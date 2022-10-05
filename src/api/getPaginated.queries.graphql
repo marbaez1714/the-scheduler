@@ -1,8 +1,4 @@
-query GetAreas(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
-  $archived: Boolean
-) {
+query GetAreas($pagination: Pagination, $sorting: Sorting, $archived: Boolean) {
   areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
       id
@@ -27,8 +23,8 @@ query GetAreas(
 }
 
 query GetBuilders(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+  $pagination: Pagination
+  $sorting: Sorting
   $archived: Boolean
 ) {
   builders(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -60,8 +56,8 @@ query GetBuilders(
 }
 
 query GetCommunities(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+  $pagination: Pagination
+  $sorting: Sorting
   $archived: Boolean
 ) {
   communities(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -91,8 +87,8 @@ query GetCommunities(
 }
 
 query GetCompanies(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+  $pagination: Pagination
+  $sorting: Sorting
   $archived: Boolean
 ) {
   companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -121,8 +117,8 @@ query GetCompanies(
 }
 
 query GetContractors(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+  $pagination: Pagination
+  $sorting: Sorting
   $archived: Boolean
 ) {
   contractors(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -149,8 +145,8 @@ query GetContractors(
 }
 
 query GetReporters(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+  $pagination: Pagination
+  $sorting: Sorting
   $archived: Boolean
 ) {
   reporters(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -178,8 +174,8 @@ query GetReporters(
 }
 
 query GetScopes(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+  $pagination: Pagination
+  $sorting: Sorting
   $archived: Boolean
 ) {
   scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -207,8 +203,8 @@ query GetScopes(
 }
 
 query GetSuppliers(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+  $pagination: Pagination
+  $sorting: Sorting
   $archived: Boolean
 ) {
   suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -285,71 +281,47 @@ query GetOptions {
   }
 }
 
-query GetAssignedContractors(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
-) {
-  assignedContractors(pagination: $pagination, sorting: $sorting) {
+query GetAssignedContractors {
+  assignedContractors {
     data {
       id
       name
-      primaryPhone
-      notes
-      jobsLegacy {
-        id
-        name
-        active
-        inProgress
-        isImportant
-        areaId
-        builderId
-        communityId
-        contractorId
-        reporterId
-        scopeId
-        completedDate
-        startDate
-        notes
-      }
-    }
-    meta {
-      page
-      pageSize
-      totalCount
-      sortField
-      sortOrder
     }
   }
 }
 
-query GetUnassignedJobs(
-  $pagination: PaginationOptions
-  $sorting: SortingOptions
+query GetJobLegacyByContractorId(
+  $contractorId: ID!
+  $pagination: Pagination
+  $sorting: Sorting
+  $archived: Boolean
 ) {
-  unassignedJobs(pagination: $pagination, sorting: $sorting) {
+  jobLegacyByContractorId(
+    id: $contractorId
+    pagination: $pagination
+    sorting: $sorting
+    archived: $archived
+  ) {
     data {
       id
       name
       active
       inProgress
       isImportant
+      status
       completedDate
       startDate
-      status
       notes
       area {
         id
         name
+        nameSpanish
       }
       builder {
         id
         name
       }
       community {
-        id
-        name
-      }
-      contractor {
         id
         name
       }
@@ -361,18 +333,19 @@ query GetUnassignedJobs(
         id
         name
       }
-
       updatedBy
       createdBy
       createdTime
       updatedTime
+      archived
+      legacy
     }
     meta {
       page
       pageSize
-      totalCount
       sortField
       sortOrder
+      totalCount
     }
   }
 }

@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
-import {
-  UnassignedJobsResponse,
-  useGetAssignedContractorsQuery,
-  useGetUnassignedJobsQuery,
-} from 'src/api';
+import { useGetAssignedContractorsQuery } from 'src/api';
 import { Button } from 'src/components/Button';
 
 import { Collapsable } from 'src/components/Collapsable';
-import { LegacyInstallerTable } from 'src/components/LegacyInstallerTable';
+import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
 import { Screen } from 'src/components/Screen';
 import { Toggle } from 'src/components/Toggle';
 import { useOptions } from 'src/hooks/useOptions';
+import { AssignedContractor } from './types';
+
+const UNASSIGNED = { name: 'Unassigned', id: '' };
 
 const Dashboard = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
-  const { contractorsOptions } = useOptions();
 
   /******************************/
   /* Refs                       */
@@ -25,7 +23,7 @@ const Dashboard = () => {
   /******************************/
   /* State                      */
   /******************************/
-  const [enabledList, setEnabledList] = useState<string[]>(['unassigned']);
+  const [enabledContractors, setEnabledContractors] = useState([UNASSIGNED]);
 
   /******************************/
   /* Context                    */
@@ -34,17 +32,10 @@ const Dashboard = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data: assignedContractorsData } = useGetAssignedContractorsQuery({
-    onCompleted: (resp) => {
-      console.log(resp);
-    },
-  });
-
-  const { data: unassignedJobsData } = useGetUnassignedJobsQuery({
-    onCompleted: (resp) => {
-      console.log(resp.unassignedJobs.data);
-    },
-  });
+  const {
+    data: getAssignedContractorsQueryData,
+    loading: getAssignedContractorsQueryLoading,
+  } = useGetAssignedContractorsQuery();
 
   /******************************/
   /* Memos                      */
@@ -57,28 +48,29 @@ const Dashboard = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const handleContractorToggle = (id: string) => () => {
-    setEnabledList((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((value) => value !== id);
+  const handleContractorToggle = (contractor: AssignedContractor) => () => {
+    setEnabledContractors((prev) => {
+      if (prev.some((item) => item.id === contractor.id)) {
+        return prev.filter((item) => item.id !== contractor.id);
       }
-
-      return [...prev, id];
+      return [...prev, contractor];
     });
   };
 
   const handleAll = () => {
-    const allOptions = ['unassigned'];
-    contractorsOptions.forEach(({ value }) => allOptions.push(value));
-    setEnabledList(allOptions);
+    const allOptions = [UNASSIGNED];
+    getAssignedContractorsQueryData?.assignedContractors.data.forEach(
+      (contractor) => allOptions.push(contractor)
+    );
+    setEnabledContractors(allOptions);
   };
 
   const handleRemoveAll = () => {
-    setEnabledList([]);
+    setEnabledContractors([]);
   };
 
-  const getIsChecked = (id: string) => {
-    return enabledList.includes(id);
+  const getIsChecked = (contractor: AssignedContractor) => {
+    return enabledContractors.some((item) => item.id === contractor.id);
   };
 
   /******************************/
@@ -86,39 +78,46 @@ const Dashboard = () => {
   /******************************/
   return (
     <Screen>
-      <Screen.Content column className="gap-4">
+      <Screen.Content
+        column
+        className="gap-4"
+        loading={getAssignedContractorsQueryLoading}
+      >
+        {/* Filters */}
         <Collapsable title="Display" subtitle="Select visible items">
           <div className="grid grid-flow-col grid-rows-5 gap-2 p-4">
             {/* Actions */}
             <div className="flex gap-x-2">
-              <Button onClick={handleAll} size="small">
+              <Button onClick={handleAll} size="small" className="w-full">
                 Add All
               </Button>
-              <Button onClick={handleRemoveAll} size="small" variant="outline">
+              <Button onClick={handleRemoveAll} size="small" variant="outline" className="w-full">
                 Remove All
               </Button>
             </div>
             {/* Unassigned */}
             <Toggle
-              checked={getIsChecked('unassigned')}
-              onChange={handleContractorToggle('unassigned')}
+              checked={getIsChecked(UNASSIGNED)}
+              onChange={handleContractorToggle(UNASSIGNED)}
               title="Unassigned"
             />
             {/* Contractors */}
-            {contractorsOptions.map(({ label, value }, index) => (
-              <Toggle
-                checked={getIsChecked(value)}
-                onChange={handleContractorToggle(value)}
-                title={`${index + 1}. ${label}`}
-              />
-            ))}
+            {getAssignedContractorsQueryData?.assignedContractors.data.map(
+              (contractor, index) => (
+                <Toggle
+                  checked={getIsChecked(contractor)}
+                  onChange={handleContractorToggle(contractor)}
+                  title={`${index + 1}. ${contractor.name}`}
+                  key={contractor.id}
+                />
+              )
+            )}
           </div>
         </Collapsable>
-        {!!unassignedJobsData && (
-          <LegacyInstallerTable
-            data={unassignedJobsData.unassignedJobs as UnassignedJobsResponse}
-          />
-        )}
+        {/* Contractors */}
+        {enabledContractors.map((contractor) => (
+          <LegacyContractorTable contractor={contractor} key={contractor.id} />
+        ))}
       </Screen.Content>
     </Screen>
   );

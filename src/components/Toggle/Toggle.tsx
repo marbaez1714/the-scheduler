@@ -47,37 +47,41 @@ const Toggle = ({ checked, disabled, title, onChange }: ToggleProps) => {
       })}
     >
       <Switch
+        className="flex items-center"
         checked={checked}
         onChange={onChange}
-        className={({ checked }) =>
-          cn(
-            'relative inline-flex h-5 w-10  cursor-pointer transition-all ease-in-out shadow-inner rounded',
-            { 'bg-app-success': checked, 'bg-app-medium': !checked }
-          )
-        }
         disabled={disabled}
       >
         {({ checked }) => (
-          <span
-            aria-hidden="true"
-            className={cn(
-              `absolute pointer-events-none inline-block h-4 w-5 transform bg-app-light ring-0 transition top-0.5 left-0.5 shadow rounded-sm`,
-              {
-                'translate-x-4': checked,
-                'translate-x-0': !checked,
-              }
-            )}
-          />
+          <>
+            <div
+              className={cn(
+                'relative inline-flex h-6 w-12 mr-3 cursor-pointer transition-all ease-in-out shadow-inner rounded',
+                { 'bg-app-success': checked, 'bg-app-medium': !checked }
+              )}
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  `absolute pointer-events-none inline-block h-5 w-5 transform bg-app-light ring-0 transition top-0.5 left-0.5 shadow rounded-sm`,
+                  {
+                    'translate-x-6': checked,
+                    'translate-x-0': !checked,
+                  }
+                )}
+              />
+            </div>
+            <span
+              className={cn('transition', {
+                'opacity-100': checked,
+                'opacity-25': !checked,
+              })}
+            >
+              {title}
+            </span>
+          </>
         )}
       </Switch>
-      <span
-        className={cn('transition', {
-          'opacity-100': checked,
-          'opacity-25': !checked,
-        })}
-      >
-        {title}
-      </span>
     </div>
   );
 };

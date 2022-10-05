@@ -1,16 +1,16 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 
-import { JobLegacy } from 'src/api';
+import { JobLegacy, useGetJobLegacyByContractorIdQuery } from 'src/api';
 
-import { LegacyInstallerTableProps } from './types';
+import { LegacyContractorTableProps } from './types';
 import { Table } from '../Table';
+import { ArrowPathIcon } from '@heroicons/react/24/solid';
 
-const LegacyInstallerTable = ({ data }: LegacyInstallerTableProps) => {
+const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
-
   /******************************/
   /* Refs                       */
   /******************************/
@@ -26,6 +26,9 @@ const LegacyInstallerTable = ({ data }: LegacyInstallerTableProps) => {
   /******************************/
   /* Data                       */
   /******************************/
+  const { data, loading } = useGetJobLegacyByContractorIdQuery({
+    variables: { contractorId: contractor.id },
+  });
 
   /******************************/
   /* Memos                      */
@@ -129,14 +132,29 @@ const LegacyInstallerTable = ({ data }: LegacyInstallerTableProps) => {
   /******************************/
   /* Render                     */
   /******************************/
+  if (loading) {
+    <div className="flex items-center w-full py-6 pl-4 pr-6 rounded bg-app animate-pulse">
+      <ArrowPathIcon className="w-6 h-6 my-2 ml-2 mr-6 text-app-altText animate-spin" />
+
+      {/******************************/}
+      {/* Title                      */}
+      {/******************************/}
+      <div className="flex items-end basis-2/3">
+        <h1 className="text-4xl font-semibold tracking-wide text-app-altText">
+          {contractor.name}
+        </h1>
+      </div>
+    </div>;
+  }
+
   return (
     <Table
-      title="Unassigned Jobs"
-      data={data.data}
+      title={contractor.name}
+      data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
       columns={columns}
-      total={data.meta.totalCount}
+      total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
     />
   );
 };
 
-export default LegacyInstallerTable;
+export default LegacyContractorTable;

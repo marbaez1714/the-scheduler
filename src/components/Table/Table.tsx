@@ -164,7 +164,7 @@ const Table = <TData extends Record<string, unknown>>({
     <Collapsable
       defaultOpen
       title={title}
-      subtitle={`${total}`}
+      subtitle={`${total} total`}
       rightRender={
         <input
           placeholder="Search"

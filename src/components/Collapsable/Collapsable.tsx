@@ -53,7 +53,7 @@ const Collapsable = ({
       {({ open }) => (
         <div className="flex flex-col w-full overflow-hidden rounded shadow-lg">
           {/******************************/}
-          {/* Table Header               */}
+          {/* Header                     */}
           {/******************************/}
           <div className="flex items-center py-6 pl-4 pr-6 bg-app">
             <Disclosure.Button className="p-2 mr-4 shadow-none text-app-altText">
@@ -72,9 +72,7 @@ const Collapsable = ({
                 {title}
               </h1>
               {subtitle && (
-                <p className="ml-4 opacity-50 text-app-altText">
-                  {subtitle} items
-                </p>
+                <p className="ml-4 opacity-50 text-app-altText">{subtitle}</p>
               )}
             </div>
             {/******************************/}

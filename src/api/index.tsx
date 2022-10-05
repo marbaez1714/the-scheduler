@@ -99,7 +99,6 @@ export type AreasResponse = {
 export type AssignedContractorsResponse = {
   __typename?: 'AssignedContractorsResponse';
   data: Array<Contractor>;
-  meta: MetaResponse;
 };
 
 export type Builder = {
@@ -252,6 +251,12 @@ export enum JobLegacyStatus {
   Today = 'today',
   WillCall = 'willCall',
 }
+
+export type JobsLegacyResponse = {
+  __typename?: 'JobsLegacyResponse';
+  data: Array<JobLegacy>;
+  meta: MetaResponse;
+};
 
 export type LineItemLegacy = {
   __typename?: 'LineItemLegacy';
@@ -432,7 +437,7 @@ export type MutationModifySupplierArgs = {
   id: Scalars['ID'];
 };
 
-export type PaginationOptions = {
+export type Pagination = {
   page: Scalars['Int'];
   pageSize: Scalars['Int'];
 };
@@ -450,6 +455,7 @@ export type Query = {
   companyById?: Maybe<Company>;
   contractorById?: Maybe<Contractor>;
   contractors: ContractorsResponse;
+  jobLegacyByContractorId: JobsLegacyResponse;
   jobLegacyById?: Maybe<JobLegacy>;
   reporterById?: Maybe<Reporter>;
   reporters: ReportersResponse;
@@ -457,7 +463,6 @@ export type Query = {
   scopes: ScopesResponse;
   supplierById?: Maybe<Supplier>;
   suppliers: SuppliersResponse;
-  unassignedJobs: UnassignedJobsResponse;
 };
 
 export type QueryAreaByIdArgs = {
@@ -466,13 +471,8 @@ export type QueryAreaByIdArgs = {
 
 export type QueryAreasArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
-};
-
-export type QueryAssignedContractorsArgs = {
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryBuilderByIdArgs = {
@@ -481,14 +481,14 @@ export type QueryBuilderByIdArgs = {
 
 export type QueryBuildersArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryCommunitiesArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryCommunityByIdArgs = {
@@ -497,8 +497,8 @@ export type QueryCommunityByIdArgs = {
 
 export type QueryCompaniesArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryCompanyByIdArgs = {
@@ -511,8 +511,15 @@ export type QueryContractorByIdArgs = {
 
 export type QueryContractorsArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
+};
+
+export type QueryJobLegacyByContractorIdArgs = {
+  archived?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryJobLegacyByIdArgs = {
@@ -525,8 +532,8 @@ export type QueryReporterByIdArgs = {
 
 export type QueryReportersArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryScopeByIdArgs = {
@@ -535,8 +542,8 @@ export type QueryScopeByIdArgs = {
 
 export type QueryScopesArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QuerySupplierByIdArgs = {
@@ -545,13 +552,8 @@ export type QuerySupplierByIdArgs = {
 
 export type QuerySuppliersArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
-};
-
-export type QueryUnassignedJobsArgs = {
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type Reporter = {
@@ -601,7 +603,7 @@ export enum SortOrder {
   Desc = 'desc',
 }
 
-export type SortingOptions = {
+export type Sorting = {
   field: Scalars['String'];
   order: SortOrder;
 };
@@ -623,12 +625,6 @@ export type Supplier = {
 export type SuppliersResponse = {
   __typename?: 'SuppliersResponse';
   data: Array<Supplier>;
-  meta: MetaResponse;
-};
-
-export type UnassignedJobsResponse = {
-  __typename?: 'UnassignedJobsResponse';
-  data: Array<JobLegacy>;
   meta: MetaResponse;
 };
 
@@ -1028,8 +1024,8 @@ export type GetSupplierQuery = {
 };
 
 export type GetAreasQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1062,8 +1058,8 @@ export type GetAreasQuery = {
 };
 
 export type GetBuildersQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1099,8 +1095,8 @@ export type GetBuildersQuery = {
 };
 
 export type GetCommunitiesQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1134,8 +1130,8 @@ export type GetCommunitiesQuery = {
 };
 
 export type GetCompaniesQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1170,8 +1166,8 @@ export type GetCompaniesQuery = {
 };
 
 export type GetContractorsQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1204,8 +1200,8 @@ export type GetContractorsQuery = {
 };
 
 export type GetReportersQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1239,8 +1235,8 @@ export type GetReportersQuery = {
 };
 
 export type GetScopesQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1274,8 +1270,8 @@ export type GetScopesQuery = {
 };
 
 export type GetSuppliersQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1346,58 +1342,28 @@ export type GetOptionsQuery = {
 };
 
 export type GetAssignedContractorsQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+  [key: string]: never;
 }>;
 
 export type GetAssignedContractorsQuery = {
   __typename?: 'Query';
   assignedContractors: {
     __typename?: 'AssignedContractorsResponse';
-    data: Array<{
-      __typename?: 'Contractor';
-      id: string;
-      name: string;
-      primaryPhone: string;
-      notes?: string | null;
-      jobsLegacy: Array<{
-        __typename?: 'JobLegacy';
-        id: string;
-        name: string;
-        active: boolean;
-        inProgress: boolean;
-        isImportant: boolean;
-        areaId?: string | null;
-        builderId?: string | null;
-        communityId?: string | null;
-        contractorId?: string | null;
-        reporterId?: string | null;
-        scopeId?: string | null;
-        completedDate?: string | null;
-        startDate?: string | null;
-        notes?: string | null;
-      }>;
-    }>;
-    meta: {
-      __typename?: 'MetaResponse';
-      page?: number | null;
-      pageSize?: number | null;
-      totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
-    };
+    data: Array<{ __typename?: 'Contractor'; id: string; name: string }>;
   };
 };
 
-export type GetUnassignedJobsQueryVariables = Exact<{
-  pagination?: InputMaybe<PaginationOptions>;
-  sorting?: InputMaybe<SortingOptions>;
+export type GetJobLegacyByContractorIdQueryVariables = Exact<{
+  contractorId: Scalars['ID'];
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
+  archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-export type GetUnassignedJobsQuery = {
+export type GetJobLegacyByContractorIdQuery = {
   __typename?: 'Query';
-  unassignedJobs: {
-    __typename?: 'UnassignedJobsResponse';
+  jobLegacyByContractorId: {
+    __typename?: 'JobsLegacyResponse';
     data: Array<{
       __typename?: 'JobLegacy';
       id: string;
@@ -1405,22 +1371,24 @@ export type GetUnassignedJobsQuery = {
       active: boolean;
       inProgress: boolean;
       isImportant: boolean;
+      status: JobLegacyStatus;
       completedDate?: string | null;
       startDate?: string | null;
-      status: JobLegacyStatus;
       notes?: string | null;
       updatedBy: string;
       createdBy: string;
       createdTime: string;
       updatedTime: string;
-      area?: { __typename?: 'Area'; id: string; name: string } | null;
-      builder?: { __typename?: 'Builder'; id: string; name: string } | null;
-      community?: { __typename?: 'Community'; id: string; name: string } | null;
-      contractor?: {
-        __typename?: 'Contractor';
+      archived: boolean;
+      legacy: boolean;
+      area?: {
+        __typename?: 'Area';
         id: string;
         name: string;
+        nameSpanish: string;
       } | null;
+      builder?: { __typename?: 'Builder'; id: string; name: string } | null;
+      community?: { __typename?: 'Community'; id: string; name: string } | null;
       reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
       scope?: { __typename?: 'Scope'; id: string; name: string } | null;
     }>;
@@ -1428,9 +1396,9 @@ export type GetUnassignedJobsQuery = {
       __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
-      totalCount: number;
       sortField?: string | null;
       sortOrder?: SortOrder | null;
+      totalCount: number;
     };
   };
 };
@@ -2846,8 +2814,8 @@ export type GetSupplierQueryResult = Apollo.QueryResult<
 >;
 export const GetAreasDocument = gql`
   query GetAreas(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -2923,8 +2891,8 @@ export type GetAreasQueryResult = Apollo.QueryResult<
 >;
 export const GetBuildersDocument = gql`
   query GetBuilders(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     builders(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -3008,8 +2976,8 @@ export type GetBuildersQueryResult = Apollo.QueryResult<
 >;
 export const GetCommunitiesDocument = gql`
   query GetCommunities(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     communities(
@@ -3097,8 +3065,8 @@ export type GetCommunitiesQueryResult = Apollo.QueryResult<
 >;
 export const GetCompaniesDocument = gql`
   query GetCompanies(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -3181,8 +3149,8 @@ export type GetCompaniesQueryResult = Apollo.QueryResult<
 >;
 export const GetContractorsDocument = gql`
   query GetContractors(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     contractors(
@@ -3267,8 +3235,8 @@ export type GetContractorsQueryResult = Apollo.QueryResult<
 >;
 export const GetReportersDocument = gql`
   query GetReporters(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     reporters(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -3350,8 +3318,8 @@ export type GetReportersQueryResult = Apollo.QueryResult<
 >;
 export const GetScopesDocument = gql`
   query GetScopes(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -3428,8 +3396,8 @@ export type GetScopesQueryResult = Apollo.QueryResult<
 >;
 export const GetSuppliersDocument = gql`
   query GetSuppliers(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+    $pagination: Pagination
+    $sorting: Sorting
     $archived: Boolean
   ) {
     suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
@@ -3609,39 +3577,11 @@ export type GetOptionsQueryResult = Apollo.QueryResult<
   GetOptionsQueryVariables
 >;
 export const GetAssignedContractorsDocument = gql`
-  query GetAssignedContractors(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
-  ) {
-    assignedContractors(pagination: $pagination, sorting: $sorting) {
+  query GetAssignedContractors {
+    assignedContractors {
       data {
         id
         name
-        primaryPhone
-        notes
-        jobsLegacy {
-          id
-          name
-          active
-          inProgress
-          isImportant
-          areaId
-          builderId
-          communityId
-          contractorId
-          reporterId
-          scopeId
-          completedDate
-          startDate
-          notes
-        }
-      }
-      meta {
-        page
-        pageSize
-        totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -3659,8 +3599,6 @@ export const GetAssignedContractorsDocument = gql`
  * @example
  * const { data, loading, error } = useGetAssignedContractorsQuery({
  *   variables: {
- *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *   },
  * });
  */
@@ -3698,35 +3636,39 @@ export type GetAssignedContractorsQueryResult = Apollo.QueryResult<
   GetAssignedContractorsQuery,
   GetAssignedContractorsQueryVariables
 >;
-export const GetUnassignedJobsDocument = gql`
-  query GetUnassignedJobs(
-    $pagination: PaginationOptions
-    $sorting: SortingOptions
+export const GetJobLegacyByContractorIdDocument = gql`
+  query GetJobLegacyByContractorId(
+    $contractorId: ID!
+    $pagination: Pagination
+    $sorting: Sorting
+    $archived: Boolean
   ) {
-    unassignedJobs(pagination: $pagination, sorting: $sorting) {
+    jobLegacyByContractorId(
+      id: $contractorId
+      pagination: $pagination
+      sorting: $sorting
+      archived: $archived
+    ) {
       data {
         id
         name
         active
         inProgress
         isImportant
+        status
         completedDate
         startDate
-        status
         notes
         area {
           id
           name
+          nameSpanish
         }
         builder {
           id
           name
         }
         community {
-          id
-          name
-        }
-        contractor {
           id
           name
         }
@@ -3742,68 +3684,72 @@ export const GetUnassignedJobsDocument = gql`
         createdBy
         createdTime
         updatedTime
+        archived
+        legacy
       }
       meta {
         page
         pageSize
-        totalCount
         sortField
         sortOrder
+        totalCount
       }
     }
   }
 `;
 
 /**
- * __useGetUnassignedJobsQuery__
+ * __useGetJobLegacyByContractorIdQuery__
  *
- * To run a query within a React component, call `useGetUnassignedJobsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUnassignedJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetJobLegacyByContractorIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobLegacyByContractorIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUnassignedJobsQuery({
+ * const { data, loading, error } = useGetJobLegacyByContractorIdQuery({
  *   variables: {
+ *      contractorId: // value for 'contractorId'
  *      pagination: // value for 'pagination'
  *      sorting: // value for 'sorting'
+ *      archived: // value for 'archived'
  *   },
  * });
  */
-export function useGetUnassignedJobsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetUnassignedJobsQuery,
-    GetUnassignedJobsQueryVariables
+export function useGetJobLegacyByContractorIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetJobLegacyByContractorIdQuery,
+    GetJobLegacyByContractorIdQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
-    GetUnassignedJobsQuery,
-    GetUnassignedJobsQueryVariables
-  >(GetUnassignedJobsDocument, options);
+    GetJobLegacyByContractorIdQuery,
+    GetJobLegacyByContractorIdQueryVariables
+  >(GetJobLegacyByContractorIdDocument, options);
 }
-export function useGetUnassignedJobsLazyQuery(
+export function useGetJobLegacyByContractorIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetUnassignedJobsQuery,
-    GetUnassignedJobsQueryVariables
+    GetJobLegacyByContractorIdQuery,
+    GetJobLegacyByContractorIdQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    GetUnassignedJobsQuery,
-    GetUnassignedJobsQueryVariables
-  >(GetUnassignedJobsDocument, options);
+    GetJobLegacyByContractorIdQuery,
+    GetJobLegacyByContractorIdQueryVariables
+  >(GetJobLegacyByContractorIdDocument, options);
 }
-export type GetUnassignedJobsQueryHookResult = ReturnType<
-  typeof useGetUnassignedJobsQuery
+export type GetJobLegacyByContractorIdQueryHookResult = ReturnType<
+  typeof useGetJobLegacyByContractorIdQuery
 >;
-export type GetUnassignedJobsLazyQueryHookResult = ReturnType<
-  typeof useGetUnassignedJobsLazyQuery
+export type GetJobLegacyByContractorIdLazyQueryHookResult = ReturnType<
+  typeof useGetJobLegacyByContractorIdLazyQuery
 >;
-export type GetUnassignedJobsQueryResult = Apollo.QueryResult<
-  GetUnassignedJobsQuery,
-  GetUnassignedJobsQueryVariables
+export type GetJobLegacyByContractorIdQueryResult = Apollo.QueryResult<
+  GetJobLegacyByContractorIdQuery,
+  GetJobLegacyByContractorIdQueryVariables
 >;
 export const ModifyAreaDocument = gql`
   mutation ModifyArea($id: ID!, $data: WriteAreaInput!) {
