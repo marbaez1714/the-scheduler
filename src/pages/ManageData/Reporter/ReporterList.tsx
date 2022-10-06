@@ -134,13 +134,13 @@ export const ReporterList = () => {
   /******************************/
   return (
     <Screen.Content
+      title="Reporters List"
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.reporters && (
         <Table
-          title="Reporters List"
           data={data.reporters.data as Reporter[]}
           columns={tableColumns}
           total={data.reporters.meta.totalCount}

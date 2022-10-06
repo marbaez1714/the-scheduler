@@ -1,3 +1,4 @@
+import { PlusCircleIcon } from '@heroicons/react/24/solid';
 import cn from 'classnames';
 import { Button } from '../Button';
 import { ContentProps } from './types';
@@ -11,6 +12,7 @@ export const Content = ({
   center,
   primaryAction,
   column,
+  title,
 }: ContentProps) => {
   /******************************/
   /* Render Loading             */
@@ -29,10 +31,27 @@ export const Content = ({
   /******************************/
   return (
     <div className="flex flex-col w-full h-full overflow-x-hidden bg-app-medium">
+      {/* Title */}
+      {(!!title || !!primaryAction) && (
+        <div className="flex px-6 pt-4 pb-6 mx-4 rounded-b shadow text-app-altText bg-app">
+          {!!title && <h1 className="text-4xl font-bold">{title}</h1>}
+          {!!primaryAction && (
+            <div className="ml-auto rounded bg-app-light">
+              <Button
+                onClick={primaryAction.onClick}
+                variant="outline"
+              >
+                {primaryAction.title}
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Comment */}
       <div
         className={cn(
-          'flex flex-grow transition-all justify-start items-start p-4',
+          'flex flex-grow transition-all justify-start items-start p-4 overflow-scroll',
           {
             'flex-col': column,
             'justify-center': center || centerHorizontal,
@@ -43,17 +62,6 @@ export const Content = ({
       >
         {children}
       </div>
-
-      {/* Actions  */}
-      {!!primaryAction && (
-        <div className="p-4 text-right border-t shadow bg-app-medium border-app-darkest">
-          {!!primaryAction && (
-            <Button className="w-full" onClick={primaryAction.onClick}>
-              {primaryAction.title}
-            </Button>
-          )}
-        </div>
-      )}
     </div>
   );
 };

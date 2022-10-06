@@ -24,10 +24,9 @@ import { HeaderCell } from './Cells/HeaderCell';
 import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
 import { PaginationFooter } from './PaginationFooter';
 import { TableProps } from './types';
-import { Collapsable } from '../Collapsable';
+import { TextInput } from '../TextInput';
 
 const Table = <TData extends Record<string, unknown>>({
-  title,
   data,
   columns,
   total,
@@ -161,49 +160,49 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <Collapsable
-      defaultOpen
-      title={title}
-      subtitle={`${total} total`}
-      rightRender={
-        <input
-          placeholder="Search"
+    <div className="flex flex-col flex-shrink-0 w-full overflow-hidden border rounded border-app">
+      {/* Header */}
+      <div className="flex items-center px-6 py-4 border-b bg-app border-b-app-medium">
+        <p className="text-2xl font-medium text-app-altText/50">{`Total Rows: ${total}`}</p>
+        <TextInput
+          className="w-1/2 py-2 ml-auto"
           onChange={handleSearchChange}
           value={globalFilter}
-          className="p-2 rounded shadow-inner basis-1/3 bg-app-light"
+          placeholder="Search Term"
         />
-      }
-      footerRender={
-        <PaginationFooter
-          totalRows={total}
-          totalPages={getPageCount()}
-          onPageSizeChange={setPageSize}
-          onPageChange={setPageIndex}
-          {...getState().pagination}
-        />
-      }
-    >
-      <table className="w-full border-collapse table-auto">
-        {/******************************/}
-        {/* Table Header               */}
-        {/******************************/}
-        <thead className="text-left text-app-altText bg-app">
+      </div>
+      {/* Table */}
+      <div className="w-full overflow-x-scroll overflow-y-scroll">
+        <table className="w-full border-collapse table-auto whitespace-nowrap">
           {/******************************/}
-          {/* Column Headers             */}
+          {/* Table Header               */}
           {/******************************/}
-          {renderHeaderGroups()}
-        </thead>
-        {/******************************/}
-        {/* Table Body                 */}
-        {/******************************/}
-        <tbody className="bg-app-light">
+          <thead className="text-left text-app-altText bg-app">
+            {/******************************/}
+            {/* Column Headers             */}
+            {/******************************/}
+            {renderHeaderGroups()}
+          </thead>
           {/******************************/}
-          {/* Data / Empty Rows          */}
+          {/* Table Body                 */}
           {/******************************/}
-          {renderBodyRows()}
-        </tbody>
-      </table>
-    </Collapsable>
+          <tbody className="bg-app-light">
+            {/******************************/}
+            {/* Data / Empty Rows          */}
+            {/******************************/}
+            {renderBodyRows()}
+          </tbody>
+        </table>
+      </div>
+      {/* Footer */}
+      <PaginationFooter
+        totalRows={total}
+        totalPages={getPageCount()}
+        onPageSizeChange={setPageSize}
+        onPageChange={setPageIndex}
+        {...getState().pagination}
+      />
+    </div>
   );
 };
 

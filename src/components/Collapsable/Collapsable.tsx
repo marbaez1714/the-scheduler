@@ -8,9 +8,7 @@ import { CollapsableProps } from './types';
 const Collapsable = ({
   title,
   subtitle,
-  rightRender,
   defaultOpen,
-  footerRender,
   children,
 }: CollapsableProps) => {
   /******************************/
@@ -51,64 +49,52 @@ const Collapsable = ({
   return (
     <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
-        <div className="flex flex-col w-full overflow-hidden rounded shadow-lg">
+        <div className="flex flex-col flex-shrink-0 w-full transition-all rounded">
           {/******************************/}
           {/* Header                     */}
           {/******************************/}
-          <div className="flex items-center py-6 pl-4 pr-6 bg-app">
-            <Disclosure.Button className="p-2 mr-4 shadow-none text-app-altText">
-              {open ? (
-                <ChevronDownIcon className="w-6" />
-              ) : (
-                <ChevronRightIcon className="w-6" />
+          <div className="z-10 flex items-center p-4 rounded shadow bg-app">
+            <Disclosure.Button
+              title="Expand"
+              className={cn(
+                'p-2 mr-2 shadow-none text-app-altText transition-all',
+                {
+                  'rotate-90': open,
+                  'rotate-0': !open,
+                }
               )}
+            >
+              <ChevronRightIcon className="w-4" />
             </Disclosure.Button>
 
             {/******************************/}
             {/* Title                      */}
             {/******************************/}
             <div className="flex items-end basis-2/3">
-              <h1 className="text-4xl font-semibold tracking-wide text-app-altText">
+              <h1 className="text-2xl font-semibold tracking-wide text-app-altText">
                 {title}
               </h1>
               {subtitle && (
-                <p className="ml-4 opacity-50 text-app-altText">{subtitle}</p>
+                <p className="ml-2 text-sm text-app-altText/50">{subtitle}</p>
               )}
             </div>
-            {/******************************/}
-            {/* Right Render               */}
-            {/******************************/}
-            {rightRender && (
-              <Transition
-                as={Fragment}
-                show={open}
-                enter="transition origin-right duration-100 ease-out"
-                enterFrom="transform scale-x-95 opacity-0"
-                enterTo="transform scale-x-100 opacity-100"
-                leave="transition origin-left duration-100 ease-out"
-                leaveFrom="transform scale-x-100 opacity-100"
-                leaveTo="transform scale-x-95 opacity-0"
-              >
-                {rightRender}
-              </Transition>
-            )}
           </div>
           {/******************************/}
           {/* Content                    */}
           {/******************************/}
           <Transition
-            enter="transition origin-top duration-100 ease-out"
-            enterFrom="transform scale-y-95 opacity-0"
-            enterTo="transform scale-y-100 opacity-100"
-            leave="transition origin-top duration-100 ease-out"
-            leaveFrom="transform scale-y-100 opacity-100"
-            leaveTo="transform scale-y-95 opacity-0"
+            show={open}
+            className="z-0 mx-2 mt-2 transition-all"
+            enterFrom="max-h-0"
+            enterTo="max-h-screen"
+            leaveFrom="max-h-screen"
+            leaveTo="max-h-0"
           >
-            <Disclosure.Panel>
-              <div className="overflow-x-scroll overflow-y-scroll border-t shadow-inner whitespace-nowrap bg-app-light border-t-app-medium">
-                {children}
-              </div>
-              {footerRender}
+            <Disclosure.Panel
+              static
+              className="flex overflow-hidden rounded shadow"
+            >
+              {children}
             </Disclosure.Panel>
           </Transition>
         </div>

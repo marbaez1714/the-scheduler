@@ -128,13 +128,13 @@ export const CommunityList = () => {
   /******************************/
   return (
     <Screen.Content
+      title="Communities List"
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.communities && (
         <Table
-          title="Communities List"
           data={data.communities.data as Community[]}
           columns={tableColumns}
           total={data.communities.meta.totalCount}

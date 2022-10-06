@@ -11,6 +11,7 @@ export interface ContentProps {
   center?: boolean;
   primaryAction?: ContentAction;
   column?: boolean;
+  title?: string;
 }
 
 type ContentAction = {

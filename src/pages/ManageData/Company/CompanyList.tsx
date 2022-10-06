@@ -133,13 +133,13 @@ export const CompanyList = () => {
   /******************************/
   return (
     <Screen.Content
+      title="Companies List"
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.companies && (
         <Table
-          title="Companies List"
           data={data.companies.data as Company[]}
           columns={tableColumns}
           total={data.companies.meta.totalCount}

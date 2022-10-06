@@ -43,6 +43,8 @@ export const PaginationFooter = ({
     (opt) => opt <= totalRows
   );
 
+  console.log(pageSizeOptions)
+
   /******************************/
   /* Memos                      */
   /******************************/

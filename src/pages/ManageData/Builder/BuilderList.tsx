@@ -140,13 +140,13 @@ export const BuilderList = () => {
   /******************************/
   return (
     <Screen.Content
+      title="Builders List"
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.builders && (
         <Table
-          title="Builders List"
           data={data.builders.data as Builder[]}
           columns={tableColumns}
           total={data.builders.meta.totalCount}

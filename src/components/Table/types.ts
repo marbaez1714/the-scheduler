@@ -12,7 +12,6 @@ export type TableRowAction<TData> = {
 };
 
 export interface TableProps<TData> {
-  title: string;
   total: number;
   data: TData[];
   columns: ColumnDef<TData>[];

@@ -72,7 +72,7 @@ const Toggle = ({ checked, disabled, title, onChange }: ToggleProps) => {
               />
             </div>
             <span
-              className={cn('transition', {
+              className={cn('transition whitespace-nowrap', {
                 'opacity-100': checked,
                 'opacity-25': !checked,
               })}

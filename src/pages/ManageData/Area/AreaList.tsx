@@ -124,13 +124,13 @@ export const AreaList = () => {
   /******************************/
   return (
     <Screen.Content
+      title='Areas List'
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.areas && (
         <Table
-          title="Areas List"
           data={data.areas.data}
           columns={tableColumns}
           total={data.areas.meta.totalCount}

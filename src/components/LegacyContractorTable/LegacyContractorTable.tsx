@@ -6,6 +6,7 @@ import { JobLegacy, useGetJobLegacyByContractorIdQuery } from 'src/api';
 import { LegacyContractorTableProps } from './types';
 import { Table } from '../Table';
 import { ArrowPathIcon } from '@heroicons/react/24/solid';
+import { Collapsable } from '../Collapsable';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
@@ -148,12 +149,15 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   }
 
   return (
-    <Table
-      title={contractor.name}
-      data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
-      columns={columns}
-      total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
-    />
+    <Collapsable title={contractor.name}>
+      <div className="overflow-hidden">
+        <Table
+          data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
+          columns={columns}
+          total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
+        />
+      </div>
+    </Collapsable>
   );
 };
 

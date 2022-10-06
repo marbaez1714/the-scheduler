@@ -124,13 +124,13 @@ export const ScopeList = () => {
   /******************************/
   return (
     <Screen.Content
+      title="Scopes List"
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.scopes && (
         <Table
-          title="Scopes List"
           data={data.scopes.data as Scope[]}
           columns={tableColumns}
           total={data.scopes.meta.totalCount}

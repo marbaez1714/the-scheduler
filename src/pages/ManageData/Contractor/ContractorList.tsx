@@ -128,13 +128,13 @@ export const ContractorList = () => {
   /******************************/
   return (
     <Screen.Content
+      title="Contractors List"
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >
       {/* Area List */}
       {data?.contractors && (
         <Table
-          title="Contractors List"
           data={data.contractors.data as Contractor[]}
           columns={tableColumns}
           total={data.contractors.meta.totalCount}

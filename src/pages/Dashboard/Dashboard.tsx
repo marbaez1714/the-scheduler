@@ -85,7 +85,7 @@ const Dashboard = () => {
       >
         {/* Filters */}
         <Collapsable title="Display" subtitle="Select visible items">
-          <div className="grid grid-flow-col grid-rows-5 gap-2 p-4">
+          <div className="grid grid-flow-col grid-rows-5 gap-2 p-4 overflow-auto bg-app-light">
             {/* Actions */}
             <div className="flex gap-x-2">
               <Button onClick={handleAll} size="small" className="w-full">
