@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGetAssignedContractorsQuery } from 'src/api';
 import { Button } from 'src/components/Button';
 
@@ -6,7 +6,6 @@ import { Collapsable } from 'src/components/Collapsable';
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
 import { Screen } from 'src/components/Screen';
 import { Toggle } from 'src/components/Toggle';
-import { useOptions } from 'src/hooks/useOptions';
 import { AssignedContractor } from './types';
 
 const UNASSIGNED = { name: 'Unassigned', id: '' };
@@ -91,7 +90,12 @@ const Dashboard = () => {
               <Button onClick={handleAll} size="small" className="w-full">
                 Add All
               </Button>
-              <Button onClick={handleRemoveAll} size="small" variant="outline" className="w-full">
+              <Button
+                onClick={handleRemoveAll}
+                size="small"
+                variant="outline"
+                className="w-full"
+              >
                 Remove All
               </Button>
             </div>

@@ -84,10 +84,10 @@ const Collapsable = ({
           {/******************************/}
           <Transition
             show={open}
-            className="z-0 mx-2 mt-2 transition-all"
+            className="z-0 p-2 mx-2 mt-2 overflow-scroll transition-all rounded shadow-inner bg-app-light"
             enterFrom="max-h-0"
-            enterTo="max-h-screen"
-            leaveFrom="max-h-screen"
+            enterTo="max-h-[700px]"
+            leaveFrom="max-h-[700px]"
             leaveTo="max-h-0"
           >
             <Disclosure.Panel
