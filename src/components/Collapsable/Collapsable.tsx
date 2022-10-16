@@ -1,6 +1,5 @@
-import { Fragment } from 'react';
 import { Disclosure, Transition } from '@headlessui/react';
-import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import cn from 'classnames';
 
 import { CollapsableProps } from './types';
@@ -10,6 +9,7 @@ const Collapsable = ({
   subtitle,
   defaultOpen,
   children,
+  unmount = true,
 }: CollapsableProps) => {
   /******************************/
   /* Custom Hooks               */
@@ -84,18 +84,14 @@ const Collapsable = ({
           {/******************************/}
           <Transition
             show={open}
-            className="z-0 p-2 mx-2 mt-2 overflow-scroll transition-all rounded shadow-inner bg-app-light"
+            className="z-0 mx-2 mt-2 overflow-scroll transition-all rounded shadow-inner bg-app-light"
             enterFrom="max-h-0"
             enterTo="max-h-[700px]"
             leaveFrom="max-h-[700px]"
             leaveTo="max-h-0"
+            unmount={unmount}
           >
-            <Disclosure.Panel
-              static
-              className="flex overflow-hidden rounded shadow"
-            >
-              {children}
-            </Disclosure.Panel>
+            <Disclosure.Panel static>{children}</Disclosure.Panel>
           </Transition>
         </div>
       )}

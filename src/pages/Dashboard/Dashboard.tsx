@@ -83,10 +83,14 @@ const Dashboard = () => {
         loading={getAssignedContractorsQueryLoading}
       >
         {/* Filters */}
-        <Collapsable title="Display" subtitle="Select visible items">
-          <div className="grid grid-flow-col grid-rows-5 gap-2 p-4 overflow-auto bg-app-light">
+        <div className="w-1/2">
+          <Collapsable
+            title="Display"
+            subtitle="Select visible items"
+            unmount={false}
+          >
             {/* Actions */}
-            <div className="flex gap-x-2">
+            <div className="flex px-4 pt-4 gap-x-2">
               <Button onClick={handleAll} size="small" className="w-full">
                 Add All
               </Button>
@@ -99,25 +103,27 @@ const Dashboard = () => {
                 Remove All
               </Button>
             </div>
-            {/* Unassigned */}
-            <Toggle
-              checked={getIsChecked(UNASSIGNED)}
-              onChange={handleContractorToggle(UNASSIGNED)}
-              title="Unassigned"
-            />
             {/* Contractors */}
-            {getAssignedContractorsQueryData?.assignedContractors.data.map(
-              (contractor, index) => (
-                <Toggle
-                  checked={getIsChecked(contractor)}
-                  onChange={handleContractorToggle(contractor)}
-                  title={`${index + 1}. ${contractor.name}`}
-                  key={contractor.id}
-                />
-              )
-            )}
-          </div>
-        </Collapsable>
+            <div className="flex flex-col p-4 gap-y-2">
+              {/* Unassigned */}
+              <Toggle
+                checked={getIsChecked(UNASSIGNED)}
+                onChange={handleContractorToggle(UNASSIGNED)}
+                title="Unassigned"
+              />
+              {getAssignedContractorsQueryData?.assignedContractors.data.map(
+                (contractor, index) => (
+                  <Toggle
+                    checked={getIsChecked(contractor)}
+                    onChange={handleContractorToggle(contractor)}
+                    title={`${index + 1}. ${contractor.name}`}
+                    key={contractor.id}
+                  />
+                )
+              )}
+            </div>
+          </Collapsable>
+        </div>
         {/* Contractors */}
         {enabledContractors.map((contractor) => (
           <LegacyContractorTable contractor={contractor} key={contractor.id} />

@@ -43,8 +43,6 @@ export const PaginationFooter = ({
     (opt) => opt <= totalRows
   );
 
-  console.log(pageSizeOptions)
-
   /******************************/
   /* Memos                      */
   /******************************/
@@ -102,13 +100,13 @@ export const PaginationFooter = ({
               className={({ checked }) =>
                 cn(
                   'px-2 flex items-center justify-center cursor-pointer bg-app-dark hover:bg-app-darkest',
-                  { 'bg-app-darkest': checked }
+                  { 'bg-app-darkest underline': checked }
                 )
               }
               value={value}
               key={value}
             >
-              {value === totalRows ? 'All' : value}
+              {value === totalRows ? `All - ${totalRows}` : value}
             </RadioGroup.Option>
           ))}
         </div>

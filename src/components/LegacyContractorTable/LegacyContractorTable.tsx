@@ -12,6 +12,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
+
   /******************************/
   /* Refs                       */
   /******************************/
@@ -149,14 +150,12 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   }
 
   return (
-    <Collapsable title={contractor.name}>
-      <div className="overflow-hidden">
-        <Table
-          data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
-          columns={columns}
-          total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
-        />
-      </div>
+    <Collapsable title={contractor.name} unmount={false}>
+      <Table
+        data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
+        columns={columns}
+        total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
+      />
     </Collapsable>
   );
 };

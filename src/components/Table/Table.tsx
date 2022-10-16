@@ -131,7 +131,7 @@ const Table = <TData extends Record<string, unknown>>({
     if (rows.length < 1) {
       return (
         <tr className="transition-all border-b last:border-b-0 text-app-text/25">
-          <td className="px-6 py-4 text-lg text-center" colSpan={100}>
+          <td className="px-6 py-4 text-lg" colSpan={100}>
             (No results)
           </td>
         </tr>

@@ -3,4 +3,5 @@ export interface CollapsableProps {
   defaultOpen?: boolean;
   subtitle?: string;
   children: React.ReactNode;
+  unmount?: boolean;
 }
