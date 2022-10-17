@@ -20,7 +20,7 @@ const Button = ({
     <button
       tabIndex={0}
       className={cn(
-        'tracking-wider uppercase font-medium flex items-center justify-center disabled:opacity-50 disabled:pointer-events-none',
+        'tracking-wider uppercase font-medium flex items-center justify-center disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap',
         {
           'text-xs': size === 'small',
           'text-base': size === 'medium',

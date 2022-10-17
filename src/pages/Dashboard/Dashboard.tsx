@@ -4,6 +4,7 @@ import { Button } from 'src/components/Button';
 
 import { Collapsable } from 'src/components/Collapsable';
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
+import { Modal } from 'src/components/Modal';
 import { Screen } from 'src/components/Screen';
 import { Toggle } from 'src/components/Toggle';
 import { AssignedContractor } from './types';
@@ -23,6 +24,7 @@ const Dashboard = () => {
   /* State                      */
   /******************************/
   const [enabledContractors, setEnabledContractors] = useState([UNASSIGNED]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   /******************************/
   /* Context                    */
@@ -82,48 +84,48 @@ const Dashboard = () => {
         className="gap-4"
         loading={getAssignedContractorsQueryLoading}
       >
-        {/* Filters */}
-        <div className="w-1/2">
-          <Collapsable
-            title="Display"
-            subtitle="Select visible items"
-            unmount={false}
-          >
-            {/* Actions */}
-            <div className="flex px-4 pt-4 gap-x-2">
-              <Button onClick={handleAll} size="small" className="w-full">
-                Add All
-              </Button>
-              <Button
-                onClick={handleRemoveAll}
-                size="small"
-                variant="outline"
-                className="w-full"
-              >
-                Remove All
-              </Button>
-            </div>
-            {/* Contractors */}
-            <div className="flex flex-col p-4 gap-y-2">
-              {/* Unassigned */}
-              <Toggle
-                checked={getIsChecked(UNASSIGNED)}
-                onChange={handleContractorToggle(UNASSIGNED)}
-                title="Unassigned"
-              />
-              {getAssignedContractorsQueryData?.assignedContractors.data.map(
-                (contractor, index) => (
-                  <Toggle
-                    checked={getIsChecked(contractor)}
-                    onChange={handleContractorToggle(contractor)}
-                    title={`${index + 1}. ${contractor.name}`}
-                    key={contractor.id}
-                  />
-                )
-              )}
-            </div>
-          </Collapsable>
-        </div>
+        <Button onClick={() => setModalOpen(true)}>toggle</Button>
+
+        <Modal
+          title="Display Options"
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+        >
+          {/* Actions */}
+          <div className="flex gap-x-2">
+            <Button onClick={handleAll} size="small" className="w-full">
+              Add All
+            </Button>
+            <Button
+              onClick={handleRemoveAll}
+              size="small"
+              variant="outline"
+              className="w-full"
+            >
+              Remove All
+            </Button>
+          </div>
+          {/* Contractors */}
+          <div className="flex flex-col p-4 gap-y-2">
+            {/* Unassigned */}
+            <Toggle
+              checked={getIsChecked(UNASSIGNED)}
+              onChange={handleContractorToggle(UNASSIGNED)}
+              title="Unassigned"
+            />
+            {getAssignedContractorsQueryData?.assignedContractors.data.map(
+              (contractor, index) => (
+                <Toggle
+                  checked={getIsChecked(contractor)}
+                  onChange={handleContractorToggle(contractor)}
+                  title={`${index + 1}. ${contractor.name}`}
+                  key={contractor.id}
+                />
+              )
+            )}
+          </div>
+        </Modal>
+
         {/* Contractors */}
         {enabledContractors.map((contractor) => (
           <LegacyContractorTable contractor={contractor} key={contractor.id} />
