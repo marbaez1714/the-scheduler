@@ -1,3 +1,8 @@
+fragment ContractorOption on Contractor {
+  id
+  name
+}
+
 query GetAreas($pagination: Pagination, $sorting: Sorting, $archived: Boolean) {
   areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
     data {
@@ -284,8 +289,7 @@ query GetOptions {
 query GetAssignedContractors {
   assignedContractors {
     data {
-      id
-      name
+      ...ContractorOption
     }
   }
 }

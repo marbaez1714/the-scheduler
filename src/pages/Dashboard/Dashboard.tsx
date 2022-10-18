@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { useGetAssignedContractorsQuery } from 'src/api';
+import {
+  ContractorOptionFragment,
+  useGetAssignedContractorsQuery,
+} from 'src/api';
 
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
 import { Screen } from 'src/components/Screen';
 import { SettingsModal } from './SettingsModal';
-import { AssignedContractor } from './types';
-
-const UNASSIGNED = { name: 'Unassigned', id: '' };
+import { UNASSIGNED } from './utils';
 
 const Dashboard = () => {
   /******************************/
@@ -21,7 +22,7 @@ const Dashboard = () => {
   /* State                      */
   /******************************/
   const [enabledContractors, setEnabledContractors] = useState([UNASSIGNED]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   /******************************/
   /* Context                    */
@@ -46,7 +47,7 @@ const Dashboard = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const handleContractorToggle = (contractor: AssignedContractor) => () => {
+  const handleContractorToggle = (contractor: ContractorOptionFragment) => {
     setEnabledContractors((prev) => {
       if (prev.some((item) => item.id === contractor.id)) {
         return prev.filter((item) => item.id !== contractor.id);
@@ -56,10 +57,10 @@ const Dashboard = () => {
   };
 
   const handleAll = () => {
-    const allOptions = [UNASSIGNED];
-    getAssignedContractorsQueryData?.assignedContractors.data.forEach(
-      (contractor) => allOptions.push(contractor)
-    );
+    const allOptions = [
+      UNASSIGNED,
+      ...(getAssignedContractorsQueryData?.assignedContractors.data || []),
+    ];
     setEnabledContractors(allOptions);
   };
 
@@ -67,8 +68,8 @@ const Dashboard = () => {
     setEnabledContractors([]);
   };
 
-  const getIsChecked = (contractor: AssignedContractor) => {
-    return enabledContractors.some((item) => item.id === contractor.id);
+  const toggleSettings = () => {
+    setSettingsOpen((prev) => !prev);
   };
 
   /******************************/
@@ -80,8 +81,20 @@ const Dashboard = () => {
         column
         className="gap-4"
         loading={getAssignedContractorsQueryLoading}
+        title="Dashboard"
+        primaryAction={{ onClick: toggleSettings, title: 'Display Settings' }}
       >
-        <SettingsModal onAddAll={handleAll} onRemoveAll={handleRemoveAll} />
+        <SettingsModal
+          onAddAll={handleAll}
+          onClose={toggleSettings}
+          onContractorToggle={handleContractorToggle}
+          onRemoveAll={handleRemoveAll}
+          open={settingsOpen}
+          enabledContractors={enabledContractors}
+          contractors={
+            getAssignedContractorsQueryData?.assignedContractors.data
+          }
+        />
 
         {/* Contractors */}
         {enabledContractors.map((contractor) => (

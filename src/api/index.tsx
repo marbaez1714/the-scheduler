@@ -1023,6 +1023,12 @@ export type GetSupplierQuery = {
   } | null;
 };
 
+export type ContractorOptionFragment = {
+  __typename?: 'Contractor';
+  id: string;
+  name: string;
+};
+
 export type GetAreasQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   sorting?: InputMaybe<Sorting>;
@@ -1483,6 +1489,12 @@ export type ModifySupplierMutation = {
   modifySupplier: { __typename?: 'WriteSupplierResponse'; message: string };
 };
 
+export const ContractorOptionFragmentDoc = gql`
+  fragment ContractorOption on Contractor {
+    id
+    name
+  }
+`;
 export const ArchiveAreaDocument = gql`
   mutation ArchiveArea($id: ID!) {
     archiveArea(id: $id) {
@@ -3580,11 +3592,11 @@ export const GetAssignedContractorsDocument = gql`
   query GetAssignedContractors {
     assignedContractors {
       data {
-        id
-        name
+        ...ContractorOption
       }
     }
   }
+  ${ContractorOptionFragmentDoc}
 `;
 
 /**

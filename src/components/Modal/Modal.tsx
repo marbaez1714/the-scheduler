@@ -23,7 +23,7 @@ const Modal = ({ title, open, onClose, children }: ModalProps) => {
         {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 overflow-y-auto">
           <Transition.Child
-            className="flex items-center justify-center min-h-full p-32 overflow-hidden"
+            className="flex items-start justify-center min-h-full p-32 overflow-hidden"
             enterFrom="opacity-0"
             enterTo="opacity-100"
             leaveFrom="opacity-100"
