@@ -1,4 +1,4 @@
-import { Disclosure, Transition } from '@headlessui/react';
+import { Disclosure } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import cn from 'classnames';
 
@@ -44,18 +44,12 @@ const Collapsable = ({
         {/******************************/}
         {/* Content                    */}
         {/******************************/}
-        <Transition
-          className="z-0 mx-2 overflow-scroll transition-all rounded"
-          enterFrom="max-h-0 mt-0"
-          enterTo="max-h-[700px] mt-2"
-          leaveFrom="max-h-[700px] mt-2"
-          leaveTo="max-h-0 mt-0"
+        <Disclosure.Panel
+          className="m-2 overflow-hidden rounded bg-app-light max-h-[700px]"
           unmount={unmount}
         >
-          <Disclosure.Panel static className="p-4 shadow-inner bg-app-light">
-            {children}
-          </Disclosure.Panel>
-        </Transition>
+          {children}
+        </Disclosure.Panel>
       </div>
     </Disclosure>
   );

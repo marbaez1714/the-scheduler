@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, forwardRef } from 'react';
+import { useMemo } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import cn from 'classnames';
 

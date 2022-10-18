@@ -160,7 +160,7 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div className="flex flex-col flex-shrink-0 w-full overflow-hidden border rounded shadow border-app">
+    <div className="flex flex-col flex-shrink-0 w-full max-h-full overflow-hidden border rounded border-app">
       {/* Header */}
       <div className="flex items-center px-6 py-4 border-b bg-app border-b-app-medium">
         <p className="text-2xl font-medium text-app-altText/50">{`Total Rows: ${total}`}</p>

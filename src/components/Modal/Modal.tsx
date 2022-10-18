@@ -12,7 +12,7 @@ const Modal = ({ title, open, onClose, children }: ModalProps) => {
       <Dialog onClose={onClose} className="relative z-50">
         {/* Overlay */}
         <Transition.Child
-          className="fixed inset-0 transition-all bg-app-darkest/75"
+          className="fixed inset-0 transition-all bg-app-darkest/75 backdrop-blur"
           enterFrom="opacity-0"
           enterTo="opacity-100"
           leaveFrom="opacity-100"

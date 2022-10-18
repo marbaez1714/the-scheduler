@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import { useGetAssignedContractorsQuery } from 'src/api';
-import { Button } from 'src/components/Button';
 
-import { Collapsable } from 'src/components/Collapsable';
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
-import { Modal } from 'src/components/Modal';
 import { Screen } from 'src/components/Screen';
-import { Toggle } from 'src/components/Toggle';
+import { SettingsModal } from './SettingsModal';
 import { AssignedContractor } from './types';
 
 const UNASSIGNED = { name: 'Unassigned', id: '' };
@@ -84,47 +81,7 @@ const Dashboard = () => {
         className="gap-4"
         loading={getAssignedContractorsQueryLoading}
       >
-        <Button onClick={() => setModalOpen(true)}>toggle</Button>
-
-        <Modal
-          title="Display Options"
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-        >
-          {/* Actions */}
-          <div className="flex gap-x-2">
-            <Button onClick={handleAll} size="small" className="w-full">
-              Add All
-            </Button>
-            <Button
-              onClick={handleRemoveAll}
-              size="small"
-              variant="outline"
-              className="w-full"
-            >
-              Remove All
-            </Button>
-          </div>
-          {/* Contractors */}
-          <div className="flex flex-col p-4 gap-y-2">
-            {/* Unassigned */}
-            <Toggle
-              checked={getIsChecked(UNASSIGNED)}
-              onChange={handleContractorToggle(UNASSIGNED)}
-              title="Unassigned"
-            />
-            {getAssignedContractorsQueryData?.assignedContractors.data.map(
-              (contractor, index) => (
-                <Toggle
-                  checked={getIsChecked(contractor)}
-                  onChange={handleContractorToggle(contractor)}
-                  title={`${index + 1}. ${contractor.name}`}
-                  key={contractor.id}
-                />
-              )
-            )}
-          </div>
-        </Modal>
+        <SettingsModal onAddAll={handleAll} onRemoveAll={handleRemoveAll} />
 
         {/* Contractors */}
         {enabledContractors.map((contractor) => (
