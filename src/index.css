@@ -30,3 +30,9 @@
     @apply text-xs opacity-25;
   }
 }
+
+@layer utilities {
+  .hide-scroll-bar::-webkit-scrollbar {
+    display: none;
+  }
+}
