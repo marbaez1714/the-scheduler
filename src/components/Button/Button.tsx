@@ -1,3 +1,4 @@
+import { ArrowPathIcon } from '@heroicons/react/24/solid';
 import cn from 'classnames';
 
 import { ButtonProps } from './types';
@@ -11,6 +12,7 @@ const Button = ({
   rounded,
   variant = 'filled',
   size = 'medium',
+  loading,
   ...rest
 }: ButtonProps) => {
   /******************************/
@@ -43,37 +45,48 @@ const Button = ({
       )}
       {...rest}
     >
-      {/******************************/}
-      {/* Left                       */}
-      {/******************************/}
-      {leftRender && (
-        <div
-          className={cn({
-            'mr-1 h-4 w-4': size === 'small',
-            'mr-2 h-4 w-4': size === 'medium',
-            'mr-3 h-8 w-8': size === 'large',
+      {loading ? (
+        <ArrowPathIcon
+          className={cn("animate-spin",{
+            'h-6 w-6': size === 'small' || size === 'medium',
+            'h-8 w-8': size === 'large',
           })}
-        >
-          {leftRender}
-        </div>
-      )}
-      {/******************************/}
-      {/* Children                   */}
-      {/******************************/}
-      {children || title}
-      {/******************************/}
-      {/* Right                      */}
-      {/******************************/}
-      {rightRender && (
-        <div
-          className={cn({
-            'ml-1 h-4 w-4': size === 'small',
-            'ml-2 h-4 w-4': size === 'medium',
-            'ml-3 h-8 w-8': size === 'large',
-          })}
-        >
-          {rightRender}
-        </div>
+        />
+      ) : (
+        <>
+          {/******************************/}
+          {/* Left                       */}
+          {/******************************/}
+          {leftRender && (
+            <div
+              className={cn({
+                'mr-1 h-4 w-4': size === 'small',
+                'mr-2 h-4 w-4': size === 'medium',
+                'mr-3 h-8 w-8': size === 'large',
+              })}
+            >
+              {leftRender}
+            </div>
+          )}
+          {/******************************/}
+          {/* Children                   */}
+          {/******************************/}
+          {children || title}
+          {/******************************/}
+          {/* Right                      */}
+          {/******************************/}
+          {rightRender && (
+            <div
+              className={cn({
+                'ml-1 h-4 w-4': size === 'small',
+                'ml-2 h-4 w-4': size === 'medium',
+                'ml-3 h-8 w-8': size === 'large',
+              })}
+            >
+              {rightRender}
+            </div>
+          )}
+        </>
       )}
     </button>
   );

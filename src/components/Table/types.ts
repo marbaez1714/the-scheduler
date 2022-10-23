@@ -40,7 +40,7 @@ export interface DataIdCellProps {
 
 export interface RowMenuCellProps<TData> {
   data: TData;
-  menuActions?: TableRowAction<TData>[];
+  menuActions: TableRowAction<TData>[];
 }
 
 export interface HeaderCellProps {

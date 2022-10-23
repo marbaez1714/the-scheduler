@@ -8,4 +8,5 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'text' | 'filled' | 'outline';
   size?: 'small' | 'medium' | 'large';
   rounded?: boolean;
+  loading?: boolean;
 }

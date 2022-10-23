@@ -16,7 +16,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
 import { DataIdCell } from './Cells/DataIdCell';
 import { DateCell } from './Cells/DateCell';
-import { RowMenuCell } from './Cells/RowMenuCell';
+import { RowActionCell } from './Cells/RowActionCell';
 import { TextCell } from './Cells/TextCell';
 import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
@@ -141,10 +141,10 @@ const Table = <TData extends Record<string, unknown>>({
 
     return rows.map(({ id: rowId, original, getVisibleCells }) => (
       <tr
-        className="relative transition-all border-b last:border-b-0 last:rounded-b"
+        className="transition-all border-b last:border-b-0 last:rounded-b"
         key={rowId}
       >
-        <RowMenuCell menuActions={rowActions} data={original} />
+        {rowActions && <RowActionCell menuActions={rowActions} data={original} />}
         {getVisibleCells().map(
           ({ id: cellId, column, getContext, getValue }) => (
             <td className="px-3 py-2 first:pl-4 last:pr-4 " key={cellId}>
@@ -174,7 +174,7 @@ const Table = <TData extends Record<string, unknown>>({
       </div>
       {/* Table */}
       <ScrollContainer>
-        <table className="w-full border-collapse table-auto whitespace-nowrap">
+        <table className="relative w-full border-collapse table-auto whitespace-nowrap">
           {/******************************/}
           {/* Table Header               */}
           {/******************************/}

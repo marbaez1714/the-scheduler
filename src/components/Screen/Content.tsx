@@ -37,10 +37,7 @@ export const Content = ({
           {!!title && <h1 className="text-4xl font-bold">{title}</h1>}
           {!!primaryAction && (
             <div className="ml-auto rounded bg-app-light">
-              <Button
-                onClick={primaryAction.onClick}
-                variant="outline"
-              >
+              <Button onClick={primaryAction.onClick} variant="outline">
                 {primaryAction.title}
               </Button>
             </div>
@@ -48,7 +45,7 @@ export const Content = ({
         </div>
       )}
 
-      {/* Comment */}
+      {/* Content */}
       <div
         className={cn(
           'flex flex-grow transition-all justify-start items-start p-4 overflow-scroll',

@@ -4,14 +4,26 @@ import { format } from 'date-fns';
 import { JobLegacy, useGetJobLegacyByContractorIdQuery } from 'src/api';
 
 import { LegacyContractorTableProps } from './types';
-import { Table } from '../Table';
-import { ArrowPathIcon } from '@heroicons/react/24/solid';
+import { Table, TableRowAction } from '../Table';
+import {
+  ArchiveBoxIcon,
+  ArrowPathIcon,
+  ArrowsRightLeftIcon,
+  ArrowUpIcon,
+  ChatBubbleBottomCenterTextIcon,
+  CogIcon,
+  DocumentCheckIcon,
+  PencilSquareIcon,
+} from '@heroicons/react/24/solid';
 import { Collapsable } from '../Collapsable';
+import { useNavigate } from 'react-router-dom';
+import { confirmArchive } from 'src/utils/alerts';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
+  const navigate = useNavigate();
 
   /******************************/
   /* Refs                       */
@@ -47,13 +59,45 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Table                      */
   /******************************/
-  const columns: ColumnDef<JobLegacy>[] = [
+  const rowActions: TableRowAction<JobLegacy>[] = [
     {
-      id: 'job-actions',
-      header: '',
-      enableSorting: false,
-      cell: (context) => 'actions',
+      icon: <PencilSquareIcon />,
+      label: 'Edit',
+      onClick: (data) => navigate(data.id),
     },
+    {
+      icon: <ChatBubbleBottomCenterTextIcon />,
+      label: 'Send Alert',
+      onClick: () => {},
+    },
+    {
+      icon: <ArrowsRightLeftIcon />,
+      label: 'Reassign',
+      onClick: () => {},
+    },
+    {
+      icon: <CogIcon />,
+      label: 'Toggle In Progress',
+      onClick: () => {},
+    },
+    {
+      icon: <ArrowUpIcon />,
+      label: 'Toggle Important',
+      onClick: () => {},
+    },
+    {
+      icon: <DocumentCheckIcon />,
+      label: 'Complete',
+      onClick: () => {},
+    },
+    {
+      icon: <ArchiveBoxIcon />,
+      label: 'Archive',
+      onClick: (data) => confirmArchive(data.name),
+    },
+  ];
+
+  const columns: ColumnDef<JobLegacy>[] = [
     {
       id: 'job-status',
       header: 'Status',
@@ -131,6 +175,10 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     },
   ];
 
+  // { label: "Toggle In Progress", icon: "mdi-arrow-right", action: "progress" },
+  // { label: "Toggle Important", icon: "mdi-star-circle", action: "important" },
+  // { label: "Complete", icon: "mdi-check", action: "complete" },
+
   /******************************/
   /* Render                     */
   /******************************/
@@ -155,6 +203,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
         columns={columns}
         total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
+        rowActions={rowActions}
       />
     </Collapsable>
   );
