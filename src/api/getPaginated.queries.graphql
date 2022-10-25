@@ -337,6 +337,7 @@ query GetJobLegacyByContractorId(
         id
         name
       }
+      contractorId
       updatedBy
       createdBy
       createdTime

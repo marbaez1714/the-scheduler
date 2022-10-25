@@ -54,13 +54,11 @@ const MultiSelectInput = ({
         {/* Options                    */}
         {/******************************/}
         <Transition
-          className="z-50"
-          enter="transition duration-100 ease-out"
-          enterFrom="transform opacity-0"
-          enterTo="transform opacity-100"
-          leave="transition duration-75 ease-out"
-          leaveFrom="transform opacity-100"
-          leaveTo="transform opacity-0"
+          className="z-50 transition-all"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
           afterLeave={onBlur}
         >
           <Listbox.Options className="absolute z-10 mt-2 overflow-y-scroll border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48">

@@ -6,6 +6,7 @@ export interface AutocompleteInputProps extends InputProps {
   options: InputOption[];
   value: string;
   name?: string;
+  disabled?: boolean;
   onBlur?: () => void;
   onChange: (value: string) => void;
 }

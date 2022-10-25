@@ -1381,6 +1381,7 @@ export type GetJobLegacyByContractorIdQuery = {
       completedDate?: string | null;
       startDate?: string | null;
       notes?: string | null;
+      contractorId?: string | null;
       updatedBy: string;
       createdBy: string;
       createdTime: string;
@@ -3692,6 +3693,7 @@ export const GetJobLegacyByContractorIdDocument = gql`
           id
           name
         }
+        contractorId
         updatedBy
         createdBy
         createdTime

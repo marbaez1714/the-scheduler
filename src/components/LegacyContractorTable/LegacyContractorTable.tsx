@@ -1,10 +1,7 @@
+import { useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
-
-import { JobLegacy, useGetJobLegacyByContractorIdQuery } from 'src/api';
-
-import { LegacyContractorTableProps } from './types';
-import { Table, TableRowAction } from '../Table';
+import { useNavigate } from 'react-router-dom';
 import {
   ArchiveBoxIcon,
   ArrowPathIcon,
@@ -15,9 +12,14 @@ import {
   DocumentCheckIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/solid';
+
+import { JobLegacy, useGetJobLegacyByContractorIdQuery } from 'src/api';
+import { LegacyContractorTableProps } from './types';
+import { Table, TableRowAction } from '../Table';
+
 import { Collapsable } from '../Collapsable';
-import { useNavigate } from 'react-router-dom';
 import { confirmArchive } from 'src/utils/alerts';
+import { ReassignModal } from './ReassignModal';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
@@ -32,6 +34,8 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* State                      */
   /******************************/
+  const [selectedJob, setSelectedJob] = useState<JobLegacy>();
+  const [reassignModalOpen, setReassignModalOpen] = useState(false);
 
   /******************************/
   /* Context                    */
@@ -56,6 +60,17 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /* Callbacks                  */
   /******************************/
 
+  const handleReassignJob = (data: JobLegacy) => {
+    console.log(data)
+    setSelectedJob(data);
+    setReassignModalOpen(true);
+  };
+
+  const handleReassignModalClose = () => {
+    setSelectedJob(undefined);
+    setReassignModalOpen(false);
+  };
+
   /******************************/
   /* Table                      */
   /******************************/
@@ -73,7 +88,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <ArrowsRightLeftIcon />,
       label: 'Reassign',
-      onClick: () => {},
+      onClick: handleReassignJob,
     },
     {
       icon: <CogIcon />,
@@ -175,10 +190,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     },
   ];
 
-  // { label: "Toggle In Progress", icon: "mdi-arrow-right", action: "progress" },
-  // { label: "Toggle Important", icon: "mdi-star-circle", action: "important" },
-  // { label: "Complete", icon: "mdi-check", action: "complete" },
-
   /******************************/
   /* Render                     */
   /******************************/
@@ -198,14 +209,21 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   }
 
   return (
-    <Collapsable title={contractor.name} unmount={false}>
-      <Table
-        data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
-        columns={columns}
-        total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
-        rowActions={rowActions}
+    <>
+      <ReassignModal
+        open={reassignModalOpen}
+        onClose={handleReassignModalClose}
+        jobLegacy={selectedJob}
       />
-    </Collapsable>
+      <Collapsable title={contractor.name} unmount={false}>
+        <Table
+          data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
+          columns={columns}
+          total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
+          rowActions={rowActions}
+        />
+      </Collapsable>
+    </>
   );
 };
 

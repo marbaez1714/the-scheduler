@@ -18,6 +18,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
       name,
       onBlur,
       placeholder,
+      disabled,
     },
     ref
   ) => {
@@ -69,7 +70,12 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
     /******************************/
     return (
       <div className="flex flex-col flex-grow">
-        <Combobox value={value} onChange={onChange} name={name}>
+        <Combobox
+          value={value}
+          onChange={onChange}
+          name={name}
+          disabled={disabled}
+        >
           {/******************************/}
           {/* Label                      */}
           {/******************************/}
@@ -89,7 +95,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
             <Combobox.Button className="w-full">
               <Combobox.Input
                 className={cn(
-                  'bg-app-light py-3 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow-inner text-ellipsis',
+                  'bg-app-light py-3 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow-inner text-ellipsis disabled:bg-app-medium/50',
                   className
                 )}
                 value={value}
@@ -103,25 +109,25 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
             {/******************************/}
             {/* Clear Button               */}
             {/******************************/}
-            <button
-              className="absolute w-4 h-4 right-4 text-app-dark"
-              onClick={(e) => handleClearClick(e)}
-              type="button"
-            >
-              {value ? <XMarkIcon /> : <ChevronDownIcon />}
-            </button>
+            {!disabled && (
+              <button
+                className="absolute w-4 h-4 right-4 text-app-dark"
+                onClick={(e) => handleClearClick(e)}
+                type="button"
+              >
+                {value ? <XMarkIcon /> : <ChevronDownIcon />}
+              </button>
+            )}
           </div>
           {/******************************/}
           {/* Options                    */}
           {/******************************/}
           <Transition
-            className="z-10"
-            enter="transition duration-100 ease-out"
-            enterFrom="transform opacity-0"
-            enterTo="transform opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform opacity-100"
-            leaveTo="transform opacity-0"
+            className="z-10 transition-all"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
             afterLeave={onBlur}
           >
             <Combobox.Options className="absolute z-10 mt-2 overflow-y-scroll border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48">

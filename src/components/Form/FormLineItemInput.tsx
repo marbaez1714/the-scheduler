@@ -98,13 +98,11 @@ export const FormLineItemInput = <TFields extends FieldValues>({
       {/******************************/}
       <Transition
         show={!!value.length}
-        className="flex flex-wrap gap-2 p-4 rounded shadow-inner bg-app-medium/50"
-        enter="transition duration-100 ease-out"
-        enterFrom="transform opacity-0"
-        enterTo="transform opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform opacity-100"
-        leaveTo="transform opacity-0"
+        className="flex flex-wrap gap-2 p-4 transition-all rounded shadow-inner bg-app-medium/50"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
         <p className="w-full text-sm font-medium">Added Line Items</p>
 
