@@ -2,7 +2,6 @@ import { useState, useMemo, ChangeEventHandler } from 'react';
 import { ContractorOptionFragment } from 'src/api';
 import { Button } from 'src/components/Button';
 import { Modal } from 'src/components/Modal';
-import { ScrollContainer } from 'src/components/ScrollContainer';
 
 import { TextInput } from 'src/components/TextInput';
 import { Toggle } from 'src/components/Toggle';
@@ -79,7 +78,7 @@ export const SettingsModal = ({
       />
 
       {/* Contractors */}
-      <ScrollContainer className="flex flex-col m-4 w-96 max-h-64">
+      <div className="flex flex-col p-2 m-4 overflow-auto border rounded w-96 max-h-64 border-app-medium">
         {/* Unassigned */}
         <div className="p-2 mb-2 rounded shadow-inner bg-app-medium">
           <Toggle
@@ -98,7 +97,7 @@ export const SettingsModal = ({
             />
           ))}
         </div>
-      </ScrollContainer>
+      </div>
 
       {/* Actions */}
       <div className="flex mt-2 gap-x-2">

@@ -25,7 +25,6 @@ import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
 import { PaginationFooter } from './PaginationFooter';
 import { TableProps } from './types';
 import { TextInput } from '../TextInput';
-import { ScrollContainer } from '../ScrollContainer';
 
 const Table = <TData extends Record<string, unknown>>({
   data,
@@ -144,7 +143,9 @@ const Table = <TData extends Record<string, unknown>>({
         className="transition-all border-b last:border-b-0 last:rounded-b"
         key={rowId}
       >
-        {rowActions && <RowActionCell menuActions={rowActions} data={original} />}
+        {rowActions && (
+          <RowActionCell menuActions={rowActions} data={original} />
+        )}
         {getVisibleCells().map(
           ({ id: cellId, column, getContext, getValue }) => (
             <td className="px-3 py-2 first:pl-4 last:pr-4 " key={cellId}>
@@ -173,7 +174,7 @@ const Table = <TData extends Record<string, unknown>>({
         />
       </div>
       {/* Table */}
-      <ScrollContainer>
+      <div className="overflow-scroll">
         <table className="relative w-full border-collapse table-auto whitespace-nowrap">
           {/******************************/}
           {/* Table Header               */}
@@ -194,7 +195,7 @@ const Table = <TData extends Record<string, unknown>>({
             {renderBodyRows()}
           </tbody>
         </table>
-      </ScrollContainer>
+      </div>
       {/* Footer */}
       <PaginationFooter
         totalRows={total}
