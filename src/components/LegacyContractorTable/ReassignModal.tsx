@@ -4,6 +4,7 @@ import { useOptions } from 'src/hooks/useOptions';
 import { AutocompleteInput } from '../AutocompleteInput';
 import { Button } from '../Button';
 import { Modal } from '../Modal';
+import { MultiSelectInput } from '../MultiSelectInput';
 import { ReassignModalProps } from './types';
 
 export const ReassignModal = ({

@@ -69,7 +69,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
     /* Render                     */
     /******************************/
     return (
-      <div className="flex flex-col flex-grow">
+      <div className="relative flex flex-col flex-grow">
         <Combobox
           value={value}
           onChange={onChange}
@@ -123,41 +123,42 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
           {/* Options                    */}
           {/******************************/}
           <Transition
-            className="z-10 transition-all"
+            as={Combobox.Options}
+            className="absolute z-50 mt-2 overflow-visible overflow-y-scroll transition-all border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48 top-full"
             enterFrom="opacity-0"
             enterTo="opacity-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
             afterLeave={onBlur}
           >
-            <Combobox.Options className="absolute z-10 mt-2 overflow-y-scroll border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48">
-              {/******************************/}
-              {/* No Results                 */}
-              {/******************************/}
-              {filteredOptions.length === 0 && (
-                <li className="px-4 py-3">No results</li>
-              )}
-              {/******************************/}
-              {/* Select Options             */}
-              {/******************************/}
-              {filteredOptions.map((option) => (
-                <Combobox.Option
-                  key={option.value}
-                  value={option.value}
-                  className={({ selected, active }) =>
-                    cn(
-                      'px-4 py-3 hover:bg-app-medium cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis transition-all',
-                      {
-                        'bg-app text-app-altText hover:text-app-text': selected,
-                        'bg-app-medium': active && !selected,
-                      }
-                    )
-                  }
-                >
-                  {option.label}
-                </Combobox.Option>
-              ))}
-            </Combobox.Options>
+            {/* <Combobox.Options className="mt-2 "> */}
+            {/******************************/}
+            {/* No Results                 */}
+            {/******************************/}
+            {filteredOptions.length === 0 && (
+              <li className="px-4 py-3">No results</li>
+            )}
+            {/******************************/}
+            {/* Select Options             */}
+            {/******************************/}
+            {filteredOptions.map((option) => (
+              <Combobox.Option
+                key={option.value}
+                value={option.value}
+                className={({ selected, active }) =>
+                  cn(
+                    'px-4 py-3 hover:bg-app-medium cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis transition-all',
+                    {
+                      'bg-app text-app-altText hover:text-app-text': selected,
+                      'bg-app-medium': active && !selected,
+                    }
+                  )
+                }
+              >
+                {option.label}
+              </Combobox.Option>
+            ))}
+            {/* </Combobox.Options> */}
           </Transition>
         </Combobox>
         {!!errorMessage && (

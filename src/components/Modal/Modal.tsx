@@ -23,7 +23,7 @@ const Modal = ({ title, open, onClose, children }: ModalProps) => {
         {/* Full-screen container to center the panel */}
         <div className="fixed inset-0 overflow-y-auto">
           <Transition.Child
-            className="flex items-start justify-center min-h-full p-32 overflow-hidden transition-all"
+            className="flex items-start justify-center min-h-full p-32 transition-all"
             enterFrom="opacity-0"
             enterTo="opacity-100"
             leaveFrom="opacity-100"
@@ -31,14 +31,13 @@ const Modal = ({ title, open, onClose, children }: ModalProps) => {
             aria-hidden="true"
           >
             {/* The actual dialog panel  */}
-            <Dialog.Panel className="max-h-full mx-auto overflow-hidden rounded shadow bg-app-light">
+            <Dialog.Panel className="max-h-full mx-auto rounded shadow bg-app-light">
               {!!title && (
                 <Dialog.Title className="py-4 pl-4 pr-12 text-2xl font-semibold tracking-wide rounded-t text-app-altText bg-app">
                   {title}
                 </Dialog.Title>
               )}
-
-              <div className="p-4 overflow-auto">{children}</div>
+              <div className='p-4'>{children}</div>
             </Dialog.Panel>
           </Transition.Child>
         </div>

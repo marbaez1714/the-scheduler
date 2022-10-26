@@ -28,7 +28,7 @@ const MultiSelectInput = ({
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col flex-grow">
+    <div className="relative flex flex-col flex-grow">
       <Listbox value={value} onChange={onChange} multiple name={name}>
         {/******************************/}
         {/* Label                      */}
@@ -54,44 +54,43 @@ const MultiSelectInput = ({
         {/* Options                    */}
         {/******************************/}
         <Transition
-          className="z-50 transition-all"
+          as={Listbox.Options}
+          className="absolute z-50 mt-2 overflow-visible overflow-y-scroll transition-all border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48 top-full"
           enterFrom="opacity-0"
           enterTo="opacity-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
           afterLeave={onBlur}
         >
-          <Listbox.Options className="absolute z-10 mt-2 overflow-y-scroll border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48">
-            {/******************************/}
-            {/* No Results                 */}
-            {/******************************/}
-            {options.length === 0 && <li className="px-4 py-3">No results</li>}
-            {/******************************/}
-            {/* Select Options             */}
-            {/******************************/}
-            {options.map((option) => (
-              <Listbox.Option
-                key={option.value}
-                value={option.value}
-                className={({ selected, active }) =>
-                  cn(
-                    'px-4 py-3 hover:bg-app-medium cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis transition-all flex items-center',
-                    {
-                      'bg-app text-app-altText hover:text-app-text': selected,
-                      'bg-app-medium': active && !selected,
-                    }
-                  )
-                }
-              >
-                {({ selected }) => (
-                  <>
-                    {selected && <CheckIcon className="w-4 h-4 mr-2" />}
-                    {option.label}
-                  </>
-                )}
-              </Listbox.Option>
-            ))}
-          </Listbox.Options>
+          {/******************************/}
+          {/* No Results                 */}
+          {/******************************/}
+          {options.length === 0 && <li className="px-4 py-3">No results</li>}
+          {/******************************/}
+          {/* Select Options             */}
+          {/******************************/}
+          {options.map((option) => (
+            <Listbox.Option
+              key={option.value}
+              value={option.value}
+              className={({ selected, active }) =>
+                cn(
+                  'px-4 py-3 hover:bg-app-medium cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis transition-all flex items-center',
+                  {
+                    'bg-app text-app-altText hover:text-app-text': selected,
+                    'bg-app-medium': active && !selected,
+                  }
+                )
+              }
+            >
+              {({ selected }) => (
+                <>
+                  {selected && <CheckIcon className="w-4 h-4 mr-2" />}
+                  {option.label}
+                </>
+              )}
+            </Listbox.Option>
+          ))}
         </Transition>
       </Listbox>
       {!!errorMessage && (
