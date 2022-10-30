@@ -1,26 +1,25 @@
+import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
-
-import { Screen } from 'src/components/Screen';
+import { useParams } from 'react-router-dom';
 import { Form } from 'src/components/Form';
+import { Screen } from 'src/components/Screen';
 import { useOptions } from 'src/hooks/useOptions';
-import { CreateJobForm } from 'src/utils/forms';
-import { CreateJobLegacyInput, useCreateJobLegacyMutation } from 'src/api';
+import { EditJobForm } from 'src/utils/forms';
 
-const CreateJob = () => {
+const EditJobLegacy = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
   const {
+    areaOptions,
     builderOptions,
     communityOptions,
     contractorsOptions,
     reporterOptions,
-    areaOptions,
     scopeOptions,
     supplierOptions,
   } = useOptions();
-
+  const { jobLegacyId } = useParams();
   const {
     handleSubmit,
     control,
@@ -28,8 +27,8 @@ const CreateJob = () => {
     formState: { isValid },
   } = useForm({
     mode: 'all',
-    defaultValues: CreateJobForm.defaultValues,
-    resolver: CreateJobForm.resolver,
+    defaultValues: EditJobForm.defaultValues,
+    resolver: EditJobForm.resolver,
   });
 
   /******************************/
@@ -47,16 +46,6 @@ const CreateJob = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const [createJobLegacy, { loading: createLoading }] =
-    useCreateJobLegacyMutation({
-      onCompleted: (data) => {
-        toast.success(data.createJobLegacy.message);
-        reset();
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    });
 
   /******************************/
   /* Memos                      */
@@ -69,20 +58,17 @@ const CreateJob = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const submit = (data: CreateJobLegacyInput) => {
-    createJobLegacy({ variables: { data } });
-  };
 
   /******************************/
   /* Render                     */
   /******************************/
   return (
     <Screen>
-      <Screen.Content centerHorizontal loading={createLoading}>
+      <Screen.Content centerHorizontal loading={false}>
         <Form
-          title="Create New Job"
+          title="Edit Job"
           className="w-1/2"
-          onSubmit={handleSubmit(submit)}
+          onSubmit={handleSubmit(() => {})}
           onClearClick={() => reset()}
           isValid={isValid}
         >
@@ -92,7 +78,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-5">
               <Form.TextInput
-                label={CreateJobForm.labels.name}
+                label={EditJobForm.labels.name}
                 control={control}
                 name="name"
                 required
@@ -104,7 +90,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-3">
               <Form.DateInput
-                label={CreateJobForm.labels.startDate}
+                label={EditJobForm.labels.startDate}
                 control={control}
                 name="startDate"
               />
@@ -115,7 +101,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-8">
               <Form.AutocompleteInput
-                label={CreateJobForm.labels.communityId}
+                label={EditJobForm.labels.communityId}
                 control={control}
                 name="communityId"
                 options={communityOptions}
@@ -127,7 +113,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-8">
               <Form.AutocompleteInput
-                label={CreateJobForm.labels.builderId}
+                label={EditJobForm.labels.builderId}
                 control={control}
                 name="builderId"
                 options={builderOptions}
@@ -139,7 +125,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-8">
               <Form.AutocompleteInput
-                label={CreateJobForm.labels.contractorId}
+                label={EditJobForm.labels.contractorId}
                 control={control}
                 name="contractorId"
                 options={contractorsOptions}
@@ -151,7 +137,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-8">
               <Form.AutocompleteInput
-                label={CreateJobForm.labels.reporterId}
+                label={EditJobForm.labels.reporterId}
                 control={control}
                 name="reporterId"
                 options={reporterOptions}
@@ -163,7 +149,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-8">
               <Form.AutocompleteInput
-                label={CreateJobForm.labels.areaId}
+                label={EditJobForm.labels.areaId}
                 control={control}
                 name="areaId"
                 options={areaOptions}
@@ -175,7 +161,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-8">
               <Form.AutocompleteInput
-                label={CreateJobForm.labels.scopeId}
+                label={EditJobForm.labels.scopeId}
                 control={control}
                 name="scopeId"
                 options={scopeOptions}
@@ -189,7 +175,7 @@ const CreateJob = () => {
               <Form.LintItemInput
                 control={control}
                 name="lineItems"
-                label={CreateJobForm.labels.lineItems}
+                label={EditJobForm.labels.lineItems}
                 suppliers={supplierOptions}
               />
             </div>
@@ -199,7 +185,7 @@ const CreateJob = () => {
             {/******************************/}
             <div className="col-span-8">
               <Form.TextAreaInput
-                label={CreateJobForm.labels.notes}
+                label={EditJobForm.labels.notes}
                 control={control}
                 name="notes"
               />
@@ -211,4 +197,4 @@ const CreateJob = () => {
   );
 };
 
-export default CreateJob;
+export default EditJobLegacy;

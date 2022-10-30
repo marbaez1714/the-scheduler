@@ -14,107 +14,137 @@ const ScrollContainer = ({ children, className }: ScrollContainerProps) => {
   /* Refs                       */
   /******************************/
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const resizeObserver = useRef(
+    new ResizeObserver(() => {
+      onScroll();
+      onResize();
+    })
+  );
 
   /******************************/
   /* State                      */
   /******************************/
-  const [opacities, setOpacities] = useState<[number, number, number, number]>([
-    0, 0, 0, 0,
-  ]);
+  const [opacities, setOpacities] = useState<{
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  }>({
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  });
+
+  const [height, setHeight] = useState(0);
 
   /******************************/
   /* Effects                    */
   /******************************/
   useEffect(() => {
+    onResize();
     onScroll();
 
-    containerRef.current?.addEventListener('scroll', onScroll);
+    const container = containerRef.current;
+
+    if (container) {
+      container.addEventListener('scroll', onScroll);
+      resizeObserver.current.observe(container);
+    }
+
     return () => {
-      containerRef.current?.removeEventListener('scroll', onScroll);
+      if (container) {
+        container.removeEventListener('scroll', onScroll);
+        resizeObserver.current.unobserve(container);
+      }
     };
-  }, []);
+  }, [containerRef.current]);
 
   /******************************/
   /* Callbacks                  */
   /******************************/
   const onScroll = () => {
-    const scrollNode = containerRef.current;
+    const containerElement = containerRef.current;
+    console.log('here');
 
-    if (scrollNode) {
+    if (containerElement) {
       const {
         scrollHeight,
-        clientHeight,
-        offsetHeight,
         scrollTop,
         scrollWidth,
-        clientWidth,
-        offsetWidth,
         scrollLeft,
-      } = scrollNode;
+        offsetHeight,
+        offsetWidth,
+      } = containerElement;
 
-      const ratioY = scrollTop / (scrollHeight - offsetHeight);
-      const ratioX = scrollLeft / (scrollWidth - offsetWidth);
+      const contentScrollHeight = scrollHeight - offsetHeight;
+      const contentScrollWidth = scrollWidth - offsetWidth;
 
-      const hasOverflowX = scrollWidth > clientWidth;
-      const hasOverflowY = scrollHeight > clientHeight;
+      // Opacities
+      const top = scrollTop / contentScrollHeight;
+      const bottom = 1 - top;
+      const left = scrollLeft / contentScrollWidth;
+      const right = 1 - left;
 
-      setOpacities([
-        ratioY,
-        hasOverflowX ? 1 - ratioX : 0,
-        hasOverflowY ? 1 - ratioY : 0,
-        ratioX,
-      ]);
+      setOpacities({ top, right, bottom, left });
     }
+  };
+
+  const onResize = () => {
+    const { height } = containerRef.current?.getBoundingClientRect() ?? {
+      height: 0,
+    };
+    setHeight(height);
   };
 
   /******************************/
   /* Render                     */
   /******************************/
   return (
-    <div className={cn('relative w-full overflow-hidden flex', className)}>
-      {/* Top */}
-      {!!opacities[0] && (
-        <div
-          className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-4 pointer-events-none bg-gradient-to-b from-app-dark/50"
-          style={{ opacity: opacities[0] }}
-        >
-          <ChevronUpIcon className="h-4 text-app" />
+    <div className={cn('relative', className)} ref={containerRef}>
+      <div className="sticky top-0 left-0 z-50 w-full">
+        <div className="absolute w-full h-full" style={{ height }}>
+          {/* Top */}
+          {!!opacities.top && (
+            <div
+              className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-4 pointer-events-none bg-gradient-to-b from-app-dark/50"
+              style={{ opacity: opacities.top }}
+            >
+              <ChevronUpIcon className="h-4 text-app" />
+            </div>
+          )}
+          {/* Right */}
+          {!!opacities.right && (
+            <div
+              className="absolute top-0 right-0 z-50 flex items-center justify-center w-4 h-full pointer-events-none bg-gradient-to-l from-app-dark/50"
+              style={{ opacity: opacities.right }}
+            >
+              <ChevronRightIcon className="h-4 text-app" />
+            </div>
+          )}
+          {/* Bottom */}
+          {!!opacities.bottom && (
+            <div
+              className="absolute bottom-0 left-0 z-50 flex items-center justify-center w-full h-4 pointer-events-none bg-gradient-to-t from-app-dark/50"
+              style={{ opacity: opacities.bottom }}
+            >
+              <ChevronDownIcon className="h-4 text-app" />
+            </div>
+          )}
+          {/* Left */}
+          {!!opacities.left && (
+            <div
+              className="absolute top-0 left-0 z-50 flex items-center justify-center w-4 h-full pointer-events-none bg-gradient-to-r from-app-dark/50"
+              style={{ opacity: opacities.left }}
+            >
+              <ChevronLeftIcon className="h-4 text-app" />
+            </div>
+          )}
         </div>
-      )}
-      {/* Right */}
-      {!!opacities[1] && (
-        <div
-          className="absolute top-0 right-0 z-50 flex items-center justify-center w-4 h-full pointer-events-none bg-gradient-to-l from-app-dark/50"
-          style={{ opacity: opacities[1] }}
-        >
-          <ChevronRightIcon className="h-4 text-app" />
-        </div>
-      )}
-      {/* Bottom */}
-      {!!opacities[2] && (
-        <div
-          className="absolute bottom-0 left-0 z-50 flex items-center justify-center w-full h-4 pointer-events-none bg-gradient-to-t from-app-dark/50"
-          style={{ opacity: opacities[2] }}
-        >
-          <ChevronDownIcon className="h-4 text-app" />
-        </div>
-      )}
-      {/* Left */}
-      {!!opacities[3] && (
-        <div
-          className="absolute top-0 left-0 z-50 flex items-center justify-center w-4 h-full pointer-events-none bg-gradient-to-r from-app-dark/50"
-          style={{ opacity: opacities[3] }}
-        >
-          <ChevronLeftIcon className="h-4 text-app" />
-        </div>
-      )}
-      {/* Content */}
-      <div
-        className="w-full max-h-full overflow-auto hide-scroll-bar"
-        ref={containerRef}
-      >
-        {children}
       </div>
+
+      {/* Content */}
+      {children}
     </div>
   );
 };

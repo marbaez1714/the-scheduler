@@ -22,9 +22,10 @@ import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
 import { HeaderCell } from './Cells/HeaderCell';
 import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
-import { PaginationFooter } from './PaginationFooter';
+import { Pagination } from './Pagination';
 import { TableProps } from './types';
 import { TextInput } from '../TextInput';
+import { ScrollContainer } from '../ScrollContainer';
 
 const Table = <TData extends Record<string, unknown>>({
   data,
@@ -162,17 +163,18 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div className="flex flex-col flex-shrink-0 w-full max-h-full border rounded border-app">
+    <div className="flex flex-col flex-shrink-0 w-full max-h-full overflow-hidden border rounded border-app">
       {/* Header */}
-      <div className="flex items-center px-6 py-4 border-b bg-app border-b-app-medium">
-        <p className="text-2xl font-medium text-app-altText/50">{`Total Rows: ${total}`}</p>
-        <TextInput
-          className="w-1/2 py-2 ml-auto"
-          onChange={handleSearchChange}
-          value={globalFilter}
-          placeholder="Search Term"
-        />
-      </div>
+      <Pagination
+        totalRows={total}
+        totalPages={getPageCount()}
+        searchTerm={globalFilter}
+        onPageSizeChange={setPageSize}
+        onPageChange={setPageIndex}
+        onSearchChange={handleSearchChange}
+        {...getState().pagination}
+      />
+
       {/* Table */}
       <div className="overflow-scroll">
         <table className="relative w-full border-collapse table-auto whitespace-nowrap">
@@ -196,14 +198,6 @@ const Table = <TData extends Record<string, unknown>>({
           </tbody>
         </table>
       </div>
-      {/* Footer */}
-      <PaginationFooter
-        totalRows={total}
-        totalPages={getPageCount()}
-        onPageSizeChange={setPageSize}
-        onPageChange={setPageIndex}
-        {...getState().pagination}
-      />
     </div>
   );
 };

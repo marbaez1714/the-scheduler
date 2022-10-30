@@ -306,3 +306,43 @@ export const CreateJobForm: FormObject<'jobLegacy'> = {
     })
   ),
 };
+
+export const EditJobForm = {
+  labels: {
+    name: labels.address,
+    communityId: labels.community,
+    startDate: labels.startDate,
+    builderId: labels.builder,
+    contractorId: labels.contractor,
+    reporterId: labels.reporter,
+    scopeId: labels.scope,
+    areaId: labels.area,
+    notes: labels.notes,
+    lineItems: labels.order,
+  },
+  defaultValues: {
+    name: '',
+    communityId: undefined,
+    startDate: undefined,
+    builderId: undefined,
+    contractorId: undefined,
+    reporterId: undefined,
+    scopeId: undefined,
+    areaId: undefined,
+    notes: undefined,
+    lineItems: [] as LineItemLegacyInput[],
+  },
+  resolver: yupResolver(
+    yup.object({
+      name: validators.addressRequired,
+      areaId: validators.string,
+      builderId: validators.string,
+      communityId: validators.string,
+      contractorId: validators.string,
+      notes: validators.string,
+      reporterId: validators.string,
+      scopeId: validators.string,
+      startDate: validators.string,
+    })
+  ),
+};

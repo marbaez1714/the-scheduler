@@ -1,3 +1,4 @@
+import { ChangeEventHandler } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { JobLegacyStatus } from 'src/api';
@@ -18,13 +19,15 @@ export interface TableProps<TData> {
   rowActions?: TableRowAction<TData>[];
 }
 
-export interface PaginationFooterProps {
+export interface PaginationProps {
   pageIndex: number;
   pageSize: number;
   totalPages: number;
   totalRows: number;
+  searchTerm: string;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
+  onSearchChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 /******************************/

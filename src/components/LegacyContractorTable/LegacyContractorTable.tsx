@@ -61,7 +61,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
 
   const handleReassignJob = (data: JobLegacy) => {
-    console.log(data)
     setSelectedJob(data);
     setReassignModalOpen(true);
   };
@@ -71,6 +70,10 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     setReassignModalOpen(false);
   };
 
+  const handleEditJob = (data: JobLegacy) => {
+    navigate(`/edit_jobLegacy/${data.id}`);
+  };
+
   /******************************/
   /* Table                      */
   /******************************/
@@ -78,7 +81,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(data.id),
+      onClick: handleEditJob,
     },
     {
       icon: <ChatBubbleBottomCenterTextIcon />,
