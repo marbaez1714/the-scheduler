@@ -45,3 +45,9 @@ mutation ModifySupplier($id: ID!, $data: WriteSupplierInput!) {
     message
   }
 }
+
+mutation ModifyJobLegacy($id: ID!, $data: ModifyJobLegacyInput!) {
+  modifyJobLegacy(id: $id, data: $data) {
+    message
+  }
+}

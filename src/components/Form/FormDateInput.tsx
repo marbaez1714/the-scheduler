@@ -16,6 +16,11 @@ export const FormDateInput = <TFields extends FieldValues>({
     fieldState: { error },
   } = useController(rest);
 
+  const formattedSelected =
+    typeof value === 'string' || typeof value === 'number'
+      ? new Date(value)
+      : value;
+
   /******************************/
   /* Render                     */
   /******************************/
@@ -24,8 +29,8 @@ export const FormDateInput = <TFields extends FieldValues>({
       label={label}
       required={required}
       errorMessage={error?.message}
-      selected={value}
-      value={value}
+      selected={formattedSelected}
+      // value={value}
       placeholderText="MM/DD/YYYY"
       {...restField}
     />

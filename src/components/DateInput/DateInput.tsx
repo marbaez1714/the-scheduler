@@ -8,6 +8,10 @@ import { CalendarDaysIcon } from '@heroicons/react/24/solid';
 const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
   ({ label, className, required, errorMessage, name, ...rest }, ref) => {
     /******************************/
+    /* Data                       */
+    /******************************/
+
+    /******************************/
     /* Render                     */
     /******************************/
     return (

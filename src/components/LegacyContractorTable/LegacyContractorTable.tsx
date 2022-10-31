@@ -71,7 +71,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   };
 
   const handleEditJob = (data: JobLegacy) => {
-    navigate(`/edit_jobLegacy/${data.id}`);
+    navigate(`/modify_jobLegacy/${data.id}`);
   };
 
   /******************************/

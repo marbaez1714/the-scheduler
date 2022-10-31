@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
-import { LineItemLegacyInput } from 'src/api';
+import { CreateLineItemLegacyInput } from 'src/api';
 import { AutocompleteInput } from '../AutocompleteInput';
 import { IconButton } from '../IconButton';
 import { TextInput } from '../TextInput';
@@ -106,7 +106,7 @@ export const FormLineItemInput = <TFields extends FieldValues>({
       >
         <p className="w-full text-sm font-medium">Added Line Items</p>
 
-        {value.map((item: LineItemLegacyInput, index: number) => (
+        {value.map((item: CreateLineItemLegacyInput, index: number) => (
           <Button
             rounded
             size="small"

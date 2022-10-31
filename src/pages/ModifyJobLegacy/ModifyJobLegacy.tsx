@@ -1,12 +1,19 @@
-import { useState, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import {
+  ModifyJobLegacyInput,
+  useGetJobLegacyByIdQuery,
+  useModifyJobLegacyMutation,
+} from 'src/api';
 import { Form } from 'src/components/Form';
 import { Screen } from 'src/components/Screen';
 import { useOptions } from 'src/hooks/useOptions';
 import { EditJobForm } from 'src/utils/forms';
+import { ToastMessages } from 'src/utils/toastMessages';
 
-const EditJobLegacy = () => {
+const ModifyJobLegacy = () => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -20,6 +27,7 @@ const EditJobLegacy = () => {
     supplierOptions,
   } = useOptions();
   const { jobLegacyId } = useParams();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -46,6 +54,41 @@ const EditJobLegacy = () => {
   /******************************/
   /* Data                       */
   /******************************/
+  const { loading: getLoading } = useGetJobLegacyByIdQuery({
+    skip: !jobLegacyId,
+    variables: { id: jobLegacyId ?? '' },
+    onCompleted: ({ jobLegacyById }) => {
+      if (!jobLegacyById) {
+        throw new Error();
+      }
+
+      reset({
+        name: jobLegacyById.name,
+        areaId: jobLegacyById.areaId ?? '',
+        builderId: jobLegacyById.builderId ?? '',
+        communityId: jobLegacyById.communityId ?? '',
+        contractorId: jobLegacyById.contractorId ?? '',
+        reporterId: jobLegacyById.reporterId ?? '',
+        startDate: jobLegacyById.startDate ?? '',
+        scopeId: jobLegacyById.scopeId ?? '',
+        notes: jobLegacyById.notes ?? '',
+        lineItems: jobLegacyById.lineItems,
+      });
+    },
+    onError: () => {
+      ToastMessages.somethingWrong();
+    },
+  });
+
+  const [modify, { loading: modifyLoading }] = useModifyJobLegacyMutation({
+    onCompleted: (data) => {
+      toast.success(data.modifyJobLegacy.message);
+      // navigate(-1);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   /******************************/
   /* Memos                      */
@@ -58,17 +101,22 @@ const EditJobLegacy = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const submit = (data: ModifyJobLegacyInput) => {
+    if (jobLegacyId) {
+      modify({ variables: { id: jobLegacyId, data } });
+    }
+  };
 
   /******************************/
   /* Render                     */
   /******************************/
   return (
     <Screen>
-      <Screen.Content centerHorizontal loading={false}>
+      <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
         <Form
           title="Edit Job"
           className="w-1/2"
-          onSubmit={handleSubmit(() => {})}
+          onSubmit={handleSubmit(submit)}
           onClearClick={() => reset()}
           isValid={isValid}
         >
@@ -197,4 +245,4 @@ const EditJobLegacy = () => {
   );
 };
 
-export default EditJobLegacy;
+export default ModifyJobLegacy;

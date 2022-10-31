@@ -41,7 +41,7 @@ import {
   SupplierModifyForm,
 } from 'src/pages/ManageData';
 import { CreateJob } from 'src/pages/CreateJob';
-import { EditJobLegacy } from 'src/pages/EditJobLegacy';
+import { ModifyJobLegacy } from 'src/pages/ModifyJobLegacy';
 import { NotFound } from './NotFound';
 
 const Navigation = () => {
@@ -168,8 +168,8 @@ const Navigation = () => {
       />
       {/* Edit Job */}
       <Route
-        path="/edit_jobLegacy/:jobLegacyId"
-        element={<ProtectedRoute component={EditJobLegacy} />}
+        path="/modify_jobLegacy/:jobLegacyId"
+        element={<ProtectedRoute component={ModifyJobLegacy} />}
       />
       {/* 404 Page */}
       <Route path="*" element={<ProtectedRoute component={NotFound} />} />

@@ -11,7 +11,9 @@ import {
   WriteReporterInput,
   WriteScopeInput,
   WriteSupplierInput,
-  LineItemLegacyInput,
+  CreateLineItemLegacyInput,
+  ModifyJobLegacyInput,
+  ModifyLineItemLegacyInput,
 } from './../api/index';
 import { inputMessages } from './inputMessages';
 
@@ -24,10 +26,11 @@ export interface CreateInputs {
   community: WriteCommunityInput;
   company: WriteCompanyInput;
   contractor: WriteContractorInput;
-  jobLegacy: CreateJobLegacyInput;
+  jobLegacyCreate: CreateJobLegacyInput;
   reporter: WriteReporterInput;
   scope: WriteScopeInput;
   supplier: WriteSupplierInput;
+  jobLegacyModify: ModifyJobLegacyInput;
 }
 
 interface FormObject<TInput extends keyof CreateInputs> {
@@ -267,7 +270,7 @@ export const WriteSupplierForm: FormObject<'supplier'> = {
   ),
 };
 
-export const CreateJobForm: FormObject<'jobLegacy'> = {
+export const CreateJobForm: FormObject<'jobLegacyCreate'> = {
   labels: {
     name: labels.address,
     communityId: labels.community,
@@ -290,7 +293,7 @@ export const CreateJobForm: FormObject<'jobLegacy'> = {
     scopeId: undefined,
     areaId: undefined,
     notes: undefined,
-    lineItems: [] as LineItemLegacyInput[],
+    lineItems: [] as CreateLineItemLegacyInput[],
   },
   resolver: yupResolver(
     yup.object({
@@ -307,7 +310,7 @@ export const CreateJobForm: FormObject<'jobLegacy'> = {
   ),
 };
 
-export const EditJobForm = {
+export const EditJobForm: FormObject<'jobLegacyModify'> = {
   labels: {
     name: labels.address,
     communityId: labels.community,
@@ -330,7 +333,7 @@ export const EditJobForm = {
     scopeId: undefined,
     areaId: undefined,
     notes: undefined,
-    lineItems: [] as LineItemLegacyInput[],
+    lineItems: [] as ModifyLineItemLegacyInput[],
   },
   resolver: yupResolver(
     yup.object({

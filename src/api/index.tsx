@@ -193,7 +193,7 @@ export type CreateJobLegacyInput = {
   builderId?: InputMaybe<Scalars['String']>;
   communityId?: InputMaybe<Scalars['String']>;
   contractorId?: InputMaybe<Scalars['String']>;
-  lineItems: Array<LineItemLegacyInput>;
+  lineItems: Array<CreateLineItemLegacyInput>;
   name: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
   reporterId?: InputMaybe<Scalars['String']>;
@@ -201,10 +201,9 @@ export type CreateJobLegacyInput = {
   startDate?: InputMaybe<Scalars['String']>;
 };
 
-export type CreateJobLegacyResponse = {
-  __typename?: 'CreateJobLegacyResponse';
-  data: JobLegacy;
-  message: Scalars['String'];
+export type CreateLineItemLegacyInput = {
+  orderNumber: Scalars['String'];
+  supplierId: Scalars['String'];
 };
 
 export type DeleteResponse = {
@@ -271,11 +270,6 @@ export type LineItemLegacy = {
   updatedTime: Scalars['String'];
 };
 
-export type LineItemLegacyInput = {
-  orderNumber: Scalars['String'];
-  supplierId: Scalars['String'];
-};
-
 export type MessageResponse = {
   __typename?: 'MessageResponse';
   message: Scalars['String'];
@@ -288,6 +282,25 @@ export type MetaResponse = {
   sortField?: Maybe<Scalars['String']>;
   sortOrder?: Maybe<SortOrder>;
   totalCount: Scalars['Int'];
+};
+
+export type ModifyJobLegacyInput = {
+  areaId?: InputMaybe<Scalars['String']>;
+  builderId?: InputMaybe<Scalars['String']>;
+  communityId?: InputMaybe<Scalars['String']>;
+  contractorId?: InputMaybe<Scalars['String']>;
+  lineItems: Array<ModifyLineItemLegacyInput>;
+  name: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  reporterId?: InputMaybe<Scalars['String']>;
+  scopeId?: InputMaybe<Scalars['String']>;
+  startDate?: InputMaybe<Scalars['String']>;
+};
+
+export type ModifyLineItemLegacyInput = {
+  id?: InputMaybe<Scalars['String']>;
+  orderNumber: Scalars['String'];
+  supplierId: Scalars['String'];
 };
 
 export type Mutation = {
@@ -306,7 +319,7 @@ export type Mutation = {
   createCommunity: WriteCommunityResponse;
   createCompany: WriteCompanyResponse;
   createContractor: WriteContractorResponse;
-  createJobLegacy: CreateJobLegacyResponse;
+  createJobLegacy: WriteJobLegacyResponse;
   createReporter: WriteReporterResponse;
   createScope: WriteScopeResponse;
   createSupplier: WriteSupplierResponse;
@@ -316,9 +329,11 @@ export type Mutation = {
   modifyCommunity: WriteCommunityResponse;
   modifyCompany: WriteCompanyResponse;
   modifyContractor: WriteContractorResponse;
+  modifyJobLegacy: WriteJobLegacyResponse;
   modifyReporter: WriteReporterResponse;
   modifyScope: WriteScopeResponse;
   modifySupplier: WriteSupplierResponse;
+  sendNotification: SendNotificationResponse;
 };
 
 export type MutationArchiveAreaArgs = {
@@ -422,6 +437,11 @@ export type MutationModifyContractorArgs = {
   id: Scalars['ID'];
 };
 
+export type MutationModifyJobLegacyArgs = {
+  data: ModifyJobLegacyInput;
+  id: Scalars['ID'];
+};
+
 export type MutationModifyReporterArgs = {
   data: WriteReporterInput;
   id: Scalars['ID'];
@@ -435,6 +455,24 @@ export type MutationModifyScopeArgs = {
 export type MutationModifySupplierArgs = {
   data: WriteSupplierInput;
   id: Scalars['ID'];
+};
+
+export type MutationSendNotificationArgs = {
+  data: SendNotificationInput;
+};
+
+export type NotificationLegacy = {
+  __typename?: 'NotificationLegacy';
+  archived: Scalars['Boolean'];
+  createdBy: Scalars['String'];
+  createdTime: Scalars['String'];
+  id: Scalars['ID'];
+  jobId: Scalars['String'];
+  jobLegacy: JobLegacy;
+  message: Scalars['String'];
+  recipientPhone: Scalars['String'];
+  recipientRole: RecipientRole;
+  success: Scalars['Boolean'];
 };
 
 export type Pagination = {
@@ -556,6 +594,11 @@ export type QuerySuppliersArgs = {
   sorting?: InputMaybe<Sorting>;
 };
 
+export enum RecipientRole {
+  Contractor = 'contractor',
+  Reporter = 'reporter',
+}
+
 export type Reporter = {
   __typename?: 'Reporter';
   archived: Scalars['Boolean'];
@@ -596,6 +639,18 @@ export type ScopesResponse = {
   __typename?: 'ScopesResponse';
   data: Array<Scope>;
   meta: MetaResponse;
+};
+
+export type SendNotificationInput = {
+  jobId: Scalars['String'];
+  message: Scalars['String'];
+  recipientPhone: Scalars['String'];
+  recipientRole: RecipientRole;
+};
+
+export type SendNotificationResponse = {
+  __typename?: 'SendNotificationResponse';
+  notification: NotificationLegacy;
 };
 
 export enum SortOrder {
@@ -689,6 +744,12 @@ export type WriteContractorInput = {
 export type WriteContractorResponse = {
   __typename?: 'WriteContractorResponse';
   data: Contractor;
+  message: Scalars['String'];
+};
+
+export type WriteJobLegacyResponse = {
+  __typename?: 'WriteJobLegacyResponse';
+  data: JobLegacy;
   message: Scalars['String'];
 };
 
@@ -832,7 +893,7 @@ export type CreateJobLegacyMutationVariables = Exact<{
 
 export type CreateJobLegacyMutation = {
   __typename?: 'Mutation';
-  createJobLegacy: { __typename?: 'CreateJobLegacyResponse'; message: string };
+  createJobLegacy: { __typename?: 'WriteJobLegacyResponse'; message: string };
 };
 
 export type CreateCommunityMutationVariables = Exact<{
@@ -1410,6 +1471,38 @@ export type GetJobLegacyByContractorIdQuery = {
   };
 };
 
+export type GetJobLegacyByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetJobLegacyByIdQuery = {
+  __typename?: 'Query';
+  jobLegacyById?: {
+    __typename?: 'JobLegacy';
+    id: string;
+    name: string;
+    active: boolean;
+    inProgress: boolean;
+    isImportant: boolean;
+    status: JobLegacyStatus;
+    areaId?: string | null;
+    builderId?: string | null;
+    communityId?: string | null;
+    contractorId?: string | null;
+    reporterId?: string | null;
+    scopeId?: string | null;
+    completedDate?: string | null;
+    startDate?: string | null;
+    notes?: string | null;
+    lineItems: Array<{
+      __typename?: 'LineItemLegacy';
+      id: string;
+      orderNumber: string;
+      supplierId: string;
+    }>;
+  } | null;
+};
+
 export type ModifyAreaMutationVariables = Exact<{
   id: Scalars['ID'];
   data: WriteAreaInput;
@@ -1488,6 +1581,16 @@ export type ModifySupplierMutationVariables = Exact<{
 export type ModifySupplierMutation = {
   __typename?: 'Mutation';
   modifySupplier: { __typename?: 'WriteSupplierResponse'; message: string };
+};
+
+export type ModifyJobLegacyMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: ModifyJobLegacyInput;
+}>;
+
+export type ModifyJobLegacyMutation = {
+  __typename?: 'Mutation';
+  modifyJobLegacy: { __typename?: 'WriteJobLegacyResponse'; message: string };
 };
 
 export const ContractorOptionFragmentDoc = gql`
@@ -3765,6 +3868,83 @@ export type GetJobLegacyByContractorIdQueryResult = Apollo.QueryResult<
   GetJobLegacyByContractorIdQuery,
   GetJobLegacyByContractorIdQueryVariables
 >;
+export const GetJobLegacyByIdDocument = gql`
+  query GetJobLegacyById($id: ID!) {
+    jobLegacyById(id: $id) {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      status
+      areaId
+      builderId
+      communityId
+      contractorId
+      reporterId
+      scopeId
+      completedDate
+      startDate
+      notes
+      lineItems {
+        id
+        orderNumber
+        supplierId
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetJobLegacyByIdQuery__
+ *
+ * To run a query within a React component, call `useGetJobLegacyByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobLegacyByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobLegacyByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetJobLegacyByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetJobLegacyByIdQuery,
+    GetJobLegacyByIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetJobLegacyByIdQuery, GetJobLegacyByIdQueryVariables>(
+    GetJobLegacyByIdDocument,
+    options
+  );
+}
+export function useGetJobLegacyByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetJobLegacyByIdQuery,
+    GetJobLegacyByIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetJobLegacyByIdQuery,
+    GetJobLegacyByIdQueryVariables
+  >(GetJobLegacyByIdDocument, options);
+}
+export type GetJobLegacyByIdQueryHookResult = ReturnType<
+  typeof useGetJobLegacyByIdQuery
+>;
+export type GetJobLegacyByIdLazyQueryHookResult = ReturnType<
+  typeof useGetJobLegacyByIdLazyQuery
+>;
+export type GetJobLegacyByIdQueryResult = Apollo.QueryResult<
+  GetJobLegacyByIdQuery,
+  GetJobLegacyByIdQueryVariables
+>;
 export const ModifyAreaDocument = gql`
   mutation ModifyArea($id: ID!, $data: WriteAreaInput!) {
     modifyArea(id: $id, data: $data) {
@@ -4172,6 +4352,57 @@ export type ModifySupplierMutationResult =
 export type ModifySupplierMutationOptions = Apollo.BaseMutationOptions<
   ModifySupplierMutation,
   ModifySupplierMutationVariables
+>;
+export const ModifyJobLegacyDocument = gql`
+  mutation ModifyJobLegacy($id: ID!, $data: ModifyJobLegacyInput!) {
+    modifyJobLegacy(id: $id, data: $data) {
+      message
+    }
+  }
+`;
+export type ModifyJobLegacyMutationFn = Apollo.MutationFunction<
+  ModifyJobLegacyMutation,
+  ModifyJobLegacyMutationVariables
+>;
+
+/**
+ * __useModifyJobLegacyMutation__
+ *
+ * To run a mutation, you first call `useModifyJobLegacyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useModifyJobLegacyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [modifyJobLegacyMutation, { data, loading, error }] = useModifyJobLegacyMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useModifyJobLegacyMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ModifyJobLegacyMutation,
+    ModifyJobLegacyMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ModifyJobLegacyMutation,
+    ModifyJobLegacyMutationVariables
+  >(ModifyJobLegacyDocument, options);
+}
+export type ModifyJobLegacyMutationHookResult = ReturnType<
+  typeof useModifyJobLegacyMutation
+>;
+export type ModifyJobLegacyMutationResult =
+  Apollo.MutationResult<ModifyJobLegacyMutation>;
+export type ModifyJobLegacyMutationOptions = Apollo.BaseMutationOptions<
+  ModifyJobLegacyMutation,
+  ModifyJobLegacyMutationVariables
 >;
 
 export interface PossibleTypesResultData {
