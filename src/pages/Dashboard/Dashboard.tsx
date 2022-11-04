@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   ContractorOptionFragment,
   useGetAssignedContractorsQuery,
@@ -6,6 +7,7 @@ import {
 
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
 import { Screen } from 'src/components/Screen';
+import { localStorageKeys } from 'src/utils/localStorage';
 import { SettingsModal } from './SettingsModal';
 import { UNASSIGNED } from './utils';
 
@@ -21,7 +23,12 @@ const Dashboard = () => {
   /******************************/
   /* State                      */
   /******************************/
-  const [enabledContractors, setEnabledContractors] = useState([UNASSIGNED]);
+  const [enabledContractors, setEnabledContractors] = useState<
+    {
+      name: string;
+      id: string;
+    }[]
+  >([]);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   /******************************/
@@ -43,15 +50,42 @@ const Dashboard = () => {
   /******************************/
   /* Effects                    */
   /******************************/
+  useEffect(() => {
+    const stored = localStorage.getItem(localStorageKeys.enabledContractors);
+    console.log(stored);
+    if (stored) {
+      try {
+        setEnabledContractors(JSON.parse(stored));
+      } catch {
+        toast.error('Unable to get stored dashboard.');
+      }
+    }
+  }, []);
 
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const storeEnabledContractors = (
+    list: {
+      name: string;
+      id: string;
+    }[]
+  ) => {
+    localStorage.setItem(
+      localStorageKeys.enabledContractors,
+      JSON.stringify(list)
+    );
+  };
+
   const handleContractorToggle = (contractor: ContractorOptionFragment) => {
     setEnabledContractors((prev) => {
       if (prev.some((item) => item.id === contractor.id)) {
-        return prev.filter((item) => item.id !== contractor.id);
+        const filtered = prev.filter((item) => item.id !== contractor.id);
+        storeEnabledContractors(filtered);
+        return filtered;
       }
+
+      storeEnabledContractors([...prev, contractor]);
       return [...prev, contractor];
     });
   };
@@ -61,10 +95,12 @@ const Dashboard = () => {
       UNASSIGNED,
       ...(getAssignedContractorsQueryData?.assignedContractors.data || []),
     ];
+    storeEnabledContractors(allOptions);
     setEnabledContractors(allOptions);
   };
 
   const handleRemoveAll = () => {
+    storeEnabledContractors([]);
     setEnabledContractors([]);
   };
 

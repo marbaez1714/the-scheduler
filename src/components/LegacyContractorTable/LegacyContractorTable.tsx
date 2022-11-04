@@ -13,13 +13,19 @@ import {
   PencilSquareIcon,
 } from '@heroicons/react/24/solid';
 
-import { JobLegacy, useGetJobLegacyByContractorIdQuery } from 'src/api';
+import {
+  GetJobLegacyByIdDocument,
+  JobLegacy,
+  useGetJobLegacyByContractorIdQuery,
+  useModifyJobLegacyMutation,
+} from 'src/api';
 import { LegacyContractorTableProps } from './types';
 import { Table, TableRowAction } from '../Table';
 
 import { Collapsable } from '../Collapsable';
 import { confirmArchive } from 'src/utils/alerts';
 import { ReassignModal } from './ReassignModal';
+import toast from 'react-hot-toast';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
@@ -44,8 +50,17 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading } = useGetJobLegacyByContractorIdQuery({
+  const { data, loading, refetch } = useGetJobLegacyByContractorIdQuery({
     variables: { contractorId: contractor.id },
+  });
+
+  const [modify] = useModifyJobLegacyMutation({
+    onCompleted: () => {
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 
   /******************************/
@@ -59,7 +74,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-
   const handleReassignJob = (data: JobLegacy) => {
     setSelectedJob(data);
     setReassignModalOpen(true);
@@ -72,6 +86,32 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
 
   const handleEditJob = (data: JobLegacy) => {
     navigate(`/modify_jobLegacy/${data.id}`);
+  };
+
+  const handleToggleInProgress = (data: JobLegacy) => {
+    modify({
+      variables: { id: data.id, data: { inProgress: !data.inProgress } },
+    });
+  };
+
+  const handleToggleIsImportant = (data: JobLegacy) => {
+    modify({
+      variables: { id: data.id, data: { isImportant: !data.isImportant } },
+    });
+  };
+
+  const handleComplete = (data: JobLegacy) => {
+    const confirm = window.confirm(
+      `Are you sure you want to mark ${data.name} as COMPLETED?`
+    );
+
+    if (confirm) {
+      const completedDate = new Date().toDateString();
+
+      modify({
+        variables: { id: data.id, data: { active: false, completedDate } },
+      }).then(() => toast.success(`${data.name} has been marked as completed`));
+    }
   };
 
   /******************************/
@@ -96,17 +136,17 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <CogIcon />,
       label: 'Toggle In Progress',
-      onClick: () => {},
+      onClick: handleToggleInProgress,
     },
     {
       icon: <ArrowUpIcon />,
       label: 'Toggle Important',
-      onClick: () => {},
+      onClick: handleToggleIsImportant,
     },
     {
       icon: <DocumentCheckIcon />,
       label: 'Complete',
-      onClick: () => {},
+      onClick: handleComplete,
     },
     {
       icon: <ArchiveBoxIcon />,
@@ -218,7 +258,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         onClose={handleReassignModalClose}
         jobLegacy={selectedJob}
       />
-      <Collapsable title={contractor.name} unmount={false}>
+      <Collapsable title={contractor.name} unmount={false} defaultOpen>
         <Table
           data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
           columns={columns}

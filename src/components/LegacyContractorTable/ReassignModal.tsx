@@ -1,10 +1,11 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useModifyJobLegacyMutation } from 'src/api';
 import { useOptions } from 'src/hooks/useOptions';
 import { AutocompleteInput } from '../AutocompleteInput';
 import { Button } from '../Button';
 import { Modal } from '../Modal';
-import { MultiSelectInput } from '../MultiSelectInput';
 import { ReassignModalProps } from './types';
 
 export const ReassignModal = ({
@@ -32,17 +33,19 @@ export const ReassignModal = ({
   /******************************/
   /* Data                       */
   /******************************/
+  const [modify] = useModifyJobLegacyMutation({
+    onCompleted: (data) => {
+      toast.success(data.modifyJobLegacy.message);
+      onClose();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   /******************************/
   /* Memos                      */
   /******************************/
-  const currentContractor = useMemo(() => {
-    return (
-      contractorsOptions.find(
-        (item) => item.value === jobLegacy?.contractorId
-      ) ?? { label: 'Unassigned', value: '' }
-    );
-  }, [jobLegacy, contractorsOptions]);
 
   /******************************/
   /* Effects                    */
@@ -51,6 +54,16 @@ export const ReassignModal = ({
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const handleSubmit = () => {
+    if (jobLegacy) {
+      modify({
+        variables: {
+          id: jobLegacy?.id,
+          data: { contractorId: selectedContractor },
+        },
+      });
+    }
+  };
 
   /******************************/
   /* Render                     */
@@ -79,8 +92,12 @@ export const ReassignModal = ({
       </div>
 
       <div className="flex justify-end gap-2 mt-4">
-        <Button variant="text">Cancel</Button>
-        <Button>Accept</Button>
+        <Button variant="text" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button disabled={!selectedContractor} onClick={handleSubmit}>
+          Submit
+        </Button>
       </div>
     </Modal>
   );
