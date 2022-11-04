@@ -56,6 +56,7 @@ const ModifyJobLegacy = () => {
   /******************************/
   const { loading: getLoading } = useGetJobLegacyByIdQuery({
     skip: !jobLegacyId,
+    fetchPolicy: 'no-cache',
     variables: { id: jobLegacyId ?? '' },
     onCompleted: ({ jobLegacyById }) => {
       if (!jobLegacyById) {
@@ -64,15 +65,15 @@ const ModifyJobLegacy = () => {
 
       reset({
         name: jobLegacyById.name,
-        areaId: jobLegacyById.areaId ?? '',
-        builderId: jobLegacyById.builderId ?? '',
-        communityId: jobLegacyById.communityId ?? '',
-        contractorId: jobLegacyById.contractorId ?? '',
-        reporterId: jobLegacyById.reporterId ?? '',
-        startDate: jobLegacyById.startDate ?? '',
-        scopeId: jobLegacyById.scopeId ?? '',
-        notes: jobLegacyById.notes ?? '',
+        areaId: jobLegacyById.areaId ?? undefined,
+        builderId: jobLegacyById.builderId ?? undefined,
+        communityId: jobLegacyById.communityId ?? undefined,
+        contractorId: jobLegacyById.contractorId ?? undefined,
+        reporterId: jobLegacyById.reporterId ?? undefined,
+        startDate: jobLegacyById.startDate ?? undefined,
+        scopeId: jobLegacyById.scopeId ?? undefined,
         lineItems: jobLegacyById.lineItems,
+        notes: jobLegacyById.notes ?? undefined,
       });
     },
     onError: () => {
@@ -83,7 +84,7 @@ const ModifyJobLegacy = () => {
   const [modify, { loading: modifyLoading }] = useModifyJobLegacyMutation({
     onCompleted: (data) => {
       toast.success(data.modifyJobLegacy.message);
-      // navigate(-1);
+      navigate(-1);
     },
     onError: (error) => {
       toast.error(error.message);
@@ -147,7 +148,7 @@ const ModifyJobLegacy = () => {
             {/******************************/}
             {/* Community                  */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={EditJobForm.labels.communityId}
                 control={control}
@@ -159,7 +160,7 @@ const ModifyJobLegacy = () => {
             {/******************************/}
             {/* Builder                    */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={EditJobForm.labels.builderId}
                 control={control}
@@ -168,10 +169,12 @@ const ModifyJobLegacy = () => {
               />
             </div>
 
+            <div className="mt-6 form-divider-y" />
+
             {/******************************/}
             {/* Contractor                 */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={EditJobForm.labels.contractorId}
                 control={control}
@@ -183,7 +186,7 @@ const ModifyJobLegacy = () => {
             {/******************************/}
             {/* Reporter                   */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={EditJobForm.labels.reporterId}
                 control={control}
@@ -195,7 +198,7 @@ const ModifyJobLegacy = () => {
             {/******************************/}
             {/* Area                       */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={EditJobForm.labels.areaId}
                 control={control}
@@ -207,7 +210,7 @@ const ModifyJobLegacy = () => {
             {/******************************/}
             {/* Scope                      */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={EditJobForm.labels.scopeId}
                 control={control}
@@ -216,17 +219,21 @@ const ModifyJobLegacy = () => {
               />
             </div>
 
+            <div className="mt-6 form-divider-y" />
+
             {/******************************/}
             {/* Line Items                 */}
             {/******************************/}
             <div className="col-span-8">
-              <Form.LintItemInput
+              <Form.ModifyLineItemInput
                 control={control}
                 name="lineItems"
                 label={EditJobForm.labels.lineItems}
                 suppliers={supplierOptions}
               />
             </div>
+
+            <div className="mt-6 form-divider-y" />
 
             {/******************************/}
             {/* Notes                      */}

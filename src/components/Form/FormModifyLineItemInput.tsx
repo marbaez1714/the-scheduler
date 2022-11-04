@@ -1,20 +1,25 @@
 import React, { useState, useMemo } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
-import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/solid';
+import {
+  PlusCircleIcon,
+  TrashIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
+import cn from 'classnames';
 
-import { CreateLineItemLegacyInput } from 'src/api';
+import { ModifyLineItemLegacyInput } from 'src/api';
 import { AutocompleteInput } from '../AutocompleteInput';
 import { IconButton } from '../IconButton';
 import { TextInput } from '../TextInput';
-import { FormLineItemInputProps } from './types';
+import { FormModifyLineItemInputProps } from './types';
 import { Button } from '../Button';
 import { Transition } from '@headlessui/react';
 
-export const FormLineItemInput = <TFields extends FieldValues>({
+export const FormModifyLineItemInput = <TFields extends FieldValues>({
   suppliers,
   label,
   ...rest
-}: FormLineItemInputProps<TFields>) => {
+}: FormModifyLineItemInputProps<TFields>) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -37,6 +42,14 @@ export const FormLineItemInput = <TFields extends FieldValues>({
     return newMap;
   }, [suppliers]);
 
+  const originalLineItems = useMemo(() => {
+    return value.filter((item: ModifyLineItemLegacyInput) => item.id);
+  }, [value]);
+
+  const newLineItems = useMemo(() => {
+    return value.filter((item: ModifyLineItemLegacyInput) => !item.id);
+  }, [value]);
+
   /******************************/
   /* Callbacks                  */
   /******************************/
@@ -48,16 +61,31 @@ export const FormLineItemInput = <TFields extends FieldValues>({
     }
   };
 
-  const handleRemoveItem = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    index: number
-  ) => {
+  const handleMarkForDelete = (e: React.MouseEvent, id?: string) => {
     e.stopPropagation();
-    const newVal = value;
-    newVal.splice(index, 1);
-    onChange(newVal);
+    e.preventDefault();
+
+    const newValue: ModifyLineItemLegacyInput[] = [...value];
+    const modifyIndex = newValue.findIndex((item) => item.id === id);
+    newValue[modifyIndex].delete = !newValue[modifyIndex].delete;
+    onChange(newValue);
   };
 
+  const handleRemoveItem = (
+    e: React.MouseEvent,
+    { orderNumber, supplierId }: ModifyLineItemLegacyInput
+  ) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const newValue: ModifyLineItemLegacyInput[] = [...value];
+    const removeIndex = newValue.findIndex(
+      (item) =>
+        item.orderNumber === orderNumber && item.supplierId === supplierId
+    );
+    newValue.splice(removeIndex, 1);
+    onChange(newValue);
+  };
 
   /******************************/
   /* Render                     */
@@ -95,28 +123,54 @@ export const FormLineItemInput = <TFields extends FieldValues>({
         </IconButton>
       </div>
       {/******************************/}
-      {/* Line Items                 */}
+      {/* Original Line Items        */}
       {/******************************/}
       <Transition
-        show={!!value.length}
+        show={!!originalLineItems.length}
         className="flex flex-wrap gap-2 p-4 transition-all rounded shadow-inner bg-app-medium/50"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <p className="w-full text-sm font-medium">Added Line Items</p>
+        <p className="w-full text-sm font-medium">Original Line Items</p>
 
-        {value.map((item: CreateLineItemLegacyInput, index: number) => (
+        {originalLineItems.map(
+          (item: ModifyLineItemLegacyInput, index: number) => (
+            <Button
+              rounded
+              size="small"
+              className={cn({ '!bg-app-warn line-through': item.delete })}
+              key={`${item.orderNumber}-${item.supplierId}-${index}`}
+              rightRender={item.delete ? <XMarkIcon /> : <TrashIcon />}
+              onClick={(e) => handleMarkForDelete(e, item.id)}
+              title={`${item.orderNumber} - ${supplierMap[item.supplierId]}`}
+            />
+          )
+        )}
+      </Transition>
+
+      {/******************************/}
+      {/* New Line Items             */}
+      {/******************************/}
+      <Transition
+        show={!!newLineItems.length}
+        className="flex flex-wrap gap-2 p-4 transition-all rounded shadow-inner bg-app-success/50"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <p className="w-full text-sm font-medium">New Line Items</p>
+
+        {newLineItems.map((item: ModifyLineItemLegacyInput, index: number) => (
           <Button
             rounded
             size="small"
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
             rightRender={<TrashIcon />}
-            onClick={(e) => handleRemoveItem(e, index)}
-            title={`${index + 1}. ${item.orderNumber} - ${
-              supplierMap[item.supplierId]
-            }`}
+            onClick={(e) => handleRemoveItem(e, item)}
+            title={`${item.orderNumber} - ${supplierMap[item.supplierId]}`}
           />
         ))}
       </Transition>

@@ -65,7 +65,6 @@ const ScrollContainer = ({ children, className }: ScrollContainerProps) => {
   /******************************/
   const onScroll = () => {
     const containerElement = containerRef.current;
-    console.log('here');
 
     if (containerElement) {
       const {

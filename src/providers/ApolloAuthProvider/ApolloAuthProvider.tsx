@@ -1,11 +1,23 @@
-import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import {
+  ApolloProvider,
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache,
+  ApolloLink,
+  from,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { ApolloAuthProviderProps } from './types';
+import { removeTypenameFromMutation } from './utils';
 
 const ApolloAuthProvider = ({ children }: ApolloAuthProviderProps) => {
   const { getAccessTokenSilently } = useAuth0();
+
+  const removeTypenameFromMutationLink = new ApolloLink(
+    removeTypenameFromMutation
+  );
 
   const httpLink = createHttpLink({
     uri: process.env.REACT_APP_API_URI, // your URI here...
@@ -22,7 +34,7 @@ const ApolloAuthProvider = ({ children }: ApolloAuthProviderProps) => {
   });
 
   const apolloClient = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: from([authLink, removeTypenameFromMutationLink, httpLink]),
     cache: new InMemoryCache(),
   });
 

@@ -73,7 +73,11 @@ export const AreaAddForm = () => {
         {/******************************/}
         {/* Notes                      */}
         {/******************************/}
-        <FormComponent.TextAreaInput label="Notes" control={control} name="notes" />
+        <FormComponent.TextAreaInput
+          label="Notes"
+          control={control}
+          name="notes"
+        />
       </FormComponent>
     </Screen.Content>
   );

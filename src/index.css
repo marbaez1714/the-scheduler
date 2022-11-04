@@ -29,6 +29,10 @@
   .cell-caption-text {
     @apply text-xs opacity-25;
   }
+
+  .form-divider-y {
+    @apply col-span-full bg-app/25 h-0.5 rounded-full w-11/12 mx-auto;
+  }
 }
 
 @layer utilities {

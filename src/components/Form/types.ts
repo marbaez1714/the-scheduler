@@ -40,3 +40,8 @@ export interface FormLineItemInputProps<TFields extends FieldValues>
   extends FormInput<TFields> {
   suppliers: AutocompleteInputProps['options'];
 }
+
+export interface FormModifyLineItemInputProps<TFields extends FieldValues>
+  extends FormInput<TFields> {
+  suppliers: AutocompleteInputProps['options'];
+}

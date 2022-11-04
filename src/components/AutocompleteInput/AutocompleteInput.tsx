@@ -38,10 +38,10 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
       return query ? displayOptions : options;
     }, [query, options]);
 
-    const displayedValue = useMemo(() => {
+    const getDisplayedValue = () => {
       const selectedOption = options.find((option) => option.value === value);
       return selectedOption?.label ?? '';
-    }, [value, options]);
+    };
 
     /******************************/
     /* Callbacks                  */
@@ -98,11 +98,11 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
                   'bg-app-light py-3 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow-inner text-ellipsis disabled:bg-app-medium/50',
                   className
                 )}
-                value={value}
+                value={value ?? undefined}
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
-                displayValue={() => displayedValue}
-                placeholder={placeholder}
+                displayValue={getDisplayedValue}
+                placeholder={placeholder ?? 'Select'}
                 ref={ref}
               />
             </Combobox.Button>

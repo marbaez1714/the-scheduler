@@ -186,7 +186,7 @@ const CreateJob = () => {
             {/* Line Items                 */}
             {/******************************/}
             <div className="col-span-8">
-              <Form.LintItemInput
+              <Form.LineItemInput
                 control={control}
                 name="lineItems"
                 label={CreateJobForm.labels.lineItems}

@@ -15,6 +15,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       placeholder,
       className,
       errorMessage,
+      value,
       ...rest
     },
     ref
@@ -46,6 +47,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           placeholder={placeholder || (mask && placeholderMap[mask])}
           mask={mask ? maskMap[mask] : ''}
           ref={ref}
+          value={value ?? ''}
           {...rest}
         />
         {!!errorMessage && (
