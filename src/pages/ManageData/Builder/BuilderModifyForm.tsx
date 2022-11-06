@@ -103,51 +103,63 @@ export const BuilderModifyForm = () => {
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
       >
-        {/******************************/}
-        {/* Name                       */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteBuilderForm.labels.name}
-          control={control}
-          name="name"
-          required
-        />
-        {/******************************/}
-        {/* Primary Phone              */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteBuilderForm.labels.primaryPhone}
-          control={control}
-          name="primaryPhone"
-          mask="phone"
-          required
-        />
-        {/******************************/}
-        {/* Primary Email              */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteBuilderForm.labels.primaryEmail}
-          control={control}
-          name="primaryEmail"
-        />
-        {/******************************/}
-        {/* Company                    */}
-        {/******************************/}
-        <Form.AutocompleteInput
-          label={WriteBuilderForm.labels.companyId}
-          control={control}
-          options={companyOptions}
-          name="companyId"
-          required
-        />
-        {/******************************/}
-        {/* Notes                      */}
-        {/******************************/}
-        <Form.TextAreaInput
-          label={WriteBuilderForm.labels.notes}
-          control={control}
-          name="notes"
-        />
+        <div className="grid grid-cols-2 gap-4">
+          {/******************************/}
+          {/* Name                       */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteBuilderForm.labels.name}
+              control={control}
+              name="name"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Primary Phone              */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteBuilderForm.labels.primaryPhone}
+              control={control}
+              name="primaryPhone"
+              mask="phone"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Primary Email              */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteBuilderForm.labels.primaryEmail}
+              control={control}
+              name="primaryEmail"
+            />
+          </div>
+          {/******************************/}
+          {/* Company                    */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.AutocompleteInput
+              label={WriteBuilderForm.labels.companyId}
+              control={control}
+              options={companyOptions}
+              name="companyId"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <div className="col-span-2">
+            <Form.TextAreaInput
+              label={WriteBuilderForm.labels.notes}
+              control={control}
+              name="notes"
+            />
+          </div>
+        </div>
       </Form>
     </Screen.Content>
   );

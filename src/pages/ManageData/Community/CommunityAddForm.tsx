@@ -75,33 +75,44 @@ export const CommunityAddForm = () => {
         onClearClick={() => reset()}
         isValid={isValid}
       >
-        {/******************************/}
-        {/* Name                       */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteCommunityForm.labels.name}
-          control={control}
-          name="name"
-          required
-        />
-        {/******************************/}
-        {/* Company                    */}
-        {/******************************/}
-        <Form.AutocompleteInput
-          label={WriteCommunityForm.labels.companyId}
-          control={control}
-          options={companyOptions}
-          name="companyId"
-          required
-        />
-        {/******************************/}
-        {/* Notes                      */}
-        {/******************************/}
-        <Form.TextAreaInput
-          label={WriteCommunityForm.labels.notes}
-          control={control}
-          name="notes"
-        />
+        <div className="grid grid-cols-2 gap-4">
+          {/******************************/}
+          {/* Name                       */}
+          {/******************************/}
+          <div className="col-span-1">
+            {/******************************/}
+            {/* Name                       */}
+            {/******************************/}
+            <Form.TextInput
+              label={WriteCommunityForm.labels.name}
+              control={control}
+              name="name"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Company                    */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.AutocompleteInput
+              label={WriteCommunityForm.labels.companyId}
+              control={control}
+              options={companyOptions}
+              name="companyId"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <div className="col-span-2">
+            <Form.TextAreaInput
+              label={WriteCommunityForm.labels.notes}
+              control={control}
+              name="notes"
+            />
+          </div>
+        </div>
       </Form>
     </Screen.Content>
   );

@@ -52,40 +52,50 @@ export const ScopeAddForm = () => {
         onClearClick={() => reset()}
         isValid={isValid}
       >
-        {/******************************/}
-        {/* Name                    */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteScopeForm.labels.name}
-          control={control}
-          name="name"
-          required
-        />
-        {/******************************/}
-        {/* Name - Spanish             */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteScopeForm.labels.nameSpanish}
-          control={control}
-          name="nameSpanish"
-          required
-        />
-        {/******************************/}
-        {/* Description                */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteScopeForm.labels.description}
-          control={control}
-          name="description"
-        />
-        {/******************************/}
-        {/* Notes                      */}
-        {/******************************/}
-        <Form.TextAreaInput
-          label={WriteScopeForm.labels.notes}
-          control={control}
-          name="notes"
-        />
+        <div className="grid grid-cols-2 gap-4">
+          {/******************************/}
+          {/* Name                       */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteScopeForm.labels.name}
+              control={control}
+              name="name"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Name - Spanish             */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteScopeForm.labels.nameSpanish}
+              control={control}
+              name="nameSpanish"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Description                */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteScopeForm.labels.description}
+              control={control}
+              name="description"
+            />
+          </div>
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <div className="col-span-2">
+            <Form.TextAreaInput
+              label={WriteScopeForm.labels.notes}
+              control={control}
+              name="notes"
+            />
+          </div>
+        </div>
       </Form>
     </Screen.Content>
   );

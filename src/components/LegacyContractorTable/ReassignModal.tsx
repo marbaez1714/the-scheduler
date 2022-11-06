@@ -40,6 +40,7 @@ export const ReassignModal = ({
   const [modify] = useModifyJobLegacyMutation({
     onCompleted: (data) => {
       toast.success(data.modifyJobLegacy.message);
+      setSelectedContractor('');
       onClose();
     },
     onError: (error) => {

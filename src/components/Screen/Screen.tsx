@@ -42,7 +42,7 @@ const Screen = ({ children }: ScreenProps) => {
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col w-screen h-screen font-roboto">
+    <div className="flex flex-col w-screen h-screen font-roboto bg-app-medium">
       {/******************************/}
       {/* Page                       */}
       {/******************************/}

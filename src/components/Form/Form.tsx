@@ -21,7 +21,7 @@ const Form = ({
   /* Render                     */
   /******************************/
   return (
-    <div className={cn('shadow w-96', className)}>
+    <div className={cn('shadow w-full rounded overflow-hidden', className)}>
       <div className="px-6 py-4 border-b border-app-dark bg-app text-app-altText">
         <h1 className="text-4xl font-semibold tracking-wide">{title}</h1>
         <p className="text-app-altText/50">
@@ -30,10 +30,10 @@ const Form = ({
         </p>
       </div>
 
-      <form className="p-6 space-y-4 bg-app-light" onSubmit={onSubmit}>
+      <form className="p-6 bg-app-light" onSubmit={onSubmit}>
         {children}
 
-        <div className="h-0.5 w-11/12 mx-auto !mt-8 !mb-6 form-divider-y" />
+        <div className="h-0.5 w-full my-6 form-divider-y" />
 
         <div className="flex justify-end space-x-4">
           {!!onClearClick && (

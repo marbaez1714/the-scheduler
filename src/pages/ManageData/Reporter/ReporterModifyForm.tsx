@@ -100,41 +100,51 @@ export const ReporterModifyForm = () => {
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
       >
-        {/******************************/}
-        {/* Name                       */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteReporterForm.labels.name}
-          control={control}
-          name="name"
-          required
-        />
-        {/******************************/}
-        {/* Primary Phone              */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteReporterForm.labels.primaryPhone}
-          control={control}
-          name="primaryPhone"
-          mask="phone"
-          required
-        />
-        {/******************************/}
-        {/* Primary Email              */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteReporterForm.labels.primaryEmail}
-          control={control}
-          name="primaryEmail"
-        />
-        {/******************************/}
-        {/* Notes                      */}
-        {/******************************/}
-        <Form.TextAreaInput
-          label={WriteReporterForm.labels.notes}
-          control={control}
-          name="notes"
-        />
+        <div className="grid grid-cols-2 gap-4">
+          {/******************************/}
+          {/* Name                       */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteReporterForm.labels.name}
+              control={control}
+              name="name"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Primary Phone              */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteReporterForm.labels.primaryPhone}
+              control={control}
+              name="primaryPhone"
+              mask="phone"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Primary Email              */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteReporterForm.labels.primaryEmail}
+              control={control}
+              name="primaryEmail"
+            />
+          </div>
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <div className="col-span-2">
+            <Form.TextAreaInput
+              label={WriteReporterForm.labels.notes}
+              control={control}
+              name="notes"
+            />
+          </div>
+        </div>
       </Form>
     </Screen.Content>
   );

@@ -8,6 +8,8 @@ import {
   from,
   NormalizedCacheObject,
 } from '@apollo/client';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -23,8 +25,10 @@ const ApolloAuthProvider = ({ children }: ApolloAuthProviderProps) => {
     removeTypenameFromMutation
   );
 
-  const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_API_URI, // your URI here...
+  const batchHttpLink = new BatchHttpLink({
+    uri: process.env.REACT_APP_API_URI,
+    batchMax: 20,
+    batchDebounce: true,
   });
 
   const authLink = setContext(async (_, { headers }) => {
@@ -39,7 +43,7 @@ const ApolloAuthProvider = ({ children }: ApolloAuthProviderProps) => {
 
   if (!client.current) {
     client.current = new ApolloClient({
-      link: from([authLink, removeTypenameFromMutationLink, httpLink]),
+      link: from([authLink, removeTypenameFromMutationLink, batchHttpLink]),
       cache: new InMemoryCache(),
     });
   }

@@ -51,6 +51,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /* Data                       */
   /******************************/
   const { data, loading, refetch } = useGetJobLegacyByContractorIdQuery({
+    fetchPolicy: 'cache-and-network',
     variables: { contractorId: contractor.id },
   });
 

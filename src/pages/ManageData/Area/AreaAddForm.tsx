@@ -52,32 +52,40 @@ export const AreaAddForm = () => {
         isValid={isValid}
         onClearClick={() => reset()}
       >
-        {/******************************/}
-        {/* Name                       */}
-        {/******************************/}
-        <FormComponent.TextInput
-          label="Name"
-          control={control}
-          name="name"
-          required
-        />
-        {/******************************/}
-        {/* Name - Spanish             */}
-        {/******************************/}
-        <FormComponent.TextInput
-          label="Name Translation (Spanish)"
-          control={control}
-          name="nameSpanish"
-          required
-        />
-        {/******************************/}
-        {/* Notes                      */}
-        {/******************************/}
-        <FormComponent.TextAreaInput
-          label="Notes"
-          control={control}
-          name="notes"
-        />
+        <div className="grid grid-cols-2 gap-4">
+          {/******************************/}
+          {/* Name                       */}
+          {/******************************/}
+          <div className="col-span-1">
+            <FormComponent.TextInput
+              label="Name"
+              control={control}
+              name="name"
+              required
+            />
+          </div>
+          <div className="col-span-1">
+            {/******************************/}
+            {/* Name - Spanish             */}
+            {/******************************/}
+            <FormComponent.TextInput
+              label="Name Translation (Spanish)"
+              control={control}
+              name="nameSpanish"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <div className="col-span-2">
+            <FormComponent.TextAreaInput
+              label="Notes"
+              control={control}
+              name="notes"
+            />
+          </div>
+        </div>
       </FormComponent>
     </Screen.Content>
   );

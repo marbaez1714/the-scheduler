@@ -102,48 +102,60 @@ export const CompanyModifyForm = () => {
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
       >
-        {/******************************/}
-        {/* Name                       */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteCompanyForm.labels.name}
-          control={control}
-          name="name"
-          required
-        />
-        {/******************************/}
-        {/* Primary Phone              */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteCompanyForm.labels.primaryPhone}
-          control={control}
-          name="primaryPhone"
-          mask="phone"
-        />
-        {/******************************/}
-        {/* Primary Email              */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteCompanyForm.labels.primaryEmail}
-          control={control}
-          name="primaryEmail"
-        />
-        {/******************************/}
-        {/* Primary Address            */}
-        {/******************************/}
-        <Form.TextInput
-          label={WriteCompanyForm.labels.primaryAddress}
-          control={control}
-          name="primaryAddress"
-        />
-        {/******************************/}
-        {/* Notes                      */}
-        {/******************************/}
-        <Form.TextAreaInput
-          label={WriteCompanyForm.labels.notes}
-          control={control}
-          name="notes"
-        />
+        <div className="grid grid-cols-2 gap-4">
+          {/******************************/}
+          {/* Name                       */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteCompanyForm.labels.name}
+              control={control}
+              name="name"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Primary Phone              */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteCompanyForm.labels.primaryPhone}
+              control={control}
+              name="primaryPhone"
+              mask="phone"
+            />
+          </div>
+          {/******************************/}
+          {/* Primary Email              */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteCompanyForm.labels.primaryEmail}
+              control={control}
+              name="primaryEmail"
+            />
+          </div>
+          {/******************************/}
+          {/* Primary Address            */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label={WriteCompanyForm.labels.primaryAddress}
+              control={control}
+              name="primaryAddress"
+            />
+          </div>
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <div className="col-span-2">
+            <Form.TextAreaInput
+              label={WriteCompanyForm.labels.notes}
+              control={control}
+              name="notes"
+            />
+          </div>
+        </div>
       </Form>
     </Screen.Content>
   );

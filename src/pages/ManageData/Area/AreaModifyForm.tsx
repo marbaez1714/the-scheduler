@@ -99,23 +99,36 @@ export const AreaModifyForm = () => {
         onSubmit={handleSubmit(submit)}
         isValid={isValid}
       >
-        {/******************************/}
-        {/* Name                       */}
-        {/******************************/}
-        <Form.TextInput label="Name" control={control} name="name" required />
-        {/******************************/}
-        {/* Name - Spanish             */}
-        {/******************************/}
-        <Form.TextInput
-          label="Name Translation (Spanish)"
-          control={control}
-          name="nameSpanish"
-          required
-        />
-        {/******************************/}
-        {/* Notes                      */}
-        {/******************************/}
-        <Form.TextAreaInput label="Notes" control={control} name="notes" />
+        <div className="grid grid-cols-2 gap-4">
+          {/******************************/}
+          {/* Name                       */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label="Name"
+              control={control}
+              name="name"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Name - Spanish             */}
+          {/******************************/}
+          <div className="col-span-1">
+            <Form.TextInput
+              label="Name Translation (Spanish)"
+              control={control}
+              name="nameSpanish"
+              required
+            />
+          </div>
+          {/******************************/}
+          {/* Notes                      */}
+          {/******************************/}
+          <div className="col-span-2">
+            <Form.TextAreaInput label="Notes" control={control} name="notes" />
+          </div>
+        </div>
       </Form>
     </Screen.Content>
   );

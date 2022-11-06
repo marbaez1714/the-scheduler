@@ -18,7 +18,7 @@ export const Content = ({
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col w-full h-full overflow-x-hidden bg-app-medium">
+    <div className="flex flex-col w-full h-full max-w-5xl mx-auto overflow-x-hidden">
       {loading && (
         <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-slate-700/50">
           <h1 className="font-medium text-white animate-pulse">Loading</h1>
