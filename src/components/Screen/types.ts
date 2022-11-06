@@ -14,6 +14,13 @@ export interface ContentProps {
   title?: string;
 }
 
+export interface NavBarMenuProps {
+  title: string;
+  to: string;
+  icon: React.ReactNode;
+  links?: { name: string; to: string }[];
+}
+
 type ContentAction = {
   onClick: () => void;
   title: string;

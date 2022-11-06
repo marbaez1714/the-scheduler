@@ -1,14 +1,10 @@
 export const manageDataItems = [
-  { title: 'Areas', to: '/manage/area', icon: 'location_searching' },
-  {
-    title: 'Builder',
-    to: '/manage/builder',
-    icon: 'connect_without_contact',
-  },
-  { title: 'Communities', to: '/manage/community', icon: 'map' },
-  { title: 'Companies', to: '/manage/company', icon: 'apartment' },
-  { title: 'Contractors', to: '/manage/contractor', icon: 'engineering' },
-  { title: 'Reporter', to: '/manage/reporter', icon: 'summarize' },
-  { title: 'Scope', to: '/manage/scope', icon: 'handyman' },
-  { title: 'Supplier', to: '/manage/supplier', icon: 'inventory' },
+  { name: 'Areas', to: '/manage/area' },
+  { name: 'Builder', to: '/manage/builder' },
+  { name: 'Communities', to: '/manage/community' },
+  { name: 'Companies', to: '/manage/company' },
+  { name: 'Contractors', to: '/manage/contractor' },
+  { name: 'Reporter', to: '/manage/reporter' },
+  { name: 'Scope', to: '/manage/scope' },
+  { name: 'Supplier', to: '/manage/supplier' },
 ];

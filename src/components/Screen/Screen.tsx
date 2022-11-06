@@ -1,8 +1,8 @@
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { ScreenProps } from './types';
-import { SideBar } from './SideBar';
 import { Content } from './Content';
+import { NavBar } from './NavBar';
 
 const Screen = ({ children }: ScreenProps) => {
   /******************************/
@@ -42,12 +42,12 @@ const Screen = ({ children }: ScreenProps) => {
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col w-screen h-screen font-roboto bg-app-medium">
+    <div className="flex flex-col w-screen h-screen font-roboto">
       {/******************************/}
       {/* Page                       */}
       {/******************************/}
-      <div className="flex flex-grow overflow-hidden">
-        <SideBar />
+      <NavBar />
+      <div className="flex flex-grow overflow-auto bg-app-medium">
         {/******************************/}
         {/* Screen Content             */}
         {/******************************/}

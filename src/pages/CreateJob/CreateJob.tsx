@@ -81,7 +81,6 @@ const CreateJob = () => {
       <Screen.Content centerHorizontal loading={createLoading}>
         <Form
           title="Create New Job"
-          className="w-1/2"
           onSubmit={handleSubmit(submit)}
           onClearClick={() => reset()}
           isValid={isValid}
@@ -90,7 +89,7 @@ const CreateJob = () => {
             {/******************************/}
             {/* Address / Name             */}
             {/******************************/}
-            <div className="col-span-5">
+            <div className="col-span-4">
               <Form.TextInput
                 label={CreateJobForm.labels.name}
                 control={control}
@@ -102,7 +101,7 @@ const CreateJob = () => {
             {/******************************/}
             {/* Start Date                 */}
             {/******************************/}
-            <div className="col-span-3">
+            <div className="col-span-4">
               <Form.DateInput
                 label={CreateJobForm.labels.startDate}
                 control={control}
@@ -113,7 +112,7 @@ const CreateJob = () => {
             {/******************************/}
             {/* Community                  */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={CreateJobForm.labels.communityId}
                 control={control}
@@ -125,7 +124,7 @@ const CreateJob = () => {
             {/******************************/}
             {/* Builder                    */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={CreateJobForm.labels.builderId}
                 control={control}
@@ -134,10 +133,12 @@ const CreateJob = () => {
               />
             </div>
 
+            <div className="mt-6 form-divider-y" />
+
             {/******************************/}
             {/* Contractor                 */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={CreateJobForm.labels.contractorId}
                 control={control}
@@ -149,7 +150,7 @@ const CreateJob = () => {
             {/******************************/}
             {/* Reporter                   */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={CreateJobForm.labels.reporterId}
                 control={control}
@@ -161,7 +162,7 @@ const CreateJob = () => {
             {/******************************/}
             {/* Area                       */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={CreateJobForm.labels.areaId}
                 control={control}
@@ -173,7 +174,7 @@ const CreateJob = () => {
             {/******************************/}
             {/* Scope                      */}
             {/******************************/}
-            <div className="col-span-8">
+            <div className="col-span-4">
               <Form.AutocompleteInput
                 label={CreateJobForm.labels.scopeId}
                 control={control}
@@ -181,6 +182,8 @@ const CreateJob = () => {
                 options={scopeOptions}
               />
             </div>
+
+            <div className="mt-6 form-divider-y" />
 
             {/******************************/}
             {/* Line Items                 */}
