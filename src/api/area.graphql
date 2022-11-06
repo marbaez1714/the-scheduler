@@ -1,0 +1,51 @@
+query GetArea($id: ID!) {
+  areaById(id: $id) {
+    id
+    name
+    nameSpanish
+    notes
+    legacy
+  }
+}
+
+query GetAreas($pagination: Pagination, $sorting: Sorting, $archived: Boolean) {
+  areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
+    data {
+      id
+      name
+      nameSpanish
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    meta {
+      page
+      pageSize
+      totalCount
+      sortField
+      sortOrder
+    }
+  }
+}
+
+mutation CreateArea($data: WriteAreaInput!) {
+  createArea(data: $data) {
+    message
+  }
+}
+
+mutation ModifyArea($id: ID!, $data: WriteAreaInput!) {
+  modifyArea(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveArea($id: ID!) {
+  archiveArea(id: $id) {
+    message
+  }
+}

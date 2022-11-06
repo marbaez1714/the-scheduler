@@ -1,0 +1,39 @@
+fragment AreaOption on Area {
+  id
+  name
+}
+
+fragment BuilderOption on Builder {
+  id
+  name
+}
+
+fragment CommunityOption on Community {
+  id
+  name
+}
+
+fragment CompanyOption on Company {
+  id
+  name
+}
+
+fragment ContractorOption on Contractor {
+  id
+  name
+}
+
+fragment ReporterOption on Reporter {
+  id
+  name
+}
+
+fragment ScopeOption on Scope {
+  id
+  name
+}
+
+fragment SupplierOption on Supplier {
+  id
+  name
+}

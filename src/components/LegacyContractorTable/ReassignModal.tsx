@@ -1,7 +1,11 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useModifyJobLegacyMutation } from 'src/api';
+import {
+  CreateReporterDocument,
+  GetJobLegacyByContractorIdDocument,
+  useModifyJobLegacyMutation,
+} from 'src/api';
 import { useOptions } from 'src/hooks/useOptions';
 import { AutocompleteInput } from '../AutocompleteInput';
 import { Button } from '../Button';
@@ -41,6 +45,16 @@ export const ReassignModal = ({
     onError: (error) => {
       toast.error(error.message);
     },
+    refetchQueries: [
+      {
+        query: GetJobLegacyByContractorIdDocument,
+        variables: { contractorId: jobLegacy?.contractorId },
+      },
+      {
+        query: GetJobLegacyByContractorIdDocument,
+        variables: { contractorId: selectedContractor },
+      },
+    ],
   });
 
   /******************************/
@@ -76,7 +90,7 @@ export const ReassignModal = ({
           label="Current"
           options={[...contractorsOptions, { label: 'Unassinged', value: '' }]}
           value={jobLegacy?.contractorId ?? ''}
-          onChange={setSelectedContractor}
+          onChange={() => {}}
           disabled
         />
 

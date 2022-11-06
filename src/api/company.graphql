@@ -1,0 +1,59 @@
+query GetCompany($id: ID!) {
+  companyById(id: $id) {
+    id
+    name
+    primaryAddress
+    primaryEmail
+    primaryPhone
+    notes
+    legacy
+  }
+}
+
+query GetCompanies(
+  $pagination: Pagination
+  $sorting: Sorting
+  $archived: Boolean
+) {
+  companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
+    data {
+      id
+      name
+      primaryAddress
+      primaryEmail
+      primaryPhone
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    meta {
+      page
+      pageSize
+      totalCount
+      sortField
+      sortOrder
+    }
+  }
+}
+
+mutation CreateCompany($data: WriteCompanyInput!) {
+  createCompany(data: $data) {
+    message
+  }
+}
+
+mutation ModifyCompany($id: ID!, $data: WriteCompanyInput!) {
+  modifyCompany(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveCompany($id: ID!) {
+  archiveCompany(id: $id) {
+    message
+  }
+}

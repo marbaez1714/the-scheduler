@@ -1,0 +1,57 @@
+query GetScope($id: ID!) {
+  scopeById(id: $id) {
+    id
+    name
+    nameSpanish
+    description
+    notes
+    legacy
+  }
+}
+
+query GetScopes(
+  $pagination: Pagination
+  $sorting: Sorting
+  $archived: Boolean
+) {
+  scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
+    data {
+      id
+      name
+      nameSpanish
+      description
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    meta {
+      page
+      pageSize
+      totalCount
+      sortField
+      sortOrder
+    }
+  }
+}
+
+mutation CreateScope($data: WriteScopeInput!) {
+  createScope(data: $data) {
+    message
+  }
+}
+
+mutation ModifyScope($id: ID!, $data: WriteScopeInput!) {
+  modifyScope(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveScope($id: ID!) {
+  archiveScope(id: $id) {
+    message
+  }
+}

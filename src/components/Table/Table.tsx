@@ -177,7 +177,7 @@ const Table = <TData extends Record<string, unknown>>({
 
       {/* Table */}
       <div className="overflow-scroll">
-        <table className="relative w-full border-collapse table-auto whitespace-nowrap">
+        <table className="relative w-full border-collapse whitespace-nowrap">
           {/******************************/}
           {/* Table Header               */}
           {/******************************/}

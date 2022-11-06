@@ -1,0 +1,136 @@
+query GetJobLegacyById($id: ID!) {
+  jobLegacyById(id: $id) {
+    id
+    name
+    active
+    inProgress
+    isImportant
+    status
+    areaId
+    builderId
+    communityId
+    contractorId
+    reporterId
+    scopeId
+    completedDate
+    startDate
+    notes
+    lineItems {
+      id
+      orderNumber
+      supplierId
+    }
+  }
+}
+
+query GetJobLegacyByContractorId(
+  $contractorId: ID!
+  $pagination: Pagination
+  $sorting: Sorting
+  $archived: Boolean
+) {
+  jobLegacyByContractorId(
+    id: $contractorId
+    pagination: $pagination
+    sorting: $sorting
+    archived: $archived
+  ) {
+    data {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      status
+      completedDate
+      startDate
+      notes
+      area {
+        id
+        name
+        nameSpanish
+      }
+      builder {
+        id
+        name
+      }
+      community {
+        id
+        name
+      }
+      reporter {
+        id
+        name
+      }
+      scope {
+        id
+        name
+      }
+      contractorId
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    meta {
+      page
+      pageSize
+      sortField
+      sortOrder
+      totalCount
+    }
+  }
+}
+
+mutation CreateJobLegacy($data: CreateJobLegacyInput!) {
+  createJobLegacy(data: $data) {
+    message
+  }
+}
+
+mutation ModifyJobLegacy($id: ID!, $data: ModifyJobLegacyInput!) {
+  modifyJobLegacy(id: $id, data: $data) {
+    message
+    data {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      status
+      completedDate
+      startDate
+      notes
+      area {
+        id
+        name
+        nameSpanish
+      }
+      builder {
+        id
+        name
+      }
+      community {
+        id
+        name
+      }
+      reporter {
+        id
+        name
+      }
+      scope {
+        id
+        name
+      }
+      contractorId
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+  }
+}

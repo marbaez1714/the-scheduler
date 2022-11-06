@@ -1,0 +1,55 @@
+query GetSupplier($id: ID!) {
+  supplierById(id: $id) {
+    id
+    name
+    primaryPhone
+    notes
+    legacy
+  }
+}
+
+query GetSuppliers(
+  $pagination: Pagination
+  $sorting: Sorting
+  $archived: Boolean
+) {
+  suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
+    data {
+      id
+      name
+      primaryPhone
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    meta {
+      page
+      pageSize
+      totalCount
+      sortField
+      sortOrder
+    }
+  }
+}
+
+mutation CreateSupplier($data: WriteSupplierInput!) {
+  createSupplier(data: $data) {
+    message
+  }
+}
+
+mutation ModifySupplier($id: ID!, $data: WriteSupplierInput!) {
+  modifySupplier(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveSupplier($id: ID!) {
+  archiveSupplier(id: $id) {
+    message
+  }
+}
