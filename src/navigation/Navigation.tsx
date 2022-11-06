@@ -7,6 +7,7 @@ import { Dashboard } from 'src/pages/Dashboard';
 import {
   // Base
   ManageData,
+  DataList,
   // Area
   AreaList,
   AreaAddForm,
@@ -58,6 +59,8 @@ const Navigation = () => {
       />
       {/* Manage */}
       <Route path="/manage" element={<ProtectedRoute component={ManageData} />}>
+        {/* List */}
+        <Route index element={<ProtectedRoute component={DataList} />} />
         {/* Area */}
         <Route path="area" element={<ProtectedRoute component={Outlet} />}>
           <Route index element={<ProtectedRoute component={AreaList} />} />

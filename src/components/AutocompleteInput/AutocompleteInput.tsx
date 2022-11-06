@@ -1,7 +1,11 @@
 import { useState, useMemo, forwardRef } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import cn from 'classnames';
-import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowDownIcon,
+  ChevronDownIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
 
 import { AutocompleteInputProps } from './types';
 
@@ -19,6 +23,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
       onBlur,
       placeholder,
       disabled,
+      icon,
     },
     ref
   ) => {
@@ -92,6 +97,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
           {/* Input                      */}
           {/******************************/}
           <div className="relative flex items-center">
+            {icon && <div className="w-12 h-12 p-2 text-app">{icon}</div>}
             <Combobox.Button className="w-full">
               <Combobox.Input
                 className={cn(

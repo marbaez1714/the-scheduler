@@ -9,3 +9,4 @@ export * from './Contractor';
 export * from './Reporter';
 export * from './Scope';
 export * from './Supplier';
+export * from './DataList';

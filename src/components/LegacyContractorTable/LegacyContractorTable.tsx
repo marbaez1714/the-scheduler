@@ -259,7 +259,12 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         onClose={handleReassignModalClose}
         jobLegacy={selectedJob}
       />
-      <Collapsable title={contractor.name} unmount={false} defaultOpen>
+      <Collapsable
+        title={contractor.name}
+        unmount={false}
+        loading={loading}
+        defaultOpen
+      >
         <Table
           data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
           columns={columns}

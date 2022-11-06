@@ -9,4 +9,5 @@ export interface AutocompleteInputProps extends InputProps {
   disabled?: boolean;
   onBlur?: () => void;
   onChange: (value: string) => void;
+  icon?: React.ReactNode;
 }

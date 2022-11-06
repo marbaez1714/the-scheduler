@@ -16,6 +16,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       className,
       errorMessage,
       value,
+      icon,
       ...rest
     },
     ref
@@ -37,19 +38,22 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             )}
           </label>
         )}
+        <div className='flex'>
+          {icon && <div className="w-12 h-12 p-2 text-app">{icon}</div>}
+          <InputComponent
+            className={cn(
+              'bg-app-light text-app-text border-app-medium py-3 px-4 w-full rounded border-2 shadow-inner text-ellipsis',
+              className
+            )}
+            name={name}
+            placeholder={placeholder || (mask && placeholderMap[mask])}
+            mask={mask ? maskMap[mask] : ''}
+            ref={ref}
+            value={value ?? ''}
+            {...rest}
+          />
+        </div>
 
-        <InputComponent
-          className={cn(
-            'bg-app-light text-app-text border-app-medium py-3 px-4 w-full rounded border-2 shadow-inner text-ellipsis',
-            className
-          )}
-          name={name}
-          placeholder={placeholder || (mask && placeholderMap[mask])}
-          mask={mask ? maskMap[mask] : ''}
-          ref={ref}
-          value={value ?? ''}
-          {...rest}
-        />
         {!!errorMessage && (
           <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
         )}

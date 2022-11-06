@@ -25,7 +25,11 @@ const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
           </label>
         )}
 
-        <div className="relative">
+        <div className="flex items-center">
+          <div className="w-12 h-12 p-2 text-app">
+            <CalendarDaysIcon />
+          </div>
+
           <DatePicker
             className={cn(
               'bg-app-light text-app-text border-app-medium py-3 px-4 w-full rounded border-2 shadow-inner text-ellipsis',
@@ -35,9 +39,6 @@ const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
             ref={ref}
             {...rest}
           />
-          <div className="absolute top-0 flex items-center h-full right-4">
-            <CalendarDaysIcon className="w-4 h-4 text-app-dark" />
-          </div>
         </div>
 
         {!!errorMessage && (

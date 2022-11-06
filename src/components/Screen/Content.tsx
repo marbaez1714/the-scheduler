@@ -41,7 +41,7 @@ export const Content = ({
         {/* Content */}
         <div
           className={cn(
-            'flex flex-grow transition-all justify-start items-start mx-2',
+            'flex flex-grow transition-all justify-start items-start mx-4',
             {
               'flex-col': column,
               'justify-center': center || centerHorizontal,
