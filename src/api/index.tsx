@@ -1595,7 +1595,39 @@ export type ModifyJobLegacyMutationVariables = Exact<{
 
 export type ModifyJobLegacyMutation = {
   __typename?: 'Mutation';
-  modifyJobLegacy: { __typename?: 'WriteJobLegacyResponse'; message: string };
+  modifyJobLegacy: {
+    __typename?: 'WriteJobLegacyResponse';
+    message: string;
+    data: {
+      __typename?: 'JobLegacy';
+      id: string;
+      name: string;
+      active: boolean;
+      inProgress: boolean;
+      isImportant: boolean;
+      status: JobLegacyStatus;
+      completedDate?: string | null;
+      startDate?: string | null;
+      notes?: string | null;
+      contractorId?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+      area?: {
+        __typename?: 'Area';
+        id: string;
+        name: string;
+        nameSpanish: string;
+      } | null;
+      builder?: { __typename?: 'Builder'; id: string; name: string } | null;
+      community?: { __typename?: 'Community'; id: string; name: string } | null;
+      reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
+      scope?: { __typename?: 'Scope'; id: string; name: string } | null;
+    };
+  };
 };
 
 export const ContractorOptionFragmentDoc = gql`
@@ -4362,6 +4394,45 @@ export const ModifyJobLegacyDocument = gql`
   mutation ModifyJobLegacy($id: ID!, $data: ModifyJobLegacyInput!) {
     modifyJobLegacy(id: $id, data: $data) {
       message
+      data {
+        id
+        name
+        active
+        inProgress
+        isImportant
+        status
+        completedDate
+        startDate
+        notes
+        area {
+          id
+          name
+          nameSpanish
+        }
+        builder {
+          id
+          name
+        }
+        community {
+          id
+          name
+        }
+        reporter {
+          id
+          name
+        }
+        scope {
+          id
+          name
+        }
+        contractorId
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
     }
   }
 `;

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import {
   ApolloProvider,
   ApolloClient,
@@ -5,6 +6,7 @@ import {
   InMemoryCache,
   ApolloLink,
   from,
+  NormalizedCacheObject,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -14,6 +16,8 @@ import { removeTypenameFromMutation } from './utils';
 
 const ApolloAuthProvider = ({ children }: ApolloAuthProviderProps) => {
   const { getAccessTokenSilently } = useAuth0();
+
+  const client = useRef<ApolloClient<NormalizedCacheObject>>();
 
   const removeTypenameFromMutationLink = new ApolloLink(
     removeTypenameFromMutation
@@ -33,12 +37,14 @@ const ApolloAuthProvider = ({ children }: ApolloAuthProviderProps) => {
     };
   });
 
-  const apolloClient = new ApolloClient({
-    link: from([authLink, removeTypenameFromMutationLink, httpLink]),
-    cache: new InMemoryCache(),
-  });
+  if (!client.current) {
+    client.current = new ApolloClient({
+      link: from([authLink, removeTypenameFromMutationLink, httpLink]),
+      cache: new InMemoryCache(),
+    });
+  }
 
-  return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
+  return <ApolloProvider client={client.current}>{children}</ApolloProvider>;
 };
 
 export default ApolloAuthProvider;
