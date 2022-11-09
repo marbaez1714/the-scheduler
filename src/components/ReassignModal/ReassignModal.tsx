@@ -2,7 +2,6 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import {
-  CreateReporterDocument,
   GetJobLegacyByContractorIdDocument,
   useModifyJobLegacyMutation,
 } from 'src/api';
@@ -12,11 +11,7 @@ import { Button } from '../Button';
 import { Modal } from '../Modal';
 import { ReassignModalProps } from './types';
 
-export const ReassignModal = ({
-  open,
-  onClose,
-  jobLegacy,
-}: ReassignModalProps) => {
+const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -117,3 +112,5 @@ export const ReassignModal = ({
     </Modal>
   );
 };
+
+export default ReassignModal;

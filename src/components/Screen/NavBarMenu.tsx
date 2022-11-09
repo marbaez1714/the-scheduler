@@ -69,7 +69,7 @@ export const NavBarMenu = ({ icon, to, links, title }: NavBarMenuProps) => {
         </Link>
 
         {links?.map((item) => (
-          <Menu.Item>
+          <Menu.Item key={item.name}>
             <Link
               className="w-full px-4 py-2 text-sm hover:bg-app-medium"
               to={item.to}

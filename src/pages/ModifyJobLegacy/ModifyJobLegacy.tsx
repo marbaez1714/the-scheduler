@@ -117,7 +117,6 @@ const ModifyJobLegacy = () => {
       <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
         <Form
           title="Edit Job"
-          className="w-1/2"
           onSubmit={handleSubmit(submit)}
           onClearClick={() => reset()}
           isValid={isValid}

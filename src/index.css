@@ -33,6 +33,12 @@
   .form-divider-y {
     @apply col-span-full bg-app/25 h-0.5 rounded-full shadow;
   }
+
+  .form-divider-x {
+    @apply h-full bg-app/25 w-0.5 rounded-full shadow;
+  }
+
+
 }
 
 @layer utilities {

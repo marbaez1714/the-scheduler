@@ -4,7 +4,6 @@ import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import {
   ArchiveBoxIcon,
-  ArrowPathIcon,
   ArrowsRightLeftIcon,
   ArrowUpIcon,
   ChatBubbleBottomCenterTextIcon,
@@ -12,20 +11,19 @@ import {
   DocumentCheckIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/solid';
+import toast from 'react-hot-toast';
 
 import {
-  GetJobLegacyByIdDocument,
   JobLegacy,
   useGetJobLegacyByContractorIdQuery,
   useModifyJobLegacyMutation,
 } from 'src/api';
 import { LegacyContractorTableProps } from './types';
 import { Table, TableRowAction } from '../Table';
-
 import { Collapsable } from '../Collapsable';
 import { confirmArchive } from 'src/utils/alerts';
-import { ReassignModal } from './ReassignModal';
-import toast from 'react-hot-toast';
+import { ReassignModal } from '../ReassignModal';
+import { SendMessageModal } from '../SendMessageModal';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
@@ -42,6 +40,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   const [selectedJob, setSelectedJob] = useState<JobLegacy>();
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
+  const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
 
   /******************************/
   /* Context                    */
@@ -85,6 +84,16 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     setReassignModalOpen(false);
   };
 
+  const handleSendMessage = (data: JobLegacy) => {
+    setSelectedJob(data);
+    setSendMessageModalOpen(true);
+  };
+
+  const handleSendMessageModalClose = () => {
+    setSelectedJob(undefined);
+    setSendMessageModalOpen(false);
+  };
+
   const handleEditJob = (data: JobLegacy) => {
     navigate(`/modify_jobLegacy/${data.id}`);
   };
@@ -126,8 +135,8 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     },
     {
       icon: <ChatBubbleBottomCenterTextIcon />,
-      label: 'Send Alert',
-      onClick: () => {},
+      label: 'Send Message',
+      onClick: handleSendMessage,
     },
     {
       icon: <ArrowsRightLeftIcon />,
@@ -237,27 +246,17 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Render                     */
   /******************************/
-  if (loading) {
-    <div className="flex items-center w-full py-6 pl-4 pr-6 rounded bg-app animate-pulse">
-      <ArrowPathIcon className="w-6 h-6 my-2 ml-2 mr-6 text-app-altText animate-spin" />
-
-      {/******************************/}
-      {/* Title                      */}
-      {/******************************/}
-      <div className="flex items-end basis-2/3">
-        <h1 className="text-4xl font-semibold tracking-wide text-app-altText">
-          {contractor.name}
-        </h1>
-      </div>
-    </div>;
-  }
-
   return (
     <>
       <ReassignModal
         open={reassignModalOpen}
         onClose={handleReassignModalClose}
         jobLegacy={selectedJob}
+      />
+      <SendMessageModal
+        open={sendMessageModalOpen}
+        jobLegacy={selectedJob}
+        onClose={handleSendMessageModalClose}
       />
       <Collapsable
         title={contractor.name}

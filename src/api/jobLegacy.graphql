@@ -65,6 +65,17 @@ query GetJobLegacyByContractorId(
       scope {
         id
         name
+        nameSpanish
+      }
+      contractor {
+        id
+        name
+      }
+      lineItems {
+        orderNumber
+        supplier {
+          name
+        }
       }
       contractorId
       updatedBy

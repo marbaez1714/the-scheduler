@@ -265,6 +265,7 @@ export type LineItemLegacy = {
   jobId: Scalars['String'];
   legacy: Scalars['Boolean'];
   orderNumber: Scalars['String'];
+  supplier: Supplier;
   supplierId: Scalars['String'];
   updatedBy: Scalars['String'];
   updatedTime: Scalars['String'];
@@ -1370,7 +1371,22 @@ export type GetJobLegacyByContractorIdQuery = {
       builder?: { __typename?: 'Builder'; id: string; name: string } | null;
       community?: { __typename?: 'Community'; id: string; name: string } | null;
       reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
-      scope?: { __typename?: 'Scope'; id: string; name: string } | null;
+      scope?: {
+        __typename?: 'Scope';
+        id: string;
+        name: string;
+        nameSpanish: string;
+      } | null;
+      contractor?: {
+        __typename?: 'Contractor';
+        id: string;
+        name: string;
+      } | null;
+      lineItems: Array<{
+        __typename?: 'LineItemLegacy';
+        orderNumber: string;
+        supplier: { __typename?: 'Supplier'; name: string };
+      }>;
     }>;
     meta: {
       __typename?: 'MetaResponse';
@@ -3476,6 +3492,17 @@ export const GetJobLegacyByContractorIdDocument = gql`
         scope {
           id
           name
+          nameSpanish
+        }
+        contractor {
+          id
+          name
+        }
+        lineItems {
+          orderNumber
+          supplier {
+            name
+          }
         }
         contractorId
         updatedBy

@@ -21,7 +21,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
 
         <textarea
           className={cn(
-            'bg-app-light py-3 px-4 w-full rounded border-2 border-app-medium shadow-inner',
+            'bg-app-light py-3 px-4 w-full rounded border-2 border-app-medium shadow-inner h-full',
             className
           )}
           name={name}

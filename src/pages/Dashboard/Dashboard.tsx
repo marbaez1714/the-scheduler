@@ -52,7 +52,7 @@ const Dashboard = () => {
   /******************************/
   useEffect(() => {
     const stored = localStorage.getItem(localStorageKeys.enabledContractors);
-    console.log(stored);
+
     if (stored) {
       try {
         setEnabledContractors(JSON.parse(stored));
