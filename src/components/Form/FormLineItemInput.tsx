@@ -26,7 +26,7 @@ export const FormLineItemInput = <TFields extends FieldValues>({
   /* State                      */
   /******************************/
   const [orderNumber, setOrderNumber] = useState('');
-  const [supplierId, setSupplierId] = useState('');
+  const [supplierId, setSupplierId] = useState<string>();
 
   /******************************/
   /* Memos                      */
@@ -57,7 +57,6 @@ export const FormLineItemInput = <TFields extends FieldValues>({
     newVal.splice(index, 1);
     onChange(newVal);
   };
-
 
   /******************************/
   /* Render                     */

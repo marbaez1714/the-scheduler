@@ -48,7 +48,7 @@ const Collapsable = ({
               'animate-pulse': loading,
             })}
           >
-            <h1 className="text-2xl font-semibold tracking-wide">{title}</h1>
+            <h1 className="text-2xl font-semibold tracking-wider">{title}</h1>
             {subtitle && <p className="ml-2 text-sm opacity-50">{subtitle}</p>}
           </div>
         </div>
@@ -56,12 +56,9 @@ const Collapsable = ({
         {/* Content                    */}
         {/******************************/}
         <Disclosure.Panel
-          className={cn(
-            'm-2 overflow-hidden rounded bg-app-light max-h-[700px]',
-            {
-              'pointer-events-none animate-pulse': loading,
-            }
-          )}
+          className={cn('m-2 rounded bg-app-light overflow-scroll max-h-[700px] shadow', {
+            'pointer-events-none animate-pulse': loading,
+          })}
           unmount={unmount}
         >
           {children}

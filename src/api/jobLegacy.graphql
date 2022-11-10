@@ -23,13 +23,13 @@ query GetJobLegacyById($id: ID!) {
   }
 }
 
-query GetJobLegacyByContractorId(
+query GetJobsLegacyByContractorId(
   $contractorId: ID!
   $pagination: Pagination
   $sorting: Sorting
   $archived: Boolean
 ) {
-  jobLegacyByContractorId(
+  jobsLegacyByContractorId(
     id: $contractorId
     pagination: $pagination
     sorting: $sorting

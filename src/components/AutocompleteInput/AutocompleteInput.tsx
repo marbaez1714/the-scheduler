@@ -65,7 +65,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
       e.stopPropagation();
 
       if (value) {
-        onChange('');
+        onChange(undefined);
         setQuery('');
       }
     };
@@ -76,7 +76,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
     return (
       <div className="relative flex flex-col flex-grow">
         <Combobox
-          value={value}
+          value={value ?? ''}
           onChange={onChange}
           name={name}
           disabled={disabled}

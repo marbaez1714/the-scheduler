@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 
 import {
   JobLegacy,
-  useGetJobLegacyByContractorIdQuery,
+  useGetJobsLegacyByContractorIdQuery,
   useModifyJobLegacyMutation,
 } from 'src/api';
 import { LegacyContractorTableProps } from './types';
@@ -49,7 +49,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading, refetch } = useGetJobLegacyByContractorIdQuery({
+  const { data, loading, refetch } = useGetJobsLegacyByContractorIdQuery({
     fetchPolicy: 'cache-and-network',
     variables: { contractorId: contractor.id },
   });
@@ -265,9 +265,9 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         defaultOpen
       >
         <Table
-          data={(data?.jobLegacyByContractorId.data ?? []) as JobLegacy[]}
+          data={(data?.jobsLegacyByContractorId.data ?? []) as JobLegacy[]}
           columns={columns}
-          total={data?.jobLegacyByContractorId.meta.totalCount ?? 0}
+          total={data?.jobsLegacyByContractorId.meta.totalCount ?? 0}
           rowActions={rowActions}
         />
       </Collapsable>

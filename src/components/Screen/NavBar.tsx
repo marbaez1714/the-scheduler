@@ -1,5 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import {
+  ArchiveBoxIcon,
   ArrowRightOnRectangleIcon,
   BriefcaseIcon,
   CircleStackIcon,
@@ -26,7 +27,7 @@ export const NavBar = () => {
   /* Render                     */
   /******************************/
   return (
-    <div className="flex items-center w-full px-6 bg-app-darkest text-app-altText">
+    <header className="flex items-center w-full px-6 bg-app-darkest text-app-altText">
       <Link to="/dashboard" className="mr-6 text-3xl font-bold">
         the_scheduler
       </Link>
@@ -37,13 +38,15 @@ export const NavBar = () => {
         to="/dashboard"
         icon={<BriefcaseIcon />}
       />
-      
+
       {/* Create Job */}
       <NavBarMenu
         title={'Create a Job (Legacy)'}
         to="/create_job"
         icon={<PlusCircleIcon />}
       />
+
+      <NavBarMenu title={'Archive'} to="/archive" icon={<ArchiveBoxIcon />} />
 
       {/* Manage Data */}
       <NavBarMenu
@@ -61,6 +64,6 @@ export const NavBar = () => {
       >
         <ArrowRightOnRectangleIcon />
       </button>
-    </div>
+    </header>
   );
 };

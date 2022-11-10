@@ -43,6 +43,7 @@ import {
 } from 'src/pages/ManageData';
 import { CreateJob } from 'src/pages/CreateJob';
 import { ModifyJobLegacy } from 'src/pages/ModifyJobLegacy';
+import { Archive } from 'src/pages/Archive';
 import { NotFound } from './NotFound';
 
 const Navigation = () => {
@@ -174,6 +175,8 @@ const Navigation = () => {
         path="/modify_jobLegacy/:jobLegacyId"
         element={<ProtectedRoute component={ModifyJobLegacy} />}
       />
+      {/* Edit Job */}
+      <Route path="/archive" element={<ProtectedRoute component={Archive} />} />
       {/* 404 Page */}
       <Route path="*" element={<ProtectedRoute component={NotFound} />} />
     </Routes>

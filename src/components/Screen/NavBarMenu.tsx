@@ -57,21 +57,24 @@ export const NavBarMenu = ({ icon, to, links, title }: NavBarMenuProps) => {
 
       <Transition
         as={Menu.Items}
-        className="absolute z-50 flex flex-col w-64 mt-1 overflow-hidden transition-all border rounded shadow bg-app-light text-app-text border-app-medium"
+        className="absolute z-50 flex flex-col w-64 mt-1 overflow-hidden transition-all divide-y rounded shadow-2xl bg-app-light text-app-text divide-app-medium"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
         {/* Title */}
-        <Link className="w-full px-4 py-2 font-bold" to={to}>
+        <Link
+          className="flex items-center px-4 py-2 font-bold tracking-wider transition-all hover:bg-app-medium"
+          to={to}
+        >
           {title}
         </Link>
 
         {links?.map((item) => (
           <Menu.Item key={item.name}>
             <Link
-              className="w-full px-4 py-2 text-sm hover:bg-app-medium"
+              className="flex items-center py-2 pl-8 pr-4 transition-all hover:bg-app-medium"
               to={item.to}
             >
               {item.name}

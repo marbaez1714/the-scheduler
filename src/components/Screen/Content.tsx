@@ -27,7 +27,7 @@ export const Content = ({
       <div className="w-full max-w-5xl">
         {(!!title || !!primaryAction) && (
           <div className="flex px-6 py-6 mb-4 rounded shadow text-app-altText bg-app">
-            {!!title && <h1 className="text-4xl font-bold">{title}</h1>}
+            {!!title && <h1 className="text-4xl font-bold tracking-wider">{title}</h1>}
             {!!primaryAction && (
               <div className="ml-auto rounded bg-app-light">
                 <Button onClick={primaryAction.onClick} variant="outline">

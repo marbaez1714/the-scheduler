@@ -488,6 +488,7 @@ export type Pagination = {
 
 export type Query = {
   __typename?: 'Query';
+  archivedJobLegacy: JobsLegacyResponse;
   areaById?: Maybe<Area>;
   areas: AreasResponse;
   assignedContractors: AssignedContractorsResponse;
@@ -499,14 +500,19 @@ export type Query = {
   companyById?: Maybe<Company>;
   contractorById?: Maybe<Contractor>;
   contractors: ContractorsResponse;
-  jobLegacyByContractorId: JobsLegacyResponse;
   jobLegacyById?: Maybe<JobLegacy>;
+  jobsLegacyByContractorId: JobsLegacyResponse;
   reporterById?: Maybe<Reporter>;
   reporters: ReportersResponse;
   scopeById?: Maybe<Scope>;
   scopes: ScopesResponse;
   supplierById?: Maybe<Supplier>;
   suppliers: SuppliersResponse;
+};
+
+export type QueryArchivedJobLegacyArgs = {
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryAreaByIdArgs = {
@@ -559,15 +565,15 @@ export type QueryContractorsArgs = {
   sorting?: InputMaybe<Sorting>;
 };
 
-export type QueryJobLegacyByContractorIdArgs = {
+export type QueryJobLegacyByIdArgs = {
+  id: Scalars['ID'];
+};
+
+export type QueryJobsLegacyByContractorIdArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
   sorting?: InputMaybe<Sorting>;
-};
-
-export type QueryJobLegacyByIdArgs = {
-  id: Scalars['ID'];
 };
 
 export type QueryReporterByIdArgs = {
@@ -1333,16 +1339,16 @@ export type GetJobLegacyByIdQuery = {
   } | null;
 };
 
-export type GetJobLegacyByContractorIdQueryVariables = Exact<{
+export type GetJobsLegacyByContractorIdQueryVariables = Exact<{
   contractorId: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
   sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-export type GetJobLegacyByContractorIdQuery = {
+export type GetJobsLegacyByContractorIdQuery = {
   __typename?: 'Query';
-  jobLegacyByContractorId: {
+  jobsLegacyByContractorId: {
     __typename?: 'JobsLegacyResponse';
     data: Array<{
       __typename?: 'JobLegacy';
@@ -3449,14 +3455,14 @@ export type GetJobLegacyByIdQueryResult = Apollo.QueryResult<
   GetJobLegacyByIdQuery,
   GetJobLegacyByIdQueryVariables
 >;
-export const GetJobLegacyByContractorIdDocument = gql`
-  query GetJobLegacyByContractorId(
+export const GetJobsLegacyByContractorIdDocument = gql`
+  query GetJobsLegacyByContractorId(
     $contractorId: ID!
     $pagination: Pagination
     $sorting: Sorting
     $archived: Boolean
   ) {
-    jobLegacyByContractorId(
+    jobsLegacyByContractorId(
       id: $contractorId
       pagination: $pagination
       sorting: $sorting
@@ -3524,16 +3530,16 @@ export const GetJobLegacyByContractorIdDocument = gql`
 `;
 
 /**
- * __useGetJobLegacyByContractorIdQuery__
+ * __useGetJobsLegacyByContractorIdQuery__
  *
- * To run a query within a React component, call `useGetJobLegacyByContractorIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetJobLegacyByContractorIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetJobsLegacyByContractorIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobsLegacyByContractorIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetJobLegacyByContractorIdQuery({
+ * const { data, loading, error } = useGetJobsLegacyByContractorIdQuery({
  *   variables: {
  *      contractorId: // value for 'contractorId'
  *      pagination: // value for 'pagination'
@@ -3542,39 +3548,39 @@ export const GetJobLegacyByContractorIdDocument = gql`
  *   },
  * });
  */
-export function useGetJobLegacyByContractorIdQuery(
+export function useGetJobsLegacyByContractorIdQuery(
   baseOptions: Apollo.QueryHookOptions<
-    GetJobLegacyByContractorIdQuery,
-    GetJobLegacyByContractorIdQueryVariables
+    GetJobsLegacyByContractorIdQuery,
+    GetJobsLegacyByContractorIdQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
-    GetJobLegacyByContractorIdQuery,
-    GetJobLegacyByContractorIdQueryVariables
-  >(GetJobLegacyByContractorIdDocument, options);
+    GetJobsLegacyByContractorIdQuery,
+    GetJobsLegacyByContractorIdQueryVariables
+  >(GetJobsLegacyByContractorIdDocument, options);
 }
-export function useGetJobLegacyByContractorIdLazyQuery(
+export function useGetJobsLegacyByContractorIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetJobLegacyByContractorIdQuery,
-    GetJobLegacyByContractorIdQueryVariables
+    GetJobsLegacyByContractorIdQuery,
+    GetJobsLegacyByContractorIdQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    GetJobLegacyByContractorIdQuery,
-    GetJobLegacyByContractorIdQueryVariables
-  >(GetJobLegacyByContractorIdDocument, options);
+    GetJobsLegacyByContractorIdQuery,
+    GetJobsLegacyByContractorIdQueryVariables
+  >(GetJobsLegacyByContractorIdDocument, options);
 }
-export type GetJobLegacyByContractorIdQueryHookResult = ReturnType<
-  typeof useGetJobLegacyByContractorIdQuery
+export type GetJobsLegacyByContractorIdQueryHookResult = ReturnType<
+  typeof useGetJobsLegacyByContractorIdQuery
 >;
-export type GetJobLegacyByContractorIdLazyQueryHookResult = ReturnType<
-  typeof useGetJobLegacyByContractorIdLazyQuery
+export type GetJobsLegacyByContractorIdLazyQueryHookResult = ReturnType<
+  typeof useGetJobsLegacyByContractorIdLazyQuery
 >;
-export type GetJobLegacyByContractorIdQueryResult = Apollo.QueryResult<
-  GetJobLegacyByContractorIdQuery,
-  GetJobLegacyByContractorIdQueryVariables
+export type GetJobsLegacyByContractorIdQueryResult = Apollo.QueryResult<
+  GetJobsLegacyByContractorIdQuery,
+  GetJobsLegacyByContractorIdQueryVariables
 >;
 export const CreateJobLegacyDocument = gql`
   mutation CreateJobLegacy($data: CreateJobLegacyInput!) {

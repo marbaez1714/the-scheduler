@@ -1,3 +1,4 @@
+import { KeyIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
@@ -6,6 +7,7 @@ import {
 } from 'src/api';
 
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
+import { Menu } from 'src/components/Menu';
 import { Screen } from 'src/components/Screen';
 import { localStorageKeys } from 'src/utils/localStorage';
 import { SettingsModal } from './SettingsModal';
@@ -90,7 +92,7 @@ const Dashboard = () => {
     });
   };
 
-  const handleAll = () => {
+  const handleAddAll = () => {
     const allOptions = [
       UNASSIGNED,
       ...(getAssignedContractorsQueryData?.assignedContractors.data || []),
@@ -121,7 +123,7 @@ const Dashboard = () => {
         primaryAction={{ onClick: toggleSettings, title: 'Display Settings' }}
       >
         <SettingsModal
-          onAddAll={handleAll}
+          onAddAll={handleAddAll}
           onClose={toggleSettings}
           onContractorToggle={handleContractorToggle}
           onRemoveAll={handleRemoveAll}

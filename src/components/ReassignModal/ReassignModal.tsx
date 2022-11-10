@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import {
-  GetJobLegacyByContractorIdDocument,
+  GetJobsLegacyByContractorIdDocument,
   useModifyJobLegacyMutation,
 } from 'src/api';
 import { useOptions } from 'src/hooks/useOptions';
@@ -23,7 +23,7 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
   /******************************/
   /* State                      */
   /******************************/
-  const [selectedContractor, setSelectedContractor] = useState('');
+  const [selectedContractor, setSelectedContractor] = useState<string>();
 
   /******************************/
   /* Context                    */
@@ -35,7 +35,7 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
   const [modify] = useModifyJobLegacyMutation({
     onCompleted: (data) => {
       toast.success(data.modifyJobLegacy.message);
-      setSelectedContractor('');
+      setSelectedContractor(undefined);
       onClose();
     },
     onError: (error) => {
@@ -43,11 +43,11 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
     },
     refetchQueries: [
       {
-        query: GetJobLegacyByContractorIdDocument,
+        query: GetJobsLegacyByContractorIdDocument,
         variables: { contractorId: jobLegacy?.contractorId },
       },
       {
-        query: GetJobLegacyByContractorIdDocument,
+        query: GetJobsLegacyByContractorIdDocument,
         variables: { contractorId: selectedContractor },
       },
     ],

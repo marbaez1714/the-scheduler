@@ -163,7 +163,7 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div className="flex flex-col flex-shrink-0 w-full max-h-full overflow-hidden border rounded border-app">
+    <div className="flex flex-col flex-shrink-0 w-full max-h-full overflow-hidden rounded shadow">
       {/* Header */}
       <Pagination
         totalRows={total}

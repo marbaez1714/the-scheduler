@@ -104,7 +104,6 @@ const ModifyJobLegacy = () => {
   /******************************/
   const submit = (data: ModifyJobLegacyInput) => {
     if (jobLegacyId) {
-      console.log(data.startDate);
       modify({ variables: { id: jobLegacyId, data } });
     }
   };
