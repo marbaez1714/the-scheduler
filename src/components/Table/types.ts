@@ -13,10 +13,15 @@ export type TableRowAction<TData> = {
 };
 
 export interface TableProps<TData> {
-  total: number;
-  data: TData[];
+  total?: number;
+  data?: TData[];
   columns: ColumnDef<TData>[];
   rowActions?: TableRowAction<TData>[];
+  manualPagination?: boolean;
+  pageCount?: number;
+  loading?: boolean;
+  onPaginationChange?: (page: number) => void;
+  onPageSizeChange?: (page: number) => void;
 }
 
 export interface TableHeaderProps {

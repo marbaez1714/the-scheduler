@@ -21,7 +21,7 @@ const Collapsable = ({
         {/******************************/}
         {/* Header                     */}
         {/******************************/}
-        <div className="flex items-center p-4 rounded shadow bg-app text-app-altText">
+        <div className="flex items-center p-4 uppercase rounded shadow bg-app text-app-altText">
           {loading ? (
             <div className="p-2 mr-2">
               <ArrowPathIcon className="w-4 animate-spin" />

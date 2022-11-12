@@ -283,6 +283,7 @@ export type MetaResponse = {
   sortField?: Maybe<Scalars['String']>;
   sortOrder?: Maybe<SortOrder>;
   totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
 };
 
 export type ModifyJobLegacyInput = {
@@ -501,6 +502,7 @@ export type Query = {
   contractors: ContractorsResponse;
   jobLegacyById?: Maybe<JobLegacy>;
   jobsLegacy: JobsLegacyResponse;
+  jobsLegacyByActiveStatus: JobsLegacyResponse;
   jobsLegacyByContractorId: JobsLegacyResponse;
   reporterById?: Maybe<Reporter>;
   reporters: ReportersResponse;
@@ -565,6 +567,13 @@ export type QueryJobLegacyByIdArgs = {
 };
 
 export type QueryJobsLegacyArgs = {
+  archived?: InputMaybe<Scalars['Boolean']>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
+};
+
+export type QueryJobsLegacyByActiveStatusArgs = {
+  active: Scalars['Boolean'];
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
   sorting?: InputMaybe<Sorting>;
@@ -1340,15 +1349,16 @@ export type GetJobLegacyByIdQuery = {
   } | null;
 };
 
-export type GetJobsLegacyQueryVariables = Exact<{
+export type GetJobsLegacyByActiveStatusQueryVariables = Exact<{
+  active: Scalars['Boolean'];
   pagination?: InputMaybe<Pagination>;
   sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-export type GetJobsLegacyQuery = {
+export type GetJobsLegacyByActiveStatusQuery = {
   __typename?: 'Query';
-  jobsLegacy: {
+  jobsLegacyByActiveStatus: {
     __typename?: 'JobsLegacyResponse';
     data: Array<{
       __typename?: 'JobLegacy';
@@ -1385,6 +1395,7 @@ export type GetJobsLegacyQuery = {
       totalCount: number;
       sortField?: string | null;
       sortOrder?: SortOrder | null;
+      totalPages: number;
     };
   };
 };
@@ -1451,6 +1462,7 @@ export type GetJobsLegacyByContractorIdQuery = {
       sortField?: string | null;
       sortOrder?: SortOrder | null;
       totalCount: number;
+      totalPages: number;
     };
   };
 };
@@ -3505,13 +3517,15 @@ export type GetJobLegacyByIdQueryResult = Apollo.QueryResult<
   GetJobLegacyByIdQuery,
   GetJobLegacyByIdQueryVariables
 >;
-export const GetJobsLegacyDocument = gql`
-  query GetJobsLegacy(
+export const GetJobsLegacyByActiveStatusDocument = gql`
+  query GetJobsLegacyByActiveStatus(
+    $active: Boolean!
     $pagination: Pagination
     $sorting: Sorting
     $archived: Boolean
   ) {
-    jobsLegacy(
+    jobsLegacyByActiveStatus(
+      active: $active
       pagination: $pagination
       sorting: $sorting
       archived: $archived
@@ -3563,62 +3577,64 @@ export const GetJobsLegacyDocument = gql`
         totalCount
         sortField
         sortOrder
+        totalPages
       }
     }
   }
 `;
 
 /**
- * __useGetJobsLegacyQuery__
+ * __useGetJobsLegacyByActiveStatusQuery__
  *
- * To run a query within a React component, call `useGetJobsLegacyQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetJobsLegacyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetJobsLegacyByActiveStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobsLegacyByActiveStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetJobsLegacyQuery({
+ * const { data, loading, error } = useGetJobsLegacyByActiveStatusQuery({
  *   variables: {
+ *      active: // value for 'active'
  *      pagination: // value for 'pagination'
  *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
  */
-export function useGetJobsLegacyQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetJobsLegacyQuery,
-    GetJobsLegacyQueryVariables
+export function useGetJobsLegacyByActiveStatusQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetJobsLegacyByActiveStatusQuery,
+    GetJobsLegacyByActiveStatusQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetJobsLegacyQuery, GetJobsLegacyQueryVariables>(
-    GetJobsLegacyDocument,
-    options
-  );
+  return Apollo.useQuery<
+    GetJobsLegacyByActiveStatusQuery,
+    GetJobsLegacyByActiveStatusQueryVariables
+  >(GetJobsLegacyByActiveStatusDocument, options);
 }
-export function useGetJobsLegacyLazyQuery(
+export function useGetJobsLegacyByActiveStatusLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetJobsLegacyQuery,
-    GetJobsLegacyQueryVariables
+    GetJobsLegacyByActiveStatusQuery,
+    GetJobsLegacyByActiveStatusQueryVariables
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetJobsLegacyQuery, GetJobsLegacyQueryVariables>(
-    GetJobsLegacyDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    GetJobsLegacyByActiveStatusQuery,
+    GetJobsLegacyByActiveStatusQueryVariables
+  >(GetJobsLegacyByActiveStatusDocument, options);
 }
-export type GetJobsLegacyQueryHookResult = ReturnType<
-  typeof useGetJobsLegacyQuery
+export type GetJobsLegacyByActiveStatusQueryHookResult = ReturnType<
+  typeof useGetJobsLegacyByActiveStatusQuery
 >;
-export type GetJobsLegacyLazyQueryHookResult = ReturnType<
-  typeof useGetJobsLegacyLazyQuery
+export type GetJobsLegacyByActiveStatusLazyQueryHookResult = ReturnType<
+  typeof useGetJobsLegacyByActiveStatusLazyQuery
 >;
-export type GetJobsLegacyQueryResult = Apollo.QueryResult<
-  GetJobsLegacyQuery,
-  GetJobsLegacyQueryVariables
+export type GetJobsLegacyByActiveStatusQueryResult = Apollo.QueryResult<
+  GetJobsLegacyByActiveStatusQuery,
+  GetJobsLegacyByActiveStatusQueryVariables
 >;
 export const GetJobsLegacyByContractorIdDocument = gql`
   query GetJobsLegacyByContractorId(
@@ -3689,6 +3705,7 @@ export const GetJobsLegacyByContractorIdDocument = gql`
         sortField
         sortOrder
         totalCount
+        totalPages
       }
     }
   }

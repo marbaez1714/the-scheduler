@@ -18,8 +18,8 @@ export const TimestampCell = ({ data }: TimestampCellProps) => {
   /******************************/
   return (
     <>
-      <p className="w-auto text-xs">{updatedDate}</p>
-      <p className="w-auto cell-caption-text">{createdDate}</p>
+      <p className="w-auto text-xs">U: {updatedDate}</p>
+      <p className="w-auto cell-caption-text">C: {createdDate}</p>
     </>
   );
 };

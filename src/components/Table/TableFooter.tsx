@@ -40,9 +40,7 @@ export const TableFooter = ({
   const currentPage = pageIndex + 1;
   const disablePrevious = pageIndex === 0;
   const disableNext = pageIndex === totalPages - 1;
-  const pageSizeOptions = [...new Set([10, 25, 50, totalRows])].filter(
-    (opt) => opt <= totalRows
-  );
+  const pageSizeOptions = [10, 25, 50];
 
   /******************************/
   /* Memos                      */
@@ -85,6 +83,7 @@ export const TableFooter = ({
   /******************************/
   return (
     <div className="flex px-6 py-2 bg-app">
+      {/* Page Size */}
       <RadioGroup
         className="flex items-center h-full text-sm border rounded text-app-altText border-app-medium"
         value={pageSize}
@@ -101,54 +100,52 @@ export const TableFooter = ({
               value={value}
               key={value}
             >
-              {value === totalRows ? `All - ${totalRows}` : value}
+              {value}
             </RadioGroup.Option>
           ))}
         </div>
       </RadioGroup>
+      {/* Pagination */}
+      <div className="flex items-center ml-auto overflow-hidden border rounded border-app-medium">
+        <div className="flex items-center text-sm shadow text-app-altText">
+          {/* Page Back Buttons */}
+          <button
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            onClick={handlePageChange('first')}
+            disabled={disablePrevious}
+          >
+            <ChevronDoubleLeftIcon />
+          </button>
+          <button
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            onClick={handlePageChange('prev')}
+            disabled={disablePrevious}
+          >
+            <ChevronLeftIcon />
+          </button>
 
-      {totalPages > 1 && (
-        <div className="flex items-center ml-auto overflow-hidden border rounded border-app-medium">
-          <div className="flex items-center text-sm shadow text-app-altText">
-            {/* Page Back Buttons */}
-            <button
-              className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
-              onClick={handlePageChange('first')}
-              disabled={disablePrevious}
-            >
-              <ChevronDoubleLeftIcon />
-            </button>
-            <button
-              className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
-              onClick={handlePageChange('prev')}
-              disabled={disablePrevious}
-            >
-              <ChevronLeftIcon />
-            </button>
-
-            {/* Current Page */}
-            <div className="flex items-center justify-center w-20 h-6 transition-all pointer-events-none bg-app-medium text-app-text">
-              {currentPage} / {totalPages}
-            </div>
-
-            {/* Page Next Buttons */}
-            <button
-              className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
-              onClick={handlePageChange('next')}
-              disabled={disableNext}
-            >
-              <ChevronRightIcon />
-            </button>
-            <button
-              className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
-              onClick={handlePageChange('last')}
-              disabled={disableNext}
-            >
-              <ChevronDoubleRightIcon />
-            </button>
+          {/* Current Page */}
+          <div className="flex items-center justify-center w-20 h-6 transition-all pointer-events-none bg-app-medium text-app-text">
+            {currentPage} / {totalPages}
           </div>
+
+          {/* Page Next Buttons */}
+          <button
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            onClick={handlePageChange('next')}
+            disabled={disableNext}
+          >
+            <ChevronRightIcon />
+          </button>
+          <button
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            onClick={handlePageChange('last')}
+            disabled={disableNext}
+          >
+            <ChevronDoubleRightIcon />
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

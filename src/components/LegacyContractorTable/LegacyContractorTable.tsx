@@ -32,15 +32,12 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const navigate = useNavigate();
 
   /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
   /* State                      */
   /******************************/
   const [selectedJob, setSelectedJob] = useState<JobLegacy>();
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
+  const [pagination, setPagination] = useState({ page: 1, pageSize: 10 });
 
   /******************************/
   /* Context                    */
@@ -51,7 +48,10 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   const { data, loading, refetch } = useGetJobsLegacyByContractorIdQuery({
     fetchPolicy: 'cache-and-network',
-    variables: { contractorId: contractor.id },
+    variables: {
+      contractorId: contractor.id,
+      pagination,
+    },
   });
 
   const [modify] = useModifyJobLegacyMutation({
@@ -74,6 +74,14 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const handlePaginationChange = (pageIndex: number) => {
+    setPagination((prev) => ({ page: pageIndex + 1, pageSize: prev.pageSize }));
+  };
+
+  const handlePageSizeChange = (pageSize: number) => {
+    setPagination({ page: 1, pageSize });
+  };
+
   const handleReassignJob = (data: JobLegacy) => {
     setSelectedJob(data);
     setReassignModalOpen(true);
@@ -217,20 +225,13 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     },
     {
       id: 'timestamp',
-      header: () => (
-        <Table.HeaderCell
-          title="Timestamps"
-          subtitle="Last Updated / First Created"
-        />
-      ),
+      header: 'Timestamps',
       accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
       cell: (data) => <Table.TimestampCell data={data.row.original} />,
     },
     {
       id: 'id',
-      header: () => (
-        <Table.HeaderCell title="ID" subtitle="Identifier / Origin" />
-      ),
+      header: 'ID',
       accessorKey: 'id',
       cell: (data) => (
         <Table.DataIdCell
@@ -265,10 +266,15 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         defaultOpen
       >
         <Table
-          data={(data?.jobsLegacyByContractorId.data ?? []) as JobLegacy[]}
+          loading={loading}
           columns={columns}
-          total={data?.jobsLegacyByContractorId.meta.totalCount ?? 0}
+          data={data?.jobsLegacyByContractorId.data as JobLegacy[]}
+          total={data?.jobsLegacyByContractorId.meta.totalCount}
+          pageCount={data?.jobsLegacyByContractorId.meta.totalPages}
           rowActions={rowActions}
+          onPaginationChange={handlePaginationChange}
+          onPageSizeChange={handlePageSizeChange}
+          manualPagination
         />
       </Collapsable>
     </>

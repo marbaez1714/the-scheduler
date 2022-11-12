@@ -11,6 +11,8 @@ import {
   getFilteredRowModel,
   Header,
   getPaginationRowModel,
+  OnChangeFn,
+  Updater,
 } from '@tanstack/react-table';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
@@ -27,16 +29,20 @@ import { TableFooter } from './TableFooter';
 import { TableHeader } from './TableHeader';
 
 const Table = <TData extends Record<string, unknown>>({
-  data,
+  data = [],
+  total = 0,
   columns,
-  total,
   rowActions,
+  pageCount,
+  loading,
+  onPaginationChange,
+  onPageSizeChange,
+  manualPagination,
 }: TableProps<TData>) => {
   /******************************/
   /* State                      */
   /******************************/
   const [globalFilter, setGlobalFilter] = useState('');
-  const [sorting, setSorting] = useState<SortingState>([]);
 
   /******************************/
   /* Callbacks                  */
@@ -56,6 +62,16 @@ const Table = <TData extends Record<string, unknown>>({
     setGlobalFilter(e.target.value);
   };
 
+  const handlePageChange = (pageIndex: number) => {
+    setPageIndex(pageIndex);
+    onPaginationChange && onPaginationChange(pageIndex);
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    onPageSizeChange && onPageSizeChange(size);
+  };
+
   /******************************/
   /* Table                      */
   /******************************/
@@ -67,13 +83,14 @@ const Table = <TData extends Record<string, unknown>>({
     setPageIndex,
     getPageCount,
   } = useReactTable({
-    state: { sorting, globalFilter },
+    state: { globalFilter },
     initialState: { pagination: { pageSize: 10 } },
     data,
     columns,
+    pageCount,
     globalFilterFn,
+    manualPagination,
     onGlobalFilterChange: setGlobalFilter,
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getCoreRowModel: getCoreRowModel(),
@@ -93,7 +110,7 @@ const Table = <TData extends Record<string, unknown>>({
     return (
       <th
         className={cn(
-          'h-14 py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative',
+          'py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
           {
             'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
             'bg-app-dark': isSorted,
@@ -128,6 +145,26 @@ const Table = <TData extends Record<string, unknown>>({
   const renderBodyRows = () => {
     const { rows } = getRowModel();
 
+    if (loading) {
+      return (
+        <>
+          <tr className="h-12 text-xs border-b">
+            <td className="px-3 py-2 first:pl-4 last:pr-4" colSpan={100}>
+              <p>(Loading)</p>
+            </td>
+          </tr>
+          {Array.from(
+            { length: getState().pagination.pageSize - 1 },
+            (_, index) => (
+              <tr className="h-12 border-b last:border-b-0" key={index}>
+                <td className="px-3 py-2 first:pl-4 last:pr-4" />
+              </tr>
+            )
+          )}
+        </>
+      );
+    }
+
     if (rows.length < 1) {
       return (
         <tr className="transition-all border-b last:border-b-0 text-app-text/25">
@@ -139,16 +176,13 @@ const Table = <TData extends Record<string, unknown>>({
     }
 
     return rows.map(({ id: rowId, original, getVisibleCells }) => (
-      <tr
-        className="transition-all border-b last:border-b-0 last:rounded-b"
-        key={rowId}
-      >
+      <tr className="transition-all border-y" key={rowId}>
         {rowActions && (
           <RowActionCell menuActions={rowActions} data={original} />
         )}
         {getVisibleCells().map(
           ({ id: cellId, column, getContext, getValue }) => (
-            <td className="px-3 py-2 first:pl-4 last:pr-4 " key={cellId}>
+            <td className="px-3 py-2 first:pl-4 last:pr-4" key={cellId}>
               {getValue() ? (
                 flexRender(column.columnDef.cell, getContext())
               ) : (
@@ -194,9 +228,9 @@ const Table = <TData extends Record<string, unknown>>({
       {/* Footer */}
       <TableFooter
         totalRows={total}
-        totalPages={getPageCount()}
-        onPageChange={setPageIndex}
-        onPageSizeChange={setPageSize}
+        totalPages={pageCount ?? getPageCount()}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
         {...getState().pagination}
       />
     </div>
