@@ -56,7 +56,7 @@ const Collapsable = ({
         {/* Content                    */}
         {/******************************/}
         <Disclosure.Panel
-          className={cn('m-2 rounded bg-app-light overflow-scroll max-h-[700px] shadow', {
+          className={cn('m-2 rounded bg-app-light shadow', {
             'pointer-events-none animate-pulse': loading,
           })}
           unmount={unmount}

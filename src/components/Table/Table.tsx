@@ -22,10 +22,9 @@ import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
 import { HeaderCell } from './Cells/HeaderCell';
 import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
-import { Pagination } from './Pagination';
 import { TableProps } from './types';
-import { TextInput } from '../TextInput';
-import { ScrollContainer } from '../ScrollContainer';
+import { TableFooter } from './TableFooter';
+import { TableHeader } from './TableHeader';
 
 const Table = <TData extends Record<string, unknown>>({
   data,
@@ -163,18 +162,12 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div className="flex flex-col flex-shrink-0 w-full max-h-full overflow-hidden rounded shadow">
+    <div className="flex flex-col w-full max-h-full overflow-hidden rounded shadow">
       {/* Header */}
-      <Pagination
-        totalRows={total}
-        totalPages={getPageCount()}
+      <TableHeader
         searchTerm={globalFilter}
-        onPageSizeChange={setPageSize}
-        onPageChange={setPageIndex}
         onSearchChange={handleSearchChange}
-        {...getState().pagination}
       />
-
       {/* Table */}
       <div className="overflow-scroll">
         <table className="relative w-full border-collapse whitespace-nowrap">
@@ -198,6 +191,14 @@ const Table = <TData extends Record<string, unknown>>({
           </tbody>
         </table>
       </div>
+      {/* Footer */}
+      <TableFooter
+        totalRows={total}
+        totalPages={getPageCount()}
+        onPageChange={setPageIndex}
+        onPageSizeChange={setPageSize}
+        {...getState().pagination}
+      />
     </div>
   );
 };

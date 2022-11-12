@@ -1,8 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useGetJobsLegacyQuery } from 'src/api';
-import { Screen } from 'src/components/Screen';
 
-const Archive = () => {
+import { TextInput } from '../TextInput';
+import { TableHeaderProps } from './types';
+
+export const TableHeader = ({
+  onSearchChange,
+  searchTerm,
+}: TableHeaderProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -22,10 +26,6 @@ const Archive = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data: getJobsLegacyData, loading: getJobLegacyLoading } =
-    useGetJobsLegacyQuery({
-      variables: { archived: true, pagination: { page: 1, pageSize: 10 } },
-    });
 
   /******************************/
   /* Memos                      */
@@ -43,12 +43,13 @@ const Archive = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen>
-      <Screen.Content title="Archive" loading={getJobLegacyLoading}>
-        {JSON.stringify(getJobsLegacyData)}
-      </Screen.Content>
-    </Screen>
+    <div className="flex px-6 py-4 border-b bg-app border-b-app-medium">
+      <TextInput
+        className='w-1/3'
+        onChange={onSearchChange}
+        value={searchTerm}
+        placeholder="Search Term"
+      />
+    </div>
   );
 };
-
-export default Archive;

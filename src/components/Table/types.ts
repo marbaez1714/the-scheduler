@@ -19,6 +19,20 @@ export interface TableProps<TData> {
   rowActions?: TableRowAction<TData>[];
 }
 
+export interface TableHeaderProps {
+  searchTerm: string;
+  onSearchChange: ChangeEventHandler<HTMLInputElement>;
+}
+
+export interface TableFooterProps {
+  totalRows: number;
+  pageIndex: number;
+  totalPages: number;
+  pageSize: number;
+  onPageChange: (page: number) => void;
+  onPageSizeChange: (size: number) => void;
+}
+
 export interface PaginationProps {
   pageIndex: number;
   pageSize: number;

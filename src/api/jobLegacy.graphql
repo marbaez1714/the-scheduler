@@ -23,6 +23,63 @@ query GetJobLegacyById($id: ID!) {
   }
 }
 
+query GetJobsLegacy(
+  $pagination: Pagination
+  $sorting: Sorting
+  $archived: Boolean
+) {
+  jobsLegacy(pagination: $pagination, sorting: $sorting, archived: $archived) {
+    data {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      status
+      completedDate
+      startDate
+      notes
+      area {
+        id
+        name
+      }
+      builder {
+        id
+        name
+      }
+      community {
+        id
+        name
+      }
+      contractor {
+        id
+        name
+      }
+      reporter {
+        id
+        name
+      }
+      scope {
+        id
+        name
+      }
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    meta {
+      page
+      pageSize
+      totalCount
+      sortField
+      sortOrder
+    }
+  }
+}
+
 query GetJobsLegacyByContractorId(
   $contractorId: ID!
   $pagination: Pagination

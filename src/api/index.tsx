@@ -488,7 +488,6 @@ export type Pagination = {
 
 export type Query = {
   __typename?: 'Query';
-  archivedJobLegacy: JobsLegacyResponse;
   areaById?: Maybe<Area>;
   areas: AreasResponse;
   assignedContractors: AssignedContractorsResponse;
@@ -501,6 +500,7 @@ export type Query = {
   contractorById?: Maybe<Contractor>;
   contractors: ContractorsResponse;
   jobLegacyById?: Maybe<JobLegacy>;
+  jobsLegacy: JobsLegacyResponse;
   jobsLegacyByContractorId: JobsLegacyResponse;
   reporterById?: Maybe<Reporter>;
   reporters: ReportersResponse;
@@ -508,11 +508,6 @@ export type Query = {
   scopes: ScopesResponse;
   supplierById?: Maybe<Supplier>;
   suppliers: SuppliersResponse;
-};
-
-export type QueryArchivedJobLegacyArgs = {
-  pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryAreaByIdArgs = {
@@ -567,6 +562,12 @@ export type QueryContractorsArgs = {
 
 export type QueryJobLegacyByIdArgs = {
   id: Scalars['ID'];
+};
+
+export type QueryJobsLegacyArgs = {
+  archived?: InputMaybe<Scalars['Boolean']>;
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryJobsLegacyByContractorIdArgs = {
@@ -1337,6 +1338,55 @@ export type GetJobLegacyByIdQuery = {
       supplierId: string;
     }>;
   } | null;
+};
+
+export type GetJobsLegacyQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  sorting?: InputMaybe<Sorting>;
+  archived?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetJobsLegacyQuery = {
+  __typename?: 'Query';
+  jobsLegacy: {
+    __typename?: 'JobsLegacyResponse';
+    data: Array<{
+      __typename?: 'JobLegacy';
+      id: string;
+      name: string;
+      active: boolean;
+      inProgress: boolean;
+      isImportant: boolean;
+      status: JobLegacyStatus;
+      completedDate?: string | null;
+      startDate?: string | null;
+      notes?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+      area?: { __typename?: 'Area'; id: string; name: string } | null;
+      builder?: { __typename?: 'Builder'; id: string; name: string } | null;
+      community?: { __typename?: 'Community'; id: string; name: string } | null;
+      contractor?: {
+        __typename?: 'Contractor';
+        id: string;
+        name: string;
+      } | null;
+      reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
+      scope?: { __typename?: 'Scope'; id: string; name: string } | null;
+    }>;
+    meta: {
+      __typename?: 'MetaResponse';
+      page?: number | null;
+      pageSize?: number | null;
+      totalCount: number;
+      sortField?: string | null;
+      sortOrder?: SortOrder | null;
+    };
+  };
 };
 
 export type GetJobsLegacyByContractorIdQueryVariables = Exact<{
@@ -3454,6 +3504,121 @@ export type GetJobLegacyByIdLazyQueryHookResult = ReturnType<
 export type GetJobLegacyByIdQueryResult = Apollo.QueryResult<
   GetJobLegacyByIdQuery,
   GetJobLegacyByIdQueryVariables
+>;
+export const GetJobsLegacyDocument = gql`
+  query GetJobsLegacy(
+    $pagination: Pagination
+    $sorting: Sorting
+    $archived: Boolean
+  ) {
+    jobsLegacy(
+      pagination: $pagination
+      sorting: $sorting
+      archived: $archived
+    ) {
+      data {
+        id
+        name
+        active
+        inProgress
+        isImportant
+        status
+        completedDate
+        startDate
+        notes
+        area {
+          id
+          name
+        }
+        builder {
+          id
+          name
+        }
+        community {
+          id
+          name
+        }
+        contractor {
+          id
+          name
+        }
+        reporter {
+          id
+          name
+        }
+        scope {
+          id
+          name
+        }
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+      meta {
+        page
+        pageSize
+        totalCount
+        sortField
+        sortOrder
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetJobsLegacyQuery__
+ *
+ * To run a query within a React component, call `useGetJobsLegacyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobsLegacyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobsLegacyQuery({
+ *   variables: {
+ *      pagination: // value for 'pagination'
+ *      sorting: // value for 'sorting'
+ *      archived: // value for 'archived'
+ *   },
+ * });
+ */
+export function useGetJobsLegacyQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetJobsLegacyQuery,
+    GetJobsLegacyQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetJobsLegacyQuery, GetJobsLegacyQueryVariables>(
+    GetJobsLegacyDocument,
+    options
+  );
+}
+export function useGetJobsLegacyLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetJobsLegacyQuery,
+    GetJobsLegacyQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetJobsLegacyQuery, GetJobsLegacyQueryVariables>(
+    GetJobsLegacyDocument,
+    options
+  );
+}
+export type GetJobsLegacyQueryHookResult = ReturnType<
+  typeof useGetJobsLegacyQuery
+>;
+export type GetJobsLegacyLazyQueryHookResult = ReturnType<
+  typeof useGetJobsLegacyLazyQuery
+>;
+export type GetJobsLegacyQueryResult = Apollo.QueryResult<
+  GetJobsLegacyQuery,
+  GetJobsLegacyQueryVariables
 >;
 export const GetJobsLegacyByContractorIdDocument = gql`
   query GetJobsLegacyByContractorId(
