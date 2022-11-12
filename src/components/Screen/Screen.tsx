@@ -56,7 +56,7 @@ const Screen = ({ children }: ScreenProps) => {
       {/******************************/}
       {/* Status Bar                 */}
       {/******************************/}
-      <div className="z-10 flex px-2 py-1 shadow-md opacity-50 bg-app-medium">
+      <div className="flex px-2 py-1 shadow-md opacity-50 bg-app-medium">
         <p className="px-4 text-xs text-app-dark">
           Version: {process.env.REACT_APP_VERSION}
         </p>

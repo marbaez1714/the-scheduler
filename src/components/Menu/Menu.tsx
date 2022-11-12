@@ -86,7 +86,7 @@ const Menu = ({ items, anchor, title, className }: MenuProps) => {
             afterLeave={handleLeave}
           >
             <HeadlessMenu.Items
-              className="fixed z-50 flex flex-col ml-2 overflow-hidden text-sm transition-all divide-y rounded shadow-2xl bg-app-light divide-app-medium"
+              className="fixed z-50 flex flex-col w-40 ml-2 overflow-hidden text-xs transition-all rounded shadow-2xl bg-app-light divide-app-medium"
               style={{ top, left, marginTop }}
               ref={listRef}
               static
@@ -94,15 +94,14 @@ const Menu = ({ items, anchor, title, className }: MenuProps) => {
               <div className="flex items-center px-4 py-2 font-bold tracking-wider transition-all text-app-altText bg-app">
                 <span>{title}</span>
               </div>
-
               {items.map((action) => (
                 <HeadlessMenu.Item key={action.label}>
                   <button
-                    className="flex items-center px-4 py-2 transition-all text-app-darkest hover:bg-app-medium"
+                    className="flex items-center w-full px-4 py-2 transition-all text-app-darkest hover:bg-app-medium"
                     onClick={action.onClick}
                   >
                     {action.icon && (
-                      <div className="w-4 h-4 mr-4">{action.icon}</div>
+                      <div className="w-3 h-3 mr-2">{action.icon}</div>
                     )}
                     {action.label}
                   </button>
