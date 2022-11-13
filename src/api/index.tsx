@@ -251,10 +251,21 @@ export enum JobLegacyStatus {
   WillCall = 'willCall',
 }
 
+export enum JobsLegacyMessageRecipient {
+  Contractor = 'contractor',
+  Reporter = 'reporter',
+}
+
 export type JobsLegacyResponse = {
   __typename?: 'JobsLegacyResponse';
   data: Array<JobLegacy>;
   meta: MetaResponse;
+};
+
+export type JobsLegacySendMessageResponse = {
+  __typename?: 'JobsLegacySendMessageResponse';
+  message: Scalars['String'];
+  recipient: JobsLegacyMessageRecipient;
 };
 
 export type LineItemLegacy = {
@@ -340,7 +351,7 @@ export type Mutation = {
   modifyReporter: WriteReporterResponse;
   modifyScope: WriteScopeResponse;
   modifySupplier: WriteSupplierResponse;
-  sendNotification: SendNotificationResponse;
+  sendMessageJobLegacy?: Maybe<JobsLegacySendMessageResponse>;
 };
 
 export type MutationArchiveAreaArgs = {
@@ -464,22 +475,10 @@ export type MutationModifySupplierArgs = {
   id: Scalars['ID'];
 };
 
-export type MutationSendNotificationArgs = {
-  data: SendNotificationInput;
-};
-
-export type NotificationLegacy = {
-  __typename?: 'NotificationLegacy';
-  archived: Scalars['Boolean'];
-  createdBy: Scalars['String'];
-  createdTime: Scalars['String'];
+export type MutationSendMessageJobLegacyArgs = {
   id: Scalars['ID'];
-  jobId: Scalars['String'];
-  jobLegacy: JobLegacy;
   message: Scalars['String'];
-  recipientPhone: Scalars['String'];
-  recipientRole: RecipientRole;
-  success: Scalars['Boolean'];
+  recipient: JobsLegacyMessageRecipient;
 };
 
 export type Pagination = {
@@ -616,11 +615,6 @@ export type QuerySuppliersArgs = {
   sorting?: InputMaybe<Sorting>;
 };
 
-export enum RecipientRole {
-  Contractor = 'contractor',
-  Reporter = 'reporter',
-}
-
 export type Reporter = {
   __typename?: 'Reporter';
   archived: Scalars['Boolean'];
@@ -661,18 +655,6 @@ export type ScopesResponse = {
   __typename?: 'ScopesResponse';
   data: Array<Scope>;
   meta: MetaResponse;
-};
-
-export type SendNotificationInput = {
-  jobId: Scalars['String'];
-  message: Scalars['String'];
-  recipientPhone: Scalars['String'];
-  recipientRole: RecipientRole;
-};
-
-export type SendNotificationResponse = {
-  __typename?: 'SendNotificationResponse';
-  notification: NotificationLegacy;
 };
 
 export enum SortOrder {
@@ -1516,6 +1498,21 @@ export type ModifyJobLegacyMutation = {
       scope?: { __typename?: 'Scope'; id: string; name: string } | null;
     };
   };
+};
+
+export type SendMessageJobLegacyMutationVariables = Exact<{
+  id: Scalars['ID'];
+  recipient: JobsLegacyMessageRecipient;
+  message: Scalars['String'];
+}>;
+
+export type SendMessageJobLegacyMutation = {
+  __typename?: 'Mutation';
+  sendMessageJobLegacy?: {
+    __typename?: 'JobsLegacySendMessageResponse';
+    message: string;
+    recipient: JobsLegacyMessageRecipient;
+  } | null;
 };
 
 export type GetReporterQueryVariables = Exact<{
@@ -3903,6 +3900,63 @@ export type ModifyJobLegacyMutationResult =
 export type ModifyJobLegacyMutationOptions = Apollo.BaseMutationOptions<
   ModifyJobLegacyMutation,
   ModifyJobLegacyMutationVariables
+>;
+export const SendMessageJobLegacyDocument = gql`
+  mutation SendMessageJobLegacy(
+    $id: ID!
+    $recipient: JobsLegacyMessageRecipient!
+    $message: String!
+  ) {
+    sendMessageJobLegacy(id: $id, recipient: $recipient, message: $message) {
+      message
+      recipient
+    }
+  }
+`;
+export type SendMessageJobLegacyMutationFn = Apollo.MutationFunction<
+  SendMessageJobLegacyMutation,
+  SendMessageJobLegacyMutationVariables
+>;
+
+/**
+ * __useSendMessageJobLegacyMutation__
+ *
+ * To run a mutation, you first call `useSendMessageJobLegacyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendMessageJobLegacyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendMessageJobLegacyMutation, { data, loading, error }] = useSendMessageJobLegacyMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      recipient: // value for 'recipient'
+ *      message: // value for 'message'
+ *   },
+ * });
+ */
+export function useSendMessageJobLegacyMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SendMessageJobLegacyMutation,
+    SendMessageJobLegacyMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    SendMessageJobLegacyMutation,
+    SendMessageJobLegacyMutationVariables
+  >(SendMessageJobLegacyDocument, options);
+}
+export type SendMessageJobLegacyMutationHookResult = ReturnType<
+  typeof useSendMessageJobLegacyMutation
+>;
+export type SendMessageJobLegacyMutationResult =
+  Apollo.MutationResult<SendMessageJobLegacyMutation>;
+export type SendMessageJobLegacyMutationOptions = Apollo.BaseMutationOptions<
+  SendMessageJobLegacyMutation,
+  SendMessageJobLegacyMutationVariables
 >;
 export const GetReporterDocument = gql`
   query GetReporter($id: ID!) {

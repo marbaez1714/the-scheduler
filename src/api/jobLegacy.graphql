@@ -210,3 +210,14 @@ mutation ModifyJobLegacy($id: ID!, $data: ModifyJobLegacyInput!) {
     }
   }
 }
+
+mutation SendMessageJobLegacy(
+  $id: ID!
+  $recipient: JobsLegacyMessageRecipient!
+  $message: String!
+) {
+  sendMessageJobLegacy(id: $id, recipient: $recipient, message: $message) {
+    message
+    recipient
+  }
+}

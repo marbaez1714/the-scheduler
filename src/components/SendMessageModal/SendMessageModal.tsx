@@ -1,5 +1,9 @@
 import { format } from 'date-fns';
 import { useState, useEffect, useMemo } from 'react';
+import {
+  JobsLegacyMessageRecipient,
+  useSendMessageJobLegacyMutation,
+} from 'src/api';
 import { Button } from '../Button';
 import { Modal } from '../Modal';
 import { RadioGroupInput } from '../RadioGroupInput';
@@ -34,6 +38,7 @@ const SendMessageModal = ({
   /******************************/
   /* Data                       */
   /******************************/
+  const [sendMessageLegacy, { loading }] = useSendMessageJobLegacyMutation();
 
   /******************************/
   /* Memos                      */
@@ -81,17 +86,6 @@ const SendMessageModal = ({
   /* Effects                    */
   /******************************/
   useEffect(() => {
-    getContractorMessage();
-  }, [translations, contractorLanguage]);
-
-  useEffect(() => {
-    getReporterMessage();
-  }, [translations, reporterLanguage]);
-
-  /******************************/
-  /* Callbacks                  */
-  /******************************/
-  const getContractorMessage = () => {
     if (jobLegacy && translations) {
       const selected =
         translations[contractorLanguage as 'english' | 'spanish'];
@@ -107,9 +101,9 @@ const SendMessageModal = ({
 
       setContractorMessage(messageArray.filter((line) => line).join('\n'));
     }
-  };
+  }, [translations, contractorLanguage]);
 
-  const getReporterMessage = () => {
+  useEffect(() => {
     if (jobLegacy && translations) {
       const selected = translations[reporterLanguage as 'english' | 'spanish'];
 
@@ -125,6 +119,33 @@ const SendMessageModal = ({
       ];
 
       setReporterMessage(messageArray.filter((line) => line).join('\n'));
+    }
+  }, [translations, reporterLanguage]);
+
+  /******************************/
+  /* Callbacks                  */
+  /******************************/
+  const sendContractorMessage = () => {
+    if (jobLegacy) {
+      sendMessageLegacy({
+        variables: {
+          id: jobLegacy.id,
+          message: contractorMessage,
+          recipient: JobsLegacyMessageRecipient.Contractor,
+        },
+      }).then(console.log);
+    }
+  };
+
+  const sendReporterMessage = () => {
+    if (jobLegacy) {
+      sendMessageLegacy({
+        variables: {
+          id: jobLegacy.id,
+          message: reporterMessage,
+          recipient: JobsLegacyMessageRecipient.Reporter,
+        },
+      }).then(console.log);
     }
   };
 
@@ -159,7 +180,9 @@ const SendMessageModal = ({
               onChange={(e) => setContractorMessage(e.target.value)}
             />
 
-            <Button>Send</Button>
+            <Button loading={loading} onClick={sendContractorMessage}>
+              Send
+            </Button>
           </div>
         )}
         {jobLegacy?.reporter && (
@@ -183,7 +206,9 @@ const SendMessageModal = ({
               onChange={(e) => setReporterMessage(e.target.value)}
             />
 
-            <Button>Send</Button>
+            <Button loading={loading} onClick={sendReporterMessage}>
+              Send
+            </Button>
           </div>
         )}
       </div>
