@@ -137,11 +137,14 @@ const SendMessageModal = ({
       open={open}
       onClose={onClose}
     >
-      <div className="flex gap-4">
+      <div className="flex gap-6">
         {jobLegacy?.contractor && (
-          <div className="flex flex-col flex-grow gap-4 basis-1/2 w-96">
+          <div className="flex flex-col flex-grow gap-4 p-4 border rounded shadow basis-1/2 w-96 border-app-medium">
+            <p className="text-lg font-medium uppercase text-app-dark">
+              To installer {jobLegacy.contractor.name}
+            </p>
+
             <RadioGroupInput
-              label={`Message to ${jobLegacy.contractor.name}`}
               value={contractorLanguage}
               onChange={setContractorLanguage}
               options={[
@@ -149,18 +152,23 @@ const SendMessageModal = ({
                 { label: 'Spanish', value: 'spanish' },
               ]}
             />
+
             <TextAreaInput
               className="h-96"
               value={contractorMessage}
               onChange={(e) => setContractorMessage(e.target.value)}
             />
+
             <Button>Send</Button>
           </div>
         )}
         {jobLegacy?.reporter && (
-          <div className="flex flex-col flex-grow gap-4 basis-1/2 w-96">
+          <div className="flex flex-col flex-grow gap-4 p-4 border shadow basis-1/2 w-96 border-app-medium">
+            <p className="text-lg font-medium uppercase text-app-dark">
+              To reporter {jobLegacy.reporter.name}
+            </p>
+
             <RadioGroupInput
-              label={`Message to ${jobLegacy.reporter.name}`}
               value={reporterLanguage}
               onChange={setReporterLanguage}
               options={[
@@ -168,6 +176,7 @@ const SendMessageModal = ({
                 { label: 'Spanish', value: 'spanish' },
               ]}
             />
+
             <TextAreaInput
               className=" h-96"
               value={reporterMessage}
@@ -177,11 +186,6 @@ const SendMessageModal = ({
             <Button>Send</Button>
           </div>
         )}
-      </div>
-
-      {/* Actions */}
-      <div className="flex justify-end mt-2">
-        <Button>Submit</Button>
       </div>
     </Modal>
   );

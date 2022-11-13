@@ -45,7 +45,7 @@ export const ContractorAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={loading}>
+    <Screen.Content loading={loading}>
       <Form
         title="Add Contractor"
         onSubmit={handleSubmit(submit)}

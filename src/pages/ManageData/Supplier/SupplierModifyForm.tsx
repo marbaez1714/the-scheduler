@@ -94,7 +94,7 @@ export const SupplierModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content loading={getLoading || modifyLoading}>
       <Form
         title="Modify Supplier"
         onSubmit={handleSubmit(submit)}

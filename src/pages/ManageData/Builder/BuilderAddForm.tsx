@@ -48,7 +48,7 @@ export const BuilderAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={loading}>
+    <Screen.Content loading={loading}>
       <Form
         title="Add Builder"
         onSubmit={handleSubmit(submit)}

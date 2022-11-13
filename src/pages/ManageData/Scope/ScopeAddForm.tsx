@@ -45,7 +45,7 @@ export const ScopeAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={loading}>
+    <Screen.Content loading={loading}>
       <Form
         title="Add Scope"
         onSubmit={handleSubmit(submit)}

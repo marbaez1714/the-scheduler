@@ -116,8 +116,6 @@ const Dashboard = () => {
   return (
     <Screen>
       <Screen.Content
-        column
-        className="gap-4"
         loading={getAssignedContractorsQueryLoading}
         title="Dashboard"
         primaryAction={{ onClick: toggleSettings, title: 'Display Settings' }}

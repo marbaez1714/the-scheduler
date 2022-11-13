@@ -42,29 +42,25 @@ const Screen = ({ children }: ScreenProps) => {
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col w-screen h-screen font-roboto">
-      {/******************************/}
-      {/* Page                       */}
-      {/******************************/}
+    <>
       <NavBar />
-      <div className="flex flex-grow overflow-auto bg-app-medium">
+      <div className="flex flex-col w-screen h-full px-4 pt-16 pb-10 font-roboto bg-app-medium">
+        {/******************************/}
+        {/* Page                       */}
+        {/******************************/}
         {/******************************/}
         {/* Screen Content             */}
         {/******************************/}
         {children}
+        {/******************************/}
+        {/* Status Bar                 */}
+        {/******************************/}
       </div>
-      {/******************************/}
-      {/* Status Bar                 */}
-      {/******************************/}
-      <div className="flex px-2 py-1 shadow-md opacity-50 bg-app-medium">
-        <p className="px-4 text-xs text-app-dark">
-          Version: {process.env.REACT_APP_VERSION}
-        </p>
-        <p className="px-4 text-xs text-app-dark">
-          Status: {isAuthenticated ? 'Authorized' : 'Unauthorized'}
-        </p>
-      </div>
-    </div>
+      <footer className="fixed bottom-0 flex w-full gap-4 px-2 py-1 text-xs shadow-md bg-app-light">
+        <p>Version: {process.env.REACT_APP_VERSION}</p>
+        <p>Status: {isAuthenticated ? 'Authorized' : 'Unauthorized'}</p>
+      </footer>
+    </>
   );
 };
 

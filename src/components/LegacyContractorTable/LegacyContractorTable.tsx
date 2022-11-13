@@ -244,6 +244,13 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     },
   ];
 
+  const tableAction = {
+    title: 'Refresh',
+    onClick: () => {
+      refetch();
+    },
+  };
+
   /******************************/
   /* Render                     */
   /******************************/
@@ -274,6 +281,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
           rowActions={rowActions}
           onPaginationChange={handlePaginationChange}
           onPageSizeChange={handlePageSizeChange}
+          tableAction={tableAction}
           manualPagination
         />
       </Collapsable>

@@ -102,20 +102,13 @@ export const CompanyList = () => {
     },
     {
       id: 'timestamp',
-      header: () => (
-        <Table.HeaderCell
-          title="Timestamps"
-          subtitle="Last Updated / First Created"
-        />
-      ),
+      header: 'Timestamps',
       accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
       cell: (data) => <Table.TimestampCell data={data.row.original} />,
     },
     {
       id: 'id',
-      header: () => (
-        <Table.HeaderCell title="ID" subtitle="Identifier / Origin" />
-      ),
+      header: "ID",
       accessorKey: 'id',
       cell: (data) => (
         <Table.DataIdCell

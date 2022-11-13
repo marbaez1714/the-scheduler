@@ -33,7 +33,7 @@ const Modal = ({ title, open, onClose, children }: ModalProps) => {
             {/* The actual dialog panel  */}
             <Dialog.Panel className="max-h-full mx-auto rounded shadow bg-app-light">
               {!!title && (
-                <Dialog.Title className="py-4 pl-4 pr-12 text-2xl font-semibold tracking-wide rounded-t text-app-altText bg-app">
+                <Dialog.Title className="py-4 pl-4 pr-12 text-2xl font-semibold tracking-wide uppercase rounded-t text-app-altText bg-app">
                   {title}
                 </Dialog.Title>
               )}

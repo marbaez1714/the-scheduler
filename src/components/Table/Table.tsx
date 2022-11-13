@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useRef, useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -6,13 +6,10 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
   getFilteredRowModel,
   Header,
   getPaginationRowModel,
-  OnChangeFn,
-  Updater,
 } from '@tanstack/react-table';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
@@ -37,12 +34,18 @@ const Table = <TData extends Record<string, unknown>>({
   loading,
   onPaginationChange,
   onPageSizeChange,
+  tableAction,
   manualPagination,
 }: TableProps<TData>) => {
   /******************************/
   /* State                      */
   /******************************/
   const [globalFilter, setGlobalFilter] = useState('');
+
+  /******************************/
+  /* Refs                       */
+  /******************************/
+  const containerRef = useRef<HTMLDivElement>(null);
 
   /******************************/
   /* Callbacks                  */
@@ -58,16 +61,25 @@ const Table = <TData extends Record<string, unknown>>({
     return itemRank.passed;
   };
 
+  const scrollToTable = () => {
+    if (containerRef.current) {
+      const { top } = containerRef.current.getBoundingClientRect();
+      window.scrollBy({ top: top - 64, behavior: 'smooth' }); // top + header offset
+    }
+  };
+
   const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setGlobalFilter(e.target.value);
   };
 
   const handlePageChange = (pageIndex: number) => {
+    scrollToTable();
     setPageIndex(pageIndex);
     onPaginationChange && onPaginationChange(pageIndex);
   };
 
   const handlePageSizeChange = (size: number) => {
+    scrollToTable();
     setPageSize(size);
     onPageSizeChange && onPageSizeChange(size);
   };
@@ -97,6 +109,8 @@ const Table = <TData extends Record<string, unknown>>({
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  const { pagination } = getState();
+
   /******************************/
   /* Render                     */
   /******************************/
@@ -110,7 +124,7 @@ const Table = <TData extends Record<string, unknown>>({
     return (
       <th
         className={cn(
-          'py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
+          'h-6 py-1 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
           {
             'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
             'bg-app-dark': isSorted,
@@ -148,7 +162,7 @@ const Table = <TData extends Record<string, unknown>>({
     if (loading) {
       return (
         <>
-          <tr className="h-12 text-xs border-b">
+          <tr className="h-12 text-xs border-y">
             <td className="px-3 py-2 first:pl-4 last:pr-4" colSpan={100}>
               <p>(Loading)</p>
             </td>
@@ -167,7 +181,7 @@ const Table = <TData extends Record<string, unknown>>({
 
     if (rows.length < 1) {
       return (
-        <tr className="transition-all border-b last:border-b-0 text-app-text/25">
+        <tr className="h-12 text-xs border-y">
           <td className="px-6 py-4 text-lg" colSpan={100}>
             (No results)
           </td>
@@ -176,13 +190,13 @@ const Table = <TData extends Record<string, unknown>>({
     }
 
     return rows.map(({ id: rowId, original, getVisibleCells }) => (
-      <tr className="transition-all border-y" key={rowId}>
+      <tr className="h-12 transition-all border-y" key={rowId}>
         {rowActions && (
           <RowActionCell menuActions={rowActions} data={original} />
         )}
         {getVisibleCells().map(
           ({ id: cellId, column, getContext, getValue }) => (
-            <td className="px-3 py-2 first:pl-4 last:pr-4" key={cellId}>
+            <td className="px-3 first:pl-4 last:pr-4" key={cellId}>
               {getValue() ? (
                 flexRender(column.columnDef.cell, getContext())
               ) : (
@@ -196,14 +210,18 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div className="flex flex-col w-full max-h-full overflow-hidden rounded shadow">
+    <div
+      className="flex flex-col w-full max-h-full overflow-hidden rounded shadow"
+      ref={containerRef}
+    >
       {/* Header */}
       <TableHeader
         searchTerm={globalFilter}
         onSearchChange={handleSearchChange}
+        tableAction={tableAction}
       />
       {/* Table */}
-      <div className="overflow-scroll">
+      <div className={'overflow-scroll'}>
         <table className="relative w-full border-collapse whitespace-nowrap">
           {/******************************/}
           {/* Table Header               */}
@@ -231,7 +249,7 @@ const Table = <TData extends Record<string, unknown>>({
         totalPages={pageCount ?? getPageCount()}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
-        {...getState().pagination}
+        {...pagination}
       />
     </div>
   );

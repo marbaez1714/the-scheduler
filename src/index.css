@@ -8,14 +8,10 @@
 
 @layer base {
   body {
-    @apply font-roboto text-app-text;
+    @apply font-roboto text-app-text bg-app-medium;
   }
   td {
     @apply text-sm;
-  }
-
-  td p {
-    @apply max-w-cellText overflow-hidden text-ellipsis;
   }
 
   input[type='number']::-webkit-inner-spin-button,

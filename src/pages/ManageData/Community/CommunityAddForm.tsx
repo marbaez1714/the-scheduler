@@ -68,7 +68,7 @@ export const CommunityAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={loading}>
+    <Screen.Content loading={loading}>
       <Form
         title="Add Community"
         onSubmit={handleSubmit(submit)}

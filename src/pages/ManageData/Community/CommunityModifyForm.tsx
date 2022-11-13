@@ -96,7 +96,7 @@ export const CommunityModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content loading={getLoading || modifyLoading}>
       <Form
         title="Modify Community"
         onSubmit={handleSubmit(submit)}

@@ -27,7 +27,7 @@ export const NavBar = () => {
   /* Render                     */
   /******************************/
   return (
-    <header className="flex items-center w-full px-6 bg-app-darkest text-app-altText">
+    <header className="fixed top-0 z-50 flex items-center w-full px-6 bg-app-darkest text-app-altText">
       <Link to="/dashboard" className="mr-6 text-3xl font-bold">
         the_scheduler
       </Link>

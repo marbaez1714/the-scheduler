@@ -45,7 +45,7 @@ export const AreaAddForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={loading}>
+    <Screen.Content loading={loading}>
       <FormComponent
         title="Add Area"
         onSubmit={handleSubmit(submit)}

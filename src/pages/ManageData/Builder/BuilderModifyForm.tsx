@@ -97,7 +97,7 @@ export const BuilderModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content loading={getLoading || modifyLoading}>
       <Form
         title="Modify Builder"
         onSubmit={handleSubmit(submit)}

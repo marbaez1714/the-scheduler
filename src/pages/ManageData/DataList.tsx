@@ -39,15 +39,18 @@ export const DataList = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content column className="gap-4" centerVertical>
-      {dataLinks.map((item) => (
-        <Link
-          className="w-1/2 p-4 text-2xl font-bold tracking-wider rounded shadow text-app-altText bg-app"
-          to={item.to}
-        >
-          {item.name}
-        </Link>
-      ))}
+    <Screen.Content>
+      <div className="flex flex-col items-center gap-4">
+        {dataLinks.map((item) => (
+          <Link
+            className="w-1/2 p-4 text-2xl font-bold tracking-wider rounded shadow text-app-altText bg-app"
+            to={item.to}
+            key={item.to}
+          >
+            {item.name}
+          </Link>
+        ))}
+      </div>
     </Screen.Content>
   );
 };

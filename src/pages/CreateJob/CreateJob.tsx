@@ -78,7 +78,7 @@ const CreateJob = () => {
   /******************************/
   return (
     <Screen>
-      <Screen.Content centerHorizontal loading={createLoading}>
+      <Screen.Content loading={createLoading}>
         <Form
           title="Create New Job"
           onSubmit={handleSubmit(submit)}

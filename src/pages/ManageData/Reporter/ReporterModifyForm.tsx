@@ -94,7 +94,7 @@ export const ReporterModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content loading={getLoading || modifyLoading}>
       <Form
         title="Modify Reporter"
         onSubmit={handleSubmit(submit)}

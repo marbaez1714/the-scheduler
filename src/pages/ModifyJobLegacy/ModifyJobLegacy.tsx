@@ -113,7 +113,7 @@ const ModifyJobLegacy = () => {
   /******************************/
   return (
     <Screen>
-      <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+      <Screen.Content loading={getLoading || modifyLoading}>
         <Form
           title="Edit Job"
           onSubmit={handleSubmit(submit)}

@@ -93,7 +93,7 @@ export const AreaModifyForm = () => {
   /* Render                     */
   /******************************/
   return (
-    <Screen.Content centerHorizontal loading={getLoading || modifyLoading}>
+    <Screen.Content loading={getLoading || modifyLoading}>
       <Form
         title="Modify Area"
         onSubmit={handleSubmit(submit)}

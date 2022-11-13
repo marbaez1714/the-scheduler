@@ -6,6 +6,8 @@ import { JobLegacyStatus } from 'src/api';
 /******************************/
 /* Main Table                 */
 /******************************/
+type tableAction = { title: string; onClick: () => void };
+
 export type TableRowAction<TData> = {
   icon: React.ReactNode;
   label: string;
@@ -20,11 +22,13 @@ export interface TableProps<TData> {
   manualPagination?: boolean;
   pageCount?: number;
   loading?: boolean;
+  tableAction?: tableAction;
   onPaginationChange?: (page: number) => void;
   onPageSizeChange?: (page: number) => void;
 }
 
 export interface TableHeaderProps {
+  tableAction?: tableAction;
   searchTerm: string;
   onSearchChange: ChangeEventHandler<HTMLInputElement>;
 }
