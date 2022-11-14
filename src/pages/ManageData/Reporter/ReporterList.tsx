@@ -13,6 +13,7 @@ import {
 import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
+import { dataColumns } from 'src/utils/tables';
 
 export const ReporterList = () => {
   /******************************/
@@ -82,45 +83,13 @@ export const ReporterList = () => {
     },
   ];
 
-  const tableColumns: ColumnDef<Reporter>[] = [
-    {
-      id: 'name',
-      header: 'Name',
-      accessorKey: 'name',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'primaryPhone',
-      header: 'Primary Phone',
-      accessorKey: 'primaryPhone',
-      cell: ({ getValue }) => <Table.PhoneNumberCell value={getValue()} />,
-    },
-    {
-      id: 'primaryEmail',
-      header: 'Primary Email',
-      accessorKey: 'primaryEmail',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'timestamp',
-      header: 'Timestamps',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
-      cell: (data) => <Table.TimestampCell data={data.row.original} />,
-    },
-    {
-      id: 'id',
-      header: "ID",
-      accessorKey: 'id',
-      cell: (data) => (
-        <Table.DataIdCell
-          data={{
-            id: data.getValue(),
-            legacy: data.row.original.legacy ?? false,
-          }}
-        />
-      ),
-    },
-  ];
+  const tableColumns = [
+    dataColumns.name,
+    dataColumns.primaryPhone,
+    dataColumns.primaryEmail,
+    dataColumns.timestamps,
+    dataColumns.id,
+  ] as ColumnDef<Reporter>[];
 
   /******************************/
   /* Render                     */

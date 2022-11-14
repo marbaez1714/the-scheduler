@@ -9,6 +9,7 @@ import { Scope, useArchiveScopeMutation, useGetScopesQuery } from 'src/api';
 import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
+import { dataColumns } from 'src/utils/tables';
 
 export const ScopeList = () => {
   /******************************/
@@ -78,39 +79,12 @@ export const ScopeList = () => {
     },
   ];
 
-  const tableColumns: ColumnDef<Scope>[] = [
-    {
-      id: 'name',
-      header: 'Name',
-      accessorKey: 'name',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'nameSpanish',
-      header: () => <Table.HeaderCell title="Translation" subtitle="Spanish" />,
-      accessorKey: 'nameSpanish',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'timestamp',
-      header: 'Timestamps',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
-      cell: (data) => <Table.TimestampCell data={data.row.original} />,
-    },
-    {
-      id: 'id',
-      header: "ID",
-      accessorKey: 'id',
-      cell: (data) => (
-        <Table.DataIdCell
-          data={{
-            id: data.getValue(),
-            legacy: data.row.original.legacy ?? false,
-          }}
-        />
-      ),
-    },
-  ];
+  const tableColumns = [
+    dataColumns.name,
+    dataColumns.nameSpanish,
+    dataColumns.timestamps,
+    dataColumns.id,
+  ] as ColumnDef<Scope>[];
 
   /******************************/
   /* Render                     */

@@ -13,6 +13,7 @@ import {
 import { Table, TableRowAction } from 'src/components/Table';
 import { Screen } from 'src/components/Screen';
 import { confirmArchive } from 'src/utils/alerts';
+import { dataColumns } from 'src/utils/tables';
 
 export const CommunityList = () => {
   /******************************/
@@ -82,39 +83,12 @@ export const CommunityList = () => {
     },
   ];
 
-  const tableColumns: ColumnDef<Community>[] = [
-    {
-      id: 'name',
-      header: 'Name',
-      accessorKey: 'name',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'company',
-      header: 'Company',
-      accessorFn: (row) => row.company.name,
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'timestamp',
-      header: 'Timestamps',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
-      cell: (data) => <Table.TimestampCell data={data.row.original} />,
-    },
-    {
-      id: 'id',
-      header: "ID",
-      accessorKey: 'id',
-      cell: (data) => (
-        <Table.DataIdCell
-          data={{
-            id: data.getValue(),
-            legacy: data.row.original.legacy ?? false,
-          }}
-        />
-      ),
-    },
-  ];
+  const tableColumns = [
+    dataColumns.name,
+    dataColumns.company,
+    dataColumns.timestamps,
+    dataColumns.id,
+  ] as ColumnDef<Community>[];
 
   /******************************/
   /* Render                     */

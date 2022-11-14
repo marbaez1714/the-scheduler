@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { ColumnDef } from '@tanstack/react-table';
+import {
+  AccessorKeyColumnDef,
+  ColumnDef,
+  ColumnDefResolved,
+  createColumnHelper,
+} from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -24,12 +29,16 @@ import { Collapsable } from '../Collapsable';
 import { confirmArchive } from 'src/utils/alerts';
 import { ReassignModal } from '../ReassignModal';
 import { SendMessageModal } from '../SendMessageModal';
+import { useManualTable } from 'src/hooks/useManualTable';
+import { dataColumns } from 'src/utils/tables';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
   const navigate = useNavigate();
+  const { pagination, handlePageSizeChange, handlePaginationChange } =
+    useManualTable();
 
   /******************************/
   /* State                      */
@@ -37,7 +46,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const [selectedJob, setSelectedJob] = useState<JobLegacy>();
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
-  const [pagination, setPagination] = useState({ page: 1, pageSize: 10 });
 
   /******************************/
   /* Context                    */
@@ -74,14 +82,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const handlePaginationChange = (pageIndex: number) => {
-    setPagination((prev) => ({ page: pageIndex + 1, pageSize: prev.pageSize }));
-  };
-
-  const handlePageSizeChange = (pageSize: number) => {
-    setPagination({ page: 1, pageSize });
-  };
-
   const handleReassignJob = (data: JobLegacy) => {
     setSelectedJob(data);
     setReassignModalOpen(true);
@@ -173,76 +173,18 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     },
   ];
 
-  const columns: ColumnDef<JobLegacy>[] = [
-    {
-      id: 'job-status',
-      header: 'Status',
-      enableSorting: false,
-      accessorKey: 'status',
-      cell: ({ getValue }) => <Table.JobLegacyStatusCell value={getValue()} />,
-    },
-    {
-      id: 'job-start-date',
-      header: 'Start Date',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'P'),
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'job-name',
-      header: 'Address',
-      accessorKey: 'name',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'job-community',
-      header: 'Community',
-      accessorFn: (row) => row.community?.name,
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'job-reporter',
-      header: 'Reporter',
-      accessorFn: (row) => row.reporter?.name,
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'job-scope',
-      header: 'Scope',
-      accessorFn: (row) => row.scope?.name,
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'job-area',
-      header: 'Area',
-      accessorFn: (row) => row.area?.name,
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'job-builder',
-      header: 'Builder',
-      accessorFn: (row) => row.builder?.name,
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'timestamp',
-      header: 'Timestamps',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
-      cell: (data) => <Table.TimestampCell data={data.row.original} />,
-    },
-    {
-      id: 'id',
-      header: 'ID',
-      accessorKey: 'id',
-      cell: (data) => (
-        <Table.DataIdCell
-          data={{
-            id: data.getValue(),
-            legacy: data.row.original.legacy ?? false,
-          }}
-        />
-      ),
-    },
-  ];
+  const columns = [
+    dataColumns.status,
+    dataColumns.startDate,
+    dataColumns.address,
+    dataColumns.community,
+    dataColumns.reporter,
+    dataColumns.scope,
+    dataColumns.area,
+    dataColumns.builder,
+    dataColumns.timestamps,
+    dataColumns.id,
+  ] as ColumnDef<JobLegacy>[];
 
   const tableAction = {
     title: 'Refresh',

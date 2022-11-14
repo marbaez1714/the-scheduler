@@ -13,6 +13,7 @@ import {
 import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
+import { dataColumns } from 'src/utils/tables';
 
 export const ContractorList = () => {
   /******************************/
@@ -82,39 +83,12 @@ export const ContractorList = () => {
     },
   ];
 
-  const tableColumns: ColumnDef<Contractor>[] = [
-    {
-      id: 'name',
-      header: 'Name',
-      accessorKey: 'name',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'primaryPhone',
-      header: 'Primary Phone',
-      accessorKey: 'primaryPhone',
-      cell: ({ getValue }) => <Table.PhoneNumberCell value={getValue()} />,
-    },
-    {
-      id: 'timestamp',
-      header: 'Timestamps',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
-      cell: (data) => <Table.TimestampCell data={data.row.original} />,
-    },
-    {
-      id: 'id',
-      header: "ID",
-      accessorKey: 'id',
-      cell: (data) => (
-        <Table.DataIdCell
-          data={{
-            id: data.getValue(),
-            legacy: data.row.original.legacy ?? false,
-          }}
-        />
-      ),
-    },
-  ];
+  const tableColumns = [
+    dataColumns.name,
+    dataColumns.primaryPhone,
+    dataColumns.timestamps,
+    dataColumns.id,
+  ] as ColumnDef<Contractor>[];
 
   /******************************/
   /* Render                     */

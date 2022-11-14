@@ -102,10 +102,10 @@ const Table = <TData extends Record<string, unknown>>({
     pageCount,
     globalFilterFn,
     manualPagination,
+    getCoreRowModel: getCoreRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
 
@@ -124,7 +124,7 @@ const Table = <TData extends Record<string, unknown>>({
     return (
       <th
         className={cn(
-          'h-6 py-1 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
+          'h-6 py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
           {
             'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
             'bg-app-dark': isSorted,

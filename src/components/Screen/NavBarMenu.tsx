@@ -56,35 +56,36 @@ export const NavBarMenu = ({ icon, to, links, title }: NavBarMenuProps) => {
       </Menu.Button>
 
       <Transition
-        as={Menu.Items}
-        className="absolute z-50 flex flex-col w-64 overflow-hidden text-xs transition-all rounded-b shadow-2xl bg-app-darkest text-app-altText"
+        className="transition-all"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        {/* Title */}
-        <Link
-          className="flex items-center px-4 py-2 font-bold tracking-wider transition-all hover:bg-app"
-          to={to}
-        >
-          {title}
-        </Link>
+        <Menu.Items className="absolute z-50 flex flex-col w-64 overflow-hidden text-xs rounded-b shadow-2xl bg-app-darkest text-app-altText">
+          {/* Title */}
+          <Link
+            className="flex items-center px-4 py-2 font-bold tracking-wider transition-all hover:bg-app"
+            to={to}
+          >
+            {title}
+          </Link>
 
-        {links && (
-          <div className="border-t border-t-app-medium">
-            {links.map((item) => (
-              <Menu.Item key={item.name}>
-                <Link
-                  className="flex items-center px-4 py-2 transition-all hover:bg-app"
-                  to={item.to}
-                >
-                  {item.name}
-                </Link>
-              </Menu.Item>
-            ))}
-          </div>
-        )}
+          {links && (
+            <div className="border-t border-t-app-medium">
+              {links.map((item) => (
+                <Menu.Item key={item.name}>
+                  <Link
+                    className="flex items-center px-4 py-2 transition-all hover:bg-app"
+                    to={item.to}
+                  >
+                    {item.name}
+                  </Link>
+                </Menu.Item>
+              ))}
+            </div>
+          )}
+        </Menu.Items>
       </Transition>
     </Menu>
   );

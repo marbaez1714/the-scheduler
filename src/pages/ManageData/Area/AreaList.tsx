@@ -9,6 +9,7 @@ import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { format } from 'date-fns';
+import { dataColumns } from 'src/utils/tables';
 
 export const AreaList = () => {
   /******************************/
@@ -78,46 +79,19 @@ export const AreaList = () => {
     },
   ];
 
-  const tableColumns: ColumnDef<Area>[] = [
-    {
-      id: 'name',
-      header: 'Name',
-      accessorKey: 'name',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'nameSpanish',
-      header: () => <Table.HeaderCell title="Translation" subtitle="Spanish" />,
-      accessorKey: 'nameSpanish',
-      cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
-    },
-    {
-      id: 'timestamp',
-      header: 'Timestamps',
-      accessorFn: (row) => format(new Date(row.updatedTime), 'Pp'),
-      cell: (data) => <Table.TimestampCell data={data.row.original} />,
-    },
-    {
-      id: 'id',
-      header: "ID",
-      accessorKey: 'id',
-      cell: (data) => (
-        <Table.DataIdCell
-          data={{
-            id: data.getValue(),
-            legacy: data.row.original.legacy ?? false,
-          }}
-        />
-      ),
-    },
-  ];
+  const tableColumns = [
+    dataColumns.name,
+    dataColumns.nameSpanish,
+    dataColumns.timestamps,
+    dataColumns.id,
+  ] as ColumnDef<Area>[];
 
   /******************************/
   /* Render                    */
   /******************************/
   return (
     <Screen.Content
-      title='Areas List'
+      title="Areas List"
       loading={loading || archiveLoading}
       primaryAction={primaryAction}
     >

@@ -21,7 +21,7 @@ export const Content = ({
           </h1>
         </div>
       )}
-      <div className={cn('max-w-5xl mx-auto w-full', className)}>
+      <div className="w-full max-w-5xl mx-auto">
         {/* Title */}
         {(!!title || !!primaryAction) && (
           <div className="flex w-full px-6 py-6 mb-4 rounded shadow text-app-altText bg-app">
@@ -40,7 +40,7 @@ export const Content = ({
           </div>
         )}
         {/* Content */}
-        {children}
+        <div className={className}>{children}</div>
       </div>
     </>
   );

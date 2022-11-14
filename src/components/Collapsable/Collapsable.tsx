@@ -56,7 +56,7 @@ const Collapsable = ({
         {/* Content                    */}
         {/******************************/}
         <Disclosure.Panel
-          className={cn('m-2 rounded bg-app-light shadow', {
+          className={cn('p-4 rounded-b bg-app-light shadow mx-2', {
             'pointer-events-none animate-pulse': loading,
           })}
           unmount={unmount}

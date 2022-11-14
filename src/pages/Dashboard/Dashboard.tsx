@@ -116,8 +116,9 @@ const Dashboard = () => {
   return (
     <Screen>
       <Screen.Content
-        loading={getAssignedContractorsQueryLoading}
         title="Dashboard"
+        className='flex flex-col gap-4'
+        loading={getAssignedContractorsQueryLoading}
         primaryAction={{ onClick: toggleSettings, title: 'Display Settings' }}
       >
         <SettingsModal

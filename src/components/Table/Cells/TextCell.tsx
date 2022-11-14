@@ -4,5 +4,5 @@ export const TextCell = ({ value }: TextCellProps) => {
   /******************************/
   /* Render                    */
   /******************************/
-  return <p title={value}>{value}</p>;
+  return <p title={value ?? ''}>{value}</p>;
 };

@@ -75,7 +75,7 @@ export interface HeaderCellProps {
 }
 
 export interface TextCellProps {
-  value?: string;
+  value?: string | null;
 }
 
 export interface PhoneNumberCellProps {
