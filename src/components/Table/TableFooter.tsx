@@ -93,7 +93,7 @@ export const TableFooter = ({
           {pageSizeOptions.map((value) => (
             <RadioGroup.Option
               className={cn(
-                'py-0.5 px-2 flex items-center justify-center cursor-pointer hover:bg-app-darkest',
+                'py-0.5 px-2 flex items-center justify-center cursor-pointer hover:bg-app-darkest focus-ring',
                 { 'bg-app': pageSize !== value },
                 { 'bg-app-darkest': pageSize === value }
               )}
@@ -110,14 +110,14 @@ export const TableFooter = ({
         <div className="flex items-center text-sm shadow text-app-altText">
           {/* Page Back Buttons */}
           <button
-            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none focus-ring"
             onClick={handlePageChange('first')}
             disabled={disablePrevious}
           >
             <ChevronDoubleLeftIcon />
           </button>
           <button
-            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none focus-ring"
             onClick={handlePageChange('prev')}
             disabled={disablePrevious}
           >
@@ -131,14 +131,14 @@ export const TableFooter = ({
 
           {/* Page Next Buttons */}
           <button
-            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none focus-ring"
             onClick={handlePageChange('next')}
             disabled={disableNext}
           >
             <ChevronRightIcon />
           </button>
           <button
-            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none"
+            className="w-6 h-6 p-1 bg-app-dark hover:bg-app-darkest text-app-altText disabled:opacity-50 disabled:pointer-events-none focus-ring"
             onClick={handlePageChange('last')}
             disabled={disableNext}
           >

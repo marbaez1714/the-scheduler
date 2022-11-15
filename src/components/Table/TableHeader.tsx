@@ -24,7 +24,7 @@ export const TableHeader = ({
         placeholder="Search Term"
       />
       {tableAction && (
-        <Button onClick={tableAction.onClick}>{tableAction.title}</Button>
+        <Button onClick={tableAction.onClick} variant='filled-light'>{tableAction.title}</Button>
       )}
     </div>
   );

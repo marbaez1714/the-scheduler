@@ -171,7 +171,7 @@ const Table = <TData extends Record<string, unknown>>({
             { length: getState().pagination.pageSize - 1 },
             (_, index) => (
               <tr className="h-12 border-b last:border-b-0" key={index}>
-                <td className="px-3 py-2 first:pl-4 last:pr-4" />
+                <td className="px-3 py-2 first:pl-4 last:pr-4" colSpan={100} />
               </tr>
             )
           )}
@@ -181,9 +181,9 @@ const Table = <TData extends Record<string, unknown>>({
 
     if (rows.length < 1) {
       return (
-        <tr className="h-12 text-xs border-y">
-          <td className="px-6 py-4 text-lg" colSpan={100}>
-            (No results)
+        <tr className="h-12 border-b last:border-b-0">
+          <td className="px-3 py-2 text-center first:pl-4 last:pr-4" colSpan={100}>
+            No results
           </td>
         </tr>
       );

@@ -1,10 +1,11 @@
-import { KeyIcon } from '@heroicons/react/24/solid';
+import { KeyIcon, LockClosedIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   ContractorOptionFragment,
   useGetAssignedContractorsQuery,
 } from 'src/api';
+import { Button } from 'src/components/Button';
 
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
 import { Menu } from 'src/components/Menu';
@@ -117,7 +118,7 @@ const Dashboard = () => {
     <Screen>
       <Screen.Content
         title="Dashboard"
-        className='flex flex-col gap-4'
+        className="flex flex-col gap-4"
         loading={getAssignedContractorsQueryLoading}
         primaryAction={{ onClick: toggleSettings, title: 'Display Settings' }}
       >

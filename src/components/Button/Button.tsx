@@ -9,45 +9,56 @@ const Button = ({
   leftRender,
   rightRender,
   className,
-  rounded,
   variant = 'filled',
   size = 'medium',
   loading,
+  rounded,
   ...rest
 }: ButtonProps) => {
   /******************************/
   /* Render                     */
   /******************************/
+
   return (
     <button
       tabIndex={0}
       className={cn(
-        'tracking-wider uppercase font-medium flex items-center justify-center disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap',
-        {
-          'text-xs': size === 'small',
-          'text-base': size === 'medium',
-          'text-2xl': size === 'large',
-          'py-1 px-3': size === 'small' && variant !== 'outline',
-          'py-0.5 px-3': size === 'small' && variant === 'outline',
-          'py-2 px-4':
-            (size === 'medium' || size === 'large') && variant !== 'outline',
-          'py-1.5 px-4':
-            (size === 'medium' || size === 'large') && variant === 'outline',
-          'text-app underline disabled:no-underline hover:text-app-text':
-            variant === 'text',
-          'bg-app text-app-altText rounded shadow hover:bg-app-dark transition-colors focus:bg-app-dark':
-            variant === 'filled',
-          'bg-transparent text-app rounded border-2 border-app-medium box-border shadow hover:border-app transition-all':
-            variant === 'outline',
-          'rounded-full': rounded,
+        'rounded tracking-wider uppercase font-bold text-app transition-all flex items-center relative scale-100 active:scale-95 focus-ring',
+        size === 'small' && {
+          'h-8 text-sm': true,
+          'pl-6': !leftRender,
+          'pr-6': !rightRender,
         },
+        size === 'medium' && {
+          'h-10': true,
+          'pl-8': !leftRender,
+          'pr-8': !rightRender,
+        },
+        size === 'large' && {
+          'h-12 text-lg': true,
+          'pl-10': !leftRender,
+          'pr-10': !rightRender,
+        },
+        { 'bg-transparent hover:underline': variant === 'text' },
+        {
+          'bg-app text-app-light hover:bg-app-dark shadow':
+            variant === 'filled',
+        },
+        {
+          'bg-app-light hover:bg-app-medium shadow': variant === 'filled-light',
+        },
+        {
+          'bg-app-light border-2 border-app hover:bg-app-medium shadow':
+            variant === 'outline',
+        },
+        { 'rounded-full': rounded },
         className
       )}
       {...rest}
     >
       {loading ? (
         <ArrowPathIcon
-          className={cn("animate-spin",{
+          className={cn('animate-spin', {
             'h-6 w-6': size === 'small' || size === 'medium',
             'h-8 w-8': size === 'large',
           })}
@@ -60,9 +71,9 @@ const Button = ({
           {leftRender && (
             <div
               className={cn({
-                'mr-1 h-4 w-4': size === 'small',
-                'mr-2 h-4 w-4': size === 'medium',
-                'mr-3 h-8 w-8': size === 'large',
+                'h-2 w-2 mx-2': size === 'small',
+                'h-4 w-4 mx-2': size === 'medium',
+                'h-6 w-6 mx-2': size === 'large',
               })}
             >
               {leftRender}
@@ -78,9 +89,9 @@ const Button = ({
           {rightRender && (
             <div
               className={cn({
-                'ml-1 h-4 w-4': size === 'small',
-                'ml-2 h-4 w-4': size === 'medium',
-                'ml-3 h-8 w-8': size === 'large',
+                'h-2 w-2 mx-2': size === 'small',
+                'h-4 w-4 mx-2': size === 'medium',
+                'h-6 w-6 mx-2': size === 'large',
               })}
             >
               {rightRender}

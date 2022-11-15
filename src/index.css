@@ -8,7 +8,7 @@
 
 @layer base {
   body {
-    @apply font-roboto text-app-text bg-app-medium;
+    @apply font-roboto text-app-text bg-app-light;
   }
   td {
     @apply text-sm;
@@ -33,12 +33,14 @@
   .form-divider-x {
     @apply h-full bg-app/25 w-0.5 rounded-full shadow;
   }
-
-
 }
 
 @layer utilities {
   .hide-scroll-bar::-webkit-scrollbar {
     display: none;
+  }
+
+  .focus-ring {
+    @apply outline-none focus:ring-2 ring-app-info;
   }
 }

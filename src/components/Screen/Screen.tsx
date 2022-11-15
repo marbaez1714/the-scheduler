@@ -44,7 +44,7 @@ const Screen = ({ children }: ScreenProps) => {
   return (
     <>
       <NavBar />
-      <div className="flex flex-col w-screen h-full px-4 pt-16 pb-10 font-roboto bg-app-medium">
+      <div className="flex flex-col w-screen h-full px-4 pt-16 pb-10 font-roboto bg-app-medium/50">
         {/******************************/}
         {/* Page                       */}
         {/******************************/}

@@ -21,7 +21,7 @@ const Collapsable = ({
         {/******************************/}
         {/* Header                     */}
         {/******************************/}
-        <div className="flex items-center p-4 uppercase rounded shadow bg-app text-app-altText">
+        <div className="flex items-center p-4 uppercase rounded shadow-lg bg-app text-app-altText">
           {loading ? (
             <div className="p-2 mr-2">
               <ArrowPathIcon className="w-4 animate-spin" />
@@ -56,7 +56,7 @@ const Collapsable = ({
         {/* Content                    */}
         {/******************************/}
         <Disclosure.Panel
-          className={cn('p-4 rounded-b bg-app-light shadow mx-2', {
+          className={cn('p-4 rounded-b bg-app-medium shadow-lg mx-2', {
             'pointer-events-none animate-pulse': loading,
           })}
           unmount={unmount}

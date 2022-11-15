@@ -31,11 +31,13 @@ export const Content = ({
               </h1>
             )}
             {!!primaryAction && (
-              <div className="ml-auto rounded bg-app-light">
-                <Button onClick={primaryAction.onClick} variant="outline">
-                  {primaryAction.title}
-                </Button>
-              </div>
+              <Button
+                onClick={primaryAction.onClick}
+                variant="filled-light"
+                className='ml-auto'
+              >
+                {primaryAction.title}
+              </Button>
             )}
           </div>
         )}
