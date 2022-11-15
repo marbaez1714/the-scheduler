@@ -106,7 +106,6 @@ export const BuilderList = () => {
         <Table
           data={data.builders.data as Builder[]}
           columns={tableColumns}
-          total={data.builders.meta.totalCount}
           rowActions={rowActions}
         />
       )}

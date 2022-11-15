@@ -104,7 +104,6 @@ export const ContractorList = () => {
         <Table
           data={data.contractors.data as Contractor[]}
           columns={tableColumns}
-          total={data.contractors.meta.totalCount}
           rowActions={rowActions}
         />
       )}

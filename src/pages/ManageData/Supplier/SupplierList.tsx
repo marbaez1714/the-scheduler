@@ -84,7 +84,6 @@ export const SupplierList = () => {
         <Table
           data={data.suppliers.data as Supplier[]}
           columns={tableColumns}
-          total={data.suppliers.meta.totalCount}
           rowActions={rowActions}
         />
       )}

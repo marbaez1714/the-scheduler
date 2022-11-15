@@ -8,7 +8,7 @@
 
 @layer base {
   body {
-    @apply font-roboto text-app-text bg-app-light;
+    @apply font-roboto text-app-text bg-app-medium;
   }
   td {
     @apply text-sm;

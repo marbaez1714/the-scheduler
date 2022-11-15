@@ -104,7 +104,6 @@ export const CompanyList = () => {
         <Table
           data={data.companies.data as Company[]}
           columns={tableColumns}
-          total={data.companies.meta.totalCount}
           rowActions={rowActions}
         />
       )}

@@ -1,14 +1,7 @@
 import { useState } from 'react';
-import {
-  AccessorKeyColumnDef,
-  ColumnDef,
-  ColumnDefResolved,
-  createColumnHelper,
-} from '@tanstack/react-table';
-import { format } from 'date-fns';
+import { ColumnDef } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import {
-  ArchiveBoxIcon,
   ArrowsRightLeftIcon,
   ArrowUpIcon,
   ChatBubbleBottomCenterTextIcon,
@@ -20,16 +13,15 @@ import toast from 'react-hot-toast';
 
 import {
   JobLegacy,
+  SortOrder,
   useGetJobsLegacyByContractorIdQuery,
   useModifyJobLegacyMutation,
 } from 'src/api';
 import { LegacyContractorTableProps } from './types';
 import { Table, TableRowAction } from '../Table';
 import { Collapsable } from '../Collapsable';
-import { confirmArchive } from 'src/utils/alerts';
 import { ReassignModal } from '../ReassignModal';
 import { SendMessageModal } from '../SendMessageModal';
-import { useManualTable } from 'src/hooks/useManualTable';
 import { dataColumns } from 'src/utils/tables';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
@@ -37,8 +29,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /* Custom Hooks               */
   /******************************/
   const navigate = useNavigate();
-  const { pagination, handlePageSizeChange, handlePaginationChange } =
-    useManualTable();
 
   /******************************/
   /* State                      */
@@ -47,18 +37,21 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
 
-  /******************************/
-  /* Context                    */
-  /******************************/
+  const [pageCount, setPageCount] = useState(1);
+  const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
 
   /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading, refetch } = useGetJobsLegacyByContractorIdQuery({
-    fetchPolicy: 'cache-and-network',
+  const { loading, refetch, fetchMore } = useGetJobsLegacyByContractorIdQuery({
     variables: {
       contractorId: contractor.id,
-      pagination,
+      pagination: { page: 1, pageSize: 10 },
+      sorting: { field: 'name', order: SortOrder.Asc },
+    },
+    onCompleted: ({ jobsLegacyByContractorId }) => {
+      setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
+      setPageCount(jobsLegacyByContractorId.meta.totalPages);
     },
   });
 
@@ -70,14 +63,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
       toast.error(error.message);
     },
   });
-
-  /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
 
   /******************************/
   /* Callbacks                  */
@@ -102,22 +87,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     setSendMessageModalOpen(false);
   };
 
-  const handleEditJob = (data: JobLegacy) => {
-    navigate(`/modify_jobLegacy/${data.id}`);
-  };
-
-  const handleToggleInProgress = (data: JobLegacy) => {
-    modify({
-      variables: { id: data.id, data: { inProgress: !data.inProgress } },
-    });
-  };
-
-  const handleToggleIsImportant = (data: JobLegacy) => {
-    modify({
-      variables: { id: data.id, data: { isImportant: !data.isImportant } },
-    });
-  };
-
   const handleComplete = (data: JobLegacy) => {
     const confirm = window.confirm(
       `Are you sure you want to mark ${data.name} as COMPLETED?`
@@ -132,6 +101,15 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     }
   };
 
+  const handlePaginationChange = (pageIndex: number, pageSize: number) => {
+    fetchMore({
+      variables: { pagination: { page: pageIndex + 1, pageSize } },
+    }).then(({ data }) => {
+      setDisplayedJobs(data.jobsLegacyByContractorId.data as JobLegacy[]);
+      setPageCount(data.jobsLegacyByContractorId.meta.totalPages);
+    });
+  };
+
   /******************************/
   /* Table                      */
   /******************************/
@@ -139,7 +117,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: handleEditJob,
+      onClick: (data) => navigate(`/modify_jobLegacy/${data.id}`),
     },
     {
       icon: <ChatBubbleBottomCenterTextIcon />,
@@ -154,22 +132,24 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <CogIcon />,
       label: 'Toggle In Progress',
-      onClick: handleToggleInProgress,
+      onClick: (data) =>
+        modify({
+          variables: { id: data.id, data: { inProgress: !data.inProgress } },
+        }),
     },
     {
       icon: <ArrowUpIcon />,
       label: 'Toggle Important',
-      onClick: handleToggleIsImportant,
+      onClick: (data) => {
+        modify({
+          variables: { id: data.id, data: { isImportant: !data.isImportant } },
+        });
+      },
     },
     {
       icon: <DocumentCheckIcon />,
       label: 'Complete',
       onClick: handleComplete,
-    },
-    {
-      icon: <ArchiveBoxIcon />,
-      label: 'Archive',
-      onClick: (data) => confirmArchive(data.name),
     },
   ];
 
@@ -185,13 +165,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     dataColumns.timestamps,
     dataColumns.id,
   ] as ColumnDef<JobLegacy>[];
-
-  const tableAction = {
-    title: 'Refresh',
-    onClick: () => {
-      refetch();
-    },
-  };
 
   /******************************/
   /* Render                     */
@@ -217,13 +190,14 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         <Table
           loading={loading}
           columns={columns}
-          data={data?.jobsLegacyByContractorId.data as JobLegacy[]}
-          total={data?.jobsLegacyByContractorId.meta.totalCount}
-          pageCount={data?.jobsLegacyByContractorId.meta.totalPages}
+          data={displayedJobs}
+          pageCount={pageCount}
           rowActions={rowActions}
           onPaginationChange={handlePaginationChange}
-          onPageSizeChange={handlePageSizeChange}
-          tableAction={tableAction}
+          tableAction={{
+            title: 'Refresh',
+            onClick: refetch,
+          }}
           manualPagination
         />
       </Collapsable>

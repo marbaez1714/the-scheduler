@@ -27,15 +27,13 @@ import { TableHeader } from './TableHeader';
 
 const Table = <TData extends Record<string, unknown>>({
   data = [],
-  total = 0,
   columns,
   rowActions,
   pageCount,
   loading,
-  onPaginationChange,
-  onPageSizeChange,
   tableAction,
   manualPagination,
+  onPaginationChange,
 }: TableProps<TData>) => {
   /******************************/
   /* State                      */
@@ -75,13 +73,14 @@ const Table = <TData extends Record<string, unknown>>({
   const handlePageChange = (pageIndex: number) => {
     scrollToTable();
     setPageIndex(pageIndex);
-    onPaginationChange && onPaginationChange(pageIndex);
+    onPaginationChange && onPaginationChange(pageIndex, pagination.pageSize);
   };
 
   const handlePageSizeChange = (size: number) => {
     scrollToTable();
+    setPageIndex(0);
     setPageSize(size);
-    onPageSizeChange && onPageSizeChange(size);
+    onPaginationChange && onPaginationChange(0, size);
   };
 
   /******************************/
@@ -182,7 +181,10 @@ const Table = <TData extends Record<string, unknown>>({
     if (rows.length < 1) {
       return (
         <tr className="h-12 border-b last:border-b-0">
-          <td className="px-3 py-2 text-center first:pl-4 last:pr-4" colSpan={100}>
+          <td
+            className="px-3 py-2 text-center first:pl-4 last:pr-4"
+            colSpan={100}
+          >
             No results
           </td>
         </tr>
@@ -245,7 +247,6 @@ const Table = <TData extends Record<string, unknown>>({
       </div>
       {/* Footer */}
       <TableFooter
-        totalRows={total}
         totalPages={pageCount ?? getPageCount()}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}

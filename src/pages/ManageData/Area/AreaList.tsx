@@ -100,7 +100,6 @@ export const AreaList = () => {
         <Table
           data={data.areas.data}
           columns={tableColumns}
-          total={data.areas.meta.totalCount}
           rowActions={rowActions}
         />
       )}

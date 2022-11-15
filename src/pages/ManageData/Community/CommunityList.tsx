@@ -104,7 +104,6 @@ export const CommunityList = () => {
         <Table
           data={data.communities.data as Community[]}
           columns={tableColumns}
-          total={data.communities.meta.totalCount}
           rowActions={rowActions}
         />
       )}

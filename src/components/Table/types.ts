@@ -15,7 +15,6 @@ export type TableRowAction<TData> = {
 };
 
 export interface TableProps<TData> {
-  total?: number;
   data?: TData[];
   columns: ColumnDef<TData>[];
   rowActions?: TableRowAction<TData>[];
@@ -23,8 +22,7 @@ export interface TableProps<TData> {
   pageCount?: number;
   loading?: boolean;
   tableAction?: tableAction;
-  onPaginationChange?: (page: number) => void;
-  onPageSizeChange?: (page: number) => void;
+  onPaginationChange?: (page: number, pageSize: number) => void;
 }
 
 export interface TableHeaderProps {
@@ -34,23 +32,11 @@ export interface TableHeaderProps {
 }
 
 export interface TableFooterProps {
-  totalRows: number;
   pageIndex: number;
   totalPages: number;
   pageSize: number;
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
-}
-
-export interface PaginationProps {
-  pageIndex: number;
-  pageSize: number;
-  totalPages: number;
-  totalRows: number;
-  searchTerm: string;
-  onPageChange: (page: number) => void;
-  onPageSizeChange: (size: number) => void;
-  onSearchChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 /******************************/

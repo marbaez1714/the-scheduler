@@ -12,7 +12,6 @@ import { RadioGroup } from '@headlessui/react';
 
 export const TableFooter = ({
   pageSize,
-  totalRows,
   pageIndex,
   totalPages,
   onPageChange,
@@ -75,7 +74,6 @@ export const TableFooter = ({
 
   const handlePageSizeChange = (size: number) => {
     onPageSizeChange(size);
-    onPageChange(0);
   };
 
   /******************************/

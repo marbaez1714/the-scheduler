@@ -72,9 +72,6 @@ const Archive = () => {
         <Table
           data={getJobsLegacyData?.jobsLegacyByActiveStatus.data as JobLegacy[]}
           columns={columns}
-          total={
-            getJobsLegacyData?.jobsLegacyByActiveStatus.meta.totalCount ?? 0
-          }
         />
       </Screen.Content>
     </Screen>

@@ -100,7 +100,6 @@ export const ScopeList = () => {
         <Table
           data={data.scopes.data as Scope[]}
           columns={tableColumns}
-          total={data.scopes.meta.totalCount}
           rowActions={rowActions}
         />
       )}

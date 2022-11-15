@@ -105,7 +105,6 @@ export const ReporterList = () => {
         <Table
           data={data.reporters.data as Reporter[]}
           columns={tableColumns}
-          total={data.reporters.meta.totalCount}
           rowActions={rowActions}
         />
       )}
