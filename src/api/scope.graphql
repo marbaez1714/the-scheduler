@@ -9,12 +9,8 @@ query GetScope($id: ID!) {
   }
 }
 
-query GetScopes(
-  $pagination: Pagination
-  $sorting: Sorting
-  $archived: Boolean
-) {
-  scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetScopes($pagination: Pagination, $archived: Boolean) {
+  scopes(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -32,8 +28,6 @@ query GetScopes(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

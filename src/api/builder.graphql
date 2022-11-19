@@ -10,12 +10,8 @@ query GetBuilder($id: ID!) {
   }
 }
 
-query GetBuilders(
-  $pagination: Pagination
-  $sorting: Sorting
-  $archived: Boolean
-) {
-  builders(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetBuilders($pagination: Pagination, $archived: Boolean) {
+  builders(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -37,8 +33,6 @@ query GetBuilders(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

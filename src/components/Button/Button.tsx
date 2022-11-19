@@ -23,7 +23,7 @@ const Button = ({
     <button
       tabIndex={0}
       className={cn(
-        'rounded tracking-wider uppercase font-bold text-app transition-all flex items-center relative scale-100 active:scale-95 focus-ring',
+        'rounded tracking-wider uppercase font-bold text-app transition-all flex items-center relative scale-100 active:scale-95 focus-ring justify-center',
         size === 'small' && {
           'h-8 text-sm': true,
           'pl-6': !leftRender,

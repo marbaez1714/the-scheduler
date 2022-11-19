@@ -8,8 +8,8 @@ query GetArea($id: ID!) {
   }
 }
 
-query GetAreas($pagination: Pagination, $sorting: Sorting, $archived: Boolean) {
-  areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetAreas($pagination: Pagination, $archived: Boolean) {
+  areas(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -26,8 +26,6 @@ query GetAreas($pagination: Pagination, $sorting: Sorting, $archived: Boolean) {
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

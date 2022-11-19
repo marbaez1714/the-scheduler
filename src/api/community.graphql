@@ -8,12 +8,8 @@ query GetCommunity($id: ID!) {
   }
 }
 
-query GetCommunities(
-  $pagination: Pagination
-  $sorting: Sorting
-  $archived: Boolean
-) {
-  communities(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetCommunities($pagination: Pagination, $archived: Boolean) {
+  communities(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -33,8 +29,6 @@ query GetCommunities(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

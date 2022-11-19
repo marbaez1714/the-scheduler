@@ -133,7 +133,7 @@ const SendMessageModal = ({
           message: contractorMessage,
           recipient: JobsLegacyMessageRecipient.Contractor,
         },
-      }).then(console.log);
+      });
     }
   };
 
@@ -145,7 +145,7 @@ const SendMessageModal = ({
           message: reporterMessage,
           recipient: JobsLegacyMessageRecipient.Reporter,
         },
-      }).then(console.log);
+      });
     }
   };
 

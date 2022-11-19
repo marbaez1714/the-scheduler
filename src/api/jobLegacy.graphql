@@ -26,13 +26,11 @@ query GetJobLegacyById($id: ID!) {
 query GetJobsLegacyByActiveStatus(
   $active: Boolean!
   $pagination: Pagination
-  $sorting: Sorting
   $archived: Boolean
 ) {
   jobsLegacyByActiveStatus(
     active: $active
     pagination: $pagination
-    sorting: $sorting
     archived: $archived
   ) {
     data {
@@ -80,8 +78,6 @@ query GetJobsLegacyByActiveStatus(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
       totalPages
     }
   }
@@ -90,13 +86,11 @@ query GetJobsLegacyByActiveStatus(
 query GetJobsLegacyByContractorId(
   $contractorId: ID!
   $pagination: Pagination
-  $sorting: Sorting
   $archived: Boolean
 ) {
   jobsLegacyByContractorId(
     id: $contractorId
     pagination: $pagination
-    sorting: $sorting
     archived: $archived
   ) {
     data {
@@ -152,8 +146,6 @@ query GetJobsLegacyByContractorId(
     meta {
       page
       pageSize
-      sortField
-      sortOrder
       totalCount
       totalPages
     }

@@ -10,12 +10,8 @@ query GetCompany($id: ID!) {
   }
 }
 
-query GetCompanies(
-  $pagination: Pagination
-  $sorting: Sorting
-  $archived: Boolean
-) {
-  companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetCompanies($pagination: Pagination, $archived: Boolean) {
+  companies(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -34,8 +30,6 @@ query GetCompanies(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

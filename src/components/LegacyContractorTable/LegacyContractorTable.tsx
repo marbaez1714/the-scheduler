@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, PaginationState } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowsRightLeftIcon,
@@ -13,7 +13,6 @@ import toast from 'react-hot-toast';
 
 import {
   JobLegacy,
-  SortOrder,
   useGetJobsLegacyByContractorIdQuery,
   useModifyJobLegacyMutation,
 } from 'src/api';
@@ -37,23 +36,24 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
 
-  const [pageCount, setPageCount] = useState(1);
   const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
 
   /******************************/
   /* Data                       */
   /******************************/
-  const { loading, refetch, fetchMore } = useGetJobsLegacyByContractorIdQuery({
-    variables: {
-      contractorId: contractor.id,
-      pagination: { page: 1, pageSize: 10 },
-      sorting: { field: 'name', order: SortOrder.Asc },
-    },
-    onCompleted: ({ jobsLegacyByContractorId }) => {
-      setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
-      setPageCount(jobsLegacyByContractorId.meta.totalPages);
-    },
-  });
+  const { data, loading, refetch, fetchMore } =
+    useGetJobsLegacyByContractorIdQuery({
+      variables: {
+        contractorId: contractor.id,
+        pagination: {
+          page: 1,
+          pageSize: 10,
+        },
+      },
+      onCompleted: ({ jobsLegacyByContractorId }) => {
+        setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
+      },
+    });
 
   const [modify] = useModifyJobLegacyMutation({
     onCompleted: () => {
@@ -101,12 +101,16 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     }
   };
 
-  const handlePaginationChange = (pageIndex: number, pageSize: number) => {
+  const handlePaginationChange = (paginationState: PaginationState) => {
     fetchMore({
-      variables: { pagination: { page: pageIndex + 1, pageSize } },
+      variables: {
+        pagination: {
+          page: paginationState.pageIndex + 1,
+          pageSize: paginationState.pageSize,
+        },
+      },
     }).then(({ data }) => {
       setDisplayedJobs(data.jobsLegacyByContractorId.data as JobLegacy[]);
-      setPageCount(data.jobsLegacyByContractorId.meta.totalPages);
     });
   };
 
@@ -169,6 +173,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Render                     */
   /******************************/
+
   return (
     <>
       <ReassignModal
@@ -191,14 +196,13 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
           loading={loading}
           columns={columns}
           data={displayedJobs}
-          pageCount={pageCount}
+          pageCount={data?.jobsLegacyByContractorId.meta.totalPages}
           rowActions={rowActions}
           onPaginationChange={handlePaginationChange}
           tableAction={{
             title: 'Refresh',
             onClick: refetch,
           }}
-          manualPagination
         />
       </Collapsable>
     </>

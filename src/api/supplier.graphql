@@ -8,12 +8,8 @@ query GetSupplier($id: ID!) {
   }
 }
 
-query GetSuppliers(
-  $pagination: Pagination
-  $sorting: Sorting
-  $archived: Boolean
-) {
-  suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetSuppliers($pagination: Pagination, $archived: Boolean) {
+  suppliers(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -30,8 +26,6 @@ query GetSuppliers(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

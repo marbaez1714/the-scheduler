@@ -9,12 +9,8 @@ query GetReporter($id: ID!) {
   }
 }
 
-query GetReporters(
-  $pagination: Pagination
-  $sorting: Sorting
-  $archived: Boolean
-) {
-  reporters(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetReporters($pagination: Pagination, $archived: Boolean) {
+  reporters(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -32,8 +28,6 @@ query GetReporters(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

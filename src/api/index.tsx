@@ -291,8 +291,6 @@ export type MetaResponse = {
   __typename?: 'MetaResponse';
   page?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
-  sortField?: Maybe<Scalars['String']>;
-  sortOrder?: Maybe<SortOrder>;
   totalCount: Scalars['Int'];
   totalPages: Scalars['Int'];
 };
@@ -518,7 +516,6 @@ export type QueryAreaByIdArgs = {
 export type QueryAreasArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryBuilderByIdArgs = {
@@ -528,13 +525,11 @@ export type QueryBuilderByIdArgs = {
 export type QueryBuildersArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryCommunitiesArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryCommunityByIdArgs = {
@@ -544,7 +539,6 @@ export type QueryCommunityByIdArgs = {
 export type QueryCompaniesArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryCompanyByIdArgs = {
@@ -558,7 +552,6 @@ export type QueryContractorByIdArgs = {
 export type QueryContractorsArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryJobLegacyByIdArgs = {
@@ -568,21 +561,18 @@ export type QueryJobLegacyByIdArgs = {
 export type QueryJobsLegacyArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryJobsLegacyByActiveStatusArgs = {
   active: Scalars['Boolean'];
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryJobsLegacyByContractorIdArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryReporterByIdArgs = {
@@ -592,7 +582,6 @@ export type QueryReporterByIdArgs = {
 export type QueryReportersArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QueryScopeByIdArgs = {
@@ -602,7 +591,6 @@ export type QueryScopeByIdArgs = {
 export type QueryScopesArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type QuerySupplierByIdArgs = {
@@ -612,7 +600,6 @@ export type QuerySupplierByIdArgs = {
 export type QuerySuppliersArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
 };
 
 export type Reporter = {
@@ -655,16 +642,6 @@ export type ScopesResponse = {
   __typename?: 'ScopesResponse';
   data: Array<Scope>;
   meta: MetaResponse;
-};
-
-export enum SortOrder {
-  Asc = 'asc',
-  Desc = 'desc',
-}
-
-export type Sorting = {
-  field: Scalars['String'];
-  order: SortOrder;
 };
 
 export type Supplier = {
@@ -899,7 +876,6 @@ export type GetAreaQuery = {
 
 export type GetAreasQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -925,8 +901,6 @@ export type GetAreasQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -979,7 +953,6 @@ export type GetBuilderQuery = {
 
 export type GetBuildersQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1008,8 +981,6 @@ export type GetBuildersQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -1060,7 +1031,6 @@ export type GetCommunityQuery = {
 
 export type GetCommunitiesQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1087,8 +1057,6 @@ export type GetCommunitiesQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -1144,7 +1112,6 @@ export type GetCompanyQuery = {
 
 export type GetCompaniesQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1172,8 +1139,6 @@ export type GetCompaniesQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -1224,7 +1189,6 @@ export type GetContractorQuery = {
 
 export type GetContractorsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1250,8 +1214,6 @@ export type GetContractorsQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -1334,7 +1296,6 @@ export type GetJobLegacyByIdQuery = {
 export type GetJobsLegacyByActiveStatusQueryVariables = Exact<{
   active: Scalars['Boolean'];
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1375,8 +1336,6 @@ export type GetJobsLegacyByActiveStatusQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
       totalPages: number;
     };
   };
@@ -1385,7 +1344,6 @@ export type GetJobsLegacyByActiveStatusQuery = {
 export type GetJobsLegacyByContractorIdQueryVariables = Exact<{
   contractorId: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1441,8 +1399,6 @@ export type GetJobsLegacyByContractorIdQuery = {
       __typename?: 'MetaResponse';
       page?: number | null;
       pageSize?: number | null;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
       totalCount: number;
       totalPages: number;
     };
@@ -1534,7 +1490,6 @@ export type GetReporterQuery = {
 
 export type GetReportersQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1561,8 +1516,6 @@ export type GetReportersQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -1614,7 +1567,6 @@ export type GetScopeQuery = {
 
 export type GetScopesQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1641,8 +1593,6 @@ export type GetScopesQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -1693,7 +1643,6 @@ export type GetSupplierQuery = {
 
 export type GetSuppliersQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
-  sorting?: InputMaybe<Sorting>;
   archived?: InputMaybe<Scalars['Boolean']>;
 }>;
 
@@ -1719,8 +1668,6 @@ export type GetSuppliersQuery = {
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
-      sortField?: string | null;
-      sortOrder?: SortOrder | null;
     };
   };
 };
@@ -1954,12 +1901,8 @@ export type GetAreaQueryResult = Apollo.QueryResult<
   GetAreaQueryVariables
 >;
 export const GetAreasDocument = gql`
-  query GetAreas(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    areas(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetAreas($pagination: Pagination, $archived: Boolean) {
+    areas(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -1976,8 +1919,6 @@ export const GetAreasDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -1996,7 +1937,6 @@ export const GetAreasDocument = gql`
  * const { data, loading, error } = useGetAreasQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -2244,12 +2184,8 @@ export type GetBuilderQueryResult = Apollo.QueryResult<
   GetBuilderQueryVariables
 >;
 export const GetBuildersDocument = gql`
-  query GetBuilders(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    builders(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetBuilders($pagination: Pagination, $archived: Boolean) {
+    builders(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -2271,8 +2207,6 @@ export const GetBuildersDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -2291,7 +2225,6 @@ export const GetBuildersDocument = gql`
  * const { data, loading, error } = useGetBuildersQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -2542,16 +2475,8 @@ export type GetCommunityQueryResult = Apollo.QueryResult<
   GetCommunityQueryVariables
 >;
 export const GetCommunitiesDocument = gql`
-  query GetCommunities(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    communities(
-      pagination: $pagination
-      sorting: $sorting
-      archived: $archived
-    ) {
+  query GetCommunities($pagination: Pagination, $archived: Boolean) {
+    communities(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -2571,8 +2496,6 @@ export const GetCommunitiesDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -2591,7 +2514,6 @@ export const GetCommunitiesDocument = gql`
  * const { data, loading, error } = useGetCommunitiesQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -2844,12 +2766,8 @@ export type GetCompanyQueryResult = Apollo.QueryResult<
   GetCompanyQueryVariables
 >;
 export const GetCompaniesDocument = gql`
-  query GetCompanies(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    companies(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetCompanies($pagination: Pagination, $archived: Boolean) {
+    companies(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -2868,8 +2786,6 @@ export const GetCompaniesDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -2888,7 +2804,6 @@ export const GetCompaniesDocument = gql`
  * const { data, loading, error } = useGetCompaniesQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -3141,16 +3056,8 @@ export type GetContractorQueryResult = Apollo.QueryResult<
   GetContractorQueryVariables
 >;
 export const GetContractorsDocument = gql`
-  query GetContractors(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    contractors(
-      pagination: $pagination
-      sorting: $sorting
-      archived: $archived
-    ) {
+  query GetContractors($pagination: Pagination, $archived: Boolean) {
+    contractors(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -3167,8 +3074,6 @@ export const GetContractorsDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -3187,7 +3092,6 @@ export const GetContractorsDocument = gql`
  * const { data, loading, error } = useGetContractorsQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -3518,13 +3422,11 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
   query GetJobsLegacyByActiveStatus(
     $active: Boolean!
     $pagination: Pagination
-    $sorting: Sorting
     $archived: Boolean
   ) {
     jobsLegacyByActiveStatus(
       active: $active
       pagination: $pagination
-      sorting: $sorting
       archived: $archived
     ) {
       data {
@@ -3572,8 +3474,6 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
         totalPages
       }
     }
@@ -3594,7 +3494,6 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
  *   variables: {
  *      active: // value for 'active'
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -3637,13 +3536,11 @@ export const GetJobsLegacyByContractorIdDocument = gql`
   query GetJobsLegacyByContractorId(
     $contractorId: ID!
     $pagination: Pagination
-    $sorting: Sorting
     $archived: Boolean
   ) {
     jobsLegacyByContractorId(
       id: $contractorId
       pagination: $pagination
-      sorting: $sorting
       archived: $archived
     ) {
       data {
@@ -3699,8 +3596,6 @@ export const GetJobsLegacyByContractorIdDocument = gql`
       meta {
         page
         pageSize
-        sortField
-        sortOrder
         totalCount
         totalPages
       }
@@ -3722,7 +3617,6 @@ export const GetJobsLegacyByContractorIdDocument = gql`
  *   variables: {
  *      contractorId: // value for 'contractorId'
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -4020,12 +3914,8 @@ export type GetReporterQueryResult = Apollo.QueryResult<
   GetReporterQueryVariables
 >;
 export const GetReportersDocument = gql`
-  query GetReporters(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    reporters(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetReporters($pagination: Pagination, $archived: Boolean) {
+    reporters(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -4043,8 +3933,6 @@ export const GetReportersDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -4063,7 +3951,6 @@ export const GetReportersDocument = gql`
  * const { data, loading, error } = useGetReportersQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -4312,12 +4199,8 @@ export type GetScopeQueryResult = Apollo.QueryResult<
   GetScopeQueryVariables
 >;
 export const GetScopesDocument = gql`
-  query GetScopes(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    scopes(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetScopes($pagination: Pagination, $archived: Boolean) {
+    scopes(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -4335,8 +4218,6 @@ export const GetScopesDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -4355,7 +4236,6 @@ export const GetScopesDocument = gql`
  * const { data, loading, error } = useGetScopesQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });
@@ -4601,12 +4481,8 @@ export type GetSupplierQueryResult = Apollo.QueryResult<
   GetSupplierQueryVariables
 >;
 export const GetSuppliersDocument = gql`
-  query GetSuppliers(
-    $pagination: Pagination
-    $sorting: Sorting
-    $archived: Boolean
-  ) {
-    suppliers(pagination: $pagination, sorting: $sorting, archived: $archived) {
+  query GetSuppliers($pagination: Pagination, $archived: Boolean) {
+    suppliers(pagination: $pagination, archived: $archived) {
       data {
         id
         name
@@ -4623,8 +4499,6 @@ export const GetSuppliersDocument = gql`
         page
         pageSize
         totalCount
-        sortField
-        sortOrder
       }
     }
   }
@@ -4643,7 +4517,6 @@ export const GetSuppliersDocument = gql`
  * const { data, loading, error } = useGetSuppliersQuery({
  *   variables: {
  *      pagination: // value for 'pagination'
- *      sorting: // value for 'sorting'
  *      archived: // value for 'archived'
  *   },
  * });

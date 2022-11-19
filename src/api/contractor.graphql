@@ -8,12 +8,8 @@ query GetContractor($id: ID!) {
   }
 }
 
-query GetContractors(
-  $pagination: Pagination
-  $sorting: Sorting
-  $archived: Boolean
-) {
-  contractors(pagination: $pagination, sorting: $sorting, archived: $archived) {
+query GetContractors($pagination: Pagination, $archived: Boolean) {
+  contractors(pagination: $pagination, archived: $archived) {
     data {
       id
       name
@@ -30,8 +26,6 @@ query GetContractors(
       page
       pageSize
       totalCount
-      sortField
-      sortOrder
     }
   }
 }

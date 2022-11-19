@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useRef, useState } from 'react';
+import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -10,6 +10,8 @@ import {
   getFilteredRowModel,
   Header,
   getPaginationRowModel,
+  Updater,
+  PaginationState,
 } from '@tanstack/react-table';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
@@ -32,13 +34,16 @@ const Table = <TData extends Record<string, unknown>>({
   pageCount,
   loading,
   tableAction,
-  manualPagination,
   onPaginationChange,
 }: TableProps<TData>) => {
   /******************************/
   /* State                      */
   /******************************/
   const [globalFilter, setGlobalFilter] = useState('');
+  const [paginationState, setPaginationState] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   /******************************/
   /* Refs                       */
@@ -73,15 +78,24 @@ const Table = <TData extends Record<string, unknown>>({
   const handlePageChange = (pageIndex: number) => {
     scrollToTable();
     setPageIndex(pageIndex);
-    onPaginationChange && onPaginationChange(pageIndex, pagination.pageSize);
   };
 
   const handlePageSizeChange = (size: number) => {
     scrollToTable();
-    setPageIndex(0);
+    resetPageIndex();
     setPageSize(size);
-    onPaginationChange && onPaginationChange(0, size);
   };
+
+  const handlePaginationChange = (updater: Updater<PaginationState>) => {
+    setPaginationState(updater);
+    if (typeof updater === 'function') {
+      onPaginationChange?.(updater(paginationState));
+    }
+  };
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
 
   /******************************/
   /* Table                      */
@@ -93,14 +107,16 @@ const Table = <TData extends Record<string, unknown>>({
     getState,
     setPageIndex,
     getPageCount,
+    resetPageIndex,
   } = useReactTable({
-    state: { globalFilter },
-    initialState: { pagination: { pageSize: 10 } },
+    state: { globalFilter, pagination: paginationState },
     data,
     columns,
     pageCount,
     globalFilterFn,
-    manualPagination,
+    enableSorting: false,
+    manualPagination: !!onPaginationChange,
+    onPaginationChange: handlePaginationChange,
     getCoreRowModel: getCoreRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     getSortedRowModel: getSortedRowModel(),

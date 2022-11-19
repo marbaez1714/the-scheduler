@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from 'react';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, PaginationState } from '@tanstack/react-table';
 
 import { JobLegacyStatus } from 'src/api';
 
@@ -18,11 +18,10 @@ export interface TableProps<TData> {
   data?: TData[];
   columns: ColumnDef<TData>[];
   rowActions?: TableRowAction<TData>[];
-  manualPagination?: boolean;
   pageCount?: number;
   loading?: boolean;
   tableAction?: tableAction;
-  onPaginationChange?: (page: number, pageSize: number) => void;
+  onPaginationChange?: (pagination: PaginationState) => void;
 }
 
 export interface TableHeaderProps {
