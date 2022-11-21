@@ -1,10 +1,8 @@
-import { useState, useEffect, useMemo } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { JobLegacy, useGetJobsLegacyByActiveStatusQuery } from 'src/api';
 import { Screen } from 'src/components/Screen';
 import { Table } from 'src/components/Table';
-import { format } from 'date-fns';
 import { dataColumns } from 'src/utils/tables';
 
 const Archive = () => {

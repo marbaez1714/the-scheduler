@@ -1,4 +1,3 @@
-import { useState, useEffect, useMemo } from 'react';
 import cn from 'classnames';
 import { Switch } from '@headlessui/react';
 

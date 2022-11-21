@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Menu as HeadlessMenu, Transition } from '@headlessui/react';
 import cn from 'classnames';
 

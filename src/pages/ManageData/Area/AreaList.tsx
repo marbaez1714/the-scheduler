@@ -8,7 +8,6 @@ import { Area, useArchiveAreaMutation, useGetAreasQuery } from 'src/api';
 import { Screen } from 'src/components/Screen';
 import { Table, TableRowAction } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
-import { format } from 'date-fns';
 import { dataColumns } from 'src/utils/tables';
 
 export const AreaList = () => {

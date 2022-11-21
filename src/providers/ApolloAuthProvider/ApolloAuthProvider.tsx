@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import {
   ApolloProvider,
   ApolloClient,
-  createHttpLink,
   InMemoryCache,
   ApolloLink,
   from,

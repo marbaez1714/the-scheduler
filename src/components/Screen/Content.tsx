@@ -1,4 +1,3 @@
-import cn from 'classnames';
 import { Button } from '../Button';
 import { ContentProps } from './types';
 

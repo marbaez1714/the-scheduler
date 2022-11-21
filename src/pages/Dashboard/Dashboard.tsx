@@ -1,14 +1,11 @@
-import { KeyIcon, LockClosedIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import {
   ContractorOptionFragment,
   useGetAssignedContractorsQuery,
 } from 'src/api';
-import { Button } from 'src/components/Button';
 
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
-import { Menu } from 'src/components/Menu';
 import { Screen } from 'src/components/Screen';
 import { localStorageKeys } from 'src/utils/localStorage';
 import { SettingsModal } from './SettingsModal';

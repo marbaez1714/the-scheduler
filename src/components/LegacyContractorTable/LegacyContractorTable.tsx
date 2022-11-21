@@ -3,7 +3,6 @@ import { ColumnDef, PaginationState } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import {
-  ArrowPathIcon,
   ArrowsRightLeftIcon,
   ArrowUpIcon,
   ChatBubbleBottomCenterTextIcon,

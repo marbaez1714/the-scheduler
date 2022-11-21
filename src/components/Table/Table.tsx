@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -225,7 +225,11 @@ const Table = <TData extends Record<string, unknown>>({
       className="flex flex-col w-full max-h-full overflow-hidden rounded shadow"
       ref={containerRef}
     >
-      {headerRender && <div className="px-6 py-4 border-b bg-app border-b-app-medium">{headerRender}</div>}
+      {headerRender && (
+        <div className="px-6 py-4 border-b bg-app border-b-app-medium">
+          {headerRender}
+        </div>
+      )}
 
       {/* Table */}
       <div className={'overflow-scroll'}>
