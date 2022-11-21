@@ -1,7 +1,8 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import { ColumnDef, PaginationState } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useDebounce } from 'usehooks-ts';
 import {
   ArrowsRightLeftIcon,
   ArrowUpIcon,
@@ -38,6 +39,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
 
@@ -66,6 +68,13 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
       toast.error(error.message);
     },
   });
+
+  /******************************/
+  /* Effects                    */
+  /******************************/
+  useEffect(() => {
+    console.log(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
 
   /******************************/
   /* Callbacks                  */
@@ -216,7 +225,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
           loading={loading}
           columns={columns}
           data={displayedJobs}
-          pageCount={data?.jobsLegacyByContractorId.meta.totalPages}
+          pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
           rowActions={rowActions}
           onPaginationChange={handlePaginationChange}
         />

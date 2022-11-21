@@ -93,7 +93,7 @@ export type Area = {
 export type AreasResponse = {
   __typename?: 'AreasResponse';
   data: Array<Area>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type AssignedContractorsResponse = {
@@ -121,13 +121,13 @@ export type Builder = {
 export type BuildersResponse = {
   __typename?: 'BuildersResponse';
   data: Array<Builder>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type CommunitiesResponse = {
   __typename?: 'CommunitiesResponse';
   data: Array<Community>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type Community = {
@@ -148,7 +148,7 @@ export type Community = {
 export type CompaniesResponse = {
   __typename?: 'CompaniesResponse';
   data: Array<Company>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type Company = {
@@ -185,7 +185,7 @@ export type Contractor = {
 export type ContractorsResponse = {
   __typename?: 'ContractorsResponse';
   data: Array<Contractor>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type CreateJobLegacyInput = {
@@ -251,6 +251,15 @@ export enum JobLegacyStatus {
   WillCall = 'willCall',
 }
 
+export enum JobsLegacyFilterField {
+  Name = 'name',
+}
+
+export type JobsLegacyFilterInput = {
+  field: JobsLegacyFilterField;
+  term: Scalars['String'];
+};
+
 export enum JobsLegacyMessageRecipient {
   Contractor = 'contractor',
   Reporter = 'reporter',
@@ -259,7 +268,7 @@ export enum JobsLegacyMessageRecipient {
 export type JobsLegacyResponse = {
   __typename?: 'JobsLegacyResponse';
   data: Array<JobLegacy>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type JobsLegacySendMessageResponse = {
@@ -285,14 +294,6 @@ export type LineItemLegacy = {
 export type MessageResponse = {
   __typename?: 'MessageResponse';
   message: Scalars['String'];
-};
-
-export type MetaResponse = {
-  __typename?: 'MetaResponse';
-  page?: Maybe<Scalars['Int']>;
-  pageSize?: Maybe<Scalars['Int']>;
-  totalCount: Scalars['Int'];
-  totalPages: Scalars['Int'];
 };
 
 export type ModifyJobLegacyInput = {
@@ -484,6 +485,14 @@ export type Pagination = {
   pageSize: Scalars['Int'];
 };
 
+export type PaginationResponse = {
+  __typename?: 'PaginationResponse';
+  page?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  totalCount: Scalars['Int'];
+  totalPages: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
   areaById?: Maybe<Area>;
@@ -571,6 +580,7 @@ export type QueryJobsLegacyByActiveStatusArgs = {
 
 export type QueryJobsLegacyByContractorIdArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<JobsLegacyFilterInput>;
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
 };
@@ -620,7 +630,7 @@ export type Reporter = {
 export type ReportersResponse = {
   __typename?: 'ReportersResponse';
   data: Array<Reporter>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type Scope = {
@@ -641,7 +651,7 @@ export type Scope = {
 export type ScopesResponse = {
   __typename?: 'ScopesResponse';
   data: Array<Scope>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type Supplier = {
@@ -661,7 +671,7 @@ export type Supplier = {
 export type SuppliersResponse = {
   __typename?: 'SuppliersResponse';
   data: Array<Supplier>;
-  meta: MetaResponse;
+  pagination: PaginationResponse;
 };
 
 export type WriteAreaInput = {
@@ -896,8 +906,8 @@ export type GetAreasQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -976,8 +986,8 @@ export type GetBuildersQuery = {
       legacy: boolean;
       company: { __typename?: 'Company'; name: string };
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1052,8 +1062,8 @@ export type GetCommunitiesQuery = {
       legacy: boolean;
       company: { __typename?: 'Company'; name: string };
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1134,8 +1144,8 @@ export type GetCompaniesQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1209,8 +1219,8 @@ export type GetContractorsQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1331,8 +1341,8 @@ export type GetJobsLegacyByActiveStatusQuery = {
       reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
       scope?: { __typename?: 'Scope'; id: string; name: string } | null;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1395,8 +1405,8 @@ export type GetJobsLegacyByContractorIdQuery = {
         supplier: { __typename?: 'Supplier'; name: string };
       }>;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1511,8 +1521,8 @@ export type GetReportersQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1588,8 +1598,8 @@ export type GetScopesQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1663,8 +1673,8 @@ export type GetSuppliersQuery = {
       archived: boolean;
       legacy: boolean;
     }>;
-    meta: {
-      __typename?: 'MetaResponse';
+    pagination: {
+      __typename?: 'PaginationResponse';
       page?: number | null;
       pageSize?: number | null;
       totalCount: number;
@@ -1915,7 +1925,7 @@ export const GetAreasDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -2203,7 +2213,7 @@ export const GetBuildersDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -2492,7 +2502,7 @@ export const GetCommunitiesDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -2782,7 +2792,7 @@ export const GetCompaniesDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -3070,7 +3080,7 @@ export const GetContractorsDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -3470,7 +3480,7 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -3593,7 +3603,7 @@ export const GetJobsLegacyByContractorIdDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -3929,7 +3939,7 @@ export const GetReportersDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -4214,7 +4224,7 @@ export const GetScopesDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount
@@ -4495,7 +4505,7 @@ export const GetSuppliersDocument = gql`
         archived
         legacy
       }
-      meta {
+      pagination {
         page
         pageSize
         totalCount

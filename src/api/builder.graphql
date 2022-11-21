@@ -29,7 +29,7 @@ query GetBuilders($pagination: Pagination, $archived: Boolean) {
       archived
       legacy
     }
-    meta {
+    pagination {
       page
       pageSize
       totalCount
