@@ -102,7 +102,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
             <Combobox.Button className="w-full">
               <Combobox.Input
                 className={cn(
-                  'bg-app-light py-3 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow-inner text-ellipsis disabled:bg-app-medium/50 focus-ring',
+                  'bg-app-light h-12 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow-inner text-ellipsis disabled:bg-app-medium/50 focus-ring',
                   className
                 )}
                 value={value ?? undefined}

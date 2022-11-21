@@ -25,7 +25,6 @@ import { HeaderCell } from './Cells/HeaderCell';
 import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
 import { TableProps } from './types';
 import { TableFooter } from './TableFooter';
-import { TableHeader } from './TableHeader';
 
 const Table = <TData extends Record<string, unknown>>({
   data = [],
@@ -33,13 +32,12 @@ const Table = <TData extends Record<string, unknown>>({
   rowActions,
   pageCount,
   loading,
-  tableAction,
+  headerRender,
   onPaginationChange,
 }: TableProps<TData>) => {
   /******************************/
   /* State                      */
   /******************************/
-  const [globalFilter, setGlobalFilter] = useState('');
   const [paginationState, setPaginationState] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -69,10 +67,6 @@ const Table = <TData extends Record<string, unknown>>({
       const { top } = containerRef.current.getBoundingClientRect();
       window.scrollBy({ top: top - 64, behavior: 'smooth' }); // top + header offset
     }
-  };
-
-  const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setGlobalFilter(e.target.value);
   };
 
   const handlePageChange = (pageIndex: number) => {
@@ -109,7 +103,7 @@ const Table = <TData extends Record<string, unknown>>({
     getPageCount,
     resetPageIndex,
   } = useReactTable({
-    state: { globalFilter, pagination: paginationState },
+    state: { pagination: paginationState },
     data,
     columns,
     pageCount,
@@ -118,7 +112,6 @@ const Table = <TData extends Record<string, unknown>>({
     manualPagination: !!onPaginationChange,
     onPaginationChange: handlePaginationChange,
     getCoreRowModel: getCoreRowModel(),
-    onGlobalFilterChange: setGlobalFilter,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -232,12 +225,8 @@ const Table = <TData extends Record<string, unknown>>({
       className="flex flex-col w-full max-h-full overflow-hidden rounded shadow"
       ref={containerRef}
     >
-      {/* Header */}
-      <TableHeader
-        searchTerm={globalFilter}
-        onSearchChange={handleSearchChange}
-        tableAction={tableAction}
-      />
+      {headerRender && <div className="px-6 py-4 border-b bg-app border-b-app-medium">{headerRender}</div>}
+
       {/* Table */}
       <div className={'overflow-scroll'}>
         <table className="relative w-full border-collapse whitespace-nowrap">

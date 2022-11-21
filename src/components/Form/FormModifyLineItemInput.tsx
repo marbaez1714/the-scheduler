@@ -138,7 +138,6 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
         {originalLineItems.map(
           (item: ModifyLineItemLegacyInput, index: number) => (
             <Button
-              rounded
               size="small"
               className={cn({ '!bg-app-warn line-through': item.delete })}
               key={`${item.orderNumber}-${item.supplierId}-${index}`}
@@ -165,7 +164,6 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
 
         {newLineItems.map((item: ModifyLineItemLegacyInput, index: number) => (
           <Button
-            rounded
             size="small"
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
             rightRender={<TrashIcon />}

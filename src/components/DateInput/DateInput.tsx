@@ -32,7 +32,7 @@ const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
 
           <DatePicker
             className={cn(
-              'bg-app-light text-app-text border-app-medium py-3 px-4 w-full rounded border-2 shadow-inner text-ellipsis focus-ring',
+              'bg-app-light text-app-text border-app-medium h-12 px-4 w-full rounded border-2 shadow-inner text-ellipsis focus-ring',
               className
             )}
             name={name}

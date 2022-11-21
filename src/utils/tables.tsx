@@ -32,7 +32,7 @@ export const dataColumns = {
     cell: ({ getValue }) => <Table.JobLegacyStatusCell value={getValue()} />,
   }),
   startDate: dataHelpers.accessor(
-    (row) => format(new Date(row.updatedTime), 'P'),
+    (row) => row.startDate && format(new Date(row.startDate), 'P'),
     {
       id: 'startDate',
       header: 'Start Date',

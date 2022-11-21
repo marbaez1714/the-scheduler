@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { ColumnDef, PaginationState } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import {
+  ArrowPathIcon,
   ArrowsRightLeftIcon,
   ArrowUpIcon,
   ChatBubbleBottomCenterTextIcon,
@@ -9,7 +11,6 @@ import {
   DocumentCheckIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/solid';
-import toast from 'react-hot-toast';
 
 import {
   JobLegacy,
@@ -22,6 +23,8 @@ import { Collapsable } from '../Collapsable';
 import { ReassignModal } from '../ReassignModal';
 import { SendMessageModal } from '../SendMessageModal';
 import { dataColumns } from 'src/utils/tables';
+import { TextInput } from '../TextInput';
+import { Button } from '../Button';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
@@ -35,6 +38,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const [selectedJob, setSelectedJob] = useState<JobLegacy>();
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
 
@@ -112,6 +116,10 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     }).then(({ data }) => {
       setDisplayedJobs(data.jobsLegacyByContractorId.data as JobLegacy[]);
     });
+  };
+
+  const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   /******************************/
@@ -193,16 +201,25 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         defaultOpen
       >
         <Table
+          headerRender={
+            <div className="flex items-center justify-between">
+              <TextInput
+                placeholder="Search by name"
+                className="w-1/2 h-10"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <Button variant="outline" onClick={() => refetch()}>
+                Refresh
+              </Button>
+            </div>
+          }
           loading={loading}
           columns={columns}
           data={displayedJobs}
           pageCount={data?.jobsLegacyByContractorId.meta.totalPages}
           rowActions={rowActions}
           onPaginationChange={handlePaginationChange}
-          tableAction={{
-            title: 'Refresh',
-            onClick: refetch,
-          }}
         />
       </Collapsable>
     </>

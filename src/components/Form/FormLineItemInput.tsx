@@ -108,7 +108,6 @@ export const FormLineItemInput = <TFields extends FieldValues>({
 
         {value.map((item: CreateLineItemLegacyInput, index: number) => (
           <Button
-            rounded
             size="small"
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
             rightRender={<TrashIcon />}

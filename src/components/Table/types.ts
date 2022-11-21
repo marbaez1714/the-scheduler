@@ -1,4 +1,3 @@
-import { ChangeEventHandler } from 'react';
 import { ColumnDef, PaginationState } from '@tanstack/react-table';
 
 import { JobLegacyStatus } from 'src/api';
@@ -6,7 +5,6 @@ import { JobLegacyStatus } from 'src/api';
 /******************************/
 /* Main Table                 */
 /******************************/
-type tableAction = { title: string; onClick: () => void };
 
 export type TableRowAction<TData> = {
   icon: React.ReactNode;
@@ -20,14 +18,8 @@ export interface TableProps<TData> {
   rowActions?: TableRowAction<TData>[];
   pageCount?: number;
   loading?: boolean;
-  tableAction?: tableAction;
+  headerRender?: React.ReactNode;
   onPaginationChange?: (pagination: PaginationState) => void;
-}
-
-export interface TableHeaderProps {
-  tableAction?: tableAction;
-  searchTerm: string;
-  onSearchChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 export interface TableFooterProps {
