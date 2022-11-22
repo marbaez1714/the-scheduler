@@ -127,7 +127,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(`/modify_jobLegacy/${data.id}`),
+      onClick: (data) => navigate(`/jobs_legacy/modify/${data.id}`),
     },
     {
       icon: <ChatBubbleBottomCenterTextIcon />,

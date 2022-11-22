@@ -4,14 +4,14 @@ import { CheckCircleIcon } from '@heroicons/react/24/solid';
 
 import { RadioGroupInputProps } from './types';
 
-const RadioGroupInput = ({
+const RadioGroupInput = <TValue extends unknown>({
   label,
   required,
   className,
   options,
   onChange,
   value,
-}: RadioGroupInputProps) => {
+}: RadioGroupInputProps<TValue>) => {
   /******************************/
   /* Render                     */
   /******************************/
@@ -29,7 +29,7 @@ const RadioGroupInput = ({
             value={option.value}
             className={({ checked }) =>
               cn(
-                'flex flex-grow flex-shrink-0 pl-4 pr-2 py-2 transition-colors border-2 rounded  text-app bg-app-light border-app-medium cursor-pointer',
+                'flex flex-grow flex-shrink-0 pl-4 pr-2 h-10 items-center transition-colors border-2 rounded  text-app bg-app-light border-app cursor-pointer uppercase tracking-wider font-bold',
                 {
                   shadow: !checked,
                   'bg-app-success border-app-success text-app-altText shadow-inner':
@@ -37,7 +37,7 @@ const RadioGroupInput = ({
                 }
               )
             }
-            key={option.value}
+            key={`${option.value}`}
           >
             {({ checked }) => (
               <>

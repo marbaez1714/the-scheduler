@@ -8,3 +8,5 @@ export const manageDataItems = [
   { name: 'Scope', to: '/manage/scope' },
   { name: 'Supplier', to: '/manage/supplier' },
 ];
+
+export const jobsLegacyItems = [{ name: 'Create', to: '/jobs_legacy/create' }];

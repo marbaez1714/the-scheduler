@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Screen } from 'src/components/Screen';
 
-const ManageData = () => {
+const JobsLegacy = () => {
   return (
     <Screen>
       <Outlet />
@@ -9,4 +9,4 @@ const ManageData = () => {
   );
 };
 
-export default ManageData;
+export default JobsLegacy;

@@ -1,5 +1,4 @@
 export { default as ManageData } from './ManageData';
-export * from './ManageData';
 
 export * from './Area';
 export * from './Builder';

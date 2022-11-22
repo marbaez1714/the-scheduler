@@ -41,10 +41,14 @@ import {
   SupplierAddForm,
   SupplierModifyForm,
 } from 'src/pages/ManageData';
-import { CreateJob } from 'src/pages/CreateJob';
-import { ModifyJobLegacy } from 'src/pages/ModifyJobLegacy';
 import { Archive } from 'src/pages/Archive';
 import { NotFound } from './NotFound';
+import {
+  JobsLegacy,
+  CreateJob,
+  ModifyJobLegacy,
+  JobsList,
+} from 'src/pages/JobsLegacy';
 
 const Navigation = () => {
   return (
@@ -165,16 +169,27 @@ const Navigation = () => {
           />
         </Route>
       </Route>
-      {/* Create Job */}
+      {/* Jobs (Legacy) */}
       <Route
-        path="/create_job"
-        element={<ProtectedRoute component={CreateJob} />}
-      />
-      {/* Edit Job */}
-      <Route
-        path="/modify_jobLegacy/:jobLegacyId"
-        element={<ProtectedRoute component={ModifyJobLegacy} />}
-      />
+        path="/jobs_legacy"
+        element={<ProtectedRoute component={JobsLegacy} />}
+      >
+        {/* List */}
+        <Route index element={<ProtectedRoute component={JobsList} />} />
+
+        {/* Create */}
+        <Route
+          path="create"
+          element={<ProtectedRoute component={CreateJob} />}
+        />
+
+        {/* Modify */}
+        <Route
+          path="modify/:jobLegacyId"
+          element={<ProtectedRoute component={ModifyJobLegacy} />}
+        />
+      </Route>
+
       {/* Edit Job */}
       <Route path="/archive" element={<ProtectedRoute component={Archive} />} />
       {/* 404 Page */}

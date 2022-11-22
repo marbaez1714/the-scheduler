@@ -4,11 +4,12 @@ import {
   ArrowRightOnRectangleIcon,
   BriefcaseIcon,
   CircleStackIcon,
+  DocumentCheckIcon,
   PlusCircleIcon,
 } from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
 import { NavBarMenu } from './NavBarMenu';
-import { manageDataItems } from './utils';
+import { jobsLegacyItems, manageDataItems } from './utils';
 
 export const NavBar = () => {
   /******************************/
@@ -39,11 +40,12 @@ export const NavBar = () => {
         icon={<BriefcaseIcon />}
       />
 
-      {/* Create Job */}
+      {/* Jobs (Legacy) */}
       <NavBarMenu
-        title={'Create a Job (Legacy)'}
-        to="/create_job"
-        icon={<PlusCircleIcon />}
+        title={'Jobs (Legacy)'}
+        to="/jobs_legacy"
+        icon={<DocumentCheckIcon />}
+        links={jobsLegacyItems}
       />
 
       <NavBarMenu title={'Archive'} to="/archive" icon={<ArchiveBoxIcon />} />
