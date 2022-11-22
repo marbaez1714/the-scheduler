@@ -260,6 +260,12 @@ export type JobsLegacyFilterInput = {
   term: Scalars['String'];
 };
 
+export type JobsLegacyFilterResponse = {
+  __typename?: 'JobsLegacyFilterResponse';
+  field?: Maybe<JobsLegacyFilterField>;
+  term?: Maybe<Scalars['String']>;
+};
+
 export enum JobsLegacyMessageRecipient {
   Contractor = 'contractor',
   Reporter = 'reporter',
@@ -268,6 +274,7 @@ export enum JobsLegacyMessageRecipient {
 export type JobsLegacyResponse = {
   __typename?: 'JobsLegacyResponse';
   data: Array<JobLegacy>;
+  filter: JobsLegacyFilterResponse;
   pagination: PaginationResponse;
 };
 
@@ -569,12 +576,14 @@ export type QueryJobLegacyByIdArgs = {
 
 export type QueryJobsLegacyArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<JobsLegacyFilterInput>;
   pagination?: InputMaybe<Pagination>;
 };
 
 export type QueryJobsLegacyByActiveStatusArgs = {
   active: Scalars['Boolean'];
   archived?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<JobsLegacyFilterInput>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -1307,6 +1316,7 @@ export type GetJobsLegacyByActiveStatusQueryVariables = Exact<{
   active: Scalars['Boolean'];
   pagination?: InputMaybe<Pagination>;
   archived?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<JobsLegacyFilterInput>;
 }>;
 
 export type GetJobsLegacyByActiveStatusQuery = {
@@ -1355,6 +1365,7 @@ export type GetJobsLegacyByContractorIdQueryVariables = Exact<{
   contractorId: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
   archived?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<JobsLegacyFilterInput>;
 }>;
 
 export type GetJobsLegacyByContractorIdQuery = {
@@ -3433,11 +3444,13 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
     $active: Boolean!
     $pagination: Pagination
     $archived: Boolean
+    $filter: JobsLegacyFilterInput
   ) {
     jobsLegacyByActiveStatus(
       active: $active
       pagination: $pagination
       archived: $archived
+      filter: $filter
     ) {
       data {
         id
@@ -3505,6 +3518,7 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
  *      active: // value for 'active'
  *      pagination: // value for 'pagination'
  *      archived: // value for 'archived'
+ *      filter: // value for 'filter'
  *   },
  * });
  */
@@ -3547,11 +3561,13 @@ export const GetJobsLegacyByContractorIdDocument = gql`
     $contractorId: ID!
     $pagination: Pagination
     $archived: Boolean
+    $filter: JobsLegacyFilterInput
   ) {
     jobsLegacyByContractorId(
       id: $contractorId
       pagination: $pagination
       archived: $archived
+      filter: $filter
     ) {
       data {
         id
@@ -3628,6 +3644,7 @@ export const GetJobsLegacyByContractorIdDocument = gql`
  *      contractorId: // value for 'contractorId'
  *      pagination: // value for 'pagination'
  *      archived: // value for 'archived'
+ *      filter: // value for 'filter'
  *   },
  * });
  */

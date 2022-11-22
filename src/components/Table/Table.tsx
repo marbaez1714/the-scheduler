@@ -44,11 +44,6 @@ const Table = <TData extends Record<string, unknown>>({
   });
 
   /******************************/
-  /* Refs                       */
-  /******************************/
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  /******************************/
   /* Callbacks                  */
   /******************************/
   const globalFilterFn: FilterFn<TData> = (row, columnId, value, addMeta) => {
@@ -62,20 +57,11 @@ const Table = <TData extends Record<string, unknown>>({
     return itemRank.passed;
   };
 
-  const scrollToTable = () => {
-    if (containerRef.current) {
-      const { top } = containerRef.current.getBoundingClientRect();
-      window.scrollBy({ top: top - 64, behavior: 'smooth' }); // top + header offset
-    }
-  };
-
   const handlePageChange = (pageIndex: number) => {
-    scrollToTable();
     setPageIndex(pageIndex);
   };
 
   const handlePageSizeChange = (size: number) => {
-    scrollToTable();
     resetPageIndex();
     setPageSize(size);
   };
@@ -132,11 +118,11 @@ const Table = <TData extends Record<string, unknown>>({
     return (
       <th
         className={cn(
-          'h-6 py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
+          'h-10 py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
           {
             'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
-            'bg-app-dark': isSorted,
             'first:pl-14': spanActions,
+            'bg-app-dark': isSorted,
           }
         )}
         onClick={h.column.getToggleSortingHandler()}
@@ -156,12 +142,6 @@ const Table = <TData extends Record<string, unknown>>({
         )}
       </th>
     );
-  };
-
-  const renderHeaderGroups = () => {
-    return getHeaderGroups().map((hg) => (
-      <tr key={hg.id}>{hg.headers.map(renderHeaderCell)}</tr>
-    ));
   };
 
   const renderBodyRows = () => {
@@ -221,10 +201,7 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div
-      className="flex flex-col w-full max-h-full overflow-hidden rounded shadow"
-      ref={containerRef}
-    >
+    <div className="flex flex-col w-full max-h-full overflow-hidden rounded shadow">
       {headerRender && (
         <div className="px-6 py-4 border-b bg-app border-b-app-medium">
           {headerRender}
@@ -241,7 +218,9 @@ const Table = <TData extends Record<string, unknown>>({
             {/******************************/}
             {/* Column Headers             */}
             {/******************************/}
-            {renderHeaderGroups()}
+            {getHeaderGroups().map((hg) => (
+              <tr key={hg.id}>{hg.headers.map(renderHeaderCell)}</tr>
+            ))}
           </thead>
           {/******************************/}
           {/* Table Body                 */}

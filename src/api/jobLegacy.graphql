@@ -27,11 +27,13 @@ query GetJobsLegacyByActiveStatus(
   $active: Boolean!
   $pagination: Pagination
   $archived: Boolean
+  $filter: JobsLegacyFilterInput
 ) {
   jobsLegacyByActiveStatus(
     active: $active
     pagination: $pagination
     archived: $archived
+    filter: $filter
   ) {
     data {
       id
@@ -87,11 +89,13 @@ query GetJobsLegacyByContractorId(
   $contractorId: ID!
   $pagination: Pagination
   $archived: Boolean
+   $filter: JobsLegacyFilterInput
 ) {
   jobsLegacyByContractorId(
     id: $contractorId
     pagination: $pagination
     archived: $archived
+    filter: $filter
   ) {
     data {
       id

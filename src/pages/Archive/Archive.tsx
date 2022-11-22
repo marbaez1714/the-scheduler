@@ -1,9 +1,17 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, PaginationState } from '@tanstack/react-table';
+import { ChangeEventHandler, useState } from 'react';
 
-import { JobLegacy, useGetJobsLegacyByActiveStatusQuery } from 'src/api';
+import {
+  JobLegacy,
+  JobsLegacyFilterField,
+  useGetJobsLegacyByActiveStatusQuery,
+} from 'src/api';
+import { Button } from 'src/components/Button';
 import { Screen } from 'src/components/Screen';
 import { Table } from 'src/components/Table';
+import { TextInput } from 'src/components/TextInput';
 import { dataColumns } from 'src/utils/tables';
+import { useDebounce } from 'usehooks-ts';
 
 const Archive = () => {
   /******************************/
@@ -17,6 +25,10 @@ const Archive = () => {
   /******************************/
   /* State                      */
   /******************************/
+  const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
+  const [pagination, setPagination] = useState({ page: 1, pageSize: 10 });
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   /******************************/
   /* Context                    */
@@ -25,10 +37,23 @@ const Archive = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const { data: getJobsLegacyData, loading: getJobLegacyLoading } =
-    useGetJobsLegacyByActiveStatusQuery({
-      variables: { active: false, pagination: { page: 1, pageSize: 10 } },
-    });
+  const { data, refetch } = useGetJobsLegacyByActiveStatusQuery({
+    variables: {
+      active: false,
+      pagination,
+      ...(debouncedSearchTerm && {
+        filter: {
+          field: JobsLegacyFilterField.Name,
+          term: debouncedSearchTerm,
+        },
+      }),
+    },
+    onCompleted: ({ jobsLegacyByActiveStatus }) => {
+      setDisplayedJobs(jobsLegacyByActiveStatus.data as JobLegacy[]);
+    },
+  });
+
+  console.log(data);
 
   /******************************/
   /* Memos                      */
@@ -41,6 +66,16 @@ const Archive = () => {
   /******************************/
   /* Callbacks                  */
   /******************************/
+  const handlePaginationChange = (paginationState: PaginationState) => {
+    setPagination({
+      page: paginationState.pageIndex + 1,
+      pageSize: paginationState.pageSize,
+    });
+  };
+
+  const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   /******************************/
   /* Table                      */
@@ -63,13 +98,25 @@ const Archive = () => {
   /******************************/
   return (
     <Screen>
-      <Screen.Content
-        title="Jobs (Legacy) - inactive "
-        loading={getJobLegacyLoading}
-      >
+      <Screen.Content title="Jobs (Legacy) - inactive">
         <Table
-          data={getJobsLegacyData?.jobsLegacyByActiveStatus.data as JobLegacy[]}
+          headerRender={
+            <div className="flex items-center justify-between gap-10">
+              <TextInput
+                placeholder="Search by name"
+                className="h-10"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <Button variant="filled-light" onClick={() => refetch()}>
+                Refresh
+              </Button>
+            </div>
+          }
+          data={displayedJobs}
           columns={columns}
+          pageCount={data?.jobsLegacyByActiveStatus.pagination.totalPages}
+          onPaginationChange={handlePaginationChange}
         />
       </Screen.Content>
     </Screen>

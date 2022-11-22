@@ -14,6 +14,7 @@ import {
 
 import {
   JobLegacy,
+  JobsLegacyFilterField,
   useGetJobsLegacyByContractorIdQuery,
   useModifyJobLegacyMutation,
 } from 'src/api';
@@ -38,27 +39,29 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const [selectedJob, setSelectedJob] = useState<JobLegacy>();
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
+  const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
+  const [pagination, setPagination] = useState({ page: 1, pageSize: 10 });
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
-
-  const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
 
   /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading, refetch, fetchMore } =
-    useGetJobsLegacyByContractorIdQuery({
-      variables: {
-        contractorId: contractor.id,
-        pagination: {
-          page: 1,
-          pageSize: 10,
+  const { data, loading, refetch } = useGetJobsLegacyByContractorIdQuery({
+    variables: {
+      contractorId: contractor.id,
+      pagination,
+      ...(debouncedSearchTerm && {
+        filter: {
+          field: JobsLegacyFilterField.Name,
+          term: debouncedSearchTerm,
         },
-      },
-      onCompleted: ({ jobsLegacyByContractorId }) => {
-        setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
-      },
-    });
+      }),
+    },
+    onCompleted: ({ jobsLegacyByContractorId }) => {
+      setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
+    },
+  });
 
   const [modify] = useModifyJobLegacyMutation({
     onCompleted: () => {
@@ -68,13 +71,6 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
       toast.error(error.message);
     },
   });
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
-  useEffect(() => {
-    console.log(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
 
   /******************************/
   /* Callbacks                  */
@@ -114,15 +110,9 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   };
 
   const handlePaginationChange = (paginationState: PaginationState) => {
-    fetchMore({
-      variables: {
-        pagination: {
-          page: paginationState.pageIndex + 1,
-          pageSize: paginationState.pageSize,
-        },
-      },
-    }).then(({ data }) => {
-      setDisplayedJobs(data.jobsLegacyByContractorId.data as JobLegacy[]);
+    setPagination({
+      page: paginationState.pageIndex + 1,
+      pageSize: paginationState.pageSize,
     });
   };
 
@@ -210,19 +200,18 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
       >
         <Table
           headerRender={
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-10">
               <TextInput
                 placeholder="Search by name"
-                className="w-1/2 h-10"
+                className="h-10"
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
-              <Button variant="outline" onClick={() => refetch()}>
+              <Button variant="filled-light" onClick={() => refetch()}>
                 Refresh
               </Button>
             </div>
           }
-          loading={loading}
           columns={columns}
           data={displayedJobs}
           pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
