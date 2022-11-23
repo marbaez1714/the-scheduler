@@ -7,6 +7,7 @@ export const FormTextInput = <TFields extends FieldValues>({
   label,
   required,
   mask,
+  icon,
   ...rest
 }: FormTextInputProps<TFields>) => {
   /******************************/
@@ -23,6 +24,7 @@ export const FormTextInput = <TFields extends FieldValues>({
   return (
     <TextInput
       label={label}
+      icon={icon}
       required={required}
       mask={mask}
       errorMessage={error?.message}

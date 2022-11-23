@@ -17,7 +17,10 @@ const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
     return (
       <div className="flex flex-col flex-grow">
         {label && (
-          <label className="mb-2 font-medium text-app-dark" htmlFor={name}>
+          <label
+            className="mb-2 ml-12 font-medium text-app-dark"
+            htmlFor={name}
+          >
             {label}
             {required && (
               <span className="ml-1 font-bold text-app-error">*</span>

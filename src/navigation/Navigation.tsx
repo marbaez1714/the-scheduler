@@ -41,14 +41,13 @@ import {
   SupplierAddForm,
   SupplierModifyForm,
 } from 'src/pages/ManageData';
-import { Archive } from 'src/pages/Archive';
-import { NotFound } from './NotFound';
 import {
   JobsLegacy,
   CreateJob,
   ModifyJobLegacy,
   JobsList,
 } from 'src/pages/JobsLegacy';
+import { NotFound } from './NotFound';
 
 const Navigation = () => {
   return (
@@ -190,8 +189,6 @@ const Navigation = () => {
         />
       </Route>
 
-      {/* Edit Job */}
-      <Route path="/archive" element={<ProtectedRoute component={Archive} />} />
       {/* 404 Page */}
       <Route path="*" element={<ProtectedRoute component={NotFound} />} />
     </Routes>

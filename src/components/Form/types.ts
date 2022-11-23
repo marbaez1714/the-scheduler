@@ -1,6 +1,7 @@
 import { FieldValues, UseControllerProps } from 'react-hook-form';
 
 import { AutocompleteInputProps } from 'src/components/AutocompleteInput';
+import { IconProps } from '../Icon';
 
 export interface FormProps {
   title: string;
@@ -18,6 +19,7 @@ interface FormInput<TFields extends FieldValues>
   extends UseControllerProps<TFields> {
   label?: string;
   required?: boolean;
+  icon?: IconProps['icon'];
 }
 
 export interface FormTextInputProps<TFields extends FieldValues>

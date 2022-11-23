@@ -115,7 +115,7 @@ export const JobsList = () => {
             />
             <div className="flex items-center justify-between gap-10">
               <TextInput
-                placeholder="Search by name"
+                placeholder="Filter by address"
                 className="h-10"
                 value={searchTerm}
                 onChange={handleSearchChange}

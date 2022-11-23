@@ -68,30 +68,33 @@ export const FormLineItemInput = <TFields extends FieldValues>({
       {/******************************/}
       <label className="font-medium text-app-dark">{label}</label>
       <div className="flex justify-between">
-        <div className="w-1/2 mr-4">
+        <div className="w-1/2 mr-4 basis-1/2">
           <TextInput
             placeholder="Order #"
             value={orderNumber}
             onChange={(e) => setOrderNumber(e.target.value)}
+            icon="orderNumber"
           />
         </div>
-        <div className="w-1/2 mr-2">
+        <div className="flex w-1/2">
           <AutocompleteInput
             placeholder="Supplier"
             options={suppliers}
             value={supplierId}
             onChange={setSupplierId}
+            icon="supplier"
+            className="mr-2"
           />
+          <IconButton
+            onClick={handleAdd}
+            type="button"
+            variant="text"
+            size="large"
+            disabled={!orderNumber || !supplierId}
+          >
+            <PlusCircleIcon />
+          </IconButton>
         </div>
-        <IconButton
-          onClick={handleAdd}
-          type="button"
-          variant="text"
-          size="large"
-          disabled={!orderNumber || !supplierId}
-        >
-          <PlusCircleIcon />
-        </IconButton>
       </div>
       {/******************************/}
       {/* Line Items                 */}

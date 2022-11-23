@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import { AutocompleteInputProps } from './types';
+import { Icon } from '../Icon';
 
 const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
   (
@@ -82,7 +83,11 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
           {/* Label                      */}
           {/******************************/}
           {label && (
-            <Combobox.Label className="block mb-2 font-medium text-app-dark">
+            <Combobox.Label
+              className={cn('block mb-2 font-medium text-app-dark', {
+                'ml-12': icon,
+              })}
+            >
               {label}
               {required && (
                 <span className="ml-1 font-bold text-app-error">*</span>
@@ -94,7 +99,12 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
           {/* Input                      */}
           {/******************************/}
           <div className="relative flex items-center">
-            {icon && <div className="w-12 h-12 p-2 text-app">{icon}</div>}
+            {icon && (
+              <Icon
+                className="flex-shrink-0 w-12 h-12 p-2 text-app"
+                icon={icon}
+              />
+            )}
             <Combobox.Button className="w-full">
               <Combobox.Input
                 className={cn(
@@ -125,7 +135,12 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
           {/******************************/}
           {/* Options                    */}
           {/******************************/}
-          <Combobox.Options className="absolute z-50 mt-2 overflow-visible overflow-y-scroll border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48 top-full">
+          <Combobox.Options
+            className={cn(
+              'absolute z-50 mt-2 overflow-visible overflow-y-scroll border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48 top-full',
+              { 'ml-12': icon }
+            )}
+          >
             {/******************************/}
             {/* No Results                 */}
             {/******************************/}

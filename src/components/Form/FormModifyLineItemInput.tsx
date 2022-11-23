@@ -102,6 +102,7 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
             placeholder="Order #"
             value={orderNumber}
             onChange={(e) => setOrderNumber(e.target.value)}
+            icon="orderNumber"
           />
         </div>
         <div className="w-1/2 mr-2">
@@ -110,6 +111,7 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
             options={suppliers}
             value={supplierId}
             onChange={setSupplierId}
+            icon="supplier"
           />
         </div>
         <IconButton

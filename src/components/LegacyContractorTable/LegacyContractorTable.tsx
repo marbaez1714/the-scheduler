@@ -1,16 +1,8 @@
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { ColumnDef, PaginationState } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDebounce } from 'usehooks-ts';
-import {
-  ArrowsRightLeftIcon,
-  ArrowUpIcon,
-  ChatBubbleBottomCenterTextIcon,
-  CogIcon,
-  DocumentCheckIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/solid';
 
 import {
   JobLegacy,
@@ -26,6 +18,7 @@ import { SendMessageModal } from '../SendMessageModal';
 import { dataColumns } from 'src/utils/tables';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
+import { Icon } from '../Icon';
 
 const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
@@ -125,22 +118,22 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   const rowActions: TableRowAction<JobLegacy>[] = [
     {
-      icon: <PencilSquareIcon />,
+      icon: <Icon icon="edit" />,
       label: 'Edit',
       onClick: (data) => navigate(`/jobs_legacy/modify/${data.id}`),
     },
     {
-      icon: <ChatBubbleBottomCenterTextIcon />,
+      icon: <Icon icon="message" />,
       label: 'Send Message',
       onClick: handleSendMessage,
     },
     {
-      icon: <ArrowsRightLeftIcon />,
+      icon: <Icon icon="reassign" />,
       label: 'Reassign',
       onClick: handleReassignJob,
     },
     {
-      icon: <CogIcon />,
+      icon: <Icon icon="inProgress" />,
       label: 'Toggle In Progress',
       onClick: (data) =>
         modify({
@@ -148,7 +141,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         }),
     },
     {
-      icon: <ArrowUpIcon />,
+      icon: <Icon icon="important" />,
       label: 'Toggle Important',
       onClick: (data) => {
         modify({
@@ -157,7 +150,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
       },
     },
     {
-      icon: <DocumentCheckIcon />,
+      icon: <Icon icon="complete" />,
       label: 'Complete',
       onClick: handleComplete,
     },
@@ -202,7 +195,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
           headerRender={
             <div className="flex items-center justify-between gap-10">
               <TextInput
-                placeholder="Search by name"
+                placeholder="Filter by address"
                 className="h-10"
                 value={searchTerm}
                 onChange={handleSearchChange}

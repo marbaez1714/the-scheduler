@@ -93,6 +93,7 @@ export const CreateJob = () => {
               label={CreateJobForm.labels.name}
               control={control}
               name="name"
+              icon="address"
               required
             />
           </div>
@@ -117,6 +118,7 @@ export const CreateJob = () => {
               control={control}
               name="communityId"
               options={communityOptions}
+              icon="community"
             />
           </div>
 
@@ -129,6 +131,7 @@ export const CreateJob = () => {
               control={control}
               name="builderId"
               options={builderOptions}
+              icon="builder"
             />
           </div>
 
@@ -143,6 +146,7 @@ export const CreateJob = () => {
               control={control}
               name="contractorId"
               options={contractorsOptions}
+              icon="contractor"
             />
           </div>
 
@@ -155,6 +159,7 @@ export const CreateJob = () => {
               control={control}
               name="reporterId"
               options={reporterOptions}
+              icon="reporter"
             />
           </div>
 
@@ -167,6 +172,7 @@ export const CreateJob = () => {
               control={control}
               name="areaId"
               options={areaOptions}
+              icon="area"
             />
           </div>
 
@@ -179,6 +185,7 @@ export const CreateJob = () => {
               control={control}
               name="scopeId"
               options={scopeOptions}
+              icon="scope"
             />
           </div>
 

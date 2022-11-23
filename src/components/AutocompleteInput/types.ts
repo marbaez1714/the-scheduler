@@ -1,3 +1,4 @@
+import { IconProps } from '../Icon';
 import { InputOption, InputProps } from '../types';
 
 export interface AutocompleteInputProps extends InputProps {
@@ -9,5 +10,5 @@ export interface AutocompleteInputProps extends InputProps {
   disabled?: boolean;
   onBlur?: () => void;
   onChange: (value?: string) => void;
-  icon?: React.ReactNode;
+  icon?: IconProps['icon'];
 }

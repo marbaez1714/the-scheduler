@@ -1,13 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import {
-  ArchiveBoxIcon,
-  ArrowRightOnRectangleIcon,
-  BriefcaseIcon,
-  CircleStackIcon,
-  DocumentCheckIcon,
-  PlusCircleIcon,
-} from '@heroicons/react/24/solid';
 import { Link } from 'react-router-dom';
+
+import { Icon } from '../Icon';
 import { NavBarMenu } from './NavBarMenu';
 import { jobsLegacyItems, manageDataItems } from './utils';
 
@@ -37,24 +31,22 @@ export const NavBar = () => {
       <NavBarMenu
         title={'Dashboard'}
         to="/dashboard"
-        icon={<BriefcaseIcon />}
+        icon={<Icon icon="dashboard" />}
       />
 
       {/* Jobs (Legacy) */}
       <NavBarMenu
         title={'Jobs (Legacy)'}
         to="/jobs_legacy"
-        icon={<DocumentCheckIcon />}
+        icon={<Icon icon="job" />}
         links={jobsLegacyItems}
       />
-
-      <NavBarMenu title={'Archive'} to="/archive" icon={<ArchiveBoxIcon />} />
 
       {/* Manage Data */}
       <NavBarMenu
         title={'Manage Data'}
         to="/manage"
-        icon={<CircleStackIcon />}
+        icon={<Icon icon="data" />}
         links={manageDataItems}
       />
 
@@ -64,7 +56,7 @@ export const NavBar = () => {
         onClick={handleLogout}
         title="Logout"
       >
-        <ArrowRightOnRectangleIcon />
+        <Icon icon="logout" />
       </button>
     </header>
   );

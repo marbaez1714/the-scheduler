@@ -8,6 +8,7 @@ export const FormAutoCompleteInput = <TFields extends FieldValues>({
   label,
   required,
   options,
+  icon,
   ...rest
 }: FormAutoCompleteInputProps<TFields>) => {
   /******************************/
@@ -24,6 +25,7 @@ export const FormAutoCompleteInput = <TFields extends FieldValues>({
   return (
     <AutocompleteInput
       label={label}
+      icon={icon}
       required={required}
       options={options}
       errorMessage={error?.message}
