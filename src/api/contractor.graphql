@@ -1,0 +1,57 @@
+query GetContractor($id: ID!) {
+  contractorById(id: $id) {
+    id
+    name
+    primaryPhone
+    notes
+    legacy
+  }
+}
+
+query GetContractors($pagination: Pagination, $archived: Boolean) {
+  contractors(pagination: $pagination, archived: $archived) {
+    data {
+      id
+      name
+      primaryPhone
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+  }
+}
+
+query GetAssignedContractors {
+  assignedContractors {
+    data {
+      ...ContractorOption
+    }
+  }
+}
+
+mutation CreateContractor($data: WriteContractorInput!) {
+  createContractor(data: $data) {
+    message
+  }
+}
+
+mutation ModifyContractor($id: ID!, $data: WriteContractorInput!) {
+  modifyContractor(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveContractor($id: ID!) {
+  archiveContractor(id: $id) {
+    message
+  }
+}

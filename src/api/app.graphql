@@ -1,0 +1,42 @@
+query GetOptions {
+  areas {
+    data {
+      ...AreaOption
+    }
+  }
+  builders {
+    data {
+      ...BuilderOption
+    }
+  }
+  communities {
+    data {
+      ...CommunityOption
+    }
+  }
+  companies {
+    data {
+      ...CompanyOption
+    }
+  }
+  contractors {
+    data {
+      ...ContractorOption
+    }
+  }
+  reporters {
+    data {
+      ...ReporterOption
+    }
+  }
+  scopes {
+    data {
+      ...ScopeOption
+    }
+  }
+  suppliers {
+    data {
+      ...SupplierOption
+    }
+  }
+}

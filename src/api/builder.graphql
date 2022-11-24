@@ -1,0 +1,56 @@
+query GetBuilder($id: ID!) {
+  builderById(id: $id) {
+    id
+    name
+    primaryPhone
+    primaryEmail
+    companyId
+    notes
+    legacy
+  }
+}
+
+query GetBuilders($pagination: Pagination, $archived: Boolean) {
+  builders(pagination: $pagination, archived: $archived) {
+    data {
+      id
+      name
+      primaryPhone
+      primaryEmail
+      companyId
+      company {
+        name
+      }
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+  }
+}
+
+mutation CreateBuilder($data: WriteBuilderInput!) {
+  createBuilder(data: $data) {
+    message
+  }
+}
+
+mutation ModifyBuilder($id: ID!, $data: WriteBuilderInput!) {
+  modifyBuilder(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveBuilder($id: ID!) {
+  archiveBuilder(id: $id) {
+    message
+  }
+}

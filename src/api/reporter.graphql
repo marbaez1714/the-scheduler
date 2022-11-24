@@ -1,0 +1,51 @@
+query GetReporter($id: ID!) {
+  reporterById(id: $id) {
+    id
+    name
+    primaryPhone
+    primaryEmail
+    notes
+    legacy
+  }
+}
+
+query GetReporters($pagination: Pagination, $archived: Boolean) {
+  reporters(pagination: $pagination, archived: $archived) {
+    data {
+      id
+      name
+      primaryPhone
+      primaryEmail
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+  }
+}
+
+mutation CreateReporter($data: WriteReporterInput!) {
+  createReporter(data: $data) {
+    message
+  }
+}
+
+mutation ModifyReporter($id: ID!, $data: WriteReporterInput!) {
+  modifyReporter(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveReporter($id: ID!) {
+  archiveReporter(id: $id) {
+    message
+  }
+}

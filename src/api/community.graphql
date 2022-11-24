@@ -1,0 +1,52 @@
+query GetCommunity($id: ID!) {
+  communityById(id: $id) {
+    id
+    name
+    companyId
+    notes
+    legacy
+  }
+}
+
+query GetCommunities($pagination: Pagination, $archived: Boolean) {
+  communities(pagination: $pagination, archived: $archived) {
+    data {
+      id
+      name
+      companyId
+      company {
+        name
+      }
+      notes
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+    }
+  }
+}
+
+mutation CreateCommunity($data: WriteCommunityInput!) {
+  createCommunity(data: $data) {
+    message
+  }
+}
+
+mutation ModifyCommunity($id: ID!, $data: WriteCommunityInput!) {
+  modifyCommunity(id: $id, data: $data) {
+    message
+  }
+}
+
+mutation ArchiveCommunity($id: ID!) {
+  archiveCommunity(id: $id) {
+    message
+  }
+}

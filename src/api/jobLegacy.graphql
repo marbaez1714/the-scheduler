@@ -1,0 +1,219 @@
+query GetJobLegacyById($id: ID!) {
+  jobLegacyById(id: $id) {
+    id
+    name
+    active
+    inProgress
+    isImportant
+    status
+    areaId
+    builderId
+    communityId
+    contractorId
+    reporterId
+    scopeId
+    completedDate
+    startDate
+    notes
+    lineItems {
+      id
+      orderNumber
+      supplierId
+    }
+  }
+}
+
+query GetJobsLegacyByActiveStatus(
+  $active: Boolean!
+  $pagination: Pagination
+  $archived: Boolean
+  $filter: JobsLegacyFilterInput
+) {
+  jobsLegacyByActiveStatus(
+    active: $active
+    pagination: $pagination
+    archived: $archived
+    filter: $filter
+  ) {
+    data {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      status
+      completedDate
+      startDate
+      notes
+      area {
+        id
+        name
+      }
+      builder {
+        id
+        name
+      }
+      community {
+        id
+        name
+      }
+      contractor {
+        id
+        name
+      }
+      reporter {
+        id
+        name
+      }
+      scope {
+        id
+        name
+      }
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+      totalPages
+    }
+  }
+}
+
+query GetJobsLegacyByContractorId(
+  $contractorId: ID!
+  $pagination: Pagination
+  $archived: Boolean
+   $filter: JobsLegacyFilterInput
+) {
+  jobsLegacyByContractorId(
+    id: $contractorId
+    pagination: $pagination
+    archived: $archived
+    filter: $filter
+  ) {
+    data {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      status
+      completedDate
+      startDate
+      notes
+      area {
+        id
+        name
+        nameSpanish
+      }
+      builder {
+        id
+        name
+      }
+      community {
+        id
+        name
+      }
+      reporter {
+        id
+        name
+      }
+      scope {
+        id
+        name
+        nameSpanish
+      }
+      contractor {
+        id
+        name
+      }
+      lineItems {
+        orderNumber
+        supplier {
+          name
+        }
+      }
+      contractorId
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+    pagination {
+      page
+      pageSize
+      totalCount
+      totalPages
+    }
+  }
+}
+
+mutation CreateJobLegacy($data: CreateJobLegacyInput!) {
+  createJobLegacy(data: $data) {
+    message
+  }
+}
+
+mutation ModifyJobLegacy($id: ID!, $data: ModifyJobLegacyInput!) {
+  modifyJobLegacy(id: $id, data: $data) {
+    message
+    data {
+      id
+      name
+      active
+      inProgress
+      isImportant
+      status
+      completedDate
+      startDate
+      notes
+      area {
+        id
+        name
+        nameSpanish
+      }
+      builder {
+        id
+        name
+      }
+      community {
+        id
+        name
+      }
+      reporter {
+        id
+        name
+      }
+      scope {
+        id
+        name
+      }
+      contractorId
+      updatedBy
+      createdBy
+      createdTime
+      updatedTime
+      archived
+      legacy
+    }
+  }
+}
+
+mutation SendMessageJobLegacy(
+  $id: ID!
+  $recipient: JobsLegacyMessageRecipient!
+  $message: String!
+) {
+  sendMessageJobLegacy(id: $id, recipient: $recipient, message: $message) {
+    message
+    recipient
+  }
+}

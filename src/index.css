@@ -2,16 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: 'Roboto';
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@layer base {
+  body {
+    @apply font-roboto text-app-text bg-app-medium;
+  }
+  td {
+    @apply text-sm;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@layer components {
+  .cell-caption-text {
+    @apply text-xs opacity-25;
+  }
+
+  .form-divider-y {
+    @apply col-span-full bg-app/25 h-0.5 rounded-full shadow;
+  }
+
+  .form-divider-x {
+    @apply h-full bg-app/25 w-0.5 rounded-full shadow;
+  }
+}
+
+@layer utilities {
+  .hide-scroll-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .focus-ring {
+    @apply outline-none focus:ring-2 ring-app-info;
+  }
 }
