@@ -11,6 +11,7 @@ const Collapsable = ({
   children,
   loading,
   unmount = true,
+  disablePadding,
 }: CollapsableProps) => {
   /******************************/
   /* Render                     */
@@ -21,7 +22,7 @@ const Collapsable = ({
         {/******************************/}
         {/* Header                     */}
         {/******************************/}
-        <div className="flex items-center p-4 uppercase rounded shadow-lg bg-app text-app-altText">
+        <div className="flex items-center h-12 px-2 uppercase rounded shadow-lg bg-app text-app-altText">
           {loading ? (
             <div className="p-2 mr-2">
               <ArrowPathIcon className="w-4 animate-spin" />
@@ -48,7 +49,7 @@ const Collapsable = ({
               'animate-pulse': loading,
             })}
           >
-            <h1 className="text-2xl font-semibold tracking-wider">{title}</h1>
+            <h4 className="text-xl font-semibold tracking-wider">{title}</h4>
             {subtitle && <p className="ml-2 text-sm opacity-50">{subtitle}</p>}
           </div>
         </div>
@@ -56,8 +57,9 @@ const Collapsable = ({
         {/* Content                    */}
         {/******************************/}
         <Disclosure.Panel
-          className={cn('p-4 rounded-b bg-app-light shadow-lg mx-2', {
+          className={cn('rounded-b bg-app-light shadow-lg mx-2', {
             'pointer-events-none animate-pulse': loading,
+            'p-4': !disablePadding,
           })}
           unmount={unmount}
         >

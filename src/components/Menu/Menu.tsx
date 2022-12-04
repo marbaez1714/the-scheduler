@@ -86,7 +86,7 @@ const Menu = ({ items, anchor, title, className }: MenuProps) => {
             afterLeave={handleLeave}
           >
             <HeadlessMenu.Items
-              className="fixed z-50 flex flex-col w-40 ml-2 overflow-hidden text-xs transition-all rounded shadow-2xl bg-app-light divide-app-medium"
+              className="fixed z-50 flex flex-col w-40 ml-2 overflow-hidden text-xs transition-all rounded shadow-2xl bg-app-light"
               style={{ top, left, marginTop }}
               ref={listRef}
               static

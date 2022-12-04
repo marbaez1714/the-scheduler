@@ -20,7 +20,10 @@ import { TextInput } from '../TextInput';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 
-const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
+const LegacyContractorTable = ({
+  contractor,
+  filter,
+}: LegacyContractorTableProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -44,10 +47,10 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     variables: {
       contractorId: contractor.id,
       pagination,
-      ...(debouncedSearchTerm && {
+      ...((debouncedSearchTerm || filter) && {
         filter: {
           field: JobsLegacyFilterField.Name,
-          term: debouncedSearchTerm,
+          term: debouncedSearchTerm || filter,
         },
       }),
     },
@@ -186,31 +189,42 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         onClose={handleSendMessageModalClose}
       />
       <Collapsable
-        title={contractor.name}
+        title={`${contractor.name} ${
+          displayedJobs.length === 0 ? '- (empty)' : ''
+        }`}
         unmount={false}
         loading={loading}
         defaultOpen
+        disablePadding
       >
-        <Table
-          headerRender={
-            <div className="flex items-center justify-between gap-10">
-              <TextInput
-                placeholder="Filter by address"
-                className="h-10"
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-              <Button variant="filled-light" onClick={() => refetch()}>
-                Refresh
-              </Button>
-            </div>
-          }
-          columns={columns}
-          data={displayedJobs}
-          pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
-          rowActions={rowActions}
-          onPaginationChange={handlePaginationChange}
-        />
+        {displayedJobs.length > 0 && (
+          <div className="m-4">
+            <Table
+              headerRender={
+                <div className="flex flex-col gap-4 md:flex-row">
+                  <TextInput
+                    placeholder="Filter by address"
+                    className="h-10"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                  />
+                  <Button
+                    variant="filled-light"
+                    onClick={() => refetch()}
+                    className="ml-0 md:ml-auto"
+                  >
+                    Refresh
+                  </Button>
+                </div>
+              }
+              columns={columns}
+              data={displayedJobs}
+              pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
+              rowActions={rowActions}
+              onPaginationChange={handlePaginationChange}
+            />
+          </div>
+        )}
       </Collapsable>
     </>
   );

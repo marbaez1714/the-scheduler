@@ -235,7 +235,7 @@ const Table = <TData extends Record<string, unknown>>({
       </div>
       {/* Footer */}
       <TableFooter
-        totalPages={pageCount ?? getPageCount()}
+        totalPages={pageCount || getPageCount()}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         {...pagination}

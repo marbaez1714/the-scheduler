@@ -17,36 +17,12 @@ export const TableFooter = ({
   onPageSizeChange,
 }: TableFooterProps) => {
   /******************************/
-  /* Custom Hooks               */
-  /******************************/
-
-  /******************************/
-  /* Refs                       */
-  /******************************/
-
-  /******************************/
-  /* State                      */
-  /******************************/
-
-  /******************************/
-  /* Context                    */
-  /******************************/
-
-  /******************************/
   /* Data                       */
   /******************************/
   const currentPage = pageIndex + 1;
   const disablePrevious = pageIndex === 0;
   const disableNext = pageIndex === totalPages - 1;
   const pageSizeOptions = [10, 25, 50];
-
-  /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
 
   /******************************/
   /* Callbacks                  */
@@ -79,7 +55,7 @@ export const TableFooter = ({
   /* Render                     */
   /******************************/
   return (
-    <div className="flex px-6 py-2 bg-app">
+    <div className="flex flex-col items-center gap-4 px-6 py-2 bg-app md:flex-row">
       {/* Page Size */}
       <RadioGroup
         className="flex items-center h-full text-sm border rounded text-app-altText border-app-medium"
@@ -103,7 +79,7 @@ export const TableFooter = ({
         </div>
       </RadioGroup>
       {/* Pagination */}
-      <div className="flex items-center ml-auto overflow-hidden border rounded border-app-medium">
+      <div className="flex items-center overflow-hidden border rounded md:ml-auto border-app-medium">
         <div className="flex items-center text-sm shadow text-app-altText">
           {/* Page Back Buttons */}
           <button

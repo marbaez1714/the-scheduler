@@ -23,7 +23,7 @@ export const Content = ({
       <div className="w-full max-w-5xl mx-auto">
         {/* Title */}
         {(!!title || !!primaryAction) && (
-          <div className="flex w-full px-6 py-6 mb-4 rounded shadow text-app-altText bg-app">
+          <div className="flex flex-col w-full gap-4 px-6 py-6 mb-4 rounded shadow text-app-altText bg-app md:flex-row">
             {!!title && (
               <h1 className="text-4xl font-bold tracking-wider uppercase">
                 {title}
@@ -33,7 +33,7 @@ export const Content = ({
               <Button
                 onClick={primaryAction.onClick}
                 variant="filled-light"
-                className='ml-auto'
+                className="ml-0 md:ml-auto"
               >
                 {primaryAction.title}
               </Button>

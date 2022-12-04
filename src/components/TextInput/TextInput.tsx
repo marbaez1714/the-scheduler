@@ -30,42 +30,41 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     }, [mask]);
 
     return (
-      <div className="flex flex-col flex-grow">
-        {label && (
-          <label
-            className={cn('mb-2 font-medium text-app-dark', { 'ml-12': icon })}
-            htmlFor={name}
-          >
-            {label}
-            {required && (
-              <span className="ml-1 font-bold text-app-error">*</span>
-            )}
-          </label>
-        )}
-        <div className="flex">
-          {icon && (
-            <Icon
-              className="flex-shrink-0 w-12 h-12 p-2 text-app"
-              icon={icon}
-            />
-          )}
-          <InputComponent
-            className={cn(
-              'bg-app-light text-app-text border-app-medium h-12 px-4 w-full rounded border-2 shadow-inner text-ellipsis focus-ring',
-              className
-            )}
-            name={name}
-            placeholder={placeholder || (mask && placeholderMap[mask])}
-            mask={mask ? maskMap[mask] : ''}
-            ref={ref}
-            value={value ?? ''}
-            {...rest}
+      <div className="flex w-full">
+        {icon && (
+          <Icon
+            className="self-end flex-shrink-0 w-12 h-12 p-2 text-app"
+            icon={icon}
           />
-        </div>
-
-        {!!errorMessage && (
-          <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
         )}
+        <div className="flex flex-col w-full">
+          {label && (
+            <label className="mb-2 font-medium text-app-dark" htmlFor={name}>
+              {label}
+              {required && (
+                <span className="ml-1 font-bold text-app-error">*</span>
+              )}
+            </label>
+          )}
+          <div className="flex">
+            <InputComponent
+              className={cn(
+                'bg-app-light text-app-text border-app-medium h-12 px-4 w-full rounded border-2 shadow-inner text-ellipsis focus-ring',
+                className
+              )}
+              name={name}
+              placeholder={placeholder || (mask && placeholderMap[mask])}
+              mask={mask ? maskMap[mask] : ''}
+              ref={ref}
+              value={value ?? ''}
+              {...rest}
+            />
+          </div>
+
+          {!!errorMessage && (
+            <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
+          )}
+        </div>
       </div>
     );
   }
