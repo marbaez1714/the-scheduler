@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -17,7 +17,6 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
 import { DataIdCell } from './Cells/DataIdCell';
 import { DateCell } from './Cells/DateCell';
-import { RowActionCell } from './Cells/RowActionCell';
 import { TextCell } from './Cells/TextCell';
 import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
@@ -25,13 +24,12 @@ import { HeaderCell } from './Cells/HeaderCell';
 import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
 import { TableProps } from './types';
 import { TableFooter } from './TableFooter';
+import { MenuCell } from './Cells/MenuCell';
 
 const Table = <TData extends Record<string, unknown>>({
   data = [],
   columns,
-  rowActions,
   pageCount,
-  loading,
   headerRender,
   onPaginationChange,
 }: TableProps<TData>) => {
@@ -108,11 +106,9 @@ const Table = <TData extends Record<string, unknown>>({
   /******************************/
   /* Render                     */
   /******************************/
-  const renderHeaderCell = (h: Header<TData, unknown>, hIndex: number) => {
-    const spanActions = rowActions && hIndex === 0;
+  const renderHeaderCell = (h: Header<TData, unknown>) => {
     const canSort = h.column.getCanSort();
     const isSorted = h.column.getIsSorted();
-    const colSpan = spanActions ? h.colSpan + 1 : h.colSpan;
     const sortDirection = h.column.getIsSorted();
 
     return (
@@ -121,12 +117,10 @@ const Table = <TData extends Record<string, unknown>>({
           'h-10 py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
           {
             'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
-            'first:pl-14': spanActions,
             'bg-app-dark': isSorted,
           }
         )}
         onClick={h.column.getToggleSortingHandler()}
-        colSpan={colSpan}
         key={h.id}
       >
         {!h.isPlaceholder && (
@@ -147,26 +141,6 @@ const Table = <TData extends Record<string, unknown>>({
   const renderBodyRows = () => {
     const { rows } = getRowModel();
 
-    if (loading) {
-      return (
-        <>
-          <tr className="h-12 text-xs border-y">
-            <td className="px-3 py-2 first:pl-4 last:pr-4" colSpan={100}>
-              <p>(Loading)</p>
-            </td>
-          </tr>
-          {Array.from(
-            { length: getState().pagination.pageSize - 1 },
-            (_, index) => (
-              <tr className="h-12 border-b last:border-b-0" key={index}>
-                <td className="px-3 py-2 first:pl-4 last:pr-4" colSpan={100} />
-              </tr>
-            )
-          )}
-        </>
-      );
-    }
-
     if (rows.length < 1) {
       return (
         <tr className="h-12 border-b last:border-b-0">
@@ -180,11 +154,8 @@ const Table = <TData extends Record<string, unknown>>({
       );
     }
 
-    return rows.map(({ id: rowId, original, getVisibleCells }) => (
+    return rows.map(({ id: rowId, getVisibleCells }) => (
       <tr className="h-12 transition-all border-y" key={rowId}>
-        {rowActions && (
-          <RowActionCell menuActions={rowActions} data={original} />
-        )}
         {getVisibleCells().map(
           ({ id: cellId, column, getContext, getValue }) => (
             <td className="px-3 first:pl-4 last:pr-4" key={cellId}>
@@ -251,5 +222,6 @@ Table.TextCell = TextCell;
 Table.PhoneNumberCell = PhoneNumberCell;
 Table.TimestampCell = TimestampCell;
 Table.JobLegacyStatusCell = JobLegacyStatusCell;
+Table.MenuCell = MenuCell;
 
 export default Table;

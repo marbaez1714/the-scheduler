@@ -1,23 +1,15 @@
 import { ColumnDef, PaginationState } from '@tanstack/react-table';
 
+import { MenuProps } from './../Menu';
 import { JobLegacyStatus } from 'src/api';
 
 /******************************/
 /* Main Table                 */
 /******************************/
-
-export type TableRowAction<TData> = {
-  icon: React.ReactNode;
-  label: string;
-  onClick: (data: TData) => void;
-};
-
 export interface TableProps<TData> {
   data?: TData[];
   columns: ColumnDef<TData>[];
-  rowActions?: TableRowAction<TData>[];
   pageCount?: number;
-  loading?: boolean;
   headerRender?: React.ReactNode;
   onPaginationChange?: (pagination: PaginationState) => void;
 }
@@ -39,11 +31,6 @@ export interface DateCellProps {
 
 export interface DataIdCellProps {
   data: { id: string; legacy: boolean };
-}
-
-export interface RowMenuCellProps<TData> {
-  data: TData;
-  menuActions: TableRowAction<TData>[];
 }
 
 export interface HeaderCellProps {
@@ -68,4 +55,8 @@ export interface TimestampCellProps {
 
 export interface JobLegacyStatusProps {
   value: JobLegacyStatus;
+}
+
+export interface MenuCellProps {
+  items: MenuProps['items'];
 }

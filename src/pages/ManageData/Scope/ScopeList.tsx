@@ -6,7 +6,7 @@ import { ArchiveBoxIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 import { Scope, useArchiveScopeMutation, useGetScopesQuery } from 'src/api';
 
 import { Screen } from 'src/components/Screen';
-import { Table, TableRowAction } from 'src/components/Table';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { dataColumns } from 'src/utils/tables';
 
@@ -64,21 +64,22 @@ export const ScopeList = () => {
   /******************************/
   /* Table Definitions         */
   /******************************/
-  const rowActions: TableRowAction<Scope>[] = [
+  const rowActions = (data: Scope) => [
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(data.id),
+      onClick: () => navigate(data.id),
     },
     {
       icon: <ArchiveBoxIcon />,
       label: 'Archive',
-      onClick: (data) =>
+      onClick: () =>
         confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
   const tableColumns = [
+    dataColumns.scopeMenu(rowActions),
     dataColumns.name,
     dataColumns.nameSpanish,
     dataColumns.timestamps,
@@ -96,11 +97,7 @@ export const ScopeList = () => {
     >
       {/* Area List */}
       {data?.scopes && (
-        <Table
-          data={data.scopes.data as Scope[]}
-          columns={tableColumns}
-          rowActions={rowActions}
-        />
+        <Table data={data.scopes.data as Scope[]} columns={tableColumns} />
       )}
     </Screen.Content>
   );

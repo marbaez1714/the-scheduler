@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useDebounce } from 'usehooks-ts';
+
 import {
   ContractorOptionFragment,
   useGetAssignedContractorsQuery,
@@ -7,12 +9,11 @@ import {
 import { Button } from 'src/components/Button';
 import { Collapsable } from 'src/components/Collapsable';
 
-import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
+import { LegacyContractorTable } from './LegacyContractorTable';
 import { Screen } from 'src/components/Screen';
 import { TextInput } from 'src/components/TextInput';
 import { Toggle } from 'src/components/Toggle';
 import { localStorageKeys } from 'src/utils/localStorage';
-import { useDebounce } from 'usehooks-ts';
 import { UNASSIGNED } from './utils';
 
 const Dashboard = () => {

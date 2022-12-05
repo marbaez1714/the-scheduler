@@ -10,7 +10,7 @@ import {
 } from 'src/api';
 
 import { Screen } from 'src/components/Screen';
-import { Table, TableRowAction } from 'src/components/Table';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { dataColumns } from 'src/utils/tables';
 
@@ -67,21 +67,22 @@ export const CompanyList = () => {
   /******************************/
   /* Table Definitions         */
   /******************************/
-  const rowActions: TableRowAction<Company>[] = [
+  const rowActions = (data: Company) => [
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(data.id),
+      onClick: () => navigate(data.id),
     },
     {
       icon: <ArchiveBoxIcon />,
       label: 'Archive',
-      onClick: (data) =>
+      onClick: () =>
         confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
   const tableColumns = [
+    dataColumns.companyMenu(rowActions),
     dataColumns.name,
     dataColumns.primaryPhone,
     dataColumns.primaryAddress,
@@ -100,11 +101,7 @@ export const CompanyList = () => {
     >
       {/* Area List */}
       {data?.companies && (
-        <Table
-          data={data.companies.data as Company[]}
-          columns={tableColumns}
-          rowActions={rowActions}
-        />
+        <Table data={data.companies.data as Company[]} columns={tableColumns} />
       )}
     </Screen.Content>
   );

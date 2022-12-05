@@ -6,10 +6,6 @@ import { MenuProps } from './types';
 
 const Menu = ({ items, anchor, title, className }: MenuProps) => {
   /******************************/
-  /* Custom Hooks               */
-  /******************************/
-
-  /******************************/
   /* Refs                       */
   /******************************/
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,18 +17,6 @@ const Menu = ({ items, anchor, title, className }: MenuProps) => {
   const [top, setTop] = useState<number>();
   const [left, setLeft] = useState<number>();
   const [marginTop, setMarginTop] = useState<number>();
-
-  /******************************/
-  /* Context                    */
-  /******************************/
-
-  /******************************/
-  /* Data                       */
-  /******************************/
-
-  /******************************/
-  /* Memos                      */
-  /******************************/
 
   /******************************/
   /* Callbacks                  */
@@ -65,12 +49,16 @@ const Menu = ({ items, anchor, title, className }: MenuProps) => {
   /* Render                     */
   /******************************/
   return (
-    <HeadlessMenu as="div" className={className} ref={containerRef}>
+    <HeadlessMenu
+      as="div"
+      className={cn('w-min', className)}
+      ref={containerRef}
+    >
       {({ open }) => (
         <>
           <HeadlessMenu.Button
             onClick={handleClick}
-            className={cn({ 'ring-2 ring-app': open })}
+            className={cn('rounded-full', { 'ring-2 ring-app': open })}
           >
             {anchor}
           </HeadlessMenu.Button>

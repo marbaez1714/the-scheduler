@@ -10,7 +10,7 @@ import {
 } from 'src/api';
 
 import { Screen } from 'src/components/Screen';
-import { Table, TableRowAction } from 'src/components/Table';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { dataColumns } from 'src/utils/tables';
 
@@ -68,21 +68,22 @@ export const ReporterList = () => {
   /******************************/
   /* Table Definitions         */
   /******************************/
-  const rowActions: TableRowAction<Reporter>[] = [
+  const rowActions = (data: Reporter) => [
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(data.id),
+      onClick: () => navigate(data.id),
     },
     {
       icon: <ArchiveBoxIcon />,
       label: 'Archive',
-      onClick: (data) =>
+      onClick: () =>
         confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
   const tableColumns = [
+    dataColumns.reporterMenu(rowActions),
     dataColumns.name,
     dataColumns.primaryPhone,
     dataColumns.primaryEmail,
@@ -104,7 +105,6 @@ export const ReporterList = () => {
         <Table
           data={data.reporters.data as Reporter[]}
           columns={tableColumns}
-          rowActions={rowActions}
         />
       )}
     </Screen.Content>

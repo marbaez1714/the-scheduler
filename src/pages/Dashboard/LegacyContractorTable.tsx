@@ -11,16 +11,16 @@ import {
   useModifyJobLegacyMutation,
 } from 'src/api';
 import { LegacyContractorTableProps } from './types';
-import { Table, TableRowAction } from '../Table';
-import { Collapsable } from '../Collapsable';
-import { ReassignModal } from '../ReassignModal';
-import { SendMessageModal } from '../SendMessageModal';
+import { Table } from '../../components/Table';
+import { Collapsable } from '../../components/Collapsable';
+import { ReassignModal } from '../../components/ReassignModal';
+import { SendMessageModal } from '../../components/SendMessageModal';
 import { dataColumns } from 'src/utils/tables';
-import { TextInput } from '../TextInput';
-import { Button } from '../Button';
-import { Icon } from '../Icon';
+import { TextInput } from '../../components/TextInput';
+import { Button } from '../../components/Button';
+import { Icon } from '../../components/Icon';
 
-const LegacyContractorTable = ({
+export const LegacyContractorTable = ({
   contractor,
   filter,
 }: LegacyContractorTableProps) => {
@@ -119,26 +119,26 @@ const LegacyContractorTable = ({
   /******************************/
   /* Table                      */
   /******************************/
-  const rowActions: TableRowAction<JobLegacy>[] = [
+  const rowActions = (data: JobLegacy) => [
     {
       icon: <Icon icon="edit" />,
       label: 'Edit',
-      onClick: (data) => navigate(`/jobs_legacy/modify/${data.id}`),
+      onClick: () => navigate(`/jobs_legacy/modify/${data.id}`),
     },
     {
       icon: <Icon icon="message" />,
       label: 'Send Message',
-      onClick: handleSendMessage,
+      onClick: () => handleSendMessage(data),
     },
     {
       icon: <Icon icon="reassign" />,
       label: 'Reassign',
-      onClick: handleReassignJob,
+      onClick: () => handleReassignJob(data),
     },
     {
       icon: <Icon icon="inProgress" />,
       label: 'Toggle In Progress',
-      onClick: (data) =>
+      onClick: () =>
         modify({
           variables: { id: data.id, data: { inProgress: !data.inProgress } },
         }),
@@ -146,7 +146,7 @@ const LegacyContractorTable = ({
     {
       icon: <Icon icon="important" />,
       label: 'Toggle Important',
-      onClick: (data) => {
+      onClick: () => {
         modify({
           variables: { id: data.id, data: { isImportant: !data.isImportant } },
         });
@@ -155,11 +155,12 @@ const LegacyContractorTable = ({
     {
       icon: <Icon icon="complete" />,
       label: 'Complete',
-      onClick: handleComplete,
+      onClick: () => handleComplete(data),
     },
   ];
 
   const columns = [
+    dataColumns.jobLegacyMenu(rowActions),
     dataColumns.status,
     dataColumns.startDate,
     dataColumns.address,
@@ -220,7 +221,6 @@ const LegacyContractorTable = ({
               columns={columns}
               data={displayedJobs}
               pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
-              rowActions={rowActions}
               onPaginationChange={handlePaginationChange}
             />
           </div>
@@ -229,5 +229,3 @@ const LegacyContractorTable = ({
     </>
   );
 };
-
-export default LegacyContractorTable;
