@@ -11,7 +11,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
     return (
       <div className="flex flex-col flex-grow">
         {label && (
-          <label className="mb-2 font-medium text-app-dark" htmlFor={name}>
+          <label className="components-input-label" htmlFor={name}>
             {label}
             {required && (
               <span className="ml-1 font-bold text-app-error">*</span>

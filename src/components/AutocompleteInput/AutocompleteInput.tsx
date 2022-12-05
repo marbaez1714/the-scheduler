@@ -90,7 +90,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
             {/* Label                      */}
             {/******************************/}
             {label && (
-              <Combobox.Label className="block mb-2 font-medium text-app-dark">
+              <Combobox.Label className="components-input-label">
                 {label}
                 {required && (
                   <span className="ml-1 font-bold text-app-error">*</span>

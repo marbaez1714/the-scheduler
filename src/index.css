@@ -33,6 +33,10 @@
   .form-divider-x {
     @apply h-full bg-app/25 w-0.5 rounded-full shadow;
   }
+
+  .components-input-label {
+    @apply mb-2 font-medium text-app-dark block;
+  }
 }
 
 @layer utilities {

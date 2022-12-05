@@ -18,7 +18,7 @@ const RadioGroupInput = <TValue extends unknown>({
   return (
     <RadioGroup value={value} onChange={onChange} className={className}>
       {label && (
-        <RadioGroup.Label className="block mb-2 font-medium text-app-dark">
+        <RadioGroup.Label className="components-input-label">
           {label}
           {required && <span className="ml-1 font-bold text-app-error">*</span>}
         </RadioGroup.Label>

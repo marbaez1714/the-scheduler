@@ -4,6 +4,7 @@ import {
   ContractorOptionFragment,
   useGetAssignedContractorsQuery,
 } from 'src/api';
+import { Button } from 'src/components/Button';
 import { Collapsable } from 'src/components/Collapsable';
 
 import { LegacyContractorTable } from 'src/components/LegacyContractorTable';
@@ -12,7 +13,6 @@ import { TextInput } from 'src/components/TextInput';
 import { Toggle } from 'src/components/Toggle';
 import { localStorageKeys } from 'src/utils/localStorage';
 import { useDebounce } from 'usehooks-ts';
-import { SettingsModal } from './SettingsModal';
 import { UNASSIGNED } from './utils';
 
 const Dashboard = () => {
@@ -30,7 +30,6 @@ const Dashboard = () => {
   const [enabledContractors, setEnabledContractors] = useState<
     { name: string; id: string }[]
   >([]);
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [filterTerm, setFilterTerm] = useState('');
   const debouncedFilterTerm = useDebounce(filterTerm);
 
@@ -107,10 +106,6 @@ const Dashboard = () => {
     setEnabledContractors([]);
   };
 
-  const toggleSettings = () => {
-    setSettingsOpen((prev) => !prev);
-  };
-
   const handleFilterTermChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
@@ -121,73 +116,76 @@ const Dashboard = () => {
   /* Render                     */
   /******************************/
   return (
-    <>
-      <SettingsModal
-        onAddAll={handleAddAll}
-        onClose={toggleSettings}
-        onContractorToggle={handleContractorToggle}
-        onRemoveAll={handleRemoveAll}
-        open={settingsOpen}
-        enabledContractors={enabledContractors}
-        contractors={getAssignedContractorsQueryData?.assignedContractors.data}
-      />
-      <Screen>
-        <Screen.Content
-          title="Dashboard"
-          className="flex flex-col gap-2"
-          loading={getAssignedContractorsQueryLoading}
-          primaryAction={{ onClick: toggleSettings, title: 'Display Settings' }}
-        >
-          <Collapsable title="Display Settings">
-            <div className="grid grid-cols-2 gap-4">
+    <Screen>
+      <Screen.Content
+        title="Dashboard"
+        className="flex flex-col gap-2"
+        loading={getAssignedContractorsQueryLoading}
+      >
+        <div className="flex gap-4">
+          <div className="w-1/2">
+            <Collapsable title="Filter">
               <TextInput
                 label="Address Filter"
                 placeholder="Filter all addresses"
                 value={filterTerm}
                 onChange={handleFilterTermChange}
               />
-
+            </Collapsable>
+          </div>
+          <div className="w-1/2">
+            <Collapsable title="Displayed">
               {/* Contractors */}
               <div>
                 <p className="mb-2 font-medium text-app-dark">
                   Displayed Contractors
                 </p>
-                <div className="p-2 overflow-scroll border-2 rounded shadow-inner border-app-medium max-h-64 bg-app-light">
+                <div className="flex flex-col gap-2 p-2 overflow-scroll border-2 rounded shadow-inner border-app-medium max-h-64 bg-app-light">
                   {/* Unassigned */}
-                  <div className="p-2 mb-2 rounded shadow-inner bg-app-medium/50">
+                  <div className="p-2 rounded bg-app-medium/50">
                     <Toggle
                       checked={false}
-                      onChange={() => {}}
+                      onChange={() => handleContractorToggle(UNASSIGNED)}
                       title="Unassigned"
                     />
                   </div>
-                  <div className="px-2 space-y-2">
-                    {getAssignedContractorsQueryData?.assignedContractors.data?.map(
-                      (contractor) => (
-                        <Toggle
-                          checked={false}
-                          onChange={() => {}}
-                          title={contractor.name}
-                        />
-                      )
-                    )}
-                  </div>
+                  {getAssignedContractorsQueryData?.assignedContractors.data?.map(
+                    (contractor) => (
+                      <Toggle
+                        checked={false}
+                        onChange={() => handleContractorToggle(contractor)}
+                        title={contractor.name}
+                      />
+                    )
+                  )}
+                </div>
+                <div className="flex mt-2 gap-x-2">
+                  <Button onClick={handleAddAll} className="w-full">
+                    Add All
+                  </Button>
+                  <Button
+                    onClick={handleRemoveAll}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Remove All
+                  </Button>
                 </div>
               </div>
-            </div>
-          </Collapsable>
+            </Collapsable>
+          </div>
+        </div>
 
-          {/* Contractors */}
-          {enabledContractors.map((contractor) => (
-            <LegacyContractorTable
-              contractor={contractor}
-              key={contractor.id}
-              filter={debouncedFilterTerm}
-            />
-          ))}
-        </Screen.Content>
-      </Screen>
-    </>
+        {/* Contractors */}
+        {enabledContractors.map((contractor) => (
+          <LegacyContractorTable
+            contractor={contractor}
+            key={contractor.id}
+            filter={debouncedFilterTerm}
+          />
+        ))}
+      </Screen.Content>
+    </Screen>
   );
 };
 
