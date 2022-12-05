@@ -11,6 +11,7 @@ import {
   JobLegacy,
   Reporter,
   Scope,
+  SortDirection,
   Supplier,
 } from 'src/api';
 import { MenuCellProps } from 'src/components/Table/types';
@@ -19,6 +20,15 @@ import { MenuCellProps } from 'src/components/Table/types';
 /* Types                      */
 /******************************/
 type MenuCallback<T> = (data: T) => MenuCellProps['items'];
+
+/******************************/
+/* Config                     */
+/******************************/
+export const DEFAULT_PAGINATION = { page: 1, pageSize: 10 };
+export const DEFAULT_SORT = {
+  field: 'startDate',
+  direction: SortDirection.Asc,
+};
 
 /******************************/
 /* Columns                    */
@@ -38,6 +48,7 @@ const dataHelpers = createColumnHelper<
 export const dataColumns = {
   status: dataHelpers.accessor('status', {
     header: 'Status',
+    enableSorting: false,
     cell: ({ getValue }) => <Table.JobLegacyStatusCell value={getValue()} />,
   }),
   startDate: dataHelpers.accessor(
@@ -54,27 +65,27 @@ export const dataColumns = {
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
   community: dataHelpers.accessor((row) => row.community?.name, {
-    id: 'communityId',
+    id: 'community',
     header: 'Community',
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
   reporter: dataHelpers.accessor((row) => row.reporter?.name, {
-    id: 'reporterId',
+    id: 'reporter',
     header: 'Reporter',
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
   scope: dataHelpers.accessor((row) => row.scope?.name, {
-    id: 'scopeId',
+    id: 'scope',
     header: 'Scope',
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
   area: dataHelpers.accessor((row) => row.area?.name, {
-    id: 'areaId',
+    id: 'area',
     header: 'Area',
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
   builder: dataHelpers.accessor((row) => row.builder?.name, {
-    id: 'builderId',
+    id: 'builder',
     header: 'Builder',
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
@@ -109,7 +120,7 @@ export const dataColumns = {
     ),
   }),
   company: dataHelpers.accessor((row) => row.company.name, {
-    id: 'companyId',
+    id: 'company',
     header: 'Company',
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
@@ -131,6 +142,7 @@ export const dataColumns = {
   jobLegacyMenu: (itemCallback: MenuCallback<JobLegacy>) =>
     dataHelpers.accessor((row) => row as JobLegacy, {
       header: '',
+      enableSorting: false,
       id: 'menu',
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
@@ -140,6 +152,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Area, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),
@@ -148,6 +161,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Builder, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),
@@ -156,6 +170,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Community, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),
@@ -164,6 +179,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Company, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),
@@ -172,6 +188,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Contractor, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),
@@ -180,6 +197,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Reporter, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),
@@ -188,6 +206,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Scope, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),
@@ -196,6 +215,7 @@ export const dataColumns = {
     dataHelpers.accessor((row) => row as Supplier, {
       header: '',
       id: 'menu',
+      enableSorting: false,
       cell: ({ getValue }) => (
         <Table.MenuCell items={itemCallback(getValue())} />
       ),

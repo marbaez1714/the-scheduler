@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -12,6 +12,7 @@ import {
   getPaginationRowModel,
   Updater,
   PaginationState,
+  SortingState,
 } from '@tanstack/react-table';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
@@ -32,6 +33,7 @@ const Table = <TData extends Record<string, unknown>>({
   pageCount,
   headerRender,
   onPaginationChange,
+  onSortingChange,
 }: TableProps<TData>) => {
   /******************************/
   /* State                      */
@@ -40,6 +42,8 @@ const Table = <TData extends Record<string, unknown>>({
     pageIndex: 0,
     pageSize: 10,
   });
+
+  const [sortingState, setSortingState] = useState<SortingState>([]);
 
   /******************************/
   /* Callbacks                  */
@@ -71,6 +75,14 @@ const Table = <TData extends Record<string, unknown>>({
     }
   };
 
+  const handleSortingChange = (updater: Updater<SortingState>) => {
+    setSortingState(updater);
+
+    if (typeof updater === 'function') {
+      onSortingChange?.(updater(sortingState));
+    }
+  };
+
   /******************************/
   /* Effects                    */
   /******************************/
@@ -87,14 +99,15 @@ const Table = <TData extends Record<string, unknown>>({
     getPageCount,
     resetPageIndex,
   } = useReactTable({
-    state: { pagination: paginationState },
+    state: { pagination: paginationState, sorting: sortingState },
     data,
     columns,
     pageCount,
     globalFilterFn,
-    enableSorting: false,
     manualPagination: !!onPaginationChange,
+    manualSorting: !!onSortingChange,
     onPaginationChange: handlePaginationChange,
+    onSortingChange: handleSortingChange,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

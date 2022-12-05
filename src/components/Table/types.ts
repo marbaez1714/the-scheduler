@@ -1,4 +1,8 @@
-import { ColumnDef, PaginationState } from '@tanstack/react-table';
+import {
+  ColumnDef,
+  PaginationState,
+  SortingState,
+} from '@tanstack/react-table';
 
 import { MenuProps } from './../Menu';
 import { JobLegacyStatus } from 'src/api';
@@ -12,6 +16,7 @@ export interface TableProps<TData> {
   pageCount?: number;
   headerRender?: React.ReactNode;
   onPaginationChange?: (pagination: PaginationState) => void;
+  onSortingChange?: (sorting: SortingState) => void;
 }
 
 export interface TableFooterProps {

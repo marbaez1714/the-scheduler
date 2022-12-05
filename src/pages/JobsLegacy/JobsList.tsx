@@ -1,9 +1,13 @@
-import { useState, useEffect, useMemo, ChangeEventHandler } from 'react';
-import { ColumnDef, PaginationState } from '@tanstack/react-table';
+import { useState, ChangeEventHandler } from 'react';
+import {
+  ColumnDef,
+  PaginationState,
+  SortingState,
+} from '@tanstack/react-table';
 
 import {
   JobLegacy,
-  JobsLegacyFilterField,
+  SortDirection,
   useGetJobsLegacyByActiveStatusQuery,
 } from 'src/api';
 import { Screen } from 'src/components/Screen';
@@ -29,6 +33,10 @@ export const JobsList = () => {
   const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
   const [jobStatus, setJobStatus] = useState(true);
   const [pagination, setPagination] = useState({ page: 1, pageSize: 10 });
+  const [sort, setSort] = useState({
+    field: 'startDate',
+    direction: SortDirection.Asc,
+  });
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -43,9 +51,10 @@ export const JobsList = () => {
     variables: {
       active: jobStatus,
       pagination,
+      sort,
       ...(debouncedSearchTerm && {
         filter: {
-          field: JobsLegacyFilterField.Name,
+          field: 'name',
           term: debouncedSearchTerm,
         },
       }),
@@ -76,6 +85,18 @@ export const JobsList = () => {
 
   const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleSortingChange = (sortingState: SortingState) => {
+    const sorting = sortingState[0];
+    if (sorting) {
+      setSort({
+        field: sorting.id,
+        direction: sorting.desc ? SortDirection.Desc : SortDirection.Asc,
+      });
+    } else {
+      setSort({ field: 'startDate', direction: SortDirection.Asc });
+    }
   };
 
   /******************************/
@@ -130,6 +151,7 @@ export const JobsList = () => {
         columns={columns}
         pageCount={data?.jobsLegacyByActiveStatus.pagination.totalPages}
         onPaginationChange={handlePaginationChange}
+        onSortingChange={handleSortingChange}
       />
     </Screen.Content>
   );

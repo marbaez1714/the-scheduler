@@ -1,24 +1,32 @@
 import { ChangeEventHandler, useState } from 'react';
-import { ColumnDef, PaginationState } from '@tanstack/react-table';
+import {
+  ColumnDef,
+  PaginationState,
+  SortingState,
+} from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDebounce } from 'usehooks-ts';
 
 import {
   JobLegacy,
-  JobsLegacyFilterField,
+  SortDirection,
   useGetJobsLegacyByContractorIdQuery,
   useModifyJobLegacyMutation,
 } from 'src/api';
 import { LegacyContractorTableProps } from './types';
-import { Table } from '../../components/Table';
-import { Collapsable } from '../../components/Collapsable';
-import { ReassignModal } from '../../components/ReassignModal';
-import { SendMessageModal } from '../../components/SendMessageModal';
-import { dataColumns } from 'src/utils/tables';
-import { TextInput } from '../../components/TextInput';
-import { Button } from '../../components/Button';
-import { Icon } from '../../components/Icon';
+import { Table } from 'src/components/Table';
+import { Collapsable } from 'src/components/Collapsable';
+import { ReassignModal } from 'src/components/ReassignModal';
+import { SendMessageModal } from 'src/components/SendMessageModal';
+import {
+  dataColumns,
+  DEFAULT_PAGINATION,
+  DEFAULT_SORT,
+} from 'src/utils/tables';
+import { TextInput } from 'src/components/TextInput';
+import { Button } from 'src/components/Button';
+import { Icon } from 'src/components/Icon';
 
 export const LegacyContractorTable = ({
   contractor,
@@ -36,7 +44,8 @@ export const LegacyContractorTable = ({
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
   const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
-  const [pagination, setPagination] = useState({ page: 1, pageSize: 10 });
+  const [pagination, setPagination] = useState(DEFAULT_PAGINATION);
+  const [sort, setSort] = useState(DEFAULT_SORT);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -47,9 +56,10 @@ export const LegacyContractorTable = ({
     variables: {
       contractorId: contractor.id,
       pagination,
+      sort,
       ...((debouncedSearchTerm || filter) && {
         filter: {
-          field: JobsLegacyFilterField.Name,
+          field: 'name',
           term: debouncedSearchTerm || filter,
         },
       }),
@@ -111,6 +121,18 @@ export const LegacyContractorTable = ({
       page: paginationState.pageIndex + 1,
       pageSize: paginationState.pageSize,
     });
+  };
+
+  const handleSortingChange = (sortingState: SortingState) => {
+    const sorting = sortingState[0];
+    if (sorting) {
+      setSort({
+        field: sorting.id,
+        direction: sorting.desc ? SortDirection.Desc : SortDirection.Asc,
+      });
+    } else {
+      setSort(DEFAULT_SORT);
+    }
   };
 
   const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -191,40 +213,36 @@ export const LegacyContractorTable = ({
       />
       <Collapsable
         title={`${contractor.name} ${
-          displayedJobs.length === 0 ? '- (empty)' : ''
+          displayedJobs.length === 0 ? '- (No Results)' : ''
         }`}
         unmount={false}
         loading={loading}
         defaultOpen
-        disablePadding
       >
-        {displayedJobs.length > 0 && (
-          <div className="m-4">
-            <Table
-              headerRender={
-                <div className="flex flex-col gap-4 md:flex-row">
-                  <TextInput
-                    placeholder="Filter by address"
-                    className="h-10"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                  />
-                  <Button
-                    variant="filled-light"
-                    onClick={() => refetch()}
-                    className="ml-0 md:ml-auto"
-                  >
-                    Refresh
-                  </Button>
-                </div>
-              }
-              columns={columns}
-              data={displayedJobs}
-              pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
-              onPaginationChange={handlePaginationChange}
-            />
-          </div>
-        )}
+        <Table
+          headerRender={
+            <div className="flex flex-col gap-4 md:flex-row">
+              <TextInput
+                placeholder="Filter by address"
+                className="h-10"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <Button
+                variant="filled-light"
+                onClick={() => refetch()}
+                className="ml-0 md:ml-auto"
+              >
+                Refresh
+              </Button>
+            </div>
+          }
+          columns={columns}
+          data={displayedJobs}
+          pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
+          onPaginationChange={handlePaginationChange}
+          onSortingChange={handleSortingChange}
+        />
       </Collapsable>
     </>
   );
