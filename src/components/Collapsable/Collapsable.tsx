@@ -45,11 +45,11 @@ const Collapsable = ({
           {/* Title                      */}
           {/******************************/}
           <div
-            className={cn('flex items-end basis-2/3 text-app-altText', {
+            className={cn('flex text-app-altText whitespace-nowrap overflow-hidden', {
               'animate-pulse': loading,
             })}
           >
-            <h4 className="text-xl font-semibold tracking-wider">{title}</h4>
+            <h4 className="overflow-hidden text-xl font-semibold tracking-wider text-ellipsis">{title}</h4>
             {subtitle && <p className="ml-2 text-sm opacity-50">{subtitle}</p>}
           </div>
         </div>

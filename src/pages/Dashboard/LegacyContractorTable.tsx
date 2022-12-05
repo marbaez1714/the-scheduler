@@ -57,6 +57,7 @@ export const LegacyContractorTable = ({
     onCompleted: ({ jobsLegacyByContractorId }) => {
       setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
     },
+    notifyOnNetworkStatusChange: true,
   });
 
   const [modify] = useModifyJobLegacyMutation({
