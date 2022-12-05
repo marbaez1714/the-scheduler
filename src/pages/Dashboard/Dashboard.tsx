@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDebounce } from 'usehooks-ts';
 
-import {
-  ContractorOptionFragment,
-  useGetAssignedContractorsQuery,
-} from 'src/api';
+import { useGetAssignedContractorsQuery } from 'src/api';
 import { Button } from 'src/components/Button';
 import { Collapsable } from 'src/components/Collapsable';
 
@@ -28,8 +25,8 @@ const Dashboard = () => {
   /******************************/
   /* State                      */
   /******************************/
-  const [enabledContractors, setEnabledContractors] = useState<
-    { name: string; id: string }[]
+  const [contractors, setContractors] = useState<
+    { name: string; id: string; visible: boolean }[]
   >([]);
   const [filterTerm, setFilterTerm] = useState('');
   const debouncedFilterTerm = useDebounce(filterTerm);
@@ -41,10 +38,16 @@ const Dashboard = () => {
   /******************************/
   /* Data                       */
   /******************************/
-  const {
-    data: getAssignedContractorsQueryData,
-    loading: getAssignedContractorsQueryLoading,
-  } = useGetAssignedContractorsQuery();
+  const { data, loading } = useGetAssignedContractorsQuery({
+    onCompleted: ({ assignedContractors }) => {
+      const formattedContractors = assignedContractors.data.map((item) => ({
+        ...item,
+        visible: false,
+      }));
+
+      setContractors([UNASSIGNED, ...formattedContractors]);
+    },
+  });
 
   /******************************/
   /* Memos                      */
@@ -54,57 +57,50 @@ const Dashboard = () => {
   /* Effects                    */
   /******************************/
   useEffect(() => {
-    const stored = localStorage.getItem(localStorageKeys.enabledContractors);
-
+    const stored = localStorage.getItem(localStorageKeys.dashboardContractors);
     if (stored) {
       try {
-        setEnabledContractors(JSON.parse(stored));
+        const enabledList = JSON.parse(stored) as string[];
+        setContractors((prev) =>
+          prev.map((item) => ({
+            ...item,
+            visible: item.visible || enabledList.includes(item.id),
+          }))
+        );
       } catch {
         toast.error('Unable to get stored dashboard.');
       }
     }
-  }, []);
+  }, [data?.assignedContractors.data]);
 
   /******************************/
   /* Callbacks                  */
   /******************************/
   const storeEnabledContractors = (
-    list: {
-      name: string;
-      id: string;
-    }[]
+    list: { name: string; id: string; visible: boolean }[]
   ) => {
+    setContractors(list);
     localStorage.setItem(
-      localStorageKeys.enabledContractors,
-      JSON.stringify(list)
+      localStorageKeys.dashboardContractors,
+      JSON.stringify(list.map((item) => item.visible && item.id))
     );
   };
 
-  const handleContractorToggle = (contractor: ContractorOptionFragment) => {
-    setEnabledContractors((prev) => {
-      if (prev.some((item) => item.id === contractor.id)) {
-        const filtered = prev.filter((item) => item.id !== contractor.id);
-        storeEnabledContractors(filtered);
-        return filtered;
-      }
-
-      storeEnabledContractors([...prev, contractor]);
-      return [...prev, contractor];
-    });
-  };
-
   const handleAddAll = () => {
-    const allOptions = [
-      UNASSIGNED,
-      ...(getAssignedContractorsQueryData?.assignedContractors.data || []),
-    ];
+    const allOptions = contractors.map((item) => ({ ...item, visible: true }));
     storeEnabledContractors(allOptions);
-    setEnabledContractors(allOptions);
   };
 
   const handleRemoveAll = () => {
-    storeEnabledContractors([]);
-    setEnabledContractors([]);
+    const allOptions = contractors.map((item) => ({ ...item, visible: false }));
+    storeEnabledContractors(allOptions);
+  };
+
+  const handleContractorToggle = (id: string) => {
+    const allOptions = contractors.map((item) =>
+      item.id === id ? { ...item, visible: !item.visible } : item
+    );
+    storeEnabledContractors(allOptions);
   };
 
   const handleFilterTermChange: React.ChangeEventHandler<HTMLInputElement> = (
@@ -121,7 +117,7 @@ const Dashboard = () => {
       <Screen.Content
         title="Dashboard"
         className="flex flex-col gap-2"
-        loading={getAssignedContractorsQueryLoading}
+        loading={loading}
       >
         <div className="flex gap-4">
           <div className="w-1/2">
@@ -142,23 +138,14 @@ const Dashboard = () => {
                   Displayed Contractors
                 </p>
                 <div className="flex flex-col gap-2 p-2 overflow-scroll border-2 rounded shadow-inner border-app-medium max-h-64 bg-app-light">
-                  {/* Unassigned */}
-                  <div className="p-2 rounded bg-app-medium/50">
+                  {contractors?.map((contractor) => (
                     <Toggle
-                      checked={false}
-                      onChange={() => handleContractorToggle(UNASSIGNED)}
-                      title="Unassigned"
+                      checked={contractor.visible}
+                      onChange={() => handleContractorToggle(contractor.id)}
+                      title={contractor.name}
+                      key={contractor.id}
                     />
-                  </div>
-                  {getAssignedContractorsQueryData?.assignedContractors.data?.map(
-                    (contractor) => (
-                      <Toggle
-                        checked={false}
-                        onChange={() => handleContractorToggle(contractor)}
-                        title={contractor.name}
-                      />
-                    )
-                  )}
+                  ))}
                 </div>
                 <div className="flex mt-2 gap-x-2">
                   <Button onClick={handleAddAll} className="w-full">
@@ -178,13 +165,16 @@ const Dashboard = () => {
         </div>
 
         {/* Contractors */}
-        {enabledContractors.map((contractor) => (
-          <LegacyContractorTable
-            contractor={contractor}
-            key={contractor.id}
-            filter={debouncedFilterTerm}
-          />
-        ))}
+        {contractors.map(
+          (contractor) =>
+            contractor.visible && (
+              <LegacyContractorTable
+                contractor={contractor}
+                key={contractor.id}
+                filter={debouncedFilterTerm}
+              />
+            )
+        )}
       </Screen.Content>
     </Screen>
   );

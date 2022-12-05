@@ -176,7 +176,6 @@ export const LegacyContractorTable = ({
   /******************************/
   /* Render                     */
   /******************************/
-
   return (
     <>
       <ReassignModal

@@ -1,1 +1,1 @@
-export const UNASSIGNED = { name: 'Unassigned', id: '' };
+export const UNASSIGNED = { name: 'Unassigned', id: '', visible: true };
