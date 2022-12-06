@@ -18,20 +18,20 @@ const Collapsable = ({
   /******************************/
   return (
     <Disclosure defaultOpen={defaultOpen}>
-      <div className="flex flex-col flex-shrink-0 w-full transition-all rounded">
+      <div className="flex w-full flex-shrink-0 flex-col rounded transition-all">
         {/******************************/}
         {/* Header                     */}
         {/******************************/}
-        <div className="flex items-center h-12 px-2 uppercase rounded shadow-lg bg-app text-app-altText">
+        <div className="flex h-12 items-center rounded bg-app px-2 uppercase text-app-altText shadow-lg">
           {loading ? (
-            <div className="p-2 mr-2">
+            <div className="mr-2 p-2">
               <ArrowPathIcon className="w-4 animate-spin" />
             </div>
           ) : (
             <Disclosure.Button
               title="Expand"
               className={({ open }) =>
-                cn('p-2 mr-2 shadow-none transition-all', {
+                cn('mr-2 p-2 shadow-none transition-all', {
                   'rotate-90': open,
                   'rotate-0': !open,
                 })
@@ -45,11 +45,16 @@ const Collapsable = ({
           {/* Title                      */}
           {/******************************/}
           <div
-            className={cn('flex text-app-altText whitespace-nowrap overflow-hidden', {
-              'animate-pulse': loading,
-            })}
+            className={cn(
+              'flex overflow-hidden whitespace-nowrap text-app-altText',
+              {
+                'animate-pulse': loading,
+              }
+            )}
           >
-            <h4 className="overflow-hidden text-xl font-semibold tracking-wider text-ellipsis">{title}</h4>
+            <h4 className="overflow-hidden text-ellipsis text-xl font-semibold tracking-wider">
+              {title}
+            </h4>
             {subtitle && <p className="ml-2 text-sm opacity-50">{subtitle}</p>}
           </div>
         </div>
@@ -57,7 +62,7 @@ const Collapsable = ({
         {/* Content                    */}
         {/******************************/}
         <Disclosure.Panel
-          className={cn('rounded-b bg-app-light shadow-lg mx-2', {
+          className={cn('mx-2 rounded-b bg-app-light shadow-lg', {
             'pointer-events-none animate-pulse': loading,
             'p-4': !disablePadding,
           })}

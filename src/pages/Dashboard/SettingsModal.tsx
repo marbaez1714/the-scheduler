@@ -78,16 +78,16 @@ export const SettingsModal = ({
       />
 
       {/* Contractors */}
-      <div className="flex flex-col p-2 m-4 overflow-auto border rounded w-96 max-h-64 border-app-medium">
+      <div className="m-4 flex max-h-64 w-96 flex-col overflow-auto rounded border border-app-medium p-2">
         {/* Unassigned */}
-        <div className="p-2 mb-2 rounded shadow-inner bg-app-medium">
+        <div className="mb-2 rounded bg-app-medium p-2 shadow-inner">
           <Toggle
             checked={getIsChecked(UNASSIGNED)}
             onChange={() => onContractorToggle(UNASSIGNED)}
             title="Unassigned"
           />
         </div>
-        <div className="px-2 space-y-2">
+        <div className="space-y-2 px-2">
           {filteredContractors?.map((contractor) => (
             <Toggle
               checked={getIsChecked(contractor)}
@@ -100,7 +100,7 @@ export const SettingsModal = ({
       </div>
 
       {/* Actions */}
-      <div className="flex mt-2 gap-x-2">
+      <div className="mt-2 flex gap-x-2">
         <Button onClick={onAddAll} className="w-full">
           Add All
         </Button>

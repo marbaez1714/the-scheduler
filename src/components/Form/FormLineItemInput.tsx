@@ -68,7 +68,7 @@ export const FormLineItemInput = <TFields extends FieldValues>({
       {/******************************/}
       <label className="font-medium text-app-dark">{label}</label>
       <div className="flex justify-between">
-        <div className="w-1/2 mr-4 basis-1/2">
+        <div className="mr-4 w-1/2 basis-1/2">
           <TextInput
             placeholder="Order #"
             value={orderNumber}
@@ -101,7 +101,7 @@ export const FormLineItemInput = <TFields extends FieldValues>({
       {/******************************/}
       <Transition
         show={!!value.length}
-        className="flex flex-wrap gap-2 p-4 transition-all rounded shadow-inner bg-app-medium/50"
+        className="flex flex-wrap gap-2 rounded bg-app-medium/50 p-4 shadow-inner transition-all"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leaveFrom="opacity-100"

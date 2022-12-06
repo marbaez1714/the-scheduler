@@ -160,7 +160,7 @@ const SendMessageModal = ({
     >
       <div className="flex gap-6">
         {jobLegacy?.contractor && (
-          <div className="flex flex-col flex-grow gap-4 p-4 border rounded shadow basis-1/2 w-96 border-app-medium">
+          <div className="flex w-96 flex-grow basis-1/2 flex-col gap-4 rounded border border-app-medium p-4 shadow">
             <p className="text-lg font-medium uppercase text-app-dark">
               To installer {jobLegacy.contractor.name}
             </p>
@@ -186,7 +186,7 @@ const SendMessageModal = ({
           </div>
         )}
         {jobLegacy?.reporter && (
-          <div className="flex flex-col flex-grow gap-4 p-4 border shadow basis-1/2 w-96 border-app-medium">
+          <div className="flex w-96 flex-grow basis-1/2 flex-col gap-4 border border-app-medium p-4 shadow">
             <p className="text-lg font-medium uppercase text-app-dark">
               To reporter {jobLegacy.reporter.name}
             </p>

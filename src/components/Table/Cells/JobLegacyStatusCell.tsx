@@ -29,8 +29,8 @@ export const JobLegacyStatusCell = ({ value }: JobLegacyStatusProps) => {
 
   return (
     <div
-      className={cn('w-6 h-6 mx-auto', {
-        'text-app-success animate-spin': value === JobLegacyStatus.InProgress,
+      className={cn('mx-auto h-6 w-6', {
+        'animate-spin text-app-success': value === JobLegacyStatus.InProgress,
         'text-app-info': value === JobLegacyStatus.Today,
         'text-app-error': value === JobLegacyStatus.PastDue,
         'text-app-warn': value === JobLegacyStatus.WillCall,

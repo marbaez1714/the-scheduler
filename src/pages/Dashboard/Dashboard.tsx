@@ -137,7 +137,7 @@ const Dashboard = () => {
                 <p className="mb-2 font-medium text-app-dark">
                   Displayed Contractors
                 </p>
-                <div className="flex flex-col gap-2 p-2 overflow-scroll border-2 rounded shadow-inner border-app-medium max-h-64 bg-app-light">
+                <div className="flex max-h-64 flex-col gap-2 overflow-scroll rounded border-2 border-app-medium bg-app-light p-2 shadow-inner">
                   {contractors?.map((contractor) => (
                     <Toggle
                       checked={contractor.visible}
@@ -147,7 +147,7 @@ const Dashboard = () => {
                     />
                   ))}
                 </div>
-                <div className="flex mt-2 gap-x-2">
+                <div className="mt-2 flex gap-x-2">
                   <Button onClick={handleAddAll} className="w-full">
                     Add All
                   </Button>

@@ -29,10 +29,10 @@ const RadioGroupInput = <TValue extends unknown>({
             value={option.value}
             className={({ checked }) =>
               cn(
-                'flex flex-grow flex-shrink-0 pl-4 pr-2 h-10 items-center transition-colors border-2 rounded  text-app bg-app-light border-app cursor-pointer uppercase tracking-wider font-bold',
+                'flex h-10 flex-shrink-0 flex-grow cursor-pointer items-center rounded border-2 border-app bg-app-light  pl-4 pr-2 font-bold uppercase tracking-wider text-app transition-colors',
                 {
                   shadow: !checked,
-                  'bg-app-success border-app-success text-app-altText shadow-inner':
+                  'border-app-success bg-app-success text-app-altText shadow-inner':
                     checked,
                 }
               )
@@ -44,7 +44,7 @@ const RadioGroupInput = <TValue extends unknown>({
                 <span>{option.label}</span>
                 <CheckCircleIcon
                   className={cn(
-                    'h-6 ml-auto opacity-0 transition-all text-app-altText',
+                    'ml-auto h-6 text-app-altText opacity-0 transition-all',
                     {
                       'opacity-100': checked,
                     }

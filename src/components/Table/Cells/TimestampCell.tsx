@@ -19,7 +19,7 @@ export const TimestampCell = ({ data }: TimestampCellProps) => {
   return (
     <>
       <p className="w-auto text-xs">U: {updatedDate}</p>
-      <p className="w-auto cell-caption-text">C: {createdDate}</p>
+      <p className="cell-caption-text w-auto">C: {createdDate}</p>
     </>
   );
 };

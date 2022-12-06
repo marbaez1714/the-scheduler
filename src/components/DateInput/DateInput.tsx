@@ -16,7 +16,7 @@ const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
     /******************************/
     return (
       <div className="flex flex-grow">
-        <div className="self-end w-12 h-12 p-2 text-app">
+        <div className="h-12 w-12 self-end p-2 text-app">
           <CalendarDaysIcon />
         </div>
         <div className="w-full">
@@ -32,7 +32,7 @@ const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
           <div className="flex items-center">
             <DatePicker
               className={cn(
-                'bg-app-light text-app-text border-app-medium h-12 px-4 w-full rounded border-2 shadow-inner text-ellipsis focus-ring',
+                'focus-ring h-12 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light px-4 text-app-text shadow-inner',
                 className
               )}
               name={name}

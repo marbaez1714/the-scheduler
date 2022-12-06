@@ -7,7 +7,7 @@ export const MenuCell = ({ items }: MenuCellProps) => {
   return (
     <Menu
       className="flex items-center"
-      anchor={<EllipsisVerticalIcon className="w-6 h-6" />}
+      anchor={<EllipsisVerticalIcon className="h-6 w-6" />}
       items={items}
       title={'Actions'}
     />

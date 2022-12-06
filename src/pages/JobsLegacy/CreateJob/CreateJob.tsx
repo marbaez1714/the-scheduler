@@ -135,7 +135,7 @@ export const CreateJob = () => {
             />
           </div>
 
-          <div className="mt-6 form-divider-y" />
+          <div className="form-divider-y mt-6" />
 
           {/******************************/}
           {/* Contractor                 */}
@@ -189,7 +189,7 @@ export const CreateJob = () => {
             />
           </div>
 
-          <div className="mt-6 form-divider-y" />
+          <div className="form-divider-y mt-6" />
 
           {/******************************/}
           {/* Line Items                 */}

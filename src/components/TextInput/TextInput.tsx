@@ -33,11 +33,11 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       <div className="flex w-full">
         {icon && (
           <Icon
-            className="self-end flex-shrink-0 w-12 h-12 p-2 text-app"
+            className="h-12 w-12 flex-shrink-0 self-end p-2 text-app"
             icon={icon}
           />
         )}
-        <div className="flex flex-col w-full">
+        <div className="flex w-full flex-col">
           {label && (
             <label className="components-input-label" htmlFor={name}>
               {label}
@@ -49,7 +49,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           <div className="flex">
             <InputComponent
               className={cn(
-                'bg-app-light text-app-text border-app-medium h-12 px-4 w-full rounded border-2 shadow-inner text-ellipsis focus-ring',
+                'focus-ring h-12 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light px-4 text-app-text shadow-inner',
                 className
               )}
               name={name}

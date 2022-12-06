@@ -132,7 +132,7 @@ export const JobsList = () => {
               ]}
               onChange={setJobStatus}
               value={jobStatus}
-              className="w-1/2 mb-4"
+              className="mb-4 w-1/2"
             />
             <div className="flex items-center justify-between gap-10">
               <TextInput
