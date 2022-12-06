@@ -44,7 +44,7 @@ const Screen = ({ children }: ScreenProps) => {
   return (
     <>
       <NavBar />
-      <div className="flex flex-col w-screen h-full px-4 pt-16 pb-10 font-roboto bg-app-medium/50">
+      <div className="flex h-full w-screen flex-col bg-app-medium/50 px-4 pt-16 pb-10 font-roboto">
         {/******************************/}
         {/* Page                       */}
         {/******************************/}
@@ -56,7 +56,7 @@ const Screen = ({ children }: ScreenProps) => {
         {/* Status Bar                 */}
         {/******************************/}
       </div>
-      <footer className="fixed bottom-0 flex w-full gap-4 px-2 py-1 text-xs shadow-md bg-app-light">
+      <footer className="fixed bottom-0 flex w-full gap-4 bg-app-light px-2 py-1 text-xs shadow-md">
         <p>Version: {process.env.REACT_APP_VERSION}</p>
         <p>Status: {isAuthenticated ? 'Authorized' : 'Unauthorized'}</p>
       </footer>

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -12,12 +12,12 @@ import {
   getPaginationRowModel,
   Updater,
   PaginationState,
+  SortingState,
 } from '@tanstack/react-table';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 
 import { DataIdCell } from './Cells/DataIdCell';
 import { DateCell } from './Cells/DateCell';
-import { RowActionCell } from './Cells/RowActionCell';
 import { TextCell } from './Cells/TextCell';
 import { PhoneNumberCell } from './Cells/PhoneNumberCell';
 import { TimestampCell } from './Cells/TimestampCell';
@@ -25,15 +25,15 @@ import { HeaderCell } from './Cells/HeaderCell';
 import { JobLegacyStatusCell } from './Cells/JobLegacyStatusCell';
 import { TableProps } from './types';
 import { TableFooter } from './TableFooter';
+import { MenuCell } from './Cells/MenuCell';
 
 const Table = <TData extends Record<string, unknown>>({
   data = [],
   columns,
-  rowActions,
   pageCount,
-  loading,
   headerRender,
   onPaginationChange,
+  onSortingChange,
 }: TableProps<TData>) => {
   /******************************/
   /* State                      */
@@ -42,6 +42,8 @@ const Table = <TData extends Record<string, unknown>>({
     pageIndex: 0,
     pageSize: 10,
   });
+
+  const [sortingState, setSortingState] = useState<SortingState>([]);
 
   /******************************/
   /* Callbacks                  */
@@ -73,6 +75,14 @@ const Table = <TData extends Record<string, unknown>>({
     }
   };
 
+  const handleSortingChange = (updater: Updater<SortingState>) => {
+    setSortingState(updater);
+
+    if (typeof updater === 'function') {
+      onSortingChange?.(updater(sortingState));
+    }
+  };
+
   /******************************/
   /* Effects                    */
   /******************************/
@@ -89,14 +99,15 @@ const Table = <TData extends Record<string, unknown>>({
     getPageCount,
     resetPageIndex,
   } = useReactTable({
-    state: { pagination: paginationState },
+    state: { pagination: paginationState, sorting: sortingState },
     data,
     columns,
     pageCount,
     globalFilterFn,
-    enableSorting: false,
     manualPagination: !!onPaginationChange,
+    manualSorting: !!onSortingChange,
     onPaginationChange: handlePaginationChange,
+    onSortingChange: handleSortingChange,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -108,32 +119,28 @@ const Table = <TData extends Record<string, unknown>>({
   /******************************/
   /* Render                     */
   /******************************/
-  const renderHeaderCell = (h: Header<TData, unknown>, hIndex: number) => {
-    const spanActions = rowActions && hIndex === 0;
+  const renderHeaderCell = (h: Header<TData, unknown>) => {
     const canSort = h.column.getCanSort();
     const isSorted = h.column.getIsSorted();
-    const colSpan = spanActions ? h.colSpan + 1 : h.colSpan;
     const sortDirection = h.column.getIsSorted();
 
     return (
       <th
         className={cn(
-          'h-10 py-2 px-3 first:pl-4 last:pr-4 font-medium transition-all relative uppercase text-xs',
+          'relative h-10 py-2 px-3 text-xs font-medium uppercase transition-all first:pl-4 last:pr-4',
           {
-            'cursor-pointer select-none hover:bg-app-dark pr-9': canSort,
-            'first:pl-14': spanActions,
+            'cursor-pointer select-none pr-9 hover:bg-app-dark': canSort,
             'bg-app-dark': isSorted,
           }
         )}
         onClick={h.column.getToggleSortingHandler()}
-        colSpan={colSpan}
         key={h.id}
       >
         {!h.isPlaceholder && (
           <>
             {flexRender(h.column.columnDef.header, h.getContext())}
             {!!sortDirection && (
-              <div className="absolute top-0 flex items-center w-4 h-full right-2 y-6">
+              <div className="y-6 absolute top-0 right-2 flex h-full w-4 items-center">
                 {sortDirection === 'asc' && <ChevronDownIcon />}
                 {sortDirection === 'desc' && <ChevronUpIcon />}
               </div>
@@ -146,26 +153,6 @@ const Table = <TData extends Record<string, unknown>>({
 
   const renderBodyRows = () => {
     const { rows } = getRowModel();
-
-    if (loading) {
-      return (
-        <>
-          <tr className="h-12 text-xs border-y">
-            <td className="px-3 py-2 first:pl-4 last:pr-4" colSpan={100}>
-              <p>(Loading)</p>
-            </td>
-          </tr>
-          {Array.from(
-            { length: getState().pagination.pageSize - 1 },
-            (_, index) => (
-              <tr className="h-12 border-b last:border-b-0" key={index}>
-                <td className="px-3 py-2 first:pl-4 last:pr-4" colSpan={100} />
-              </tr>
-            )
-          )}
-        </>
-      );
-    }
 
     if (rows.length < 1) {
       return (
@@ -180,11 +167,8 @@ const Table = <TData extends Record<string, unknown>>({
       );
     }
 
-    return rows.map(({ id: rowId, original, getVisibleCells }) => (
-      <tr className="h-12 transition-all border-y" key={rowId}>
-        {rowActions && (
-          <RowActionCell menuActions={rowActions} data={original} />
-        )}
+    return rows.map(({ id: rowId, getVisibleCells }) => (
+      <tr className="h-12 border-y transition-all" key={rowId}>
         {getVisibleCells().map(
           ({ id: cellId, column, getContext, getValue }) => (
             <td className="px-3 first:pl-4 last:pr-4" key={cellId}>
@@ -201,9 +185,9 @@ const Table = <TData extends Record<string, unknown>>({
   };
 
   return (
-    <div className="flex flex-col w-full max-h-full overflow-hidden rounded shadow">
+    <div className="flex max-h-full w-full flex-col overflow-hidden rounded shadow">
       {headerRender && (
-        <div className="px-6 py-4 border-b bg-app border-b-app-medium">
+        <div className="border-b border-b-app-medium bg-app px-6 py-4">
           {headerRender}
         </div>
       )}
@@ -214,7 +198,7 @@ const Table = <TData extends Record<string, unknown>>({
           {/******************************/}
           {/* Table Header               */}
           {/******************************/}
-          <thead className="text-left text-app-altText bg-app">
+          <thead className="bg-app text-left text-app-altText">
             {/******************************/}
             {/* Column Headers             */}
             {/******************************/}
@@ -235,7 +219,7 @@ const Table = <TData extends Record<string, unknown>>({
       </div>
       {/* Footer */}
       <TableFooter
-        totalPages={pageCount ?? getPageCount()}
+        totalPages={pageCount || getPageCount()}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         {...pagination}
@@ -251,5 +235,6 @@ Table.TextCell = TextCell;
 Table.PhoneNumberCell = PhoneNumberCell;
 Table.TimestampCell = TimestampCell;
 Table.JobLegacyStatusCell = JobLegacyStatusCell;
+Table.MenuCell = MenuCell;
 
 export default Table;

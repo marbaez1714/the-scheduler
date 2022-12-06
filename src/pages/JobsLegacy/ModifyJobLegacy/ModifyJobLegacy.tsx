@@ -167,7 +167,7 @@ export const ModifyJobLegacy = () => {
             />
           </div>
 
-          <div className="mt-6 form-divider-y" />
+          <div className="form-divider-y mt-6" />
 
           {/******************************/}
           {/* Contractor                 */}
@@ -217,7 +217,7 @@ export const ModifyJobLegacy = () => {
             />
           </div>
 
-          <div className="mt-6 form-divider-y" />
+          <div className="form-divider-y mt-6" />
 
           {/******************************/}
           {/* Line Items                 */}
@@ -231,7 +231,7 @@ export const ModifyJobLegacy = () => {
             />
           </div>
 
-          <div className="mt-6 form-divider-y" />
+          <div className="form-divider-y mt-6" />
 
           {/******************************/}
           {/* Notes                      */}

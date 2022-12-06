@@ -6,7 +6,7 @@ import { ArchiveBoxIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 import { Area, useArchiveAreaMutation, useGetAreasQuery } from 'src/api';
 
 import { Screen } from 'src/components/Screen';
-import { Table, TableRowAction } from 'src/components/Table';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { dataColumns } from 'src/utils/tables';
 
@@ -64,24 +64,26 @@ export const AreaList = () => {
   /******************************/
   /* Table Definitions         */
   /******************************/
-  const rowActions: TableRowAction<Area>[] = [
+  const rowActions = (data: Area) => [
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(data.id),
+      onClick: () => navigate(data.id),
     },
     {
       icon: <ArchiveBoxIcon />,
       label: 'Archive',
-      onClick: (data) =>
+      onClick: () =>
         confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
   const tableColumns = [
+    dataColumns.areaMenu(rowActions),
     dataColumns.name,
     dataColumns.nameSpanish,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Area>[];
 
@@ -95,13 +97,7 @@ export const AreaList = () => {
       primaryAction={primaryAction}
     >
       {/* Area List */}
-      {data?.areas && (
-        <Table
-          data={data.areas.data}
-          columns={tableColumns}
-          rowActions={rowActions}
-        />
-      )}
+      {data?.areas && <Table data={data.areas.data} columns={tableColumns} />}
     </Screen.Content>
   );
 };

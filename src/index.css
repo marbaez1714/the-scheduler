@@ -8,7 +8,7 @@
 
 @layer base {
   body {
-    @apply font-roboto text-app-text bg-app-medium;
+    @apply bg-app-medium font-roboto text-app-text;
   }
   td {
     @apply text-sm;
@@ -27,11 +27,15 @@
   }
 
   .form-divider-y {
-    @apply col-span-full bg-app/25 h-0.5 rounded-full shadow;
+    @apply col-span-full h-0.5 rounded-full bg-app/25 shadow;
   }
 
   .form-divider-x {
-    @apply h-full bg-app/25 w-0.5 rounded-full shadow;
+    @apply h-full w-0.5 rounded-full bg-app/25 shadow;
+  }
+
+  .components-input-label {
+    @apply mb-2 block font-medium text-app-dark;
   }
 }
 
@@ -41,6 +45,6 @@
   }
 
   .focus-ring {
-    @apply outline-none focus:ring-2 ring-app-info;
+    @apply outline-none ring-app-info focus:ring-2;
   }
 }

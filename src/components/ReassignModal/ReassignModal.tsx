@@ -82,7 +82,7 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
     <Modal title={`Reassign: ${jobLegacy?.name}`} open={open} onClose={onClose}>
       <div className="flex items-center">
         <AutocompleteInput
-          className="flex-grow w-72"
+          className="w-72 flex-grow"
           label="Current"
           options={[...contractorsOptions, { label: 'Unassinged', value: '' }]}
           value={jobLegacy?.contractorId ?? ''}
@@ -90,10 +90,10 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
           disabled
         />
 
-        <ArrowRightIcon className="h-6 mx-4" />
+        <ArrowRightIcon className="mx-4 h-6" />
 
         <AutocompleteInput
-          className="flex-grow w-72"
+          className="w-72 flex-grow"
           label="New"
           options={contractorsOptions}
           value={selectedContractor}
@@ -101,7 +101,7 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
         />
       </div>
 
-      <div className="flex justify-end gap-2 mt-4">
+      <div className="mt-4 flex justify-end gap-2">
         <Button variant="text" onClick={onClose}>
           Cancel
         </Button>

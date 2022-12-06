@@ -9,3 +9,8 @@ export interface SettingsModalProps<TData = ContractorOptionFragment> {
   contractors?: TData[];
   enabledContractors: TData[];
 }
+
+export interface LegacyContractorTableProps {
+  contractor: { name: string; id: string };
+  filter: string;
+}

@@ -5,4 +5,5 @@ export interface CollapsableProps {
   children: React.ReactNode;
   unmount?: boolean;
   loading?: boolean;
+  disablePadding?: boolean;
 }

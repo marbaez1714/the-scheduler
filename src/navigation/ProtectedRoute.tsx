@@ -4,7 +4,10 @@ import { Loading } from 'src/pages/Loading';
 import { ProtectedRouteProps } from './types';
 
 export const ProtectedRoute = ({ component, ...args }: ProtectedRouteProps) => {
-  const Component = withAuthenticationRequired(component, { ...args, onRedirecting: Loading });
+  const Component = withAuthenticationRequired(component, {
+    ...args,
+    onRedirecting: Loading,
+  });
 
   return <Component />;
 };
