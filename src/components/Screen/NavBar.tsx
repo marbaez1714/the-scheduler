@@ -15,7 +15,7 @@ export const NavBar = () => {
   /* Callbacks                  */
   /******************************/
   const handleLogout = () => {
-    logout();
+    logout({ returnTo: window.location.origin });
   };
 
   /******************************/
