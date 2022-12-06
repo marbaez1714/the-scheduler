@@ -86,7 +86,8 @@ export const ContractorList = () => {
     dataColumns.contractorMenu(rowActions),
     dataColumns.name,
     dataColumns.primaryPhone,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Contractor>[];
 

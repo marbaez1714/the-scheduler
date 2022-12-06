@@ -35,7 +35,7 @@ export interface DateCellProps {
 }
 
 export interface DataIdCellProps {
-  data: { id: string; legacy: boolean };
+  value: string;
 }
 
 export interface HeaderCellProps {
@@ -52,10 +52,7 @@ export interface PhoneNumberCellProps {
 }
 
 export interface TimestampCellProps {
-  data: {
-    createdTime?: string;
-    updatedTime?: string;
-  };
+  value?: string;
 }
 
 export interface JobLegacyStatusProps {

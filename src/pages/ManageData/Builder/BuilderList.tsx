@@ -88,7 +88,8 @@ export const BuilderList = () => {
     dataColumns.company,
     dataColumns.primaryPhone,
     dataColumns.primaryEmail,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Builder>[];
 

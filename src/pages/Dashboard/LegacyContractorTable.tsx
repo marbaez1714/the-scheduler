@@ -192,7 +192,8 @@ export const LegacyContractorTable = ({
     dataColumns.scope,
     dataColumns.area,
     dataColumns.builder,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<JobLegacy>[];
 

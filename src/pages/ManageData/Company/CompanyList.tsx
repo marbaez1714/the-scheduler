@@ -86,7 +86,8 @@ export const CompanyList = () => {
     dataColumns.name,
     dataColumns.primaryPhone,
     dataColumns.primaryAddress,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Company>[];
 

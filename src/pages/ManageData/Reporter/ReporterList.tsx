@@ -87,7 +87,8 @@ export const ReporterList = () => {
     dataColumns.name,
     dataColumns.primaryPhone,
     dataColumns.primaryEmail,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Reporter>[];
 

@@ -82,7 +82,8 @@ export const ScopeList = () => {
     dataColumns.scopeMenu(rowActions),
     dataColumns.name,
     dataColumns.nameSpanish,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Scope>[];
 

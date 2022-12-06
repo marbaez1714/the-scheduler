@@ -66,7 +66,8 @@ export const SupplierList = () => {
     dataColumns.supplierMenu(rowActions),
     dataColumns.name,
     dataColumns.primaryPhone,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Supplier>[];
 

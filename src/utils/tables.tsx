@@ -99,25 +99,26 @@ export const dataColumns = {
     header: () => <Table.HeaderCell title="Translation" subtitle="Spanish" />,
     cell: ({ getValue }) => <Table.TextCell value={getValue()} />,
   }),
-  timestamps: dataHelpers.accessor(
+  createdTimestamp: dataHelpers.accessor(
+    (row) => format(new Date(row.createdTime), 'Pp'),
+    {
+      id: 'createdTime',
+      header: 'Created',
+      cell: ({ getValue }) => <Table.TimestampCell value={getValue()} />,
+    }
+  ),
+  updatedTimestamp: dataHelpers.accessor(
     (row) => format(new Date(row.updatedTime), 'Pp'),
     {
       id: 'updatedTime',
-      header: 'Timestamps',
-      cell: (data) => <Table.TimestampCell data={data.row.original} />,
+      header: 'Last Updated',
+      cell: ({ getValue }) => <Table.TimestampCell value={getValue()} />,
     }
   ),
   id: dataHelpers.accessor('id', {
     id: 'id',
     header: 'ID',
-    cell: (data) => (
-      <Table.DataIdCell
-        data={{
-          id: data.getValue(),
-          legacy: data.row.original.legacy ?? false,
-        }}
-      />
-    ),
+    cell: ({ getValue }) => <Table.DataIdCell value={getValue()} />,
   }),
   company: dataHelpers.accessor((row) => row.company.name, {
     id: 'company',

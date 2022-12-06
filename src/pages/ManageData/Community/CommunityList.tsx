@@ -86,7 +86,8 @@ export const CommunityList = () => {
     dataColumns.communityMenu(rowActions),
     dataColumns.name,
     dataColumns.company,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Community>[];
 
