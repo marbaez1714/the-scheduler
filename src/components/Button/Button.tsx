@@ -23,7 +23,7 @@ const Button = ({
     <button
       tabIndex={0}
       className={cn(
-        'rounded tracking-wider uppercase font-bold text-app transition-all flex items-center relative scale-100 active:scale-95 focus-ring justify-center',
+        'focus-ring relative flex scale-100 items-center justify-center rounded font-bold uppercase tracking-wider text-app transition-all active:scale-95',
         size === 'small' && {
           'h-8 text-sm': true,
           'pl-6': !leftRender,
@@ -41,14 +41,14 @@ const Button = ({
         },
         { 'bg-transparent hover:underline': variant === 'text' },
         {
-          'bg-app text-app-light hover:bg-app-dark shadow':
+          'bg-app text-app-light shadow hover:bg-app-dark':
             variant === 'filled',
         },
         {
-          'bg-app-light hover:bg-app-medium shadow': variant === 'filled-light',
+          'bg-app-light shadow hover:bg-app-medium': variant === 'filled-light',
         },
         {
-          'bg-app-light border-2 border-app hover:bg-app-medium shadow':
+          'border-2 border-app bg-app-light shadow hover:bg-app-medium':
             variant === 'outline',
         },
         { 'rounded-full': rounded },
@@ -71,9 +71,9 @@ const Button = ({
           {leftRender && (
             <div
               className={cn({
-                'h-2 w-2 mx-2': size === 'small',
-                'h-4 w-4 mx-2': size === 'medium',
-                'h-6 w-6 mx-2': size === 'large',
+                'mx-2 h-2 w-2': size === 'small',
+                'mx-2 h-4 w-4': size === 'medium',
+                'mx-2 h-6 w-6': size === 'large',
               })}
             >
               {leftRender}
@@ -89,9 +89,9 @@ const Button = ({
           {rightRender && (
             <div
               className={cn({
-                'h-2 w-2 mx-2': size === 'small',
-                'h-4 w-4 mx-2': size === 'medium',
-                'h-6 w-6 mx-2': size === 'large',
+                'mx-2 h-2 w-2': size === 'small',
+                'mx-2 h-4 w-4': size === 'medium',
+                'mx-2 h-6 w-6': size === 'large',
               })}
             >
               {rightRender}

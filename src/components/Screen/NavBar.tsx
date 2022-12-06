@@ -22,7 +22,7 @@ export const NavBar = () => {
   /* Render                     */
   /******************************/
   return (
-    <header className="fixed top-0 z-50 flex items-center w-full px-6 bg-app-darkest text-app-altText">
+    <header className="fixed top-0 z-50 flex w-full items-center bg-app-darkest px-6 text-app-altText">
       <Link to="/dashboard" className="mr-6 text-3xl font-bold">
         the_scheduler
       </Link>
@@ -52,7 +52,7 @@ export const NavBar = () => {
 
       {/* Logout Button */}
       <button
-        className="w-12 h-12 p-3 ml-auto transition-colors text-app-light"
+        className="ml-auto h-12 w-12 p-3 text-app-light transition-colors"
         onClick={handleLogout}
         title="Logout"
       >

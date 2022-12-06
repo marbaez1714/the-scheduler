@@ -16,17 +16,19 @@ const IconButton = ({
     <button
       tabIndex={0}
       className={cn(
-        'tracking-wider uppercase font-medium flex items-center justify-center disabled:opacity-50 disabled:pointer-events-none rounded-full self-center',
+        'flex items-center justify-center self-center rounded-full font-medium uppercase tracking-wider disabled:pointer-events-none disabled:opacity-50',
         {
           'p-1': size === 'small' && variant !== 'outline',
           'p-0.5': size === 'small' && variant === 'outline',
-          'p-2': (size === 'medium' || size === 'large') && variant !== 'outline',
-          'p-1.5': (size === 'medium' || size === 'large') && variant === 'outline',
-          'text-app underline disabled:no-underline hover:text-app-text':
+          'p-2':
+            (size === 'medium' || size === 'large') && variant !== 'outline',
+          'p-1.5':
+            (size === 'medium' || size === 'large') && variant === 'outline',
+          'text-app underline hover:text-app-text disabled:no-underline':
             variant === 'text',
-          'bg-app text-app-altText rounded shadow hover:bg-app-dark transition-colors focus:bg-app-dark':
+          'rounded bg-app text-app-altText shadow transition-colors hover:bg-app-dark focus:bg-app-dark':
             variant === 'filled',
-          'bg-transparent text-app rounded border-2 border-app-medium box-border shadow hover:border-app transition-all':
+          'box-border rounded border-2 border-app-medium bg-transparent text-app shadow transition-all hover:border-app':
             variant === 'outline',
         },
         className

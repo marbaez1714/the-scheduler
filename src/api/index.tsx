@@ -211,6 +211,17 @@ export type DeleteResponse = {
   message: Scalars['String'];
 };
 
+export type FilterInput = {
+  field: Scalars['String'];
+  term: Scalars['String'];
+};
+
+export type FilterResponse = {
+  __typename?: 'FilterResponse';
+  field: Scalars['String'];
+  term: Scalars['String'];
+};
+
 export type JobLegacy = {
   __typename?: 'JobLegacy';
   active: Scalars['Boolean'];
@@ -251,21 +262,6 @@ export enum JobLegacyStatus {
   WillCall = 'willCall',
 }
 
-export enum JobsLegacyFilterField {
-  Name = 'name',
-}
-
-export type JobsLegacyFilterInput = {
-  field: JobsLegacyFilterField;
-  term: Scalars['String'];
-};
-
-export type JobsLegacyFilterResponse = {
-  __typename?: 'JobsLegacyFilterResponse';
-  field?: Maybe<JobsLegacyFilterField>;
-  term?: Maybe<Scalars['String']>;
-};
-
 export enum JobsLegacyMessageRecipient {
   Contractor = 'contractor',
   Reporter = 'reporter',
@@ -274,8 +270,9 @@ export enum JobsLegacyMessageRecipient {
 export type JobsLegacyResponse = {
   __typename?: 'JobsLegacyResponse';
   data: Array<JobLegacy>;
-  filter: JobsLegacyFilterResponse;
+  filter: FilterResponse;
   pagination: PaginationResponse;
+  sort: SortResponse;
 };
 
 export type JobsLegacySendMessageResponse = {
@@ -576,22 +573,25 @@ export type QueryJobLegacyByIdArgs = {
 
 export type QueryJobsLegacyArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<JobsLegacyFilterInput>;
+  filter?: InputMaybe<FilterInput>;
   pagination?: InputMaybe<Pagination>;
+  sort?: InputMaybe<SortInput>;
 };
 
 export type QueryJobsLegacyByActiveStatusArgs = {
   active: Scalars['Boolean'];
   archived?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<JobsLegacyFilterInput>;
+  filter?: InputMaybe<FilterInput>;
   pagination?: InputMaybe<Pagination>;
+  sort?: InputMaybe<SortInput>;
 };
 
 export type QueryJobsLegacyByContractorIdArgs = {
   archived?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<JobsLegacyFilterInput>;
+  filter?: InputMaybe<FilterInput>;
   id: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
+  sort?: InputMaybe<SortInput>;
 };
 
 export type QueryReporterByIdArgs = {
@@ -661,6 +661,22 @@ export type ScopesResponse = {
   __typename?: 'ScopesResponse';
   data: Array<Scope>;
   pagination: PaginationResponse;
+};
+
+export enum SortDirection {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
+export type SortInput = {
+  direction: SortDirection;
+  field: Scalars['String'];
+};
+
+export type SortResponse = {
+  __typename?: 'SortResponse';
+  direction: SortDirection;
+  field: Scalars['String'];
 };
 
 export type Supplier = {
@@ -1316,7 +1332,8 @@ export type GetJobsLegacyByActiveStatusQueryVariables = Exact<{
   active: Scalars['Boolean'];
   pagination?: InputMaybe<Pagination>;
   archived?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<JobsLegacyFilterInput>;
+  filter?: InputMaybe<FilterInput>;
+  sort?: InputMaybe<SortInput>;
 }>;
 
 export type GetJobsLegacyByActiveStatusQuery = {
@@ -1358,6 +1375,11 @@ export type GetJobsLegacyByActiveStatusQuery = {
       totalCount: number;
       totalPages: number;
     };
+    sort: {
+      __typename?: 'SortResponse';
+      field: string;
+      direction: SortDirection;
+    };
   };
 };
 
@@ -1365,7 +1387,8 @@ export type GetJobsLegacyByContractorIdQueryVariables = Exact<{
   contractorId: Scalars['ID'];
   pagination?: InputMaybe<Pagination>;
   archived?: InputMaybe<Scalars['Boolean']>;
-  filter?: InputMaybe<JobsLegacyFilterInput>;
+  filter?: InputMaybe<FilterInput>;
+  sort?: InputMaybe<SortInput>;
 }>;
 
 export type GetJobsLegacyByContractorIdQuery = {
@@ -1422,6 +1445,11 @@ export type GetJobsLegacyByContractorIdQuery = {
       pageSize?: number | null;
       totalCount: number;
       totalPages: number;
+    };
+    sort: {
+      __typename?: 'SortResponse';
+      field: string;
+      direction: SortDirection;
     };
   };
 };
@@ -3444,13 +3472,15 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
     $active: Boolean!
     $pagination: Pagination
     $archived: Boolean
-    $filter: JobsLegacyFilterInput
+    $filter: FilterInput
+    $sort: SortInput
   ) {
     jobsLegacyByActiveStatus(
       active: $active
       pagination: $pagination
       archived: $archived
       filter: $filter
+      sort: $sort
     ) {
       data {
         id
@@ -3499,6 +3529,10 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
         totalCount
         totalPages
       }
+      sort {
+        field
+        direction
+      }
     }
   }
 `;
@@ -3519,6 +3553,7 @@ export const GetJobsLegacyByActiveStatusDocument = gql`
  *      pagination: // value for 'pagination'
  *      archived: // value for 'archived'
  *      filter: // value for 'filter'
+ *      sort: // value for 'sort'
  *   },
  * });
  */
@@ -3561,13 +3596,15 @@ export const GetJobsLegacyByContractorIdDocument = gql`
     $contractorId: ID!
     $pagination: Pagination
     $archived: Boolean
-    $filter: JobsLegacyFilterInput
+    $filter: FilterInput
+    $sort: SortInput
   ) {
     jobsLegacyByContractorId(
       id: $contractorId
       pagination: $pagination
       archived: $archived
       filter: $filter
+      sort: $sort
     ) {
       data {
         id
@@ -3625,6 +3662,10 @@ export const GetJobsLegacyByContractorIdDocument = gql`
         totalCount
         totalPages
       }
+      sort {
+        field
+        direction
+      }
     }
   }
 `;
@@ -3645,6 +3686,7 @@ export const GetJobsLegacyByContractorIdDocument = gql`
  *      pagination: // value for 'pagination'
  *      archived: // value for 'archived'
  *      filter: // value for 'filter'
+ *      sort: // value for 'sort'
  *   },
  * });
  */

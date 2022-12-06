@@ -1,3 +1,3 @@
 export const localStorageKeys = {
-  enabledContractors: 'scheduler_dashboard_enabledContractors',
+  dashboardContractors: 'scheduler_dashboard_dashboardContractors',
 };

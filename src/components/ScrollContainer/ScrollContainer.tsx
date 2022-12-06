@@ -102,11 +102,11 @@ const ScrollContainer = ({ children, className }: ScrollContainerProps) => {
   return (
     <div className={cn('relative', className)} ref={containerRef}>
       <div className="sticky top-0 left-0 z-50 w-full">
-        <div className="absolute w-full h-full" style={{ height }}>
+        <div className="absolute h-full w-full" style={{ height }}>
           {/* Top */}
           {!!opacities.top && (
             <div
-              className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-4 pointer-events-none bg-gradient-to-b from-app-dark/50"
+              className="pointer-events-none absolute top-0 left-0 z-50 flex h-4 w-full items-center justify-center bg-gradient-to-b from-app-dark/50"
               style={{ opacity: opacities.top }}
             >
               <ChevronUpIcon className="h-4 text-app" />
@@ -115,7 +115,7 @@ const ScrollContainer = ({ children, className }: ScrollContainerProps) => {
           {/* Right */}
           {!!opacities.right && (
             <div
-              className="absolute top-0 right-0 z-50 flex items-center justify-center w-4 h-full pointer-events-none bg-gradient-to-l from-app-dark/50"
+              className="pointer-events-none absolute top-0 right-0 z-50 flex h-full w-4 items-center justify-center bg-gradient-to-l from-app-dark/50"
               style={{ opacity: opacities.right }}
             >
               <ChevronRightIcon className="h-4 text-app" />
@@ -124,7 +124,7 @@ const ScrollContainer = ({ children, className }: ScrollContainerProps) => {
           {/* Bottom */}
           {!!opacities.bottom && (
             <div
-              className="absolute bottom-0 left-0 z-50 flex items-center justify-center w-full h-4 pointer-events-none bg-gradient-to-t from-app-dark/50"
+              className="pointer-events-none absolute bottom-0 left-0 z-50 flex h-4 w-full items-center justify-center bg-gradient-to-t from-app-dark/50"
               style={{ opacity: opacities.bottom }}
             >
               <ChevronDownIcon className="h-4 text-app" />
@@ -133,7 +133,7 @@ const ScrollContainer = ({ children, className }: ScrollContainerProps) => {
           {/* Left */}
           {!!opacities.left && (
             <div
-              className="absolute top-0 left-0 z-50 flex items-center justify-center w-4 h-full pointer-events-none bg-gradient-to-r from-app-dark/50"
+              className="pointer-events-none absolute top-0 left-0 z-50 flex h-full w-4 items-center justify-center bg-gradient-to-r from-app-dark/50"
               style={{ opacity: opacities.left }}
             >
               <ChevronLeftIcon className="h-4 text-app" />

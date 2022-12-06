@@ -21,8 +21,8 @@ const Form = ({
   /* Render                     */
   /******************************/
   return (
-    <div className={cn('shadow w-full rounded overflow-hidden', className)}>
-      <div className="px-6 py-4 border-b border-app-dark bg-app text-app-altText">
+    <div className={cn('w-full overflow-hidden rounded shadow', className)}>
+      <div className="border-b border-app-dark bg-app px-6 py-4 text-app-altText">
         <h1 className="text-4xl font-semibold tracking-wide">{title}</h1>
         <p className="text-app-altText/50">
           Fields marked with <span className="font-bold text-app-error">*</span>{' '}
@@ -30,10 +30,10 @@ const Form = ({
         </p>
       </div>
 
-      <form className="p-6 bg-app-light" onSubmit={onSubmit}>
+      <form className="bg-app-light p-6" onSubmit={onSubmit}>
         {children}
 
-        <div className="h-0.5 w-full my-6 form-divider-y" />
+        <div className="form-divider-y my-6 h-0.5 w-full" />
 
         <div className="flex justify-end space-x-4">
           {!!onClearClick && (

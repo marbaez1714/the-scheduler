@@ -10,7 +10,7 @@ import {
 } from 'src/api';
 
 import { Screen } from 'src/components/Screen';
-import { Table, TableRowAction } from 'src/components/Table';
+import { Table } from 'src/components/Table';
 import { confirmArchive } from 'src/utils/alerts';
 import { dataColumns } from 'src/utils/tables';
 
@@ -68,24 +68,26 @@ export const ContractorList = () => {
   /******************************/
   /* Table Definitions         */
   /******************************/
-  const rowActions: TableRowAction<Contractor>[] = [
+  const rowActions = (data: Contractor) => [
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(data.id),
+      onClick: () => navigate(data.id),
     },
     {
       icon: <ArchiveBoxIcon />,
       label: 'Archive',
-      onClick: (data) =>
+      onClick: () =>
         confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
   const tableColumns = [
+    dataColumns.contractorMenu(rowActions),
     dataColumns.name,
     dataColumns.primaryPhone,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Contractor>[];
 
@@ -103,7 +105,6 @@ export const ContractorList = () => {
         <Table
           data={data.contractors.data as Contractor[]}
           columns={tableColumns}
-          rowActions={rowActions}
         />
       )}
     </Screen.Content>

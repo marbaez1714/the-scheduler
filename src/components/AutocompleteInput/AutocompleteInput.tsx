@@ -72,106 +72,104 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
     /* Render                     */
     /******************************/
     return (
-      <div className="relative flex flex-col flex-grow">
-        <Combobox
-          value={value ?? ''}
-          onChange={onChange}
-          name={name}
-          disabled={disabled}
-        >
-          {/******************************/}
-          {/* Label                      */}
-          {/******************************/}
-          {label && (
-            <Combobox.Label
-              className={cn('block mb-2 font-medium text-app-dark', {
-                'ml-12': icon,
-              })}
-            >
-              {label}
-              {required && (
-                <span className="ml-1 font-bold text-app-error">*</span>
-              )}
-            </Combobox.Label>
-          )}
-
-          {/******************************/}
-          {/* Input                      */}
-          {/******************************/}
-          <div className="relative flex items-center">
-            {icon && (
-              <Icon
-                className="flex-shrink-0 w-12 h-12 p-2 text-app"
-                icon={icon}
-              />
-            )}
-            <Combobox.Button className="w-full">
-              <Combobox.Input
-                className={cn(
-                  'bg-app-light h-12 pl-4 pr-12 w-full rounded border-2 border-app-medium shadow-inner text-ellipsis disabled:bg-app-medium/50 focus-ring',
-                  className
-                )}
-                value={value ?? undefined}
-                onBlur={handleInputBlur}
-                onChange={handleInputChange}
-                displayValue={getDisplayedValue}
-                placeholder={placeholder ?? 'Select'}
-                ref={ref}
-              />
-            </Combobox.Button>
-            {/******************************/}
-            {/* Clear Button               */}
-            {/******************************/}
-            {!disabled && (
-              <button
-                className="absolute w-4 h-4 right-4 text-app-dark"
-                onClick={(e) => handleClearClick(e)}
-                type="button"
-              >
-                {value ? <XMarkIcon /> : <ChevronDownIcon />}
-              </button>
-            )}
-          </div>
-          {/******************************/}
-          {/* Options                    */}
-          {/******************************/}
-          <Combobox.Options
-            className={cn(
-              'absolute z-50 mt-2 overflow-visible overflow-y-scroll border-2 divide-y rounded shadow-2xl w-96 border-app-medium bg-app-light max-h-48 top-full',
-              { 'ml-12': icon }
-            )}
+      <div className="relative flex flex-grow">
+        {icon && (
+          <Icon
+            className="h-12 w-12 flex-shrink-0 self-end p-2 text-app"
+            icon={icon}
+          />
+        )}
+        <div className="flex w-full flex-col">
+          <Combobox
+            value={value ?? ''}
+            onChange={onChange}
+            name={name}
+            disabled={disabled}
           >
             {/******************************/}
-            {/* No Results                 */}
+            {/* Label                      */}
             {/******************************/}
-            {filteredOptions.length === 0 && (
-              <li className="px-4 py-3">No results</li>
+            {label && (
+              <Combobox.Label className="components-input-label">
+                {label}
+                {required && (
+                  <span className="ml-1 font-bold text-app-error">*</span>
+                )}
+              </Combobox.Label>
             )}
+
             {/******************************/}
-            {/* Select Options             */}
+            {/* Input                      */}
             {/******************************/}
-            {filteredOptions.map((option) => (
-              <Combobox.Option
-                key={option.value}
-                value={option.value}
-                className={({ selected, active }) =>
-                  cn(
-                    'px-4 py-3 hover:bg-app-medium cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis transition-all',
-                    {
-                      'bg-app text-app-altText hover:text-app-text': selected,
-                      'bg-app-medium': active && !selected,
-                    }
-                  )
-                }
-              >
-                {option.label}
-              </Combobox.Option>
-            ))}
-          </Combobox.Options>
-        </Combobox>
-        {!!errorMessage && (
-          <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
-        )}
+            <div className="relative flex items-center">
+              <Combobox.Button className="w-full">
+                <Combobox.Input
+                  className={cn(
+                    'focus-ring h-12 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light pl-4 pr-12 shadow-inner disabled:bg-app-medium/50',
+                    className
+                  )}
+                  value={value ?? undefined}
+                  onBlur={handleInputBlur}
+                  onChange={handleInputChange}
+                  displayValue={getDisplayedValue}
+                  placeholder={placeholder ?? 'Select'}
+                  ref={ref}
+                />
+              </Combobox.Button>
+              {/******************************/}
+              {/* Clear Button               */}
+              {/******************************/}
+              {!disabled && (
+                <button
+                  className="absolute right-4 h-4 w-4 text-app-dark"
+                  onClick={(e) => handleClearClick(e)}
+                  type="button"
+                >
+                  {value ? <XMarkIcon /> : <ChevronDownIcon />}
+                </button>
+              )}
+            </div>
+            {/******************************/}
+            {/* Options                    */}
+            {/******************************/}
+            <Combobox.Options
+              className={cn(
+                'absolute top-full z-50 mt-2 max-h-48 w-96 divide-y overflow-visible overflow-y-scroll rounded border-2 border-app-medium bg-app-light uppercase shadow-2xl',
+                { 'ml-12': icon }
+              )}
+            >
+              {/******************************/}
+              {/* No Results                 */}
+              {/******************************/}
+              {filteredOptions.length === 0 && (
+                <li className="px-4 py-3">No results</li>
+              )}
+              {/******************************/}
+              {/* Select Options             */}
+              {/******************************/}
+              {filteredOptions.map((option) => (
+                <Combobox.Option
+                  key={option.value}
+                  value={option.value}
+                  className={({ selected, active }) =>
+                    cn(
+                      'cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap px-4 py-3 transition-all hover:bg-app-medium',
+                      {
+                        'bg-app text-app-altText hover:text-app-text': selected,
+                        'bg-app-medium': active && !selected,
+                      }
+                    )
+                  }
+                >
+                  {option.label}
+                </Combobox.Option>
+              ))}
+            </Combobox.Options>
+          </Combobox>
+          {!!errorMessage && (
+            <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
+          )}
+        </div>
       </div>
     );
   }

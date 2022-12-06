@@ -1,26 +1,37 @@
 import { ChangeEventHandler, useState } from 'react';
-import { ColumnDef, PaginationState } from '@tanstack/react-table';
+import {
+  ColumnDef,
+  PaginationState,
+  SortingState,
+} from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDebounce } from 'usehooks-ts';
 
 import {
   JobLegacy,
-  JobsLegacyFilterField,
+  SortDirection,
   useGetJobsLegacyByContractorIdQuery,
   useModifyJobLegacyMutation,
 } from 'src/api';
 import { LegacyContractorTableProps } from './types';
-import { Table, TableRowAction } from '../Table';
-import { Collapsable } from '../Collapsable';
-import { ReassignModal } from '../ReassignModal';
-import { SendMessageModal } from '../SendMessageModal';
-import { dataColumns } from 'src/utils/tables';
-import { TextInput } from '../TextInput';
-import { Button } from '../Button';
-import { Icon } from '../Icon';
+import { Table } from 'src/components/Table';
+import { Collapsable } from 'src/components/Collapsable';
+import { ReassignModal } from 'src/components/ReassignModal';
+import { SendMessageModal } from 'src/components/SendMessageModal';
+import {
+  dataColumns,
+  DEFAULT_PAGINATION,
+  DEFAULT_SORT,
+} from 'src/utils/tables';
+import { TextInput } from 'src/components/TextInput';
+import { Button } from 'src/components/Button';
+import { Icon } from 'src/components/Icon';
 
-const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
+export const LegacyContractorTable = ({
+  contractor,
+  filter,
+}: LegacyContractorTableProps) => {
   /******************************/
   /* Custom Hooks               */
   /******************************/
@@ -33,7 +44,8 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   const [reassignModalOpen, setReassignModalOpen] = useState(false);
   const [sendMessageModalOpen, setSendMessageModalOpen] = useState(false);
   const [displayedJobs, setDisplayedJobs] = useState<JobLegacy[]>([]);
-  const [pagination, setPagination] = useState({ page: 1, pageSize: 10 });
+  const [pagination, setPagination] = useState(DEFAULT_PAGINATION);
+  const [sort, setSort] = useState(DEFAULT_SORT);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -44,16 +56,18 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     variables: {
       contractorId: contractor.id,
       pagination,
-      ...(debouncedSearchTerm && {
+      sort,
+      ...((debouncedSearchTerm || filter) && {
         filter: {
-          field: JobsLegacyFilterField.Name,
-          term: debouncedSearchTerm,
+          field: 'name',
+          term: debouncedSearchTerm || filter,
         },
       }),
     },
     onCompleted: ({ jobsLegacyByContractorId }) => {
       setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
     },
+    notifyOnNetworkStatusChange: true,
   });
 
   const [modify] = useModifyJobLegacyMutation({
@@ -109,6 +123,18 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     });
   };
 
+  const handleSortingChange = (sortingState: SortingState) => {
+    const sorting = sortingState[0];
+    if (sorting) {
+      setSort({
+        field: sorting.id,
+        direction: sorting.desc ? SortDirection.Desc : SortDirection.Asc,
+      });
+    } else {
+      setSort(DEFAULT_SORT);
+    }
+  };
+
   const handleSearchChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -116,26 +142,26 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
   /******************************/
   /* Table                      */
   /******************************/
-  const rowActions: TableRowAction<JobLegacy>[] = [
+  const rowActions = (data: JobLegacy) => [
     {
       icon: <Icon icon="edit" />,
       label: 'Edit',
-      onClick: (data) => navigate(`/jobs_legacy/modify/${data.id}`),
+      onClick: () => navigate(`/jobs_legacy/modify/${data.id}`),
     },
     {
       icon: <Icon icon="message" />,
       label: 'Send Message',
-      onClick: handleSendMessage,
+      onClick: () => handleSendMessage(data),
     },
     {
       icon: <Icon icon="reassign" />,
       label: 'Reassign',
-      onClick: handleReassignJob,
+      onClick: () => handleReassignJob(data),
     },
     {
       icon: <Icon icon="inProgress" />,
       label: 'Toggle In Progress',
-      onClick: (data) =>
+      onClick: () =>
         modify({
           variables: { id: data.id, data: { inProgress: !data.inProgress } },
         }),
@@ -143,7 +169,7 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <Icon icon="important" />,
       label: 'Toggle Important',
-      onClick: (data) => {
+      onClick: () => {
         modify({
           variables: { id: data.id, data: { isImportant: !data.isImportant } },
         });
@@ -152,11 +178,12 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     {
       icon: <Icon icon="complete" />,
       label: 'Complete',
-      onClick: handleComplete,
+      onClick: () => handleComplete(data),
     },
   ];
 
   const columns = [
+    dataColumns.jobLegacyMenu(rowActions),
     dataColumns.status,
     dataColumns.startDate,
     dataColumns.address,
@@ -165,14 +192,14 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
     dataColumns.scope,
     dataColumns.area,
     dataColumns.builder,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<JobLegacy>[];
 
   /******************************/
   /* Render                     */
   /******************************/
-
   return (
     <>
       <ReassignModal
@@ -186,21 +213,27 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
         onClose={handleSendMessageModalClose}
       />
       <Collapsable
-        title={contractor.name}
+        title={`${contractor.name} ${
+          displayedJobs.length === 0 ? '- (No Results)' : ''
+        }`}
         unmount={false}
         loading={loading}
         defaultOpen
       >
         <Table
           headerRender={
-            <div className="flex items-center justify-between gap-10">
+            <div className="flex flex-col gap-4 md:flex-row">
               <TextInput
                 placeholder="Filter by address"
                 className="h-10"
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
-              <Button variant="filled-light" onClick={() => refetch()}>
+              <Button
+                variant="filled-light"
+                onClick={() => refetch()}
+                className="ml-0 md:ml-auto"
+              >
                 Refresh
               </Button>
             </div>
@@ -208,12 +241,10 @@ const LegacyContractorTable = ({ contractor }: LegacyContractorTableProps) => {
           columns={columns}
           data={displayedJobs}
           pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
-          rowActions={rowActions}
           onPaginationChange={handlePaginationChange}
+          onSortingChange={handleSortingChange}
         />
       </Collapsable>
     </>
   );
 };
-
-export default LegacyContractorTable;

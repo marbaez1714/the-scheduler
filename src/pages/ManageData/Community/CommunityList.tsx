@@ -9,7 +9,7 @@ import {
   useGetCommunitiesQuery,
 } from 'src/api';
 
-import { Table, TableRowAction } from 'src/components/Table';
+import { Table } from 'src/components/Table';
 import { Screen } from 'src/components/Screen';
 import { confirmArchive } from 'src/utils/alerts';
 import { dataColumns } from 'src/utils/tables';
@@ -68,24 +68,26 @@ export const CommunityList = () => {
   /******************************/
   /* Table Definitions         */
   /******************************/
-  const rowActions: TableRowAction<Community>[] = [
+  const rowActions = (data: Community) => [
     {
       icon: <PencilSquareIcon />,
       label: 'Edit',
-      onClick: (data) => navigate(data.id),
+      onClick: () => navigate(data.id),
     },
     {
       icon: <ArchiveBoxIcon />,
       label: 'Archive',
-      onClick: (data) =>
+      onClick: () =>
         confirmArchive(data.name) && archive({ variables: { id: data.id } }),
     },
   ];
 
   const tableColumns = [
+    dataColumns.communityMenu(rowActions),
     dataColumns.name,
     dataColumns.company,
-    dataColumns.timestamps,
+    dataColumns.updatedTimestamp,
+    dataColumns.createdTimestamp,
     dataColumns.id,
   ] as ColumnDef<Community>[];
 
@@ -103,7 +105,6 @@ export const CommunityList = () => {
         <Table
           data={data.communities.data as Community[]}
           columns={tableColumns}
-          rowActions={rowActions}
         />
       )}
     </Screen.Content>
