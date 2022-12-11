@@ -33,6 +33,7 @@ const Dashboard = () => {
   /******************************/
   /* Data                       */
   /******************************/
+
   const { loading } = useGetAssignedContractorsQuery({
     onCompleted: ({ assignedContractors }) => {
       const formattedContractors = assignedContractors.data.map((item) => ({
@@ -73,7 +74,7 @@ const Dashboard = () => {
     );
     storeEnabledContractors(allOptions);
   };
-
+  
   const handleFilterTermChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
