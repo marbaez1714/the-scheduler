@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { useState } from 'react';
 import { useDebounce } from 'usehooks-ts';
 
 import { useGetAssignedContractorsQuery } from 'src/api';
@@ -32,46 +31,19 @@ const Dashboard = () => {
   const debouncedFilterTerm = useDebounce(filterTerm);
 
   /******************************/
-  /* Context                    */
-  /******************************/
-
-  /******************************/
   /* Data                       */
   /******************************/
-  const { data, loading } = useGetAssignedContractorsQuery({
+
+  const { loading } = useGetAssignedContractorsQuery({
     onCompleted: ({ assignedContractors }) => {
       const formattedContractors = assignedContractors.data.map((item) => ({
         ...item,
-        visible: false,
+        visible: true,
       }));
 
       setContractors([UNASSIGNED, ...formattedContractors]);
     },
   });
-
-  /******************************/
-  /* Memos                      */
-  /******************************/
-
-  /******************************/
-  /* Effects                    */
-  /******************************/
-  useEffect(() => {
-    const stored = localStorage.getItem(localStorageKeys.dashboardContractors);
-    if (stored) {
-      try {
-        const enabledList = JSON.parse(stored) as string[];
-        setContractors((prev) =>
-          prev.map((item) => ({
-            ...item,
-            visible: item.visible || enabledList.includes(item.id),
-          }))
-        );
-      } catch {
-        toast.error('Unable to get stored dashboard.');
-      }
-    }
-  }, [data?.assignedContractors.data]);
 
   /******************************/
   /* Callbacks                  */
@@ -102,7 +74,7 @@ const Dashboard = () => {
     );
     storeEnabledContractors(allOptions);
   };
-
+  
   const handleFilterTermChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
@@ -116,7 +88,7 @@ const Dashboard = () => {
     <Screen>
       <Screen.Content
         title="Dashboard"
-        className="flex flex-col gap-2"
+        className="flex flex-col gap-4"
         loading={loading}
       >
         <div className="flex gap-4">

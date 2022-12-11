@@ -187,18 +187,18 @@ const Table = <TData extends Record<string, unknown>>({
   return (
     <div className="flex max-h-full w-full flex-col overflow-hidden rounded shadow">
       {headerRender && (
-        <div className="border-b border-b-app-medium bg-app px-6 py-4">
+        <div className="border-b border-b-app-medium gradient-br-app px-6 py-4">
           {headerRender}
         </div>
       )}
 
       {/* Table */}
-      <div className={'overflow-scroll'}>
+      <div className="overflow-scroll">
         <table className="relative w-full border-collapse whitespace-nowrap">
           {/******************************/}
           {/* Table Header               */}
           {/******************************/}
-          <thead className="bg-app text-left text-app-altText">
+          <thead className="gradient-br-app text-left text-app-altText">
             {/******************************/}
             {/* Column Headers             */}
             {/******************************/}

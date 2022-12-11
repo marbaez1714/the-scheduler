@@ -67,6 +67,7 @@ export const LegacyContractorTable = ({
     onCompleted: ({ jobsLegacyByContractorId }) => {
       setDisplayedJobs(jobsLegacyByContractorId.data as JobLegacy[]);
     },
+    fetchPolicy: 'cache-and-network',
     notifyOnNetworkStatusChange: true,
   });
 
