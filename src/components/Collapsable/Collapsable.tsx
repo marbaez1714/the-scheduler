@@ -22,7 +22,7 @@ const Collapsable = ({
         {/******************************/}
         {/* Header                     */}
         {/******************************/}
-        <div className="flex h-12 items-center rounded bg-app px-2 uppercase text-app-altText shadow-lg">
+        <div className="gradient-br-app flex h-12 items-center rounded px-2 uppercase text-app-altText shadow-lg">
           {loading ? (
             <div className="mr-2 p-2">
               <ArrowPathIcon className="w-4 animate-spin" />
@@ -62,7 +62,7 @@ const Collapsable = ({
         {/* Content                    */}
         {/******************************/}
         <Disclosure.Panel
-          className={cn('mx-2 rounded-b bg-app-light shadow-lg', {
+          className={cn('mx-2 rounded-b gradient-r-app-lightest shadow-lg ', {
             'pointer-events-none animate-pulse': loading,
             'p-4': !disablePadding,
           })}

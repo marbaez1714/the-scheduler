@@ -22,42 +22,44 @@ export const NavBar = () => {
   /* Render                     */
   /******************************/
   return (
-    <header className="fixed top-0 z-50 flex w-full items-center bg-app-darkest px-6 text-app-altText">
-      <Link to="/dashboard" className="mr-6 text-3xl font-bold">
-        the_scheduler
-      </Link>
+    <header className="gradient-b-app fixed top-0 z-50 flex w-full justify-center px-6 text-app-altText">
+      <div className="flex w-full max-w-7xl items-center">
+        <Link to="/dashboard" className="mr-6 text-3xl font-bold">
+          the_scheduler
+        </Link>
 
-      {/* Dashboard */}
-      <NavBarMenu
-        title={'Dashboard'}
-        to="/dashboard"
-        icon={<Icon icon="dashboard" />}
-      />
+        {/* Dashboard */}
+        <NavBarMenu
+          title={'Dashboard'}
+          to="/dashboard"
+          icon={<Icon icon="dashboard" />}
+        />
 
-      {/* Jobs (Legacy) */}
-      <NavBarMenu
-        title={'Jobs (Legacy)'}
-        to="/jobs_legacy"
-        icon={<Icon icon="job" />}
-        links={jobsLegacyItems}
-      />
+        {/* Jobs (Legacy) */}
+        <NavBarMenu
+          title={'Jobs (Legacy)'}
+          to="/jobs_legacy"
+          icon={<Icon icon="job" />}
+          links={jobsLegacyItems}
+        />
 
-      {/* Manage Data */}
-      <NavBarMenu
-        title={'Manage Data'}
-        to="/manage"
-        icon={<Icon icon="data" />}
-        links={manageDataItems}
-      />
+        {/* Manage Data */}
+        <NavBarMenu
+          title={'Manage Data'}
+          to="/manage"
+          icon={<Icon icon="data" />}
+          links={manageDataItems}
+        />
 
-      {/* Logout Button */}
-      <button
-        className="ml-auto h-12 w-12 p-3 text-app-light transition-colors"
-        onClick={handleLogout}
-        title="Logout"
-      >
-        <Icon icon="logout" />
-      </button>
+        {/* Logout Button */}
+        <button
+          className="ml-auto h-12 w-12 p-3 text-app-light transition-colors"
+          onClick={handleLogout}
+          title="Logout"
+        >
+          <Icon icon="logout" />
+        </button>
+      </div>
     </header>
   );
 };

@@ -23,7 +23,7 @@ export const Content = ({
       <div className="mx-auto w-full max-w-7xl">
         {/* Title */}
         {(!!title || !!primaryAction) && (
-          <div className="mb-4 flex w-full flex-col gap-4 rounded bg-app px-6 py-6 text-app-altText shadow md:flex-row">
+          <div className="gradient-b-app mb-4 flex w-full flex-col gap-4 rounded px-6 py-6 text-app-altText shadow md:flex-row">
             {!!title && (
               <h1 className="text-4xl font-bold uppercase tracking-wider">
                 {title}

@@ -44,11 +44,9 @@ export const NavBarMenu = ({ icon, to, links, title }: NavBarMenuProps) => {
     <Menu as="div" className="relative">
       <Menu.Button
         className={({ open }) =>
-          cn(
-            'h-12 w-12 p-3 text-app-light transition-colors',
-            { 'bg-app-darkest': !open },
-            { 'border border-app-medium': open }
-          )
+          cn('h-12 w-12 p-3 text-app-light transition-colors', {
+            'border border-app-medium bg-app-dark': open,
+          })
         }
       >
         {icon}
@@ -61,10 +59,10 @@ export const NavBarMenu = ({ icon, to, links, title }: NavBarMenuProps) => {
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <Menu.Items className="absolute z-50 flex w-64 flex-col overflow-hidden rounded-b bg-app-darkest text-xs text-app-altText shadow-2xl">
+        <Menu.Items className="absolute z-50 flex w-64 flex-col overflow-hidden rounded-b shadow-2xl">
           {/* Title */}
           <Link
-            className="flex items-center px-4 py-2 font-bold tracking-wider transition-all hover:bg-app"
+            className="flex items-center bg-app px-4 py-2 font-bold tracking-wider text-app-altText transition-all hover:bg-app-dark"
             to={to}
           >
             {title}
@@ -75,7 +73,7 @@ export const NavBarMenu = ({ icon, to, links, title }: NavBarMenuProps) => {
               {links.map((item) => (
                 <Menu.Item key={item.name}>
                   <Link
-                    className="flex items-center px-4 py-2 transition-all hover:bg-app"
+                    className="flex items-center bg-app-light px-4 py-2 text-app-text transition-all hover:bg-app-medium"
                     to={item.to}
                   >
                     {item.name}

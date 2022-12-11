@@ -55,7 +55,7 @@ export const TableFooter = ({
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col items-center gap-4 bg-app px-6 py-2 md:flex-row">
+    <div className="flex flex-col items-center gap-4 gradient-br-app px-6 py-2 md:flex-row">
       {/* Page Size */}
       <RadioGroup
         className="flex h-full items-center rounded border border-app-medium text-sm text-app-altText"

@@ -9,13 +9,14 @@ module.exports = {
       colors: {
         app: {
           // Default colors
+          lightest: colors.slate['50'],
           light: colors.slate['100'],
           medium: colors.slate['300'],
           DEFAULT: colors.slate['600'],
           dark: colors.slate['700'],
           darkest: colors.slate['900'],
           // Text colors
-          altText: colors.white,
+          altText: colors.slate['50'],
           text: colors.slate['900'],
           // Util colors
           info: colors.blue['500'],
