@@ -201,6 +201,10 @@ export const LegacyContractorTable = ({
   /******************************/
   /* Render                     */
   /******************************/
+  if (filter && displayedJobs.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <ReassignModal
