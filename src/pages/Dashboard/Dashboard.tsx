@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDebounce } from 'usehooks-ts';
 
 import { useGetAssignedContractorsQuery } from 'src/api';
@@ -27,8 +27,9 @@ const Dashboard = () => {
   const [contractors, setContractors] = useState<
     { name: string; id: string; visible: boolean }[]
   >([]);
-  const [filterTerm, setFilterTerm] = useState('');
-  const debouncedFilterTerm = useDebounce(filterTerm);
+  const [contractorFilterTerm, setContractorFilterTerm] = useState('');
+  const [addressFilterTerm, setAddressFilterTerm] = useState('');
+  const debouncedFilterTerm = useDebounce(addressFilterTerm);
 
   /******************************/
   /* Data                       */
@@ -74,12 +75,35 @@ const Dashboard = () => {
     );
     storeEnabledContractors(allOptions);
   };
-  
-  const handleFilterTermChange: React.ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    setFilterTerm(e.target.value);
+
+  const handleAddressFilterTermChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = (e) => {
+    setAddressFilterTerm(e.target.value);
   };
+
+  const handleContractorFilterTermChange: React.ChangeEventHandler<
+    HTMLInputElement
+  > = (e) => {
+    setContractorFilterTerm(e.target.value);
+  };
+
+  /******************************/
+  /* Memo                       */
+  /******************************/
+  const visibleContractors = useMemo(() => {
+    const visible = contractors.filter((contractor) => contractor.visible);
+
+    if (contractorFilterTerm) {
+      return visible.filter((contractor) =>
+        contractor.name
+          .toLocaleLowerCase()
+          .includes(contractorFilterTerm.toLocaleLowerCase())
+      );
+    }
+
+    return visible;
+  }, [contractors, contractorFilterTerm]);
 
   /******************************/
   /* Render                     */
@@ -94,12 +118,22 @@ const Dashboard = () => {
         <div className="flex gap-4">
           <div className="w-1/2">
             <Collapsable title="Filter">
-              <TextInput
-                label="Address Filter"
-                placeholder="Filter all addresses"
-                value={filterTerm}
-                onChange={handleFilterTermChange}
-              />
+              <div className="flex flex-col gap-4">
+                {/* Address */}
+                <TextInput
+                  label="Address Filter"
+                  placeholder="Filter all addresses"
+                  value={addressFilterTerm}
+                  onChange={handleAddressFilterTermChange}
+                />
+                {/* Contractor */}
+                <TextInput
+                  label="Contractor Filter"
+                  placeholder="Filter contractors"
+                  value={contractorFilterTerm}
+                  onChange={handleContractorFilterTermChange}
+                />
+              </div>
             </Collapsable>
           </div>
           <div className="w-1/2">
@@ -137,16 +171,13 @@ const Dashboard = () => {
         </div>
 
         {/* Contractors */}
-        {contractors.map(
-          (contractor) =>
-            contractor.visible && (
-              <LegacyContractorTable
-                contractor={contractor}
-                key={contractor.id}
-                filter={debouncedFilterTerm}
-              />
-            )
-        )}
+        {visibleContractors.map((contractor) => (
+          <LegacyContractorTable
+            contractor={contractor}
+            key={contractor.id}
+            filter={debouncedFilterTerm}
+          />
+        ))}
       </Screen.Content>
     </Screen>
   );
