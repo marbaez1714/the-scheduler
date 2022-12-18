@@ -121,7 +121,7 @@ const Dashboard = () => {
 
   const handleRemoveContractor = (id: string) => () => {
     const allOptions = contractors.map((item) =>
-      item.id === id ? { ...item, visible: false } : item
+      item.id === id ? { ...item, visible: false, open: false } : item
     );
     storeEnabledContractors(allOptions);
   };
