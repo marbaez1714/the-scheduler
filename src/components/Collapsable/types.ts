@@ -6,4 +6,5 @@ export interface CollapsableProps {
   defaultOpen?: boolean;
   action?: { label: string; onClick: () => void };
   open?: boolean;
+  onToggle?: (open: boolean) => void;
 }

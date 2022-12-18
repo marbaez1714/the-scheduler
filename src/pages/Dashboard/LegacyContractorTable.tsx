@@ -16,7 +16,6 @@ import {
 } from 'src/api';
 import { LegacyContractorTableProps } from './types';
 import { Table } from 'src/components/Table';
-import { Collapsable } from 'src/components/Collapsable';
 import { ReassignModal } from 'src/components/ReassignModal';
 import { SendMessageModal } from 'src/components/SendMessageModal';
 import {
@@ -217,39 +216,31 @@ export const LegacyContractorTable = ({
         jobLegacy={selectedJob}
         onClose={handleSendMessageModalClose}
       />
-      <Collapsable
-        title={`${contractor.name} ${
-          displayedJobs.length === 0 ? '- (No Results)' : ''
-        }`}
-        unmount={false}
-        loading={loading}
-        defaultOpen
-      >
-        <Table
-          headerRender={
-            <div className="flex flex-col gap-4 md:flex-row">
-              <TextInput
-                placeholder="Filter by address"
-                className="h-10"
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-              <Button
-                variant="filled-light"
-                onClick={() => refetch()}
-                className="ml-0 md:ml-auto"
-              >
-                Refresh
-              </Button>
-            </div>
-          }
-          columns={columns}
-          data={displayedJobs}
-          pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
-          onPaginationChange={handlePaginationChange}
-          onSortingChange={handleSortingChange}
-        />
-      </Collapsable>
+
+      <Table
+        headerRender={
+          <div className="flex flex-col gap-4 md:flex-row">
+            <TextInput
+              placeholder="Filter by address"
+              className="h-10"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <Button
+              variant="filled-light"
+              onClick={() => refetch()}
+              className="ml-0 md:ml-auto"
+            >
+              Refresh
+            </Button>
+          </div>
+        }
+        columns={columns}
+        data={displayedJobs}
+        pageCount={data?.jobsLegacyByContractorId.pagination.totalPages}
+        onPaginationChange={handlePaginationChange}
+        onSortingChange={handleSortingChange}
+      />
     </>
   );
 };
