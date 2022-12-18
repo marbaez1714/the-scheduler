@@ -156,6 +156,23 @@ const Dashboard = () => {
   }, [contractors, contractorFilterTerm]);
 
   /******************************/
+  /* Memo                       */
+  /******************************/
+  const visibleContractors = useMemo(() => {
+    const visible = contractors.filter((contractor) => contractor.visible);
+
+    if (contractorFilterTerm) {
+      return visible.filter((contractor) =>
+        contractor.name
+          .toLocaleLowerCase()
+          .includes(contractorFilterTerm.toLocaleLowerCase())
+      );
+    }
+
+    return visible;
+  }, [contractors, contractorFilterTerm]);
+
+  /******************************/
   /* Render                     */
   /******************************/
   return (
