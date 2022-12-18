@@ -14,3 +14,10 @@ export interface LegacyContractorTableProps {
   contractor: { name: string; id: string };
   filter: string;
 }
+
+export type ContractorTable = {
+  name: string;
+  id: string;
+  visible: boolean;
+  open: boolean;
+};

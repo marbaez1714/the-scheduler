@@ -12,13 +12,7 @@ import { TextInput } from 'src/components/TextInput';
 import { Toggle } from 'src/components/Toggle';
 import { localStorageKeys } from 'src/utils/localStorage';
 import { UNASSIGNED } from './utils';
-
-type ContractorTable = {
-  name: string;
-  id: string;
-  visible: boolean;
-  open: boolean;
-};
+import { ContractorTable } from './types';
 
 const Dashboard = () => {
   /******************************/
@@ -137,23 +131,6 @@ const Dashboard = () => {
   ) => {
     setContractorFilterTerm(e.target.value);
   };
-
-  /******************************/
-  /* Memo                       */
-  /******************************/
-  const visibleContractors = useMemo(() => {
-    const visible = contractors.filter((contractor) => contractor.visible);
-
-    if (contractorFilterTerm) {
-      return visible.filter((contractor) =>
-        contractor.name
-          .toLocaleLowerCase()
-          .includes(contractorFilterTerm.toLocaleLowerCase())
-      );
-    }
-
-    return visible;
-  }, [contractors, contractorFilterTerm]);
 
   /******************************/
   /* Memo                       */
