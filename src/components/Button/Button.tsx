@@ -41,7 +41,10 @@ const Button = ({
         },
         { 'bg-transparent hover:underline': variant === 'text' },
         {
-          'bg-app text-app-light shadow hover:bg-app-dark':
+          'bg-transparent text-app-altText hover:underline': variant === 'text',
+        },
+        {
+          'bg-app text-app-altText shadow hover:bg-app-dark':
             variant === 'filled',
         },
         {

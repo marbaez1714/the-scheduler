@@ -4,6 +4,7 @@ import { useDebounce } from 'usehooks-ts';
 import { useGetAssignedContractorsQuery } from 'src/api';
 import { Button } from 'src/components/Button';
 import { Collapsable } from 'src/components/Collapsable';
+import { toast } from 'react-hot-toast';
 
 import { LegacyContractorTable } from './LegacyContractorTable';
 import { Screen } from 'src/components/Screen';
@@ -11,6 +12,13 @@ import { TextInput } from 'src/components/TextInput';
 import { Toggle } from 'src/components/Toggle';
 import { localStorageKeys } from 'src/utils/localStorage';
 import { UNASSIGNED } from './utils';
+
+type ContractorTable = {
+  name: string;
+  id: string;
+  visible: boolean;
+  open: boolean;
+};
 
 const Dashboard = () => {
   /******************************/
@@ -24,9 +32,7 @@ const Dashboard = () => {
   /******************************/
   /* State                      */
   /******************************/
-  const [contractors, setContractors] = useState<
-    { name: string; id: string; visible: boolean }[]
-  >([]);
+  const [contractors, setContractors] = useState<ContractorTable[]>([]);
   const [contractorFilterTerm, setContractorFilterTerm] = useState('');
   const [addressFilterTerm, setAddressFilterTerm] = useState('');
   const debouncedFilterTerm = useDebounce(addressFilterTerm);
@@ -37,54 +43,98 @@ const Dashboard = () => {
 
   const { loading } = useGetAssignedContractorsQuery({
     onCompleted: ({ assignedContractors }) => {
+      // Get the previous state
+      let prevState: Record<string, { visible: boolean; open: boolean }> = {};
+      try {
+        const prevStateStored =
+          localStorage.getItem(localStorageKeys.dashboardContractors) ?? '{}';
+        prevState = JSON.parse(prevStateStored);
+      } catch {
+        toast.error('Unable to get previous state');
+      }
+
       const formattedContractors = assignedContractors.data.map((item) => ({
         ...item,
-        visible: true,
+        ...prevState[item.id],
       }));
 
-      setContractors([UNASSIGNED, ...formattedContractors]);
+      setContractors([
+        { ...UNASSIGNED, ...prevState[''] },
+        ...formattedContractors,
+      ]);
     },
   });
 
   /******************************/
   /* Callbacks                  */
   /******************************/
-  const storeEnabledContractors = (
-    list: { name: string; id: string; visible: boolean }[]
-  ) => {
+  const storeEnabledContractors = (list: ContractorTable[]) => {
     setContractors(list);
+
+    const storageObject = list.reduce<
+      Record<string, { open: boolean; visible: boolean }>
+    >((acc, curr) => {
+      acc[curr.id] = { open: curr.open, visible: curr.visible };
+
+      return acc;
+    }, {});
+
     localStorage.setItem(
       localStorageKeys.dashboardContractors,
-      JSON.stringify(list.map((item) => item.visible && item.id))
+      JSON.stringify(storageObject)
     );
   };
 
   const handleAddAll = () => {
-    const allOptions = contractors.map((item) => ({ ...item, visible: true }));
+    const allOptions = contractors.map((item) => ({
+      ...item,
+      visible: true,
+      open: true,
+    }));
     storeEnabledContractors(allOptions);
   };
 
   const handleRemoveAll = () => {
-    const allOptions = contractors.map((item) => ({ ...item, visible: false }));
+    const allOptions = contractors.map((item) => ({
+      ...item,
+      visible: false,
+      open: false,
+    }));
     storeEnabledContractors(allOptions);
   };
 
   const handleContractorToggle = (id: string) => {
     const allOptions = contractors.map((item) =>
-      item.id === id ? { ...item, visible: !item.visible } : item
+      item.id === id
+        ? { ...item, visible: !item.visible, open: !item.visible }
+        : item
     );
     storeEnabledContractors(allOptions);
   };
 
-  const handleAddressFilterTermChange: React.ChangeEventHandler<
-    HTMLInputElement
-  > = (e) => {
+  const handleToggleCollapsable = (id: string, open: boolean) => {
+    const allOptions = contractors.map((item) =>
+      item.id === id ? { ...item, open } : item
+    );
+    storeEnabledContractors(allOptions);
+  };
+
+  const handleRemoveContractor = (id: string) => () => {
+    const allOptions = contractors.map((item) =>
+      item.id === id ? { ...item, visible: false, open: false } : item
+    );
+    storeEnabledContractors(allOptions);
+  };
+
+  const handleAddressFilterTermChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setAddressFilterTerm(e.target.value);
   };
 
-  const handleContractorFilterTermChange: React.ChangeEventHandler<
-    HTMLInputElement
-  > = (e) => {
+  const handleContractorFilterTermChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setContractorFilterTerm(e.target.value);
   };
 
@@ -116,6 +166,7 @@ const Dashboard = () => {
         loading={loading}
       >
         <div className="flex gap-4">
+          {/* Filters */}
           <div className="w-1/2">
             <Collapsable title="Filter">
               <div className="flex flex-col gap-4">
@@ -136,6 +187,7 @@ const Dashboard = () => {
               </div>
             </Collapsable>
           </div>
+          {/* Visible Contractors */}
           <div className="w-1/2">
             <Collapsable title="Displayed">
               {/* Contractors */}
@@ -154,13 +206,13 @@ const Dashboard = () => {
                   ))}
                 </div>
                 <div className="mt-2 flex gap-x-2">
-                  <Button onClick={handleAddAll} className="w-full">
+                  <Button onClick={handleAddAll} className="w-1/2">
                     Add All
                   </Button>
                   <Button
                     onClick={handleRemoveAll}
                     variant="outline"
-                    className="w-full"
+                    className="w-1/2"
                   >
                     Remove All
                   </Button>
@@ -170,13 +222,25 @@ const Dashboard = () => {
           </div>
         </div>
 
+        <div className="form-divider-y" />
+
         {/* Contractors */}
         {visibleContractors.map((contractor) => (
-          <LegacyContractorTable
-            contractor={contractor}
+          <Collapsable
             key={contractor.id}
-            filter={debouncedFilterTerm}
-          />
+            title={contractor.name}
+            defaultOpen={contractor.open}
+            onToggle={(open) => handleToggleCollapsable(contractor.id, open)}
+            action={{
+              label: 'remove',
+              onClick: handleRemoveContractor(contractor.id),
+            }}
+          >
+            <LegacyContractorTable
+              contractor={contractor}
+              filter={debouncedFilterTerm}
+            />
+          </Collapsable>
         ))}
       </Screen.Content>
     </Screen>
