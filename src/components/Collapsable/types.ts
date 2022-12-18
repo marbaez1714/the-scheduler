@@ -1,9 +1,9 @@
 export interface CollapsableProps {
-  title: string;
-  defaultOpen?: boolean;
+  title?: string;
   subtitle?: string;
-  children: React.ReactNode;
-  unmount?: boolean;
+  children?: React.ReactNode;
   loading?: boolean;
-  disablePadding?: boolean;
+  defaultOpen?: boolean;
+  action?: { label: string; onClick: () => void };
+  open?: boolean;
 }
