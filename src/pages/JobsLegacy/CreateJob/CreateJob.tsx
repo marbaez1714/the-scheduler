@@ -51,7 +51,6 @@ export const CreateJob = () => {
     useCreateJobLegacyMutation({
       onCompleted: (data) => {
         toast.success(data.createJobLegacy.message);
-        reset();
       },
       onError: (error) => {
         toast.error(error.message);
