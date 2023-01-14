@@ -78,7 +78,7 @@ const validators = {
     .string()
     .trim()
     .required(inputMessages.companyRequired),
-  string: yup.string().trim(),
+  string: yup.string().trim().nullable(),
 };
 
 export const placeholderMap = {
