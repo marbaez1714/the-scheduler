@@ -104,6 +104,7 @@ export const ModifyJobLegacy = () => {
   /******************************/
   const submit = (data: ModifyJobLegacyInput) => {
     if (jobLegacyId) {
+      console.log(data);
       modify({ variables: { id: jobLegacyId, data } });
     }
   };

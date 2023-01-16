@@ -63,7 +63,7 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
       e.stopPropagation();
 
       if (value) {
-        onChange(undefined);
+        onChange(null);
         setQuery('');
       }
     };

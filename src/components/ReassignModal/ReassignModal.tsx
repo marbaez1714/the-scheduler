@@ -23,7 +23,9 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
   /******************************/
   /* State                      */
   /******************************/
-  const [selectedContractor, setSelectedContractor] = useState<string>();
+  const [selectedContractor, setSelectedContractor] = useState<string | null>(
+    null
+  );
 
   /******************************/
   /* Context                    */
@@ -35,7 +37,7 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
   const [modify] = useModifyJobLegacyMutation({
     onCompleted: (data) => {
       toast.success(data.modifyJobLegacy.message);
-      setSelectedContractor(undefined);
+      setSelectedContractor(null);
       onClose();
     },
     onError: (error) => {
@@ -69,7 +71,7 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
       modify({
         variables: {
           id: jobLegacy?.id,
-          data: { contractorId: selectedContractor },
+          data: { contractorId: selectedContractor ?? undefined },
         },
       });
     }
@@ -84,7 +86,7 @@ const ReassignModal = ({ open, onClose, jobLegacy }: ReassignModalProps) => {
         <AutocompleteInput
           className="w-72 flex-grow"
           label="Current"
-          options={[...contractorsOptions, { label: 'Unassinged', value: '' }]}
+          options={[...contractorsOptions, { label: 'Unassigned', value: '' }]}
           value={jobLegacy?.contractorId ?? ''}
           onChange={() => {}}
           disabled
