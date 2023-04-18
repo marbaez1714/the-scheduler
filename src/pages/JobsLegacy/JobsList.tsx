@@ -9,6 +9,7 @@ import {
   JobLegacy,
   SortDirection,
   useGetJobsLegacyByActiveStatusQuery,
+  useReenableJobLegacyMutation,
 } from 'src/api';
 import { Screen } from 'src/components/Screen';
 import { dataColumns } from 'src/utils/tables';
@@ -17,6 +18,8 @@ import { Table } from 'src/components/Table';
 import { TextInput } from 'src/components/TextInput';
 import { Button } from 'src/components/Button';
 import { RadioGroupInput } from 'src/components/RadioGroupInput';
+import { Icon } from 'src/components/Icon';
+import toast from 'react-hot-toast';
 
 export const JobsList = () => {
   /******************************/
@@ -65,6 +68,15 @@ export const JobsList = () => {
     notifyOnNetworkStatusChange: true,
   });
 
+  const [reenable] = useReenableJobLegacyMutation({
+    onCompleted: () => {
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   /******************************/
   /* Memos                      */
   /******************************/
@@ -99,10 +111,32 @@ export const JobsList = () => {
     }
   };
 
+  const handleComplete = (data: JobLegacy) => {
+    const confirm = window.confirm(
+      `Are you sure you want to reenable ${data.name}?`
+    );
+
+    if (confirm) {
+      reenable({
+        variables: { id: data.id },
+      }).then(() => toast.success(`${data.name} has been reenabled`));
+    }
+  };
+
   /******************************/
   /* Table                      */
   /******************************/
+  const rowActions = (data: JobLegacy) => [
+    {
+      icon: <Icon icon="edit" />,
+      label: 'Reenable',
+      onClick: () => handleComplete(data),
+      disabled: jobStatus,
+    },
+  ];
+
   const columns = [
+    dataColumns.jobLegacyMenu(rowActions),
     dataColumns.status,
     dataColumns.startDate,
     dataColumns.address,
