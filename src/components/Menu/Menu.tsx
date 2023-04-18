@@ -83,10 +83,14 @@ const Menu = ({ items, anchor, title, className }: MenuProps) => {
                 <span>{title}</span>
               </div>
               {items.map((action) => (
-                <HeadlessMenu.Item key={action.label}>
+                <HeadlessMenu.Item
+                  key={action.label}
+                  disabled={action.disabled}
+                >
                   <button
-                    className="flex w-full items-center px-4 py-2 text-app-darkest transition-all hover:bg-app-medium"
+                    className="flex w-full items-center px-4 py-2 text-app-darkest transition-all hover:bg-app-medium disabled:bg-app-medium disabled:text-app-light"
                     onClick={action.onClick}
+                    disabled={action.disabled}
                   >
                     {action.icon && (
                       <div className="mr-2 h-3 w-3">{action.icon}</div>

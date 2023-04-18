@@ -354,6 +354,7 @@ export type Mutation = {
   modifyReporter: WriteReporterResponse;
   modifyScope: WriteScopeResponse;
   modifySupplier: WriteSupplierResponse;
+  reenableJobLegacy: WriteJobLegacyResponse;
   sendMessageJobLegacy?: Maybe<JobsLegacySendMessageResponse>;
 };
 
@@ -475,6 +476,10 @@ export type MutationModifyScopeArgs = {
 
 export type MutationModifySupplierArgs = {
   data: WriteSupplierInput;
+  id: Scalars['ID'];
+};
+
+export type MutationReenableJobLegacyArgs = {
   id: Scalars['ID'];
 };
 
@@ -1471,6 +1476,47 @@ export type ModifyJobLegacyMutationVariables = Exact<{
 export type ModifyJobLegacyMutation = {
   __typename?: 'Mutation';
   modifyJobLegacy: {
+    __typename?: 'WriteJobLegacyResponse';
+    message: string;
+    data: {
+      __typename?: 'JobLegacy';
+      id: string;
+      name: string;
+      active: boolean;
+      inProgress: boolean;
+      isImportant: boolean;
+      status: JobLegacyStatus;
+      completedDate?: string | null;
+      startDate?: string | null;
+      notes?: string | null;
+      contractorId?: string | null;
+      updatedBy: string;
+      createdBy: string;
+      createdTime: string;
+      updatedTime: string;
+      archived: boolean;
+      legacy: boolean;
+      area?: {
+        __typename?: 'Area';
+        id: string;
+        name: string;
+        nameSpanish: string;
+      } | null;
+      builder?: { __typename?: 'Builder'; id: string; name: string } | null;
+      community?: { __typename?: 'Community'; id: string; name: string } | null;
+      reporter?: { __typename?: 'Reporter'; id: string; name: string } | null;
+      scope?: { __typename?: 'Scope'; id: string; name: string } | null;
+    };
+  };
+};
+
+export type ReenableJobLegacyMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type ReenableJobLegacyMutation = {
+  __typename?: 'Mutation';
+  reenableJobLegacy: {
     __typename?: 'WriteJobLegacyResponse';
     message: string;
     data: {
@@ -3863,6 +3909,95 @@ export type ModifyJobLegacyMutationResult =
 export type ModifyJobLegacyMutationOptions = Apollo.BaseMutationOptions<
   ModifyJobLegacyMutation,
   ModifyJobLegacyMutationVariables
+>;
+export const ReenableJobLegacyDocument = gql`
+  mutation ReenableJobLegacy($id: ID!) {
+    reenableJobLegacy(id: $id) {
+      message
+      data {
+        id
+        name
+        active
+        inProgress
+        isImportant
+        status
+        completedDate
+        startDate
+        notes
+        area {
+          id
+          name
+          nameSpanish
+        }
+        builder {
+          id
+          name
+        }
+        community {
+          id
+          name
+        }
+        reporter {
+          id
+          name
+        }
+        scope {
+          id
+          name
+        }
+        contractorId
+        updatedBy
+        createdBy
+        createdTime
+        updatedTime
+        archived
+        legacy
+      }
+    }
+  }
+`;
+export type ReenableJobLegacyMutationFn = Apollo.MutationFunction<
+  ReenableJobLegacyMutation,
+  ReenableJobLegacyMutationVariables
+>;
+
+/**
+ * __useReenableJobLegacyMutation__
+ *
+ * To run a mutation, you first call `useReenableJobLegacyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReenableJobLegacyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reenableJobLegacyMutation, { data, loading, error }] = useReenableJobLegacyMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useReenableJobLegacyMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReenableJobLegacyMutation,
+    ReenableJobLegacyMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ReenableJobLegacyMutation,
+    ReenableJobLegacyMutationVariables
+  >(ReenableJobLegacyDocument, options);
+}
+export type ReenableJobLegacyMutationHookResult = ReturnType<
+  typeof useReenableJobLegacyMutation
+>;
+export type ReenableJobLegacyMutationResult =
+  Apollo.MutationResult<ReenableJobLegacyMutation>;
+export type ReenableJobLegacyMutationOptions = Apollo.BaseMutationOptions<
+  ReenableJobLegacyMutation,
+  ReenableJobLegacyMutationVariables
 >;
 export const SendMessageJobLegacyDocument = gql`
   mutation SendMessageJobLegacy(
