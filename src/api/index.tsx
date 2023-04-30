@@ -1270,6 +1270,18 @@ export type GetAssignedContractorsQuery = {
   };
 };
 
+export type GetDisplayedContractorsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetDisplayedContractorsQuery = {
+  __typename?: 'Query';
+  contractors: {
+    __typename?: 'ContractorsResponse';
+    data: Array<{ __typename?: 'Contractor'; id: string; name: string }>;
+  };
+};
+
 export type CreateContractorMutationVariables = Exact<{
   data: WriteContractorInput;
 }>;
@@ -3284,6 +3296,66 @@ export type GetAssignedContractorsLazyQueryHookResult = ReturnType<
 export type GetAssignedContractorsQueryResult = Apollo.QueryResult<
   GetAssignedContractorsQuery,
   GetAssignedContractorsQueryVariables
+>;
+export const GetDisplayedContractorsDocument = gql`
+  query GetDisplayedContractors {
+    contractors {
+      data {
+        ...ContractorOption
+      }
+    }
+  }
+  ${ContractorOptionFragmentDoc}
+`;
+
+/**
+ * __useGetDisplayedContractorsQuery__
+ *
+ * To run a query within a React component, call `useGetDisplayedContractorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDisplayedContractorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDisplayedContractorsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDisplayedContractorsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetDisplayedContractorsQuery,
+    GetDisplayedContractorsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetDisplayedContractorsQuery,
+    GetDisplayedContractorsQueryVariables
+  >(GetDisplayedContractorsDocument, options);
+}
+export function useGetDisplayedContractorsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetDisplayedContractorsQuery,
+    GetDisplayedContractorsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetDisplayedContractorsQuery,
+    GetDisplayedContractorsQueryVariables
+  >(GetDisplayedContractorsDocument, options);
+}
+export type GetDisplayedContractorsQueryHookResult = ReturnType<
+  typeof useGetDisplayedContractorsQuery
+>;
+export type GetDisplayedContractorsLazyQueryHookResult = ReturnType<
+  typeof useGetDisplayedContractorsLazyQuery
+>;
+export type GetDisplayedContractorsQueryResult = Apollo.QueryResult<
+  GetDisplayedContractorsQuery,
+  GetDisplayedContractorsQueryVariables
 >;
 export const CreateContractorDocument = gql`
   mutation CreateContractor($data: WriteContractorInput!) {
