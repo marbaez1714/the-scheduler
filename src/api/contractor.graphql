@@ -38,6 +38,14 @@ query GetAssignedContractors {
   }
 }
 
+query GetDisplayedContractors {
+  contractors {
+    data {
+      ...ContractorOption
+    }
+  }
+}
+
 mutation CreateContractor($data: WriteContractorInput!) {
   createContractor(data: $data) {
     message

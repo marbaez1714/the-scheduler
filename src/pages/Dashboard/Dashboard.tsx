@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useDebounce } from 'usehooks-ts';
 
-import { useGetAssignedContractorsQuery } from 'src/api';
+import {
+  useGetAssignedContractorsQuery,
+  useGetContractorsQuery,
+} from 'src/api';
 import { Button } from 'src/components/Button';
 import { Collapsable } from 'src/components/Collapsable';
 import { toast } from 'react-hot-toast';
@@ -13,6 +16,11 @@ import { Toggle } from 'src/components/Toggle';
 import { localStorageKeys } from 'src/utils/localStorage';
 import { UNASSIGNED } from './utils';
 import { ContractorTable } from './types';
+import { useReactiveVar } from '@apollo/client';
+import {
+  dashboardAddressFilterVar,
+  dashboardContractorFilterVar,
+} from 'src/utils/reactiveVariables';
 
 const Dashboard = () => {
   /******************************/
@@ -27,16 +35,19 @@ const Dashboard = () => {
   /* State                      */
   /******************************/
   const [contractors, setContractors] = useState<ContractorTable[]>([]);
-  const [contractorFilterTerm, setContractorFilterTerm] = useState('');
-  const [addressFilterTerm, setAddressFilterTerm] = useState('');
-  const debouncedFilterTerm = useDebounce(addressFilterTerm);
+  const dashboardAddressFilter = useReactiveVar(dashboardAddressFilterVar);
+  const dashboardContractorFilter = useReactiveVar(
+    dashboardContractorFilterVar
+  );
+
+  const debouncedFilterTerm = useDebounce(dashboardAddressFilter);
 
   /******************************/
   /* Data                       */
   /******************************/
 
-  const { loading } = useGetAssignedContractorsQuery({
-    onCompleted: ({ assignedContractors }) => {
+  const { loading } = useGetContractorsQuery({
+    onCompleted: ({ contractors }) => {
       // Get the previous state
       let prevState: Record<string, { visible: boolean; open: boolean }> = {};
       try {
@@ -47,7 +58,7 @@ const Dashboard = () => {
         toast.error('Unable to get previous state');
       }
 
-      const formattedContractors = assignedContractors.data.map((item) => ({
+      const formattedContractors = contractors.data.map((item) => ({
         ...item,
         ...prevState[item.id],
       }));
@@ -123,13 +134,13 @@ const Dashboard = () => {
   const handleAddressFilterTermChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setAddressFilterTerm(e.target.value);
+    dashboardAddressFilterVar(e.target.value);
   };
 
   const handleContractorFilterTermChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setContractorFilterTerm(e.target.value);
+    dashboardContractorFilterVar(e.target.value);
   };
 
   /******************************/
@@ -138,16 +149,16 @@ const Dashboard = () => {
   const visibleContractors = useMemo(() => {
     const visible = contractors.filter((contractor) => contractor.visible);
 
-    if (contractorFilterTerm) {
+    if (dashboardContractorFilter) {
       return visible.filter((contractor) =>
         contractor.name
           .toLocaleLowerCase()
-          .includes(contractorFilterTerm.toLocaleLowerCase())
+          .includes(dashboardContractorFilter.toLocaleLowerCase())
       );
     }
 
     return visible;
-  }, [contractors, contractorFilterTerm]);
+  }, [contractors, dashboardContractorFilter]);
 
   /******************************/
   /* Render                     */
@@ -168,14 +179,14 @@ const Dashboard = () => {
                 <TextInput
                   label="Address Filter"
                   placeholder="Filter all addresses"
-                  value={addressFilterTerm}
+                  value={dashboardAddressFilter}
                   onChange={handleAddressFilterTermChange}
                 />
                 {/* Contractor */}
                 <TextInput
                   label="Contractor Filter"
                   placeholder="Filter contractors"
-                  value={contractorFilterTerm}
+                  value={dashboardContractorFilter}
                   onChange={handleContractorFilterTermChange}
                 />
               </div>
