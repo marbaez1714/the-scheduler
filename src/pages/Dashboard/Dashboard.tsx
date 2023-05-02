@@ -57,11 +57,22 @@ const Dashboard = () => {
       } catch {
         toast.error('Unable to get previous state');
       }
+      const formattedContractors = contractors.data
+        .map((item) => ({
+          ...item,
+          ...prevState[item.id],
+        }))
+        .sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
 
-      const formattedContractors = contractors.data.map((item) => ({
-        ...item,
-        ...prevState[item.id],
-      }));
+      console.log(formattedContractors);
 
       setContractors([
         { ...UNASSIGNED, ...prevState[''] },
