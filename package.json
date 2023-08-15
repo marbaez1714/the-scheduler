@@ -59,6 +59,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@graphql-codegen/cli": "2.11.3",
     "@graphql-codegen/fragment-matcher": "3.3.0",
     "@graphql-codegen/typescript": "2.7.2",
