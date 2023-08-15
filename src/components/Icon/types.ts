@@ -1,4 +1,5 @@
-export interface IconProps extends React.ComponentProps<'svg'> {
+export interface IconProps {
+  className?: string;
   icon:
     | 'complete'
     | 'dashboard'
