@@ -108,7 +108,6 @@ const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
                     'focus-ring h-12 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light pl-4 pr-12 shadow-inner disabled:bg-app-medium/50',
                     className
                   )}
-                  value={value ?? undefined}
                   onBlur={handleInputBlur}
                   onChange={handleInputChange}
                   displayValue={getDisplayedValue}
