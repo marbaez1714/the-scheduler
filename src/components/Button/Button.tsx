@@ -2,12 +2,12 @@ import { ArrowPathIcon } from '@heroicons/react/24/solid';
 import cn from 'classnames';
 
 import { ButtonProps } from './types';
+import { Icon } from '../Icon';
 
-const Button = ({
+export const Button = ({
   children,
-  title,
-  leftRender,
-  rightRender,
+  leftIcon,
+  rightIcon,
   className,
   variant = 'filled',
   size = 'medium',
@@ -26,18 +26,18 @@ const Button = ({
         'focus-ring relative flex scale-100 items-center justify-center rounded font-bold uppercase tracking-wider text-app transition-all active:scale-95',
         size === 'small' && {
           'h-8 text-sm': true,
-          'pl-6': !leftRender,
-          'pr-6': !rightRender,
+          'pl-6': !leftIcon,
+          'pr-6': !rightIcon,
         },
         size === 'medium' && {
           'h-10': true,
-          'pl-8': !leftRender,
-          'pr-8': !rightRender,
+          'pl-8': !leftIcon,
+          'pr-8': !rightIcon,
         },
         size === 'large' && {
           'h-12 text-lg': true,
-          'pl-10': !leftRender,
-          'pr-10': !rightRender,
+          'pl-10': !leftIcon,
+          'pr-10': !rightIcon,
         },
         { 'bg-transparent hover:underline': variant === 'text' },
         {
@@ -60,7 +60,8 @@ const Button = ({
       {...rest}
     >
       {loading ? (
-        <ArrowPathIcon
+        <Icon
+          icon="loading"
           className={cn('animate-spin', {
             'h-6 w-6': size === 'small' || size === 'medium',
             'h-8 w-8': size === 'large',
@@ -71,39 +72,37 @@ const Button = ({
           {/******************************/}
           {/* Left                       */}
           {/******************************/}
-          {leftRender && (
-            <div
+          {leftIcon && (
+            <Icon
+              icon={leftIcon}
               className={cn({
                 'mx-2 h-2 w-2': size === 'small',
                 'mx-2 h-4 w-4': size === 'medium',
                 'mx-2 h-6 w-6': size === 'large',
               })}
-            >
-              {leftRender}
-            </div>
+            />
           )}
+
           {/******************************/}
           {/* Children                   */}
           {/******************************/}
-          {children || title}
+          {children}
           {/******************************/}
           {/* Right                      */}
           {/******************************/}
-          {rightRender && (
-            <div
+
+          {rightIcon && (
+            <Icon
+              icon={rightIcon}
               className={cn({
                 'mx-2 h-2 w-2': size === 'small',
                 'mx-2 h-4 w-4': size === 'medium',
                 'mx-2 h-6 w-6': size === 'large',
               })}
-            >
-              {rightRender}
-            </div>
+            />
           )}
         </>
       )}
     </button>
   );
 };
-
-export default Button;

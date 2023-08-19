@@ -143,10 +143,9 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
               size="small"
               className={cn({ '!bg-app-warn line-through': item.delete })}
               key={`${item.orderNumber}-${item.supplierId}-${index}`}
-              rightRender={item.delete ? <XMarkIcon /> : <TrashIcon />}
+              rightIcon={item.delete ? 'remove' : 'trash'}
               onClick={(e) => handleMarkForDelete(e, item.id)}
-              title={`${item.orderNumber} - ${supplierMap[item.supplierId]}`}
-            />
+            >{`${item.orderNumber} - ${supplierMap[item.supplierId]}`}</Button>
           )
         )}
       </Transition>
@@ -168,10 +167,9 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
           <Button
             size="small"
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
-            rightRender={<TrashIcon />}
+            rightIcon="trash"
             onClick={(e) => handleRemoveItem(e, item)}
-            title={`${item.orderNumber} - ${supplierMap[item.supplierId]}`}
-          />
+          >{`${item.orderNumber} - ${supplierMap[item.supplierId]}`}</Button>
         ))}
       </Transition>
     </div>

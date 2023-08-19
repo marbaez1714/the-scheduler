@@ -113,12 +113,11 @@ export const FormLineItemInput = <TFields extends FieldValues>({
           <Button
             size="small"
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
-            rightRender={<TrashIcon />}
+            rightIcon="trash"
             onClick={(e) => handleRemoveItem(e, index)}
-            title={`${index + 1}. ${item.orderNumber} - ${
-              supplierMap[item.supplierId]
-            }`}
-          />
+          >{`${index + 1}. ${item.orderNumber} - ${
+            supplierMap[item.supplierId]
+          }`}</Button>
         ))}
       </Transition>
     </div>

@@ -19,6 +19,9 @@ import {
   TruckIcon,
   MapPinIcon,
   CreditCardIcon,
+  XMarkIcon,
+  TrashIcon,
+  ArrowPathIcon,
 } from '@heroicons/react/24/solid';
 
 export const iconMap = {
@@ -42,4 +45,9 @@ export const iconMap = {
   reporter: EyeIcon,
   scope: MagnifyingGlassIcon,
   supplier: TruckIcon,
+  remove: XMarkIcon,
+  trash: TrashIcon,
+  loading: ArrowPathIcon,
 };
+
+export const iconNames = Object.keys(iconMap) as (keyof typeof iconMap)[];
