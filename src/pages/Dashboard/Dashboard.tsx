@@ -72,8 +72,6 @@ const Dashboard = () => {
           return 0;
         });
 
-      console.log(formattedContractors);
-
       setContractors([
         { ...UNASSIGNED, ...prevState[''] },
         ...formattedContractors,
