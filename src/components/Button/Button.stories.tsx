@@ -1,28 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+import { Button as ButtonComponent } from './Button';
 
-//#region Types
+//#region - Types
 
-type ButtonMeta = Meta<typeof Button>;
-type ButtonStoryObj = StoryObj<typeof Button>;
+type ButtonMeta = Meta<typeof ButtonComponent>;
+type ButtonStoryObj = StoryObj<typeof ButtonComponent>;
 
 //#endregion
-//#region Stories
+//#region - Meta
 
-// Create the meta
 const meta: ButtonMeta = {
-  component: Button,
+  component: ButtonComponent,
   tags: ['autodocs'],
   args: { children: 'Button' },
 };
 
-// Create the template
-const Example: ButtonStoryObj = {};
+export default meta;
 
 //#endregion
-//#region Exports
+//#region - Stories
 
-export default meta;
-export { Example };
+export const Button: ButtonStoryObj = {};
 
 //#endregion

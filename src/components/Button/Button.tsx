@@ -1,108 +1,83 @@
-import { ArrowPathIcon } from '@heroicons/react/24/solid';
-import cn from 'classnames';
-
+import { forwardRef } from 'react';
 import { ButtonProps } from './types';
 import { Icon } from '../Icon';
+import cn from 'classnames';
 
-export const Button = ({
-  children,
-  leftIcon,
-  rightIcon,
-  className,
-  variant = 'filled',
-  size = 'medium',
-  loading,
-  rounded,
-  ...rest
-}: ButtonProps) => {
-  /******************************/
-  /* Render                     */
-  /******************************/
+//#region - Component
 
-  return (
-    <button
-      tabIndex={0}
-      className={cn(
-        'focus-ring relative flex scale-100 items-center justify-center rounded font-bold uppercase tracking-wider text-app transition-all active:scale-95',
-        size === 'small' && {
-          'h-8 text-sm': true,
-          'pl-6': !leftIcon,
-          'pr-6': !rightIcon,
-        },
-        size === 'medium' && {
-          'h-10': true,
-          'pl-8': !leftIcon,
-          'pr-8': !rightIcon,
-        },
-        size === 'large' && {
-          'h-12 text-lg': true,
-          'pl-10': !leftIcon,
-          'pr-10': !rightIcon,
-        },
-        { 'bg-transparent hover:underline': variant === 'text' },
-        {
-          'bg-transparent text-app-altText hover:underline': variant === 'text',
-        },
-        {
-          'bg-app text-app-altText shadow hover:bg-app-dark':
-            variant === 'filled',
-        },
-        {
-          'bg-app-light shadow hover:bg-app-medium': variant === 'filled-light',
-        },
-        {
-          'border-2 border-app bg-app-light shadow hover:bg-app-medium':
-            variant === 'outline',
-        },
-        { 'rounded-full': rounded },
-        className
-      )}
-      {...rest}
-    >
-      {loading ? (
-        <Icon
-          icon="loading"
-          className={cn('animate-spin', {
-            'h-6 w-6': size === 'small' || size === 'medium',
-            'h-8 w-8': size === 'large',
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      variant = 'filled',
+      size = 'medium',
+      children,
+      leftIcon,
+      rightIcon,
+      className,
+      loading,
+      rounded,
+      ...rest
+    },
+    forwardRef
+  ) => {
+    //#region - Render
+
+    return (
+      <button
+        ref={forwardRef}
+        className={cn(
+          'focus-ring relative flex scale-100 flex-row items-center justify-between rounded font-bold uppercase tracking-wider active:scale-95',
+          { 'rounded-full': rounded, rounded: !rounded },
+          { 'animate-pulse ': loading },
+          {
+            'h-8 text-sm': size === 'small',
+            'h-10': size === 'medium',
+            'h-12 text-lg': size === 'large',
+          },
+          {
+            'bg-transparent text-app-altText hover:underline':
+              variant === 'text',
+            'bg-transparent text-app hover:underline': variant === 'text-light',
+            'bg-app text-app-altText shadow hover:bg-app-dark':
+              variant === 'filled',
+            'bg-app-light text-app shadow hover:bg-app-medium':
+              variant === 'filled-light',
+            'border-2 border-app bg-app-light text-app shadow hover:bg-app-medium':
+              variant === 'outline',
+          },
+          className
+        )}
+        {...rest}
+      >
+        {/* Left Icon */}
+        <div
+          className={cn({
+            'px-2': size === 'small',
+            'px-4': size === 'medium',
+            'px-5': size === 'large',
           })}
-        />
-      ) : (
-        <>
-          {/******************************/}
-          {/* Left                       */}
-          {/******************************/}
-          {leftIcon && (
-            <Icon
-              icon={leftIcon}
-              className={cn({
-                'mx-2 h-2 w-2': size === 'small',
-                'mx-2 h-4 w-4': size === 'medium',
-                'mx-2 h-6 w-6': size === 'large',
-              })}
-            />
-          )}
+        >
+          {leftIcon && <Icon className="h-4" icon={leftIcon} />}
+        </div>
 
-          {/******************************/}
-          {/* Children                   */}
-          {/******************************/}
-          {children}
-          {/******************************/}
-          {/* Right                      */}
-          {/******************************/}
+        {/* Content */}
+        {children}
 
-          {rightIcon && (
-            <Icon
-              icon={rightIcon}
-              className={cn({
-                'mx-2 h-2 w-2': size === 'small',
-                'mx-2 h-4 w-4': size === 'medium',
-                'mx-2 h-6 w-6': size === 'large',
-              })}
-            />
-          )}
-        </>
-      )}
-    </button>
-  );
-};
+        {/* Right Icon */}
+        <div
+          className={cn({
+            'px-2': size === 'small',
+            'px-4': size === 'medium',
+            'px-5': size === 'large',
+          })}
+        >
+          {rightIcon && <Icon className="h-4" icon={rightIcon} />}
+        </div>
+      </button>
+    );
+
+    //#endregion
+  }
+);
+
+//#endregion

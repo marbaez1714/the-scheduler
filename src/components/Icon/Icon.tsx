@@ -1,15 +1,15 @@
 import { iconMap } from './utils';
 import { IconProps } from './types';
 
-//#region Component
+//#region - Component
 
 export const Icon = ({ icon, className }: IconProps) => {
-  //#region Constants
+  //#region - Constants
 
   const IconComponent = iconMap[icon];
 
   //#endregion
-  //#region Render
+  //#region - Render
 
   return <IconComponent className={className} />;
 

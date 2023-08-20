@@ -1,28 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Icon } from './Icon';
+import { Icon as IconComponent } from './Icon';
 
-//#region Types
+//#region - Types
 
-type IconMeta = Meta<typeof Icon>;
-type IconStoryObj = StoryObj<typeof Icon>;
+type IconMeta = Meta<typeof IconComponent>;
+type IconStoryObj = StoryObj<typeof IconComponent>;
 
 //#endregion
-//#region Stories
+//#region - Meta
 
-// Create the meta
 const meta: IconMeta = {
-  component: Icon,
+  component: IconComponent,
   tags: ['autodocs'],
   args: { className: 'h-10', icon: 'address' },
 };
 
-// Create the template
-const Example: IconStoryObj = {};
+export default meta;
 
 //#endregion
-//#region Exports
+//#region - Stories
 
-export default meta;
-export { Example };
+export const Icon: IconStoryObj = {};
 
 //#endregion
