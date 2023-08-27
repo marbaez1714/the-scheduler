@@ -12,10 +12,7 @@ export const InputLabel = ({
   //#region - Render
 
   return (
-    <label
-      className={cn('mb-2 block font-medium text-app-dark', className)}
-      {...rest}
-    >
+    <label className={cn('font-medium text-app-dark', className)} {...rest}>
       {children}
       {required && <span className="ml-1 font-bold text-app-error">*</span>}
     </label>
