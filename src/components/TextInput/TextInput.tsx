@@ -5,8 +5,9 @@ import cn from 'classnames';
 import { maskMap, placeholderMap } from 'src/utils/forms';
 import { TextInputProps } from './types';
 import { Icon } from '../Icon';
+import { InputLabel } from '../InputLabel';
 
-const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       label,
@@ -20,7 +21,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       icon,
       ...rest
     },
-    ref
+    forwardedRef
   ) => {
     /******************************/
     /* Render                     */
@@ -39,12 +40,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         )}
         <div className="flex w-full flex-col">
           {label && (
-            <label className="components-input-label" htmlFor={name}>
+            <InputLabel htmlFor={name} required={required}>
               {label}
-              {required && (
-                <span className="ml-1 font-bold text-app-error">*</span>
-              )}
-            </label>
+            </InputLabel>
           )}
           <div className="flex">
             <InputComponent
@@ -55,7 +53,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
               name={name}
               placeholder={placeholder || (mask && placeholderMap[mask])}
               mask={mask ? maskMap[mask] : ''}
-              ref={ref}
+              ref={forwardedRef}
               value={value ?? ''}
               {...rest}
             />
@@ -69,5 +67,3 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     );
   }
 );
-
-export default TextInput;
