@@ -3,51 +3,57 @@ import DatePicker, { ReactDatePicker } from 'react-datepicker';
 import cn from 'classnames';
 
 import { DateInputProps } from './types';
-import { CalendarDaysIcon } from '@heroicons/react/24/solid';
+import { InputLabel } from '../InputLabel';
+import { Icon } from '../Icon';
 
-const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
-  ({ label, className, required, errorMessage, name, ...rest }, ref) => {
-    /******************************/
-    /* Data                       */
-    /******************************/
+//#region - Component
 
-    /******************************/
-    /* Render                     */
-    /******************************/
+export const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
+  (
+    { label, className, required, errorMessage, name, ...rest },
+    forwardedRef
+  ) => {
+    //#region - Render
+
     return (
-      <div className="flex flex-grow">
-        <div className="h-12 w-12 self-end p-2 text-app">
-          <CalendarDaysIcon />
-        </div>
-        <div className="w-full">
-          {label && (
-            <label className="components-input-label" htmlFor={name}>
-              {label}
-              {required && (
-                <span className="ml-1 font-bold text-app-error">*</span>
-              )}
-            </label>
-          )}
+      <div className={cn('flex flex-grow flex-col', className)}>
+        {/* Label */}
+        {label && (
+          <InputLabel className="self-start" htmlFor={name} required={required}>
+            {label}
+          </InputLabel>
+        )}
 
-          <div className="flex items-center">
-            <DatePicker
-              className={cn(
-                'focus-ring h-12 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light px-4 text-app-text shadow-inner',
-                className
-              )}
-              name={name}
-              ref={ref}
-              {...rest}
-            />
-          </div>
+        {/* Input Wrapper */}
+        <div className="relative flex w-full flex-grow self-start">
+          {/* Icon */}
+          <Icon
+            className="absolute z-10 ml-0.5 h-10 w-10 flex-shrink-0 p-2 text-app-medium"
+            icon="calendar"
+          />
 
-          {!!errorMessage && (
-            <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
+          {/* Input */}
+          <DatePicker
+            className="focus-ring box-border h-10 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light pl-10 pr-2 text-app-text shadow-inner"
+            wrapperClassName="w-full"
+            name={name}
+            ref={forwardedRef}
+            required={required}
+            {...rest}
+          />
+
+          {/* Error Message */}
+          {errorMessage && (
+            <p className="absolute top-full ml-1 mt-1 text-xs text-app-error">
+              {errorMessage}
+            </p>
           )}
         </div>
       </div>
     );
+
+    //#endregion
   }
 );
 
-export default DateInput;
+//#endregion

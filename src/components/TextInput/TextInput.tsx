@@ -38,10 +38,10 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     //#region - Render
 
     return (
-      <div className={cn('flex w-full flex-col', className)}>
+      <div className={cn('flex flex-grow flex-col', className)}>
         {/* Label */}
         {label && (
-          <InputLabel htmlFor={name} required={required}>
+          <InputLabel className="self-start" htmlFor={name} required={required}>
             {label}
           </InputLabel>
         )}
@@ -51,14 +51,14 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           {/* Icon */}
           {icon && (
             <Icon
-              className="absolute ml-0.5 h-10 w-10 flex-shrink-0 p-2 text-app opacity-75"
+              className="absolute ml-0.5 h-10 w-10 flex-shrink-0 p-2 text-app-medium"
               icon={icon}
             />
           )}
           {/* Input */}
           <InputComponent
             className={cn(
-              'focus-ring box-border h-10 w-full text-ellipsis rounded border-2 bg-app-light pr-2 text-app-text shadow-inner',
+              'focus-ring box-border h-10 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light pr-2 text-app-text shadow-inner',
               { 'pl-10': icon, 'pl-2': !icon }
             )}
             name={name}
@@ -76,9 +76,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           )}
         </div>
       </div>
-
-      //#endregion
     );
+
+    //#endregion
   }
 );
 
