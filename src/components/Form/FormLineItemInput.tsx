@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
-import { PlusCircleIcon } from '@heroicons/react/24/solid';
 
 import { CreateLineItemLegacyInput } from 'src/api';
 import { AutocompleteInput } from '../AutocompleteInput';
