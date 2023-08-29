@@ -1,5 +1,4 @@
 import { IconProps } from '../Icon';
-import { InputOption } from '../types';
 
 export interface AutocompleteInputProps {
   label?: string;
@@ -7,7 +6,7 @@ export interface AutocompleteInputProps {
   errorMessage?: string;
   className?: string;
   placeholder?: string;
-  options: InputOption[];
+  options: { label: string; value: string }[];
   value: string | null;
   name?: string;
   disabled?: boolean;
