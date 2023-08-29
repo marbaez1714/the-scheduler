@@ -1,10 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useDebounce } from 'usehooks-ts';
 
-import {
-  useGetAssignedContractorsQuery,
-  useGetContractorsQuery,
-} from 'src/api';
+import { useGetContractorsQuery } from 'src/api';
 import { Button } from 'src/components/Button';
 import { Collapsable } from 'src/components/Collapsable';
 import { toast } from 'react-hot-toast';
@@ -71,8 +68,6 @@ const Dashboard = () => {
           }
           return 0;
         });
-
-      console.log(formattedContractors);
 
       setContractors([
         { ...UNASSIGNED, ...prevState[''] },
