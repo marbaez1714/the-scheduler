@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { rankItem } from '@tanstack/match-sorter-utils';
 import cn from 'classnames';
 import {
@@ -127,7 +127,7 @@ const Table = <TData extends Record<string, unknown>>({
     return (
       <th
         className={cn(
-          'relative h-10 px-3 py-2 text-xs font-medium uppercase transition-all first:pl-4 last:pr-4',
+          'relative h-10 py-2 px-3 text-xs font-medium uppercase transition-all first:pl-4 last:pr-4',
           {
             'cursor-pointer select-none pr-9 hover:bg-app-dark': canSort,
             'bg-app-dark': isSorted,
@@ -140,7 +140,7 @@ const Table = <TData extends Record<string, unknown>>({
           <>
             {flexRender(h.column.columnDef.header, h.getContext())}
             {!!sortDirection && (
-              <div className="y-6 absolute right-2 top-0 flex h-full w-4 items-center">
+              <div className="y-6 absolute top-0 right-2 flex h-full w-4 items-center">
                 {sortDirection === 'asc' && <ChevronDownIcon />}
                 {sortDirection === 'desc' && <ChevronUpIcon />}
               </div>
@@ -187,7 +187,7 @@ const Table = <TData extends Record<string, unknown>>({
   return (
     <div className="flex max-h-full w-full flex-col overflow-hidden rounded shadow">
       {headerRender && (
-        <div className="gradient-br-app border-b border-b-app-medium px-6 py-4">
+        <div className="border-b border-b-app-medium gradient-br-app px-6 py-4">
           {headerRender}
         </div>
       )}

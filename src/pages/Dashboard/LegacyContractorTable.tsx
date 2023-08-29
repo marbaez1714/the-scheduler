@@ -51,7 +51,7 @@ export const LegacyContractorTable = ({
   /******************************/
   /* Data                       */
   /******************************/
-  const { data, refetch } = useGetJobsLegacyByContractorIdQuery({
+  const { data, loading, refetch } = useGetJobsLegacyByContractorIdQuery({
     variables: {
       contractorId: contractor.id,
       pagination,

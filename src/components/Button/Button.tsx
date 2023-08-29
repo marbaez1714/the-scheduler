@@ -1,99 +1,109 @@
-import { forwardRef } from 'react';
-import { ButtonProps } from './types';
-import { Icon } from '../Icon';
+import { ArrowPathIcon } from '@heroicons/react/24/solid';
 import cn from 'classnames';
 
-//#region - Component
+import { ButtonProps } from './types';
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      variant = 'filled',
-      size = 'medium',
-      children,
-      leftIcon,
-      rightIcon,
-      className,
-      loading,
-      rounded,
-      ...rest
-    },
-    forwardRef
-  ) => {
-    //#region - Render
+const Button = ({
+  children,
+  title,
+  leftRender,
+  rightRender,
+  className,
+  variant = 'filled',
+  size = 'medium',
+  loading,
+  rounded,
+  ...rest
+}: ButtonProps) => {
+  /******************************/
+  /* Render                     */
+  /******************************/
 
-    return (
-      <button
-        ref={forwardRef}
-        className={cn(
-          'focus-ring flex scale-100 flex-row items-center justify-between rounded font-bold uppercase tracking-wider active:scale-95',
-          { 'rounded-full': rounded },
-          { 'animate-pulse ': loading },
-          {
-            'h-8 text-sm': size === 'small',
-            'pl-4': !leftIcon && size === 'small',
-            'pr-4': !rightIcon && size === 'small',
-          },
-          {
-            'h-10': size === 'medium',
-            'pl-8': !leftIcon && size === 'medium',
-            'pr-8': !rightIcon && size === 'medium',
-          },
-          {
-            'h-12 text-lg': size === 'large',
-            'pl-10': !leftIcon && size === 'large',
-            'pr-10': !rightIcon && size === 'large',
-          },
-          {
-            'bg-transparent text-app hover:underline': variant === 'text',
-            'bg-transparent text-app-altText hover:underline':
-              variant === 'text-light',
-            'bg-app text-app-altText shadow hover:bg-app-dark':
-              variant === 'filled',
-            'bg-app-light text-app shadow hover:bg-app-medium':
-              variant === 'filled-light',
-            'border-2 border-app bg-app-light text-app shadow hover:bg-app-medium':
-              variant === 'outline',
-          },
-          {
-            'pl-0': leftIcon,
-            'pr-0': rightIcon,
-          },
-          className
-        )}
-        {...rest}
-      >
-        {/* Left Icon */}
-        {leftIcon && (
-          <Icon
-            className={cn('h-4', {
-              'mx-2': size === 'small',
-              'mx-4': size === 'medium',
-              'mx-5': size === 'large',
-            })}
-            icon={leftIcon}
-          />
-        )}
+  return (
+    <button
+      tabIndex={0}
+      className={cn(
+        'focus-ring relative flex scale-100 items-center justify-center rounded font-bold uppercase tracking-wider text-app transition-all active:scale-95',
+        size === 'small' && {
+          'h-8 text-sm': true,
+          'pl-6': !leftRender,
+          'pr-6': !rightRender,
+        },
+        size === 'medium' && {
+          'h-10': true,
+          'pl-8': !leftRender,
+          'pr-8': !rightRender,
+        },
+        size === 'large' && {
+          'h-12 text-lg': true,
+          'pl-10': !leftRender,
+          'pr-10': !rightRender,
+        },
+        { 'bg-transparent hover:underline': variant === 'text' },
+        {
+          'bg-transparent text-app-altText hover:underline': variant === 'text',
+        },
+        {
+          'bg-app text-app-altText shadow hover:bg-app-dark':
+            variant === 'filled',
+        },
+        {
+          'bg-app-light shadow hover:bg-app-medium': variant === 'filled-light',
+        },
+        {
+          'border-2 border-app bg-app-light shadow hover:bg-app-medium':
+            variant === 'outline',
+        },
+        { 'rounded-full': rounded },
+        className
+      )}
+      {...rest}
+    >
+      {loading ? (
+        <ArrowPathIcon
+          className={cn('animate-spin', {
+            'h-6 w-6': size === 'small' || size === 'medium',
+            'h-8 w-8': size === 'large',
+          })}
+        />
+      ) : (
+        <>
+          {/******************************/}
+          {/* Left                       */}
+          {/******************************/}
+          {leftRender && (
+            <div
+              className={cn({
+                'mx-2 h-2 w-2': size === 'small',
+                'mx-2 h-4 w-4': size === 'medium',
+                'mx-2 h-6 w-6': size === 'large',
+              })}
+            >
+              {leftRender}
+            </div>
+          )}
+          {/******************************/}
+          {/* Children                   */}
+          {/******************************/}
+          {children || title}
+          {/******************************/}
+          {/* Right                      */}
+          {/******************************/}
+          {rightRender && (
+            <div
+              className={cn({
+                'mx-2 h-2 w-2': size === 'small',
+                'mx-2 h-4 w-4': size === 'medium',
+                'mx-2 h-6 w-6': size === 'large',
+              })}
+            >
+              {rightRender}
+            </div>
+          )}
+        </>
+      )}
+    </button>
+  );
+};
 
-        {/* Content */}
-        {children}
-
-        {/* Right Icon */}
-        {rightIcon && (
-          <Icon
-            className={cn('h-4', {
-              'mx-2': size === 'small',
-              'mx-4': size === 'medium',
-              'mx-5': size === 'large',
-            })}
-            icon={rightIcon}
-          />
-        )}
-      </button>
-    );
-
-    //#endregion
-  }
-);
-
-//#endregion
+export default Button;
