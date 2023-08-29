@@ -1,9 +1,11 @@
 import { InputHTMLAttributes } from 'react';
 import { IconProps } from '../Icon';
 
-export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  errorMessage?: string;
+import { InputProps } from '../types';
+
+export interface TextInputProps
+  extends InputHTMLAttributes<HTMLInputElement>,
+    InputProps {
   mask?: 'phone';
   icon?: IconProps['icon'];
 }

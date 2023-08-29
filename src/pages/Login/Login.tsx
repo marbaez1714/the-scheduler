@@ -26,10 +26,8 @@ const Login = () => {
   // JSX
   return (
     <div className="flex h-screen w-screen flex-grow items-center justify-center">
-      <Button onClick={handleLoginClick}>Auth0 Login</Button>
-      <Button onClick={handleLogoutClick} variant="text">
-        Logout
-      </Button>
+      <Button title="Auth0 Login" onClick={handleLoginClick} />
+      <Button title="Logout" onClick={handleLogoutClick} variant="text" />
     </div>
   );
 };

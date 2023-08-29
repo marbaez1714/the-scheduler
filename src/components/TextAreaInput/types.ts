@@ -1,5 +1,6 @@
-export interface TextAreaInputProps
-  extends React.InputHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-  errorMessage?: string;
-}
+import { InputHTMLAttributes } from 'react';
+
+import { InputProps } from '../types';
+
+export type TextAreaInputProps = InputHTMLAttributes<HTMLTextAreaElement> &
+  InputProps;

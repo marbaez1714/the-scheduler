@@ -1,6 +1,5 @@
 import { ReactDatePickerProps } from 'react-datepicker';
 
-export interface DateInputProps extends ReactDatePickerProps {
-  label?: string;
-  errorMessage?: string;
-}
+import { InputProps } from '../types';
+
+export type DateInputProps = ReactDatePickerProps & InputProps;

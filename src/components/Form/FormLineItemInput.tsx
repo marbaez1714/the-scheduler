@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
+import { PlusCircleIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 import { CreateLineItemLegacyInput } from 'src/api';
 import { AutocompleteInput } from '../AutocompleteInput';
@@ -8,7 +9,6 @@ import { TextInput } from '../TextInput';
 import { FormLineItemInputProps } from './types';
 import { Button } from '../Button';
 import { Transition } from '@headlessui/react';
-import { InputLabel } from '../InputLabel';
 
 export const FormLineItemInput = <TFields extends FieldValues>({
   suppliers,
@@ -62,39 +62,46 @@ export const FormLineItemInput = <TFields extends FieldValues>({
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       {/******************************/}
       {/* Inputs                     */}
       {/******************************/}
-      <InputLabel>{label}</InputLabel>
-      <div className="flex items-center justify-between gap-4">
-        <TextInput
-          placeholder="Order #"
-          value={orderNumber}
-          onChange={(e) => setOrderNumber(e.target.value)}
-          icon="orderNumber"
-        />
-        <AutocompleteInput
-          placeholder="Supplier"
-          options={suppliers}
-          value={supplierId}
-          onChange={setSupplierId}
-          icon="supplier"
-        />
-        <IconButton
-          onClick={handleAdd}
-          type="button"
-          variant="text"
-          disabled={!orderNumber || !supplierId}
-          icon="plusCircle"
-        />
+      <label className="font-medium text-app-dark">{label}</label>
+      <div className="flex justify-between">
+        <div className="mr-4 w-1/2 basis-1/2">
+          <TextInput
+            placeholder="Order #"
+            value={orderNumber}
+            onChange={(e) => setOrderNumber(e.target.value)}
+            icon="orderNumber"
+          />
+        </div>
+        <div className="flex w-1/2">
+          <AutocompleteInput
+            placeholder="Supplier"
+            options={suppliers}
+            value={supplierId}
+            onChange={setSupplierId}
+            icon="supplier"
+            className="mr-2"
+          />
+          <IconButton
+            onClick={handleAdd}
+            type="button"
+            variant="text"
+            size="large"
+            disabled={!orderNumber || !supplierId}
+          >
+            <PlusCircleIcon />
+          </IconButton>
+        </div>
       </div>
       {/******************************/}
       {/* Line Items                 */}
       {/******************************/}
       <Transition
         show={!!value.length}
-        className="mt-4 flex flex-wrap gap-2 rounded bg-app-medium/50 p-4 shadow-inner transition-all"
+        className="flex flex-wrap gap-2 rounded bg-app-medium/50 p-4 shadow-inner transition-all"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leaveFrom="opacity-100"
@@ -104,12 +111,14 @@ export const FormLineItemInput = <TFields extends FieldValues>({
 
         {value.map((item: CreateLineItemLegacyInput, index: number) => (
           <Button
+            size="small"
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
-            leftIcon="trash"
+            rightRender={<TrashIcon />}
             onClick={(e) => handleRemoveItem(e, index)}
-          >
-            {item.orderNumber} - {supplierMap[item.supplierId]}
-          </Button>
+            title={`${index + 1}. ${item.orderNumber} - ${
+              supplierMap[item.supplierId]
+            }`}
+          />
         ))}
       </Transition>
     </div>

@@ -1,16 +1,12 @@
 import { useState, useMemo, forwardRef } from 'react';
 import { Combobox } from '@headlessui/react';
 import cn from 'classnames';
+import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import { AutocompleteInputProps } from './types';
 import { Icon } from '../Icon';
 
-//#region - Component
-
-export const AutocompleteInput = forwardRef<
-  HTMLInputElement,
-  AutocompleteInputProps
->(
+const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
   (
     {
       label,
@@ -26,36 +22,33 @@ export const AutocompleteInput = forwardRef<
       disabled,
       icon,
     },
-    forwardedRef
+    ref
   ) => {
-    //#region - State
-
+    /******************************/
+    /* State                      */
+    /******************************/
     const [query, setQuery] = useState('');
 
-    //#endregion
-    //#region - Memos
-
+    /******************************/
+    /* Memos                      */
+    /******************************/
     const filteredOptions = useMemo(() => {
-      if (!query) {
-        return options;
-      }
-
-      return options.filter(({ label }) =>
-        label.toLowerCase().includes(query.toLowerCase())
+      const displayOptions = options.filter((option) =>
+        option.label.toLowerCase().includes(query.toLowerCase())
       );
-    }, [query, options]);
 
-    //#endregion
-    //#region - Callbacks
+      return query ? displayOptions : options;
+    }, [query, options]);
 
     const getDisplayedValue = () => {
       const selectedOption = options.find((option) => option.value === value);
       return selectedOption?.label ?? '';
     };
 
-    const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (
-      e
-    ) => {
+    /******************************/
+    /* Callbacks                  */
+    /******************************/
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(e.target.value);
     };
 
@@ -64,8 +57,8 @@ export const AutocompleteInput = forwardRef<
       setQuery('');
     };
 
-    const handleClearClick: React.MouseEventHandler<HTMLButtonElement> = (
-      e
+    const handleClearClick = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
       e.stopPropagation();
 
@@ -75,103 +68,110 @@ export const AutocompleteInput = forwardRef<
       }
     };
 
-    //#endregion
-    //#region - Render
-
+    /******************************/
+    /* Render                     */
+    /******************************/
     return (
-      <div className={cn('flex flex-grow flex-col', className)}>
-        <Combobox
-          value={value ?? ''}
-          onChange={onChange}
-          name={name}
-          disabled={disabled}
-        >
-          {/* Label */}
-          {label && (
-            <Combobox.Label
-              className="mb-1 self-start font-medium text-app-dark"
-              htmlFor={name}
-            >
-              {label}
-              {required && (
-                <span className="ml-1 font-bold text-app-error">*</span>
-              )}
-            </Combobox.Label>
-          )}
-
-          {/* Input Wrapper */}
-          <div className="relative flex w-full flex-grow self-start">
-            {/* Icon */}
-            {icon && (
-              <Icon
-                className="absolute ml-0.5 h-10 w-10 flex-shrink-0 p-2 text-app-medium"
-                icon={icon}
-              />
-            )}
-
-            {/* Input */}
-            <Combobox.Button className="w-full">
-              <Combobox.Input
-                className={cn(
-                  'focus-ring box-border h-10 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light pr-2 text-app-text shadow-inner',
-                  { 'pl-10': icon, 'pl-2': !icon }
+      <div className="relative flex flex-grow">
+        {icon && (
+          <Icon
+            className="h-12 w-12 flex-shrink-0 self-end p-2 text-app"
+            icon={icon}
+          />
+        )}
+        <div className="flex w-full flex-col">
+          <Combobox
+            value={value ?? ''}
+            onChange={onChange}
+            name={name}
+            disabled={disabled}
+          >
+            {/******************************/}
+            {/* Label                      */}
+            {/******************************/}
+            {label && (
+              <Combobox.Label className="components-input-label">
+                {label}
+                {required && (
+                  <span className="ml-1 font-bold text-app-error">*</span>
                 )}
-                onBlur={handleInputBlur}
-                onChange={handleInputChange}
-                displayValue={getDisplayedValue}
-                placeholder={placeholder ?? 'Select'}
-                ref={forwardedRef}
-              />
-            </Combobox.Button>
-
-            {/* Icon right */}
-            {!disabled && (
-              <button
-                className="absolute right-0 mr-0.5 h-10 w-10 p-3 text-app-dark"
-                onClick={handleClearClick}
-                type="button"
-              >
-                <Icon icon={value ? 'remove' : 'chevronDown'} />
-              </button>
+              </Combobox.Label>
             )}
 
-            {/* Options */}
-            <Combobox.Options className="absolute top-full z-50 mt-1 max-h-48 w-full divide-y overflow-visible overflow-y-scroll rounded border-2 border-app-medium bg-app-light uppercase shadow-2xl">
-              {filteredOptions.length === 0 ? (
-                <li className="px-4 py-3">No results</li>
-              ) : (
-                filteredOptions.map((option) => (
-                  <Combobox.Option
-                    key={option.value}
-                    value={option.value}
-                    className={({ selected, active }) =>
-                      cn(
-                        'cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap px-4 py-3 transition-all hover:bg-app-medium',
-                        {
-                          'bg-app text-app-altText hover:text-app-text':
-                            selected,
-                          'bg-app-medium': active && !selected,
-                        }
-                      )
-                    }
-                  >
-                    {option.label}
-                  </Combobox.Option>
-                ))
+            {/******************************/}
+            {/* Input                      */}
+            {/******************************/}
+            <div className="relative flex items-center">
+              <Combobox.Button className="w-full">
+                <Combobox.Input
+                  className={cn(
+                    'focus-ring h-12 w-full text-ellipsis rounded border-2 border-app-medium bg-app-light pl-4 pr-12 shadow-inner disabled:bg-app-medium/50',
+                    className
+                  )}
+                  onBlur={handleInputBlur}
+                  onChange={handleInputChange}
+                  displayValue={getDisplayedValue}
+                  placeholder={placeholder ?? 'Select'}
+                  ref={ref}
+                />
+              </Combobox.Button>
+              {/******************************/}
+              {/* Clear Button               */}
+              {/******************************/}
+              {!disabled && (
+                <button
+                  className="absolute right-4 h-4 w-4 text-app-dark"
+                  onClick={(e) => handleClearClick(e)}
+                  type="button"
+                >
+                  {value ? <XMarkIcon /> : <ChevronDownIcon />}
+                </button>
               )}
+            </div>
+            {/******************************/}
+            {/* Options                    */}
+            {/******************************/}
+            <Combobox.Options
+              className={cn(
+                'absolute top-full z-50 mt-2 max-h-48 w-96 divide-y overflow-visible overflow-y-scroll rounded border-2 border-app-medium bg-app-light uppercase shadow-2xl',
+                { 'ml-12': icon }
+              )}
+            >
+              {/******************************/}
+              {/* No Results                 */}
+              {/******************************/}
+              {filteredOptions.length === 0 && (
+                <li className="px-4 py-3">No results</li>
+              )}
+              {/******************************/}
+              {/* Select Options             */}
+              {/******************************/}
+              {filteredOptions.map((option) => (
+                <Combobox.Option
+                  key={option.value}
+                  value={option.value}
+                  className={({ selected, active }) =>
+                    cn(
+                      'cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap px-4 py-3 transition-all hover:bg-app-medium',
+                      {
+                        'bg-app text-app-altText hover:text-app-text': selected,
+                        'bg-app-medium': active && !selected,
+                      }
+                    )
+                  }
+                >
+                  {option.label}
+                </Combobox.Option>
+              ))}
             </Combobox.Options>
-          </div>
-
-          {/* Error Message */}
-          {errorMessage && (
-            <p className="ml-1 mt-1 text-xs text-app-error">{errorMessage}</p>
+          </Combobox>
+          {!!errorMessage && (
+            <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
           )}
-        </Combobox>
+        </div>
       </div>
     );
-
-    //#endregion
   }
 );
 
-//#endregion
+export default AutocompleteInput;
