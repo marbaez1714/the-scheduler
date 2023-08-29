@@ -2,38 +2,46 @@ import { forwardRef } from 'react';
 import cn from 'classnames';
 
 import { TextAreaInputProps } from './types';
+import { InputLabel } from '../InputLabel';
 
-const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
-  ({ label, required, name, className, errorMessage, ...rest }, ref) => {
-    /******************************/
-    /* Render                     */
-    /******************************/
+//#region - Component
+
+export const TextAreaInput = forwardRef<
+  HTMLTextAreaElement,
+  TextAreaInputProps
+>(
+  (
+    { label, required, name, className, errorMessage, ...rest },
+    forwardedRef
+  ) => {
+    //#region - Render
+
     return (
-      <div className="flex flex-grow flex-col">
+      <div className={cn('flex flex-grow flex-col', className)}>
+        {/* Label */}
         {label && (
-          <label className="components-input-label" htmlFor={name}>
+          <InputLabel className="self-start" htmlFor={name} required={required}>
             {label}
-            {required && (
-              <span className="ml-1 font-bold text-app-error">*</span>
-            )}
-          </label>
+          </InputLabel>
         )}
 
         <textarea
-          className={cn(
-            'focus-ring h-full w-full rounded border-2 border-app-medium bg-app-light py-3 px-4 shadow-inner',
-            className
-          )}
+          className="focus-ring box-border w-full text-ellipsis rounded border-2 border-app-medium bg-app-light p-2 text-app-text shadow-inner"
           name={name}
-          ref={ref}
+          required={required}
+          ref={forwardedRef}
           {...rest}
         />
-        {!!errorMessage && (
-          <p className="mt-2 text-xs text-app-error">{errorMessage}</p>
+
+        {/* Error Message */}
+        {errorMessage && (
+          <p className="ml-1 mt-1 text-xs text-app-error">{errorMessage}</p>
         )}
       </div>
     );
+
+    //#endregion
   }
 );
 
-export default TextAreaInput;
+//#endregion

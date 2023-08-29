@@ -6,7 +6,8 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "plugin:storybook/recommended"
   ],
   "rules": {
     "@typescript-eslint/no-empty-interface": "warn",

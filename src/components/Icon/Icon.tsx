@@ -1,17 +1,19 @@
+import { useMemo } from 'react';
+import cn from 'classnames';
 import { iconMap } from './utils';
 import { IconProps } from './types';
 
-//#region Component
+//#region - Component
 
 export const Icon = ({ icon, className }: IconProps) => {
-  //#region Constants
+  //#region - Constants
 
-  const IconComponent = iconMap[icon];
+  const IconComponent = useMemo(() => iconMap[icon], [icon]);
 
   //#endregion
-  //#region Render
+  //#region - Render
 
-  return <IconComponent className={className} />;
+  return <IconComponent className={cn('aspect-square', className)} />;
 
   //#endregion
 };

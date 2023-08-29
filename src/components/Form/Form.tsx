@@ -37,10 +37,14 @@ const Form = ({
 
         <div className="flex justify-end space-x-4">
           {!!onClearClick && (
-            <Button variant="text" onClick={onClearClick} title="Clear" />
+            <Button variant="text" onClick={onClearClick}>
+              Clear
+            </Button>
           )}
 
-          <Button type="submit" disabled={!isValid} title="Submit" />
+          <Button type="submit" disabled={!isValid}>
+            Submit
+          </Button>
         </div>
       </form>
     </div>
