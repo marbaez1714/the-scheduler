@@ -24,6 +24,7 @@ import {
   ArrowPathIcon,
   CalendarDaysIcon,
   ChevronDownIcon,
+  PlusCircleIcon,
 } from '@heroicons/react/24/solid';
 
 export const iconMap = {
@@ -52,6 +53,7 @@ export const iconMap = {
   loading: ArrowPathIcon,
   calendar: CalendarDaysIcon,
   chevronDown: ChevronDownIcon,
+  plusCircle: PlusCircleIcon,
 };
 
 export const iconNames = Object.keys(iconMap) as (keyof typeof iconMap)[];

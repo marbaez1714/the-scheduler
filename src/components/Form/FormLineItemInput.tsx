@@ -87,9 +87,8 @@ export const FormLineItemInput = <TFields extends FieldValues>({
           type="button"
           variant="text"
           disabled={!orderNumber || !supplierId}
-        >
-          <PlusCircleIcon />
-        </IconButton>
+          icon="plusCircle"
+        />
       </div>
       {/******************************/}
       {/* Line Items                 */}
@@ -107,7 +106,7 @@ export const FormLineItemInput = <TFields extends FieldValues>({
         {value.map((item: CreateLineItemLegacyInput, index: number) => (
           <Button
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
-            rightIcon="trash"
+            leftIcon="trash"
             onClick={(e) => handleRemoveItem(e, index)}
           >
             {item.orderNumber} - {supplierMap[item.supplierId]}

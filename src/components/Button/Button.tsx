@@ -26,7 +26,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={forwardRef}
         className={cn(
-          'focus-ring relative flex scale-100 flex-row items-center justify-between rounded font-bold uppercase tracking-wider active:scale-95',
+          'focus-ring flex scale-100 flex-row items-center justify-between rounded font-bold uppercase tracking-wider active:scale-95',
           { 'rounded-full': rounded },
           { 'animate-pulse ': loading },
           {
@@ -45,9 +45,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'pr-10': !rightIcon && size === 'large',
           },
           {
+            'bg-transparent text-app hover:underline': variant === 'text',
             'bg-transparent text-app-altText hover:underline':
-              variant === 'text',
-            'bg-transparent text-app hover:underline': variant === 'text-light',
+              variant === 'text-light',
             'bg-app text-app-altText shadow hover:bg-app-dark':
               variant === 'filled',
             'bg-app-light text-app shadow hover:bg-app-medium':
