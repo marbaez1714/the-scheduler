@@ -41,14 +41,11 @@ export const DateInput = forwardRef<ReactDatePicker, DateInputProps>(
             required={required}
             {...rest}
           />
-
-          {/* Error Message */}
-          {errorMessage && (
-            <p className="absolute top-full ml-1 mt-1 text-xs text-app-error">
-              {errorMessage}
-            </p>
-          )}
         </div>
+        {/* Error Message */}
+        {errorMessage && (
+          <p className="ml-1 mt-1 text-xs text-app-error">{errorMessage}</p>
+        )}
       </div>
     );
 

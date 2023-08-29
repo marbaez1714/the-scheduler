@@ -68,13 +68,11 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             ref={forwardedRef}
             {...rest}
           />
-          {/* Error Message */}
-          {errorMessage && (
-            <p className="absolute top-full ml-1 mt-1 text-xs text-app-error">
-              {errorMessage}
-            </p>
-          )}
         </div>
+        {/* Error Message */}
+        {errorMessage && (
+          <p className="ml-1 mt-1 text-xs text-app-error">{errorMessage}</p>
+        )}
       </div>
     );
 

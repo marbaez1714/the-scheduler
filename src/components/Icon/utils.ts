@@ -23,6 +23,7 @@ import {
   TrashIcon,
   ArrowPathIcon,
   CalendarDaysIcon,
+  ChevronDownIcon,
 } from '@heroicons/react/24/solid';
 
 export const iconMap = {
@@ -50,6 +51,7 @@ export const iconMap = {
   trash: TrashIcon,
   loading: ArrowPathIcon,
   calendar: CalendarDaysIcon,
+  chevronDown: ChevronDownIcon,
 };
 
 export const iconNames = Object.keys(iconMap) as (keyof typeof iconMap)[];
