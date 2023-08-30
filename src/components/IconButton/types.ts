@@ -1,8 +1,10 @@
-import { ButtonHTMLAttributes } from 'react';
+import { IconName } from '../Icon';
 
 export interface IconButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: JSX.Element;
-  size?: 'small' | 'medium' | 'large';
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
+  icon: IconName;
   variant?: 'text' | 'filled' | 'outline';
+  size?: 'small' | 'medium' | 'large';
+  rounded?: boolean;
+  loading?: boolean;
 }

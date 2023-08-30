@@ -1,10 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
-import {
-  PlusCircleIcon,
-  TrashIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/solid';
 import cn from 'classnames';
 
 import { ModifyLineItemLegacyInput } from 'src/api';
@@ -14,6 +9,7 @@ import { TextInput } from '../TextInput';
 import { FormModifyLineItemInputProps } from './types';
 import { Button } from '../Button';
 import { Transition } from '@headlessui/react';
+import { InputLabel } from '../InputLabel';
 
 export const FormModifyLineItemInput = <TFields extends FieldValues>({
   suppliers,
@@ -91,45 +87,40 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
   /* Render                     */
   /******************************/
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col">
       {/******************************/}
       {/* Inputs                     */}
       {/******************************/}
-      <label className="font-medium text-app-dark">{label}</label>
-      <div className="flex justify-between">
-        <div className="mr-4 w-1/2">
-          <TextInput
-            placeholder="Order #"
-            value={orderNumber}
-            onChange={(e) => setOrderNumber(e.target.value)}
-            icon="orderNumber"
-          />
-        </div>
-        <div className="mr-2 w-1/2">
-          <AutocompleteInput
-            placeholder="Supplier"
-            options={suppliers}
-            value={supplierId}
-            onChange={setSupplierId}
-            icon="supplier"
-          />
-        </div>
+      <InputLabel>{label}</InputLabel>
+      <div className="flex items-center justify-between gap-4">
+        <TextInput
+          placeholder="Order #"
+          value={orderNumber}
+          onChange={(e) => setOrderNumber(e.target.value)}
+          icon="orderNumber"
+        />
+        <AutocompleteInput
+          placeholder="Supplier"
+          options={suppliers}
+          value={supplierId}
+          onChange={setSupplierId}
+          icon="supplier"
+        />
         <IconButton
           onClick={handleAdd}
           type="button"
           variant="text"
           size="large"
           disabled={!orderNumber || !supplierId}
-        >
-          <PlusCircleIcon />
-        </IconButton>
+          icon="plusCircle"
+        />
       </div>
       {/******************************/}
       {/* Original Line Items        */}
       {/******************************/}
       <Transition
         show={!!originalLineItems.length}
-        className="flex flex-wrap gap-2 rounded bg-app-medium/50 p-4 shadow-inner transition-all"
+        className="mt-4 flex flex-wrap gap-2 rounded bg-app-medium/50 p-4 shadow-inner transition-all"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leaveFrom="opacity-100"
@@ -140,13 +131,11 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
         {originalLineItems.map(
           (item: ModifyLineItemLegacyInput, index: number) => (
             <Button
-              size="small"
               className={cn({ '!bg-app-warn line-through': item.delete })}
               key={`${item.orderNumber}-${item.supplierId}-${index}`}
-              rightRender={item.delete ? <XMarkIcon /> : <TrashIcon />}
+              leftIcon={item.delete ? 'remove' : 'trash'}
               onClick={(e) => handleMarkForDelete(e, item.id)}
-              title={`${item.orderNumber} - ${supplierMap[item.supplierId]}`}
-            />
+            >{`${item.orderNumber} - ${supplierMap[item.supplierId]}`}</Button>
           )
         )}
       </Transition>
@@ -156,7 +145,7 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
       {/******************************/}
       <Transition
         show={!!newLineItems.length}
-        className="flex flex-wrap gap-2 rounded bg-app-success/50 p-4 shadow-inner transition-all"
+        className="mt-4 flex flex-wrap gap-2 rounded bg-app-success/50 p-4 shadow-inner transition-all"
         enterFrom="opacity-0"
         enterTo="opacity-100"
         leaveFrom="opacity-100"
@@ -166,12 +155,10 @@ export const FormModifyLineItemInput = <TFields extends FieldValues>({
 
         {newLineItems.map((item: ModifyLineItemLegacyInput, index: number) => (
           <Button
-            size="small"
             key={`${item.orderNumber}-${item.supplierId}-${index}`}
-            rightRender={<TrashIcon />}
+            leftIcon="trash"
             onClick={(e) => handleRemoveItem(e, item)}
-            title={`${item.orderNumber} - ${supplierMap[item.supplierId]}`}
-          />
+          >{`${item.orderNumber} - ${supplierMap[item.supplierId]}`}</Button>
         ))}
       </Transition>
     </div>

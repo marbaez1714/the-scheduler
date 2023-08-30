@@ -1,10 +1,12 @@
 import { IconProps } from '../Icon';
-import { InputOption, InputProps } from '../types';
 
-export interface AutocompleteInputProps extends InputProps {
+export interface AutocompleteInputProps {
+  label?: string;
+  required?: boolean;
+  errorMessage?: string;
   className?: string;
   placeholder?: string;
-  options: InputOption[];
+  options: { label: string; value: string }[];
   value: string | null;
   name?: string;
   disabled?: boolean;
