@@ -180,7 +180,11 @@ const SendMessageModal = ({
               onChange={(e) => setContractorMessage(e.target.value)}
             />
 
-            <Button loading={loading} onClick={sendContractorMessage}>
+            <Button
+              className="ml-auto w-1/2"
+              loading={loading}
+              onClick={sendContractorMessage}
+            >
               Send
             </Button>
           </div>
@@ -201,12 +205,16 @@ const SendMessageModal = ({
             />
 
             <TextAreaInput
-              className=" h-96"
+              className="h-96"
               value={reporterMessage}
               onChange={(e) => setReporterMessage(e.target.value)}
             />
 
-            <Button loading={loading} onClick={sendReporterMessage}>
+            <Button
+              className="ml-auto w-1/2"
+              loading={loading}
+              onClick={sendReporterMessage}
+            >
               Send
             </Button>
           </div>

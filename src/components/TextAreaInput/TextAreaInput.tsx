@@ -26,7 +26,7 @@ export const TextAreaInput = forwardRef<
         )}
 
         <textarea
-          className="focus-ring box-border w-full text-ellipsis rounded border-2 border-app-medium bg-app-light p-2 text-app-text shadow-inner"
+          className="focus-ring box-border w-full h-full text-ellipsis rounded border-2 border-app-medium bg-app-light p-2 text-app-text shadow-inner"
           name={name}
           required={required}
           ref={forwardedRef}
