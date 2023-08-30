@@ -25,8 +25,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={forwardRef}
+        disabled={loading}
         className={cn(
-          'focus-ring flex scale-100 flex-row items-center justify-between rounded font-bold uppercase tracking-wider active:scale-95',
+          'focus-ring flex scale-100 flex-row items-center justify-center self-start rounded font-bold uppercase leading-none tracking-wider enabled:active:scale-95',
           { 'rounded-full': rounded },
           { 'animate-pulse ': loading },
           {
@@ -64,7 +65,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...rest}
       >
         {/* Left Icon */}
-        {leftIcon && (
+        {leftIcon && !loading && (
           <Icon
             className={cn('h-4', {
               'mx-2': size === 'small',
@@ -75,11 +76,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           />
         )}
 
-        {/* Content */}
-        {children}
+        {/* Content & Loading Icon */}
+        {loading ? (
+          <Icon className="h-6 animate-spin" icon="loading" />
+        ) : (
+          children
+        )}
 
         {/* Right Icon */}
-        {rightIcon && (
+        {rightIcon && !loading && (
           <Icon
             className={cn('h-4', {
               'mx-2': size === 'small',

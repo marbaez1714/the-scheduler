@@ -81,7 +81,7 @@ const Collapsable = ({
         </div>
 
         {action && (
-          <Button onClick={action.onClick} className="ml-auto" variant="text">
+          <Button onClick={action.onClick} className="ml-auto" variant="text-light">
             {action.label}
           </Button>
         )}
