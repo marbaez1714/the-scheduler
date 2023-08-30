@@ -27,7 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={forwardRef}
         disabled={loading}
         className={cn(
-          'focus-ring flex scale-100 flex-row items-center justify-center self-start rounded font-bold uppercase leading-none tracking-wider enabled:active:scale-95',
+          'focus-ring flex scale-100 flex-row items-center justify-center rounded font-bold uppercase leading-none tracking-wider enabled:active:scale-95',
           { 'rounded-full': rounded },
           { 'animate-pulse ': loading },
           {
